@@ -290,8 +290,13 @@ typedef gl_uint_fast32_t gl_uint_fast16_t;
 
 #undef intptr_t
 #undef uintptr_t
+#ifndef __KLIBC__
 typedef long int gl_intptr_t;
 typedef unsigned long int gl_uintptr_t;
+#else
+typedef int gl_intptr_t;
+typedef unsigned int gl_uintptr_t;
+#endif
 #define intptr_t gl_intptr_t
 #define uintptr_t gl_uintptr_t
 
