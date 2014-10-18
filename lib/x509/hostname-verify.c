@@ -133,6 +133,7 @@ gnutls_x509_crt_check_hostname2(gnutls_x509_crt_t cert,
 	/* check whether @hostname is an ip address */
 	if ((p=strchr(hostname, ':')) != NULL || inet_aton(hostname, &ipv4) != 0) {
 
+#ifdef HAVE_IPV6
 		if (p != NULL) {
 			struct in6_addr ipv6;
 
@@ -143,8 +144,11 @@ gnutls_x509_crt_check_hostname2(gnutls_x509_crt_t cert,
 			}
 			ret = check_ip(cert, &ipv6, 16, flags);
 		} else {
+#endif
 			ret = check_ip(cert, &ipv4, 4, flags);
+#ifdef HAVE_IPV6
 		}
+#endif
 
 		if (ret != 0)
 			return ret;
