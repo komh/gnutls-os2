@@ -86,6 +86,9 @@ case "$host" in
   *darwin*)
     have_macosx=yes
   ;;
+  *os2*)
+    have_os2=yes
+  ;;
   *)
     have_elf=yes
   ;;
@@ -93,6 +96,7 @@ esac
 
 AM_CONDITIONAL(WINDOWS, test "$have_win" = yes)
 AM_CONDITIONAL(MACOSX, test "$have_macosx" = yes)
+AM_CONDITIONAL(OS2, test "$have_os2" = yes)
 AM_CONDITIONAL(ELF, test "$have_elf" = yes)
 
 dnl Hardware Acceleration
