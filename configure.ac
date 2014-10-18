@@ -135,6 +135,9 @@ case "$host" in
 *** with the assembler. Use --enable-hardware-acceleration to enable it.
 *** ]])
   ;;
+  *os2*)
+    have_os2=yes
+  ;;
   *)
     have_elf=yes
   ;;
@@ -143,6 +146,7 @@ esac
 AM_CONDITIONAL(ANDROID, test "$have_android" = yes)
 AM_CONDITIONAL(WINDOWS, test "$have_win" = yes)
 AM_CONDITIONAL(MACOSX, test "$have_macosx" = yes)
+AM_CONDITIONAL(OS2, test "$have_os2" = yes)
 AM_CONDITIONAL(ELF, test "$have_elf" = yes)
 
 dnl Hardware Acceleration
