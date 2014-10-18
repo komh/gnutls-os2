@@ -128,6 +128,49 @@ void _rnd_system_entropy_deinit(void)
 	CryptReleaseContext(device_fd, 0);
 }
 
+#elif defined(__OS2__)
+/* The OS/2 randomness gatherer.
+ */
+
+#define INCL_DOS
+#include <os2.h>
+
+#include <stdlib.h>
+#include <time.h>
+
+static
+int _rnd_get_system_entropy_os2(void* rnd, size_t size)
+{
+	QWORD qwTime;
+	uint8_t *p = (uint8_t *)rnd;
+
+	while (size-- > 0) {
+		DosTmrQueryTime(&qwTime);
+
+		*p++ = (uint8_t)(qwTime.ulLo * rand());
+	}
+
+	return 0;
+}
+
+get_entropy_func _rnd_get_system_entropy = _rnd_get_system_entropy_os2;
+
+int _rnd_system_entropy_check(void)
+{
+	return 0;
+}
+
+int _rnd_system_entropy_init(void)
+{
+	srand(time(NULL));
+
+	return 0;
+}
+
+void _rnd_system_entropy_deinit(void)
+{
+}
+
 #else /* POSIX */
 
 /* The POSIX (Linux-BSD) randomness gatherer.
