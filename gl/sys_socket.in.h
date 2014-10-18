@@ -79,7 +79,11 @@ _GL_INLINE_HEADER_BEGIN
 
 #if !@HAVE_SA_FAMILY_T@
 # if !GNULIB_defined_sa_family_t
+#  if defined __KLIBC__
+typedef unsigned char  sa_family_t;
+#  else
 typedef unsigned short  sa_family_t;
+#  endif
 #  define GNULIB_defined_sa_family_t 1
 # endif
 #endif
