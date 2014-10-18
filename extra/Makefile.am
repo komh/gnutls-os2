@@ -58,6 +58,10 @@ libgnutls_openssl_la_LIBADD = ../gl/libgnu.la \
 
 libgnutls_openssl_la_LDFLAGS += -version-info $(LT_SSL_CURRENT):$(LT_SSL_REVISION):$(LT_SSL_AGE)
 
+if OS2
+libgnutls_openssl_la_LDFLAGS += -os2dllname gtlsossl
+endif
+
 if ENABLE_MINITASN1
 libgnutls_openssl_la_LIBADD += ../lib/minitasn1/libminitasn1.la
 else
