@@ -351,7 +351,7 @@ ao_strdup(char const * str);
 /*
  *  text_mmap structure.  Only active on platforms with mmap(2).
  */
-#ifdef HAVE_SYS_MMAN_H
+#if defined(HAVE_SYS_MMAN_H) && !defined(__KLIBC__)
 #  include <sys/mman.h>
 #else
 #  ifndef  PROT_READ
