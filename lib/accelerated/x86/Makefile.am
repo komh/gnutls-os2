@@ -88,6 +88,13 @@ libx86_la_SOURCES += $(X86_PADLOCK_FILES_MACOSX)
 endif
 endif
 
+if OS2
+libx86_la_SOURCES += $(X86_FILES_OS2)
+if ENABLE_PADLOCK
+libx86_la_SOURCES += $(X86_PADLOCK_FILES_OS2)
+endif
+endif
+
 if ELF
 libx86_la_SOURCES += $(X86_FILES_ELF)
 if ENABLE_PADLOCK
