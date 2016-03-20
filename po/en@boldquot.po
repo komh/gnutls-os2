@@ -32,8 +32,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnutls 3.3.22\n"
 "Report-Msgid-Bugs-To: bug-gnutls@gnu.org\n"
-"POT-Creation-Date: 2016-03-03 08:50+0100\n"
-"PO-Revision-Date: 2016-03-03 08:50+0100\n"
+"POT-Creation-Date: 2016-03-20 13:57+0900\n"
+"PO-Revision-Date: 2016-03-20 13:57+0900\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "Language: en@boldquot\n"
@@ -970,13 +970,13 @@ msgstr "unknown key algorithm (%d)"
 msgid "OpenPGP Certificate Information:\n"
 msgstr "OpenPGP Certificate Information:\n"
 
-#: lib/x509/ocsp_output.c:139 lib/x509/ocsp_output.c:497
-#: lib/x509/output.c:1930 lib/x509/output.c:2295
+#: lib/x509/ocsp_output.c:139 lib/x509/ocsp_output.c:497 lib/x509/output.c:1930
+#: lib/x509/output.c:2295
 msgid "\t\t\tASCII: "
 msgstr "\t\t\tASCII: "
 
-#: lib/x509/ocsp_output.c:144 lib/x509/ocsp_output.c:502
-#: lib/x509/output.c:1934 lib/x509/output.c:2300
+#: lib/x509/ocsp_output.c:144 lib/x509/ocsp_output.c:502 lib/x509/output.c:1934
+#: lib/x509/output.c:2300
 msgid "\t\t\tHexdump: "
 msgstr "\t\t\tHexdump: "
 

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgnutls-3.2.3\n"
 "Report-Msgid-Bugs-To: bug-gnutls@gnu.org\n"
-"POT-Creation-Date: 2016-03-03 08:50+0100\n"
+"POT-Creation-Date: 2016-03-20 13:57+0900\n"
 "PO-Revision-Date: 2013-08-06 07:13+0700\n"
 "Last-Translator: Trần Ngọc Quân <vnwildman@gmail.com>\n"
 "Language-Team: Vietnamese <translation-team-vi@lists.sourceforge.net>\n"
@@ -952,13 +952,13 @@ msgstr "không nhận ra thuật toán khoá (%d)"
 msgid "OpenPGP Certificate Information:\n"
 msgstr "Thông tin chứng nhận OpenPGP:\n"
 
-#: lib/x509/ocsp_output.c:139 lib/x509/ocsp_output.c:497
-#: lib/x509/output.c:1930 lib/x509/output.c:2295
+#: lib/x509/ocsp_output.c:139 lib/x509/ocsp_output.c:497 lib/x509/output.c:1930
+#: lib/x509/output.c:2295
 msgid "\t\t\tASCII: "
 msgstr "\t\t\tASCII: "
 
-#: lib/x509/ocsp_output.c:144 lib/x509/ocsp_output.c:502
-#: lib/x509/output.c:1934 lib/x509/output.c:2300
+#: lib/x509/ocsp_output.c:144 lib/x509/ocsp_output.c:502 lib/x509/output.c:1934
+#: lib/x509/output.c:2300
 msgid "\t\t\tHexdump: "
 msgstr "\t\t\tĐổ thập lục: "
 

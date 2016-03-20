@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgnutls 2.8.1\n"
 "Report-Msgid-Bugs-To: bug-gnutls@gnu.org\n"
-"POT-Creation-Date: 2016-03-03 08:50+0100\n"
+"POT-Creation-Date: 2016-03-20 13:57+0900\n"
 "PO-Revision-Date: 2009-11-09 19:16+0800\n"
 "Last-Translator: Aron Xu <happyaron.xu@gmail.com>\n"
 "Language-Team: Chinese (simplified) <i18n-zh@googlegroups.com>\n"
@@ -962,13 +962,13 @@ msgstr ""
 msgid "OpenPGP Certificate Information:\n"
 msgstr "OpenPGP 证书信息：\n"
 
-#: lib/x509/ocsp_output.c:139 lib/x509/ocsp_output.c:497
-#: lib/x509/output.c:1930 lib/x509/output.c:2295
+#: lib/x509/ocsp_output.c:139 lib/x509/ocsp_output.c:497 lib/x509/output.c:1930
+#: lib/x509/output.c:2295
 msgid "\t\t\tASCII: "
 msgstr "\t\t\tASCII: "
 
-#: lib/x509/ocsp_output.c:144 lib/x509/ocsp_output.c:502
-#: lib/x509/output.c:1934 lib/x509/output.c:2300
+#: lib/x509/ocsp_output.c:144 lib/x509/ocsp_output.c:502 lib/x509/output.c:1934
+#: lib/x509/output.c:2300
 msgid "\t\t\tHexdump: "
 msgstr "\t\t\t十六进制转储： "
 

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgnutls 2.8.5\n"
 "Report-Msgid-Bugs-To: bug-gnutls@gnu.org\n"
-"POT-Creation-Date: 2016-03-03 08:50+0100\n"
+"POT-Creation-Date: 2016-03-20 13:57+0900\n"
 "PO-Revision-Date: 2009-12-29 21:15+0100\n"
 "Last-Translator: Nicolas Provost <nprovost@quadriv.com>\n"
 "Language-Team: French <traduc@traduc.org>\n"
@@ -985,13 +985,13 @@ msgstr "algorithme de clef inconnu (%d)"
 msgid "OpenPGP Certificate Information:\n"
 msgstr "Détails du certificat OpenPGP :\n"
 
-#: lib/x509/ocsp_output.c:139 lib/x509/ocsp_output.c:497
-#: lib/x509/output.c:1930 lib/x509/output.c:2295
+#: lib/x509/ocsp_output.c:139 lib/x509/ocsp_output.c:497 lib/x509/output.c:1930
+#: lib/x509/output.c:2295
 msgid "\t\t\tASCII: "
 msgstr "\t\t\tASCII: "
 
-#: lib/x509/ocsp_output.c:144 lib/x509/ocsp_output.c:502
-#: lib/x509/output.c:1934 lib/x509/output.c:2300
+#: lib/x509/ocsp_output.c:144 lib/x509/ocsp_output.c:502 lib/x509/output.c:1934
+#: lib/x509/output.c:2300
 msgid "\t\t\tHexdump: "
 msgstr "\t\t\tCode hexadécimal: "
 

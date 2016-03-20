@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgnutls 3.2.1\n"
 "Report-Msgid-Bugs-To: bug-gnutls@gnu.org\n"
-"POT-Creation-Date: 2016-03-03 08:50+0100\n"
+"POT-Creation-Date: 2016-03-20 13:57+0900\n"
 "PO-Revision-Date: 2013-06-28 14:49-0300\n"
 "Last-Translator: Felipe Castro <fefcas@gmail.com>\n"
 "Language-Team: Esperanto <translation-team-eo@lists.sourceforge.net>\n"
@@ -947,13 +947,13 @@ msgstr "nekonata ŝlosil-algoritmo (%d)"
 msgid "OpenPGP Certificate Information:\n"
 msgstr "Atestil-informo de OpenPGP:\n"
 
-#: lib/x509/ocsp_output.c:139 lib/x509/ocsp_output.c:497
-#: lib/x509/output.c:1930 lib/x509/output.c:2295
+#: lib/x509/ocsp_output.c:139 lib/x509/ocsp_output.c:497 lib/x509/output.c:1930
+#: lib/x509/output.c:2295
 msgid "\t\t\tASCII: "
 msgstr "\t\t\tASCII: "
 
-#: lib/x509/ocsp_output.c:144 lib/x509/ocsp_output.c:502
-#: lib/x509/output.c:1934 lib/x509/output.c:2300
+#: lib/x509/ocsp_output.c:144 lib/x509/ocsp_output.c:502 lib/x509/output.c:1934
+#: lib/x509/output.c:2300
 msgid "\t\t\tHexdump: "
 msgstr "\t\t\t16-uma nekropsio: "
 
