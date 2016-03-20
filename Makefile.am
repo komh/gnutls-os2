@@ -43,7 +43,8 @@ ACLOCAL_AMFLAGS = -I m4 -I gl/m4 -I src/libopts/m4 -I src/gl/m4
 
 EXTRA_DIST = cfg.mk maint.mk .clcopying
 
-dist-hook: 
+# Disable dist-hook
+dist-hook-no:
 	make -C doc/ compare-makefile
 	make -C doc/ compare-exported
 	make -C doc/manpages compare-makefile
