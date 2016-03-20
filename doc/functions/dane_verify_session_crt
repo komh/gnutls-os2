@@ -24,7 +24,7 @@ CA constrains and/or the certificate available via DANE.
 See @code{dane_verify_crt()}  for more information.
 
 This will not verify the chain for validity; unless the DANE
-verification is restricted to end certificates, this has to
+verification is restricted to end certificates, this must be
 be performed separately using @code{gnutls_certificate_verify_peers3()} .
 
 @strong{Returns:} On success, @code{DANE_E_SUCCESS}  (0) is returned, otherwise a

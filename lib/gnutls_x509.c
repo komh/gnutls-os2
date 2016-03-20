@@ -632,6 +632,7 @@ read_key_mem(gnutls_certificate_credentials_t res,
 						   pass, flags);
 		if (ret < 0) {
 			gnutls_assert();
+			gnutls_privkey_deinit(privkey);
 			return ret;
 		}
 
@@ -941,8 +942,10 @@ gnutls_certificate_set_x509_key_mem2(gnutls_certificate_credentials_t res,
 				flags)) < 0)
 		return ret;
 
-	if ((ret = read_cert_mem(res, cert->data, cert->size, type)) < 0)
+	if ((ret = read_cert_mem(res, cert->data, cert->size, type)) < 0) {
+		gnutls_privkey_deinit(res->pkey[res->ncerts]);
 		return ret;
+	}
 
 	res->ncerts++;
 
@@ -1059,6 +1062,9 @@ certificate_credentials_append_pkey(gnutls_certificate_credentials_t res,
  * Note that the certificates and keys provided, can be safely deinitialized
  * after this function is called.
  *
+ * If that function fails to load the @res structure is at an undefined state, it must
+ * not be reused to load other keys or certificates.
+ *
  * Returns: %GNUTLS_E_SUCCESS (0) on success, or a negative error code.
  *
  * Since: 2.4.0
@@ -1163,6 +1169,9 @@ gnutls_certificate_set_x509_key(gnutls_certificate_credentials_t res,
  * Note that the @pcert_list and @key will become part of the credentials 
  * structure and must not be deallocated. They will be automatically deallocated 
  * when the @res structure is deinitialized.
+ *
+ * If that function fails to load the @res structure is at an undefined state, it must
+ * not be reused to load other keys or certificates.
  *
  * Returns: %GNUTLS_E_SUCCESS (0) on success, or a negative error code.
  *
@@ -1278,6 +1287,9 @@ gnutls_certificate_set_trust_list(gnutls_certificate_credentials_t res,
  * In case the @certfile is provided as a PKCS #11 URL, then the certificate, and its
  * present issuers in the token are are imported (i.e., the required trust chain).
  *
+ * If that function fails to load the @res structure is at an undefined state, it must
+ * not be reused to load other keys or certificates.
+ *
  * Returns: %GNUTLS_E_SUCCESS (0) on success, or a negative error code.
  **/
 int
@@ -1319,6 +1331,9 @@ gnutls_certificate_set_x509_key_file(gnutls_certificate_credentials_t res,
  * In case the @certfile is provided as a PKCS #11 URL, then the certificate, and its
  * present issuers in the token are are imported (i.e., the required trust chain).
  *
+ * If that function fails to load the @res structure is at an undefined state, it must
+ * not be reused to load other keys or certificates.
+ *
  * Returns: %GNUTLS_E_SUCCESS (0) on success, or a negative error code.
  **/
 int
@@ -1334,9 +1349,12 @@ gnutls_certificate_set_x509_key_file2(gnutls_certificate_credentials_t res,
 	 */
 	if ((ret = read_key_file(res, keyfile, type, pass, flags)) < 0)
 		return ret;
+	
 
-	if ((ret = read_cert_file(res, certfile, type)) < 0)
+	if ((ret = read_cert_file(res, certfile, type)) < 0) {
+		gnutls_privkey_deinit(res->pkey[res->ncerts]);
 		return ret;
+	}
 
 	res->ncerts++;
 

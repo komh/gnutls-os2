@@ -33,9 +33,9 @@ AES in GCM mode with 256-bit keys.
 @item GNUTLS_@-CIPHER_@-CAMELLIA_@-192_@-CBC
 Camellia in CBC mode with 192-bit keys.
 @item GNUTLS_@-CIPHER_@-SALSA20_@-256
--- undescribed --
+Salsa20 with 256-bit keys.
 @item GNUTLS_@-CIPHER_@-ESTREAM_@-SALSA20_@-256
--- undescribed --
+Estream's Salsa20 variant with 256-bit keys.
 @item GNUTLS_@-CIPHER_@-CAMELLIA_@-128_@-GCM
 CAMELLIA in GCM mode with 128-bit keys.
 @item GNUTLS_@-CIPHER_@-CAMELLIA_@-256_@-GCM

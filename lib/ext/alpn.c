@@ -92,7 +92,8 @@ _gnutls_alpn_recv_params(gnutls_session_t session,
 					    priv->protocols[i];
 					priv->selected_protocol_size =
 					    priv->protocol_size[i];
-					break;
+
+					return 0;
 				}
 			p += len1;
 		}
@@ -203,6 +204,9 @@ _gnutls_alpn_send_params(gnutls_session_t session,
  * returned protocol should be treated as opaque, constant value and
  * only valid during the session life.
  *
+ * The selected protocol is the first supported by the list sent
+ * by the client.
+ *
  * Returns: On success, %GNUTLS_E_SUCCESS (0) is returned,
  *   otherwise a negative error code is returned.
  *
@@ -245,7 +249,7 @@ gnutls_alpn_get_selected_protocol(gnutls_session_t session,
  * @flags: zero or %GNUTLS_ALPN_*
  *
  * This function is to be used by both clients and servers, to declare
- * the supported ALPN protocols, which are used during peer negotiation.
+ * the supported ALPN protocols, which are used during negotiation with peer.
  *
  * If %GNUTLS_ALPN_MAND is specified the connection will be aborted
  * if no matching ALPN protocol is found.

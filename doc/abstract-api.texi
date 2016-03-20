@@ -25,6 +25,9 @@ Note that the  @code{pcert_list} and  @code{key} will become part of the credent
 structure and must not be deallocated. They will be automatically deallocated 
 when the  @code{res} structure is deinitialized.
 
+If that function fails to load the  @code{res} structure is at an undefined state, it must
+not be reused to load other keys or certificates.
+
 @strong{Returns:} @code{GNUTLS_E_SUCCESS}  (0) on success, or a negative error code.
 
 @strong{Since:} 3.0
@@ -45,7 +48,7 @@ int (*callback)(gnutls_session_t, const gnutls_datum_t* req_ca_dn, int nreqs,
 const gnutls_pk_algorithm_t* pk_algos, int pk_algos_length, gnutls_pcert_st** pcert,
 unsigned int *pcert_length, gnutls_privkey_t * pkey);
 
- @code{req_ca_cert} is only used in X.509 certificates.
+ @code{req_ca_dn} is only used in X.509 certificates.
 Contains a list with the CA names that the server considers trusted.
 Normally we should send a certificate that is signed
 by one of these CAs. These names are DER encoded. To get a more
@@ -54,7 +57,7 @@ meaningful value use the function @code{gnutls_x509_rdn_get()} .
  @code{pk_algos} contains a list with server's acceptable signature algorithms.
 The certificate returned should support the server's given algorithms.
 
- @code{pcert} should contain a single certificate and public or a list of them.
+ @code{pcert} should contain a single certificate and public key or a list of them.
 
  @code{pcert_length} is the size of the previous list.
 
@@ -62,6 +65,8 @@ The certificate returned should support the server's given algorithms.
 
 If the callback function is provided then gnutls will call it, in the
 handshake, after the certificate request message has been received.
+All the provided by the callback values will not be released or
+modified by gnutls.
 
 In server side pk_algos and req_ca_dn are NULL.
 
@@ -1451,7 +1456,7 @@ negative error value.
 
 @var{format}: Indicate the format to use
 
-@var{out}: Newly allocated datum with (0) terminated string.
+@var{out}: Newly allocated datum with null terminated string.
 
 This function will pretty print public key information, suitable for
 display to a human.

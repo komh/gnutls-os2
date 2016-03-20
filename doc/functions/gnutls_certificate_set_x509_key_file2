@@ -34,5 +34,8 @@ that the supported URLs are the ones indicated by @code{gnutls_url_is_supported(
 In case the  @code{certfile} is provided as a PKCS @code{11}  URL, then the certificate, and its
 present issuers in the token are are imported (i.e., the required trust chain).
 
+If that function fails to load the  @code{res} structure is at an undefined state, it must
+not be reused to load other keys or certificates.
+
 @strong{Returns:} @code{GNUTLS_E_SUCCESS}  (0) on success, or a negative error code.
 @end deftypefun

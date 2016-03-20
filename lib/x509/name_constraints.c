@@ -254,11 +254,6 @@ int name_constraints_add(gnutls_x509_name_constraints_t nc,
 		type != GNUTLS_SAN_DN && type != GNUTLS_SAN_URI && type != GNUTLS_SAN_IPADDRESS)
 		return gnutls_assert_val(GNUTLS_E_INVALID_REQUEST);
 
-	if (type == GNUTLS_SAN_DNSNAME && name->size > 0 && name->data[0] == '.') {
-		_gnutls_debug_log("DNSNAME constraints cannot start with '.'. They must contain a domain name\n");
-		return gnutls_assert_val(GNUTLS_E_INVALID_REQUEST);
-	}
-
 	if (permitted != 0)
 		prev = tmp = nc->permitted;
 	else
@@ -377,11 +372,21 @@ cleanup:
 static
 unsigned ends_with(const gnutls_datum_t * str, const gnutls_datum_t * suffix)
 {
+	unsigned char *tree;
+	unsigned int treelen;
+
 	if (suffix->size >= str->size)
 		return 0;
 
-	if (memcmp(str->data + str->size - suffix->size, suffix->data, suffix->size) == 0 &&
-		str->data[str->size - suffix->size -1] == '.')
+	tree = suffix->data;
+	treelen = suffix->size;
+	if((treelen > 0) && (tree[0] == '.')) {
+		tree++;
+		treelen--;
+	}
+
+	if (memcmp(str->data + str->size - treelen, tree, treelen) == 0 &&
+		str->data[str->size - treelen -1] == '.')
 		return 1;
 
 	return 0;
@@ -672,8 +677,12 @@ unsigned found_one;
 		/* passed */
 		if (found_one != 0)
 			return 1;
-		else /* nothing was found */
-			return gnutls_assert_val(0);
+		else {
+			/* no name was found. According to RFC5280: 
+			 * If no name of the type is in the certificate, the certificate is acceptable.
+			 */
+			return gnutls_assert_val(1);
+		}
 	} else if (type == GNUTLS_SAN_DNSNAME) {
 		idx = found_one = 0;
 		do {
@@ -733,8 +742,60 @@ unsigned found_one;
 		/* passed */
 		if (found_one != 0)
 			return 1;
-		else /* nothing was found */
-			return gnutls_assert_val(0);
+		else {
+			/* no name was found. According to RFC5280: 
+			 * If no name of the type is in the certificate, the certificate is acceptable.
+			 */
+			return gnutls_assert_val(1);
+		}
+	} else if (type == GNUTLS_SAN_IPADDRESS) {
+		/* Only check whether the IPAddress is present */
+		idx = found_one = 0;
+		do {
+			name_size = sizeof(name);
+			ret = gnutls_x509_crt_get_subject_alt_name2(cert,
+				idx++, name, &name_size, &san_type, NULL);
+			if (ret == GNUTLS_E_REQUESTED_DATA_NOT_AVAILABLE)
+				break;
+			else if (ret < 0)
+				return gnutls_assert_val(0);
+
+			if (san_type != GNUTLS_SAN_IPADDRESS)
+				continue;
+
+			found_one = 1;
+			break;
+		} while(ret >= 0);
+
+		if (found_one != 0)
+			return check_unsupported_constraint(nc, type);
+
+		/* no IPaddress was found in the certificate, so accept */
+		return 1;
+	} else if (type == GNUTLS_SAN_URI) {
+		/* Only check whether the URI is present */
+		idx = found_one = 0;
+		do {
+			name_size = sizeof(name);
+			ret = gnutls_x509_crt_get_subject_alt_name2(cert,
+				idx++, name, &name_size, &san_type, NULL);
+			if (ret == GNUTLS_E_REQUESTED_DATA_NOT_AVAILABLE)
+				break;
+			else if (ret < 0)
+				return gnutls_assert_val(0);
+
+			if (san_type != GNUTLS_SAN_URI)
+				continue;
+
+			found_one = 1;
+			break;
+		} while(ret >= 0);
+
+		if (found_one != 0)
+			return check_unsupported_constraint(nc, type);
+
+		/* no IPaddress was found in the certificate, so accept */
+		return 1;
 	} else
 		return check_unsupported_constraint(nc, type);
 }

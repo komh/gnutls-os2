@@ -327,9 +327,9 @@ pkcs11_int
 
 @sinfo: 
 @pin_info: 
-@tokinfo: 
 @info: 
 @so: 
+@reauth: 
 @Returns: 
 
 
@@ -363,7 +363,7 @@ pkcs11_int
 @pks: 
 @obj: 
 @key_type: 
-@pubkey: 
+@pobj: 
 @Returns: 
 
 
@@ -460,6 +460,7 @@ pkcs11_int
 
 @url: 
 @info: 
+@flags: 
 @Returns: 
 
 

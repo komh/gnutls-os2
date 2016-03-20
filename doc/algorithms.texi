@@ -9,7 +9,7 @@
 @tab SSL3.0
 @item TLS_@-RSA_@-NULL_@-SHA256
 @tab 0x00 0x3B
-@tab TLS1.0
+@tab TLS1.2
 @item TLS_@-RSA_@-ARCFOUR_@-128_@-SHA1
 @tab 0x00 0x05
 @tab SSL3.0
@@ -27,10 +27,10 @@
 @tab SSL3.0
 @item TLS_@-RSA_@-CAMELLIA_@-128_@-CBC_@-SHA256
 @tab 0x00 0xBA
-@tab TLS1.0
+@tab TLS1.2
 @item TLS_@-RSA_@-CAMELLIA_@-256_@-CBC_@-SHA256
 @tab 0x00 0xC0
-@tab TLS1.0
+@tab TLS1.2
 @item TLS_@-RSA_@-CAMELLIA_@-128_@-CBC_@-SHA1
 @tab 0x00 0x41
 @tab SSL3.0
@@ -39,10 +39,10 @@
 @tab SSL3.0
 @item TLS_@-RSA_@-AES_@-128_@-CBC_@-SHA256
 @tab 0x00 0x3C
-@tab TLS1.0
+@tab TLS1.2
 @item TLS_@-RSA_@-AES_@-256_@-CBC_@-SHA256
 @tab 0x00 0x3D
-@tab TLS1.0
+@tab TLS1.2
 @item TLS_@-RSA_@-AES_@-128_@-GCM_@-SHA256
 @tab 0x00 0x9C
 @tab TLS1.2
@@ -75,10 +75,10 @@
 @tab SSL3.0
 @item TLS_@-DHE_@-DSS_@-CAMELLIA_@-128_@-CBC_@-SHA256
 @tab 0x00 0xBD
-@tab TLS1.0
+@tab TLS1.2
 @item TLS_@-DHE_@-DSS_@-CAMELLIA_@-256_@-CBC_@-SHA256
 @tab 0x00 0xC3
-@tab TLS1.0
+@tab TLS1.2
 @item TLS_@-DHE_@-DSS_@-CAMELLIA_@-128_@-CBC_@-SHA1
 @tab 0x00 0x44
 @tab SSL3.0
@@ -87,10 +87,10 @@
 @tab SSL3.0
 @item TLS_@-DHE_@-DSS_@-AES_@-128_@-CBC_@-SHA256
 @tab 0x00 0x40
-@tab TLS1.0
+@tab TLS1.2
 @item TLS_@-DHE_@-DSS_@-AES_@-256_@-CBC_@-SHA256
 @tab 0x00 0x6A
-@tab TLS1.0
+@tab TLS1.2
 @item TLS_@-DHE_@-DSS_@-AES_@-128_@-GCM_@-SHA256
 @tab 0x00 0xA2
 @tab TLS1.2
@@ -114,10 +114,10 @@
 @tab SSL3.0
 @item TLS_@-DHE_@-RSA_@-CAMELLIA_@-128_@-CBC_@-SHA256
 @tab 0x00 0xBE
-@tab TLS1.0
+@tab TLS1.2
 @item TLS_@-DHE_@-RSA_@-CAMELLIA_@-256_@-CBC_@-SHA256
 @tab 0x00 0xC4
-@tab TLS1.0
+@tab TLS1.2
 @item TLS_@-DHE_@-RSA_@-CAMELLIA_@-128_@-CBC_@-SHA1
 @tab 0x00 0x45
 @tab SSL3.0
@@ -126,10 +126,10 @@
 @tab SSL3.0
 @item TLS_@-DHE_@-RSA_@-AES_@-128_@-CBC_@-SHA256
 @tab 0x00 0x67
-@tab TLS1.0
+@tab TLS1.2
 @item TLS_@-DHE_@-RSA_@-AES_@-256_@-CBC_@-SHA256
 @tab 0x00 0x6B
-@tab TLS1.0
+@tab TLS1.2
 @item TLS_@-DHE_@-RSA_@-AES_@-128_@-GCM_@-SHA256
 @tab 0x00 0x9E
 @tab TLS1.2
@@ -156,16 +156,16 @@
 @tab SSL3.0
 @item TLS_@-ECDHE_@-RSA_@-AES_@-256_@-CBC_@-SHA384
 @tab 0xC0 0x28
-@tab TLS1.0
+@tab TLS1.2
 @item TLS_@-ECDHE_@-RSA_@-ARCFOUR_@-128_@-SHA1
 @tab 0xC0 0x11
 @tab SSL3.0
 @item TLS_@-ECDHE_@-RSA_@-CAMELLIA_@-128_@-CBC_@-SHA256
 @tab 0xC0 0x76
-@tab TLS1.0
+@tab TLS1.2
 @item TLS_@-ECDHE_@-RSA_@-CAMELLIA_@-256_@-CBC_@-SHA384
 @tab 0xC0 0x77
-@tab TLS1.0
+@tab TLS1.2
 @item TLS_@-ECDHE_@-ECDSA_@-NULL_@-SHA1
 @tab 0xC0 0x06
 @tab SSL3.0
@@ -183,16 +183,16 @@
 @tab SSL3.0
 @item TLS_@-ECDHE_@-ECDSA_@-CAMELLIA_@-128_@-CBC_@-SHA256
 @tab 0xC0 0x72
-@tab TLS1.0
+@tab TLS1.2
 @item TLS_@-ECDHE_@-ECDSA_@-CAMELLIA_@-256_@-CBC_@-SHA384
 @tab 0xC0 0x73
-@tab TLS1.0
+@tab TLS1.2
 @item TLS_@-ECDHE_@-ECDSA_@-AES_@-128_@-CBC_@-SHA256
 @tab 0xC0 0x23
-@tab TLS1.0
+@tab TLS1.2
 @item TLS_@-ECDHE_@-RSA_@-AES_@-128_@-CBC_@-SHA256
 @tab 0xC0 0x27
-@tab TLS1.0
+@tab TLS1.2
 @item TLS_@-ECDHE_@-ECDSA_@-CAMELLIA_@-128_@-GCM_@-SHA256
 @tab 0xC0 0x86
 @tab TLS1.2
@@ -213,7 +213,7 @@
 @tab TLS1.2
 @item TLS_@-ECDHE_@-ECDSA_@-AES_@-256_@-CBC_@-SHA384
 @tab 0xC0 0x24
-@tab TLS1.0
+@tab TLS1.2
 @item TLS_@-ECDHE_@-RSA_@-CAMELLIA_@-128_@-GCM_@-SHA256
 @tab 0xC0 0x8A
 @tab TLS1.2
@@ -243,10 +243,10 @@
 @tab SSL3.0
 @item TLS_@-ECDHE_@-PSK_@-AES_@-128_@-CBC_@-SHA256
 @tab 0xC0 0x37
-@tab TLS1.0
+@tab TLS1.2
 @item TLS_@-ECDHE_@-PSK_@-AES_@-256_@-CBC_@-SHA384
 @tab 0xC0 0x38
-@tab TLS1.0
+@tab TLS1.2
 @item TLS_@-ECDHE_@-PSK_@-ARCFOUR_@-128_@-SHA1
 @tab 0xC0 0x33
 @tab SSL3.0
@@ -255,16 +255,16 @@
 @tab SSL3.0
 @item TLS_@-ECDHE_@-PSK_@-NULL_@-SHA256
 @tab 0xC0 0x3A
-@tab TLS1.0
+@tab TLS1.2
 @item TLS_@-ECDHE_@-PSK_@-NULL_@-SHA384
 @tab 0xC0 0x3B
 @tab TLS1.0
 @item TLS_@-ECDHE_@-PSK_@-CAMELLIA_@-128_@-CBC_@-SHA256
 @tab 0xC0 0x9A
-@tab TLS1.0
+@tab TLS1.2
 @item TLS_@-ECDHE_@-PSK_@-CAMELLIA_@-256_@-CBC_@-SHA384
 @tab 0xC0 0x9B
-@tab TLS1.0
+@tab TLS1.2
 @item TLS_@-ECDHE_@-PSK_@-SALSA20_@-256_@-SHA1
 @tab 0xE4 0x19
 @tab SSL3.0
@@ -285,7 +285,7 @@
 @tab SSL3.0
 @item TLS_@-PSK_@-AES_@-128_@-CBC_@-SHA256
 @tab 0x00 0xAE
-@tab TLS1.0
+@tab TLS1.2
 @item TLS_@-PSK_@-AES_@-256_@-GCM_@-SHA384
 @tab 0x00 0xA9
 @tab TLS1.2
@@ -303,13 +303,13 @@
 @tab SSL3.0
 @item TLS_@-PSK_@-NULL_@-SHA256
 @tab 0x00 0xB0
-@tab TLS1.0
+@tab TLS1.2
 @item TLS_@-PSK_@-CAMELLIA_@-128_@-CBC_@-SHA256
 @tab 0xC0 0x94
-@tab TLS1.0
+@tab TLS1.2
 @item TLS_@-PSK_@-CAMELLIA_@-256_@-CBC_@-SHA384
 @tab 0xC0 0x95
-@tab TLS1.0
+@tab TLS1.2
 @item TLS_@-PSK_@-SALSA20_@-256_@-SHA1
 @tab 0xE4 0x17
 @tab SSL3.0
@@ -318,10 +318,10 @@
 @tab SSL3.0
 @item TLS_@-PSK_@-AES_@-256_@-CBC_@-SHA384
 @tab 0x00 0xAF
-@tab TLS1.0
+@tab TLS1.2
 @item TLS_@-PSK_@-NULL_@-SHA384
 @tab 0x00 0xB1
-@tab TLS1.0
+@tab TLS1.2
 @item TLS_@-RSA_@-PSK_@-ARCFOUR_@-128_@-SHA1
 @tab 0x00 0x92
 @tab TLS1.0
@@ -345,28 +345,28 @@
 @tab TLS1.2
 @item TLS_@-RSA_@-PSK_@-AES_@-128_@-CBC_@-SHA256
 @tab 0x00 0xB6
-@tab TLS1.0
+@tab TLS1.2
 @item TLS_@-RSA_@-PSK_@-NULL_@-SHA1
 @tab 0x00 0x2E
 @tab TLS1.0
 @item TLS_@-RSA_@-PSK_@-NULL_@-SHA256
 @tab 0x00 0xB8
-@tab TLS1.0
+@tab TLS1.2
 @item TLS_@-RSA_@-PSK_@-AES_@-256_@-GCM_@-SHA384
 @tab 0x00 0xAD
 @tab TLS1.2
 @item TLS_@-RSA_@-PSK_@-AES_@-256_@-CBC_@-SHA384
 @tab 0x00 0xB7
-@tab TLS1.0
+@tab TLS1.2
 @item TLS_@-RSA_@-PSK_@-NULL_@-SHA384
 @tab 0x00 0xB9
-@tab TLS1.0
+@tab TLS1.2
 @item TLS_@-RSA_@-PSK_@-CAMELLIA_@-128_@-CBC_@-SHA256
 @tab 0xC0 0x98
-@tab TLS1.0
+@tab TLS1.2
 @item TLS_@-RSA_@-PSK_@-CAMELLIA_@-256_@-CBC_@-SHA384
 @tab 0xC0 0x99
-@tab TLS1.0
+@tab TLS1.2
 @item TLS_@-DHE_@-PSK_@-ARCFOUR_@-128_@-SHA1
 @tab 0x00 0x8E
 @tab SSL3.0
@@ -381,7 +381,7 @@
 @tab SSL3.0
 @item TLS_@-DHE_@-PSK_@-AES_@-128_@-CBC_@-SHA256
 @tab 0x00 0xB2
-@tab TLS1.0
+@tab TLS1.2
 @item TLS_@-DHE_@-PSK_@-AES_@-128_@-GCM_@-SHA256
 @tab 0x00 0xAA
 @tab TLS1.2
@@ -390,22 +390,22 @@
 @tab SSL3.0
 @item TLS_@-DHE_@-PSK_@-NULL_@-SHA256
 @tab 0x00 0xB4
-@tab TLS1.0
+@tab TLS1.2
 @item TLS_@-DHE_@-PSK_@-NULL_@-SHA384
 @tab 0x00 0xB5
-@tab TLS1.0
+@tab TLS1.2
 @item TLS_@-DHE_@-PSK_@-AES_@-256_@-CBC_@-SHA384
 @tab 0x00 0xB3
-@tab TLS1.0
+@tab TLS1.2
 @item TLS_@-DHE_@-PSK_@-AES_@-256_@-GCM_@-SHA384
 @tab 0x00 0xAB
 @tab TLS1.2
 @item TLS_@-DHE_@-PSK_@-CAMELLIA_@-128_@-CBC_@-SHA256
 @tab 0xC0 0x96
-@tab TLS1.0
+@tab TLS1.2
 @item TLS_@-DHE_@-PSK_@-CAMELLIA_@-256_@-CBC_@-SHA384
 @tab 0xC0 0x97
-@tab TLS1.0
+@tab TLS1.2
 @item TLS_@-DHE_@-PSK_@-CAMELLIA_@-128_@-GCM_@-SHA256
 @tab 0xC0 0x90
 @tab TLS1.2
@@ -426,10 +426,10 @@
 @tab SSL3.0
 @item TLS_@-DH_@-ANON_@-CAMELLIA_@-128_@-CBC_@-SHA256
 @tab 0x00 0xBF
-@tab TLS1.0
+@tab TLS1.2
 @item TLS_@-DH_@-ANON_@-CAMELLIA_@-256_@-CBC_@-SHA256
 @tab 0x00 0xC5
-@tab TLS1.0
+@tab TLS1.2
 @item TLS_@-DH_@-ANON_@-CAMELLIA_@-128_@-CBC_@-SHA1
 @tab 0x00 0x46
 @tab SSL3.0
@@ -438,10 +438,10 @@
 @tab SSL3.0
 @item TLS_@-DH_@-ANON_@-AES_@-128_@-CBC_@-SHA256
 @tab 0x00 0x6C
-@tab TLS1.0
+@tab TLS1.2
 @item TLS_@-DH_@-ANON_@-AES_@-256_@-CBC_@-SHA256
 @tab 0x00 0x6D
-@tab TLS1.0
+@tab TLS1.2
 @item TLS_@-DH_@-ANON_@-AES_@-128_@-GCM_@-SHA256
 @tab 0x00 0xA6
 @tab TLS1.2
@@ -567,6 +567,7 @@
 @item RSA-PSK
 @item DHE-PSK
 @item ECDHE-PSK
+@item RSA-EXPORT
 @end table
 
 @heading Public key algorithms

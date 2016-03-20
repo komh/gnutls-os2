@@ -52,7 +52,7 @@ dist-hook:
 	@echo "symbols added or removed are correct and copy symbols.last.tmp as"
 	@echo "symbols.last"
 	@echo "*****************************************************************"
-	objdump -T $(srcdir)/lib/.libs/libgnutls.so.28  | grep -v ' \*UND\*' | awk '{print $$7 "@" $$6;}' | sort -u >symbols.last.tmp
+	objdump -T $(srcdir)/lib/.libs/libgnutls.so.28  | grep -v ' \*UND\*' | awk '{print $$7 "@" $$6;}' | grep -v GNUTLS_FIPS140 | grep -v GNUTLS_PRIVATE | sort -u >symbols.last.tmp
 	diff -u symbols.last symbols.last.tmp >/dev/null 2>&1
 	rm -f symbols.last.tmp
 	rm -f ChangeLog
@@ -73,4 +73,9 @@ dist-hook:
 	cd $(distdir)/src/ && for i in *-args.c *-args.h;do \
 		mv $$i $$i.bak; \
 	done
+	@echo "*****************************************************************"
+	@echo "Checking whether included libopts matches the system's. If the"
+	@echo "check fails upgrade the included libopts."
+	@echo "*****************************************************************"
+	test "`autoopts-config libsrc|cut -d '-' -f 2|sed 's/.tar.gz//'`" = "`cat src/libopts/autoopts/options.h |grep OPTIONS_VERSION_STRING|cut -d '"' -f 2|sed 's/:/./g'`"
 	touch $(distdir)/doc/*.html $(distdir)/doc/*.pdf $(distdir)/doc/*.info

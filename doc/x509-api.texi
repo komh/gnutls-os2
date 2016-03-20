@@ -2292,6 +2292,9 @@ This function will check if the given certificate was issued by the
 given issuer. It checks the DN fields and the authority
 key identifier and subject key identifier fields match.
 
+If the same certificate is provided at the  @code{cert} and  @code{issuer} fields,
+it will check whether the certificate is self-signed.
+
 @strong{Returns:} It will return true (1) if the given certificate is issued
 by the given issuer, and false (0) if not.  
 @end deftypefun
@@ -2429,17 +2432,20 @@ hold the accessLocation GeneralName type (e.g.,
 
 If  @code{what} is @code{GNUTLS_IA_URI} ,  @code{data} will hold the accessLocation URI
 data.  Requesting this  @code{what} value leads to an error if the
-accessLocation is not of the "uniformResourceIdentifier" type.
+accessLocation is not of the "uniformResourceIdentifier" type. 
 
 If  @code{what} is @code{GNUTLS_IA_OCSP_URI} ,  @code{data} will hold the OCSP URI.
 Requesting this  @code{what} value leads to an error if the accessMethod
 is not 1.3.6.1.5.5.7.48.1 aka OSCP, or if accessLocation is not of
-the "uniformResourceIdentifier" type.
+the "uniformResourceIdentifier" type. In that case @code{GNUTLS_E_UNKNOWN_ALGORITHM} 
+will be returned, and  @code{seq} should be increased and this function
+called again.
 
 If  @code{what} is @code{GNUTLS_IA_CAISSUERS_URI} ,  @code{data} will hold the caIssuers
 URI.  Requesting this  @code{what} value leads to an error if the
 accessMethod is not 1.3.6.1.5.5.7.48.2 aka caIssuers, or if
 accessLocation is not of the "uniformResourceIdentifier" type.
+In that case handle as in @code{GNUTLS_IA_OCSP_URI} .
 
 More  @code{what} values may be allocated in the future as needed.
 
@@ -5974,7 +5980,10 @@ to the trusted list. The list of CRLs must not be deinitialized
 during this structure's lifetime.
 
 This function must be called after @code{gnutls_x509_trust_list_add_cas()} 
-to allow verifying the CRLs for validity.
+to allow verifying the CRLs for validity. If the flag @code{GNUTLS_TL_NO_DUPLICATES} 
+is given, then any provided CRLs that are a duplicate, will be deinitialized
+and not added to the list (that assumes that @code{gnutls_x509_trust_list_deinit()} 
+will be called with all=1).
 
 @strong{Returns:} The number of added elements is returned.
 

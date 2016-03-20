@@ -63,5 +63,6 @@ recognized.
 The SRP/PSK username is missing
 or not known.
 @item GNUTLS_@-A_@-NO_@-APPLICATION_@-PROTOCOL
--- undescribed --
+The ALPN protocol requested is
+not supported by the peer.
 @end table

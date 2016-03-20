@@ -5,7 +5,7 @@
 @deftypefun {int} {gnutls_priority_init} (gnutls_priority_t * @var{priority_cache}, const char * @var{priorities}, const char ** @var{err_pos})
 @var{priority_cache}: is a @code{gnutls_prioritity_t}  structure.
 
-@var{priorities}: is a string describing priorities
+@var{priorities}: is a string describing priorities (may be @code{NULL} )
 
 @var{err_pos}: In case of an error this will have the position in the string the error occurred
 
@@ -83,6 +83,9 @@ enabled, SSL3.0 is disabled, and libz compression enabled.
 "SECURE256:+SECURE128",
 
 Note that "NORMAL:@code{COMPAT} " is the most compatible mode.
+
+A @code{NULL}   @code{priorities} string indicates the default priorities to be
+used (this is available since GnuTLS 3.3.0).
 
 @strong{Returns:} On syntax error @code{GNUTLS_E_INVALID_REQUEST}  is returned,
 @code{GNUTLS_E_SUCCESS}  on success, or an error code.

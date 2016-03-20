@@ -6,7 +6,7 @@
  *  From the definitions    psktool-args.def
  *  and the template file   options
  *
- * Generated from AutoOpts 41:0:16 templates.
+ * Generated from AutoOpts 41:1:16 templates.
  *
  *  AutoOpts is a copyrighted work.  This source file is not encumbered
  *  by AutoOpts licensing, but is provided under the licensing terms chosen
@@ -19,7 +19,7 @@
  * The psktool program is copyrighted and licensed
  * under the following terms:
  *
- *  Copyright (C) 2000-2014 Free Software Foundation, and others, all rights reserved.
+ *  Copyright (C) 2000-2016 Free Software Foundation, and others, all rights reserved.
  *  This is free software. It is licensed for use, modification and
  *  redistribution under the terms of the GNU General Public License,
  *  version 3 or later <http://gnu.org/licenses/gpl.html>
@@ -53,7 +53,7 @@ extern "C" {
 #endif
 extern FILE * option_usage_fp;
 #define zCopyright      (psktool_opt_strs+0)
-#define zLicenseDescrip (psktool_opt_strs+282)
+#define zLicenseDescrip (psktool_opt_strs+283)
 
 
 #ifndef NULL
@@ -63,13 +63,13 @@ extern FILE * option_usage_fp;
 /**
  *  static const strings for psktool options
  */
-static char const psktool_opt_strs[1481] =
-/*     0 */ "psktool 3.3.9\n"
-            "Copyright (C) 2000-2014 Free Software Foundation, and others, all rights reserved.\n"
+static char const psktool_opt_strs[1483] =
+/*     0 */ "psktool 3.3.22\n"
+            "Copyright (C) 2000-2016 Free Software Foundation, and others, all rights reserved.\n"
             "This is free software. It is licensed for use, modification and\n"
             "redistribution under the terms of the GNU General Public License,\n"
             "version 3 or later <http://gnu.org/licenses/gpl.html>\n\0"
-/*   282 */ "psktool is free software: you can redistribute it and/or modify it under\n"
+/*   283 */ "psktool is free software: you can redistribute it and/or modify it under\n"
             "the terms of the GNU General Public License as published by the Free\n"
             "Software Foundation, either version 3 of the License, or (at your option)\n"
             "any later version.\n\n"
@@ -79,44 +79,44 @@ static char const psktool_opt_strs[1481] =
             "details.\n\n"
             "You should have received a copy of the GNU General Public License along\n"
             "with this program.  If not, see <http://www.gnu.org/licenses/>.\n\0"
-/*   885 */ "Enable debugging\0"
-/*   902 */ "DEBUG\0"
-/*   908 */ "debug\0"
-/*   914 */ "specify the key size in bytes\0"
-/*   944 */ "KEYSIZE\0"
-/*   952 */ "keysize\0"
-/*   960 */ "specify a username\0"
-/*   979 */ "USERNAME\0"
-/*   988 */ "username\0"
-/*   997 */ "specify a password file\0"
-/*  1021 */ "PASSWD\0"
-/*  1028 */ "passwd\0"
-/*  1035 */ "display extended usage information and exit\0"
-/*  1079 */ "help\0"
-/*  1084 */ "extended usage information passed thru pager\0"
-/*  1129 */ "more-help\0"
-/*  1139 */ "output version information and exit\0"
-/*  1175 */ "version\0"
-/*  1183 */ "PSKTOOL\0"
-/*  1191 */ "psktool - GnuTLS PSK tool\n"
+/*   886 */ "Enable debugging\0"
+/*   903 */ "DEBUG\0"
+/*   909 */ "debug\0"
+/*   915 */ "specify the key size in bytes\0"
+/*   945 */ "KEYSIZE\0"
+/*   953 */ "keysize\0"
+/*   961 */ "specify a username\0"
+/*   980 */ "USERNAME\0"
+/*   989 */ "username\0"
+/*   998 */ "specify a password file\0"
+/*  1022 */ "PASSWD\0"
+/*  1029 */ "passwd\0"
+/*  1036 */ "display extended usage information and exit\0"
+/*  1080 */ "help\0"
+/*  1085 */ "extended usage information passed thru pager\0"
+/*  1130 */ "more-help\0"
+/*  1140 */ "output version information and exit\0"
+/*  1176 */ "version\0"
+/*  1184 */ "PSKTOOL\0"
+/*  1192 */ "psktool - GnuTLS PSK tool\n"
             "Usage:  %s [ -<flag> [<val>] | --<name>[{=| }<val>] ]...\n\0"
-/*  1275 */ "bugs@gnutls.org\0"
-/*  1291 */ "\n\0"
-/*  1293 */ "Program that generates random keys for use with TLS-PSK.  The keys are\n"
+/*  1276 */ "bugs@gnutls.org\0"
+/*  1292 */ "\n\0"
+/*  1294 */ "Program that generates random keys for use with TLS-PSK.  The keys are\n"
             "stored in hexadecimal format in a key file.\n\0"
-/*  1409 */ "psktool 3.3.9\0"
-/*  1423 */ "psktool [options]\n"
+/*  1410 */ "psktool 3.3.22\0"
+/*  1425 */ "psktool [options]\n"
             "psktool --help for usage instructions.\n";
 
 /**
  *  debug option description:
  */
 /** Descriptive text for the debug option */
-#define DEBUG_DESC      (psktool_opt_strs+885)
+#define DEBUG_DESC      (psktool_opt_strs+886)
 /** Upper-cased name for the debug option */
-#define DEBUG_NAME      (psktool_opt_strs+902)
+#define DEBUG_NAME      (psktool_opt_strs+903)
 /** Name string for the debug option */
-#define DEBUG_name      (psktool_opt_strs+908)
+#define DEBUG_name      (psktool_opt_strs+909)
 /** Compiled in flag settings for the debug option */
 #define DEBUG_FLAGS     (OPTST_DISABLED \
         | OPTST_SET_ARGTYPE(OPARG_TYPE_NUMERIC))
@@ -125,11 +125,11 @@ static char const psktool_opt_strs[1481] =
  *  keysize option description:
  */
 /** Descriptive text for the keysize option */
-#define KEYSIZE_DESC      (psktool_opt_strs+914)
+#define KEYSIZE_DESC      (psktool_opt_strs+915)
 /** Upper-cased name for the keysize option */
-#define KEYSIZE_NAME      (psktool_opt_strs+944)
+#define KEYSIZE_NAME      (psktool_opt_strs+945)
 /** Name string for the keysize option */
-#define KEYSIZE_name      (psktool_opt_strs+952)
+#define KEYSIZE_name      (psktool_opt_strs+953)
 /** Compiled in flag settings for the keysize option */
 #define KEYSIZE_FLAGS     (OPTST_DISABLED \
         | OPTST_SET_ARGTYPE(OPARG_TYPE_NUMERIC))
@@ -138,11 +138,11 @@ static char const psktool_opt_strs[1481] =
  *  username option description:
  */
 /** Descriptive text for the username option */
-#define USERNAME_DESC      (psktool_opt_strs+960)
+#define USERNAME_DESC      (psktool_opt_strs+961)
 /** Upper-cased name for the username option */
-#define USERNAME_NAME      (psktool_opt_strs+979)
+#define USERNAME_NAME      (psktool_opt_strs+980)
 /** Name string for the username option */
-#define USERNAME_name      (psktool_opt_strs+988)
+#define USERNAME_name      (psktool_opt_strs+989)
 /** Compiled in flag settings for the username option */
 #define USERNAME_FLAGS     (OPTST_DISABLED \
         | OPTST_SET_ARGTYPE(OPARG_TYPE_STRING))
@@ -151,11 +151,11 @@ static char const psktool_opt_strs[1481] =
  *  passwd option description:
  */
 /** Descriptive text for the passwd option */
-#define PASSWD_DESC      (psktool_opt_strs+997)
+#define PASSWD_DESC      (psktool_opt_strs+998)
 /** Upper-cased name for the passwd option */
-#define PASSWD_NAME      (psktool_opt_strs+1021)
+#define PASSWD_NAME      (psktool_opt_strs+1022)
 /** Name string for the passwd option */
-#define PASSWD_name      (psktool_opt_strs+1028)
+#define PASSWD_name      (psktool_opt_strs+1029)
 /** Compiled in flag settings for the passwd option */
 #define PASSWD_FLAGS     (OPTST_DISABLED \
         | OPTST_SET_ARGTYPE(OPARG_TYPE_STRING))
@@ -163,11 +163,11 @@ static char const psktool_opt_strs[1481] =
 /*
  *  Help/More_Help/Version option descriptions:
  */
-#define HELP_DESC       (psktool_opt_strs+1035)
-#define HELP_name       (psktool_opt_strs+1079)
+#define HELP_DESC       (psktool_opt_strs+1036)
+#define HELP_name       (psktool_opt_strs+1080)
 #ifdef HAVE_WORKING_FORK
-#define MORE_HELP_DESC  (psktool_opt_strs+1084)
-#define MORE_HELP_name  (psktool_opt_strs+1129)
+#define MORE_HELP_DESC  (psktool_opt_strs+1085)
+#define MORE_HELP_name  (psktool_opt_strs+1130)
 #define MORE_HELP_FLAGS (OPTST_IMM | OPTST_NO_INIT)
 #else
 #define MORE_HELP_DESC  HELP_DESC
@@ -180,8 +180,8 @@ static char const psktool_opt_strs[1481] =
 #  define VER_FLAGS     (OPTST_SET_ARGTYPE(OPARG_TYPE_STRING) | \
                          OPTST_ARG_OPTIONAL | OPTST_IMM | OPTST_NO_INIT)
 #endif
-#define VER_DESC        (psktool_opt_strs+1139)
-#define VER_name        (psktool_opt_strs+1175)
+#define VER_DESC        (psktool_opt_strs+1140)
+#define VER_name        (psktool_opt_strs+1176)
 /**
  *  Declare option callback procedures
  */
@@ -291,21 +291,21 @@ static tOptDesc optDesc[OPTION_CT] = {
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 /** Reference to the upper cased version of psktool. */
-#define zPROGNAME       (psktool_opt_strs+1183)
+#define zPROGNAME       (psktool_opt_strs+1184)
 /** Reference to the title line for psktool usage. */
-#define zUsageTitle     (psktool_opt_strs+1191)
+#define zUsageTitle     (psktool_opt_strs+1192)
 /** There is no psktool configuration file. */
 #define zRcName         NULL
 /** There are no directories to search for psktool config files. */
 #define apzHomeList     NULL
 /** The psktool program bug email address. */
-#define zBugsAddr       (psktool_opt_strs+1275)
+#define zBugsAddr       (psktool_opt_strs+1276)
 /** Clarification/explanation of what psktool does. */
-#define zExplain        (psktool_opt_strs+1291)
+#define zExplain        (psktool_opt_strs+1292)
 /** Extra detail explaining what psktool does. */
-#define zDetail         (psktool_opt_strs+1293)
+#define zDetail         (psktool_opt_strs+1294)
 /** The full version string for psktool. */
-#define zFullVersion    (psktool_opt_strs+1409)
+#define zFullVersion    (psktool_opt_strs+1410)
 /* extracted from optcode.tlib near line 364 */
 
 #if defined(ENABLE_NLS)
@@ -317,7 +317,7 @@ static tOptDesc optDesc[OPTION_CT] = {
 #endif /* ENABLE_NLS */
 
 #define psktool_full_usage (NULL)
-#define psktool_short_usage (psktool_opt_strs+1423)
+#define psktool_short_usage (psktool_opt_strs+1425)
 
 #endif /* not defined __doxygen__ */
 
@@ -338,7 +338,7 @@ doUsageOpt(tOptions * opts, tOptDesc * od)
     ex_code = PSKTOOL_EXIT_SUCCESS;
     optionUsage(&psktoolOptions, ex_code);
     /* NOTREACHED */
-    exit(1);
+    exit(PSKTOOL_EXIT_FAILURE);
     (void)opts;
     (void)od;
 }
@@ -375,7 +375,7 @@ doOptDebug(tOptions* pOptions, tOptDesc* pOptDesc)
     option_usage_fp = stderr;
 
  emit_ranges:
-    optionShowRange(pOptions, pOptDesc, (void *)rng, 1);
+optionShowRange(pOptions, pOptDesc, VOIDP(rng), 1);
 }
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -410,9 +410,9 @@ doOptKeysize(tOptions* pOptions, tOptDesc* pOptDesc)
     option_usage_fp = stderr;
 
  emit_ranges:
-    optionShowRange(pOptions, pOptDesc, (void *)rng, 1);
+optionShowRange(pOptions, pOptDesc, VOIDP(rng), 1);
 }
-/* extracted from optmain.tlib near line 1245 */
+/* extracted from optmain.tlib near line 1250 */
 
 /**
  * The directory containing the data associated with psktool.
@@ -525,11 +525,11 @@ AO_gettext(char const * pz)
     if (option_xlateable_txt.field_ct != 0) {
         res = dgettext("libopts", pz);
         if (res == pz)
-            res = (char *)(void *)_(pz);
+            res = (char *)VOIDP(_(pz));
     } else
-        res = (char *)(void *)_(pz);
+        res = (char *)VOIDP(_(pz));
 #else
-    res = (char *)(void *)_(pz);
+    res = (char *)VOIDP(_(pz));
 #endif
     if (res == pz)
         return res;
@@ -566,7 +566,7 @@ translate_option_strings(void)
          *  Do the translations.  The first pointer follows the field count
          *  field.  The field count field is the size of a pointer.
          */
-        char ** ppz = (char**)(void*)&(option_xlateable_txt);
+        char ** ppz = (char**)VOIDP(&(option_xlateable_txt));
         int     ix  = option_xlateable_txt.field_ct;
 
         do {
@@ -576,16 +576,16 @@ translate_option_strings(void)
         /* prevent re-translation and disable "libopts" domain lookup */
         option_xlateable_txt.field_ct = 0;
 
-        coerce_it((void*)&(opts->pzCopyright));
-        coerce_it((void*)&(opts->pzCopyNotice));
-        coerce_it((void*)&(opts->pzFullVersion));
-        coerce_it((void*)&(opts->pzUsageTitle));
-        coerce_it((void*)&(opts->pzExplain));
-        coerce_it((void*)&(opts->pzDetail));
+        coerce_it(VOIDP(&(opts->pzCopyright)));
+        coerce_it(VOIDP(&(opts->pzCopyNotice)));
+        coerce_it(VOIDP(&(opts->pzFullVersion)));
+        coerce_it(VOIDP(&(opts->pzUsageTitle)));
+        coerce_it(VOIDP(&(opts->pzExplain)));
+        coerce_it(VOIDP(&(opts->pzDetail)));
         {
             tOptDesc * od = opts->pOptDesc;
             for (ix = opts->optCt; ix > 0; ix--, od++)
-                coerce_it((void*)&(od->pzText));
+                coerce_it(VOIDP(&(od->pzText)));
         }
     }
 }
@@ -611,8 +611,8 @@ static void bogus_function(void) {
      translate option names.
    */
   /* referenced via psktoolOptions.pzCopyright */
-  puts(_("psktool 3.3.9\n\
-Copyright (C) 2000-2014 Free Software Foundation, and others, all rights reserved.\n\
+  puts(_("psktool 3.3.22\n\
+Copyright (C) 2000-2016 Free Software Foundation, and others, all rights reserved.\n\
 This is free software. It is licensed for use, modification and\n\
 redistribution under the terms of the GNU General Public License,\n\
 version 3 or later <http://gnu.org/licenses/gpl.html>\n"));
@@ -662,7 +662,7 @@ Usage:  %s [ -<flag> [<val>] | --<name>[{=| }<val>] ]...\n"));
 stored in hexadecimal format in a key file.\n"));
 
   /* referenced via psktoolOptions.pzFullVersion */
-  puts(_("psktool 3.3.9"));
+  puts(_("psktool 3.3.22"));
 
   /* referenced via psktoolOptions.pzFullUsage */
   puts(_("<<<NOT-FOUND>>>"));
@@ -677,19 +677,19 @@ psktool --help for usage instructions.\n"));
   puts(_("allocation of %d bytes failed\n"));
 #line 53 "../init.c"
   puts(_("AutoOpts function called without option descriptor\n"));
-#line 90 "../init.c"
+#line 86 "../init.c"
   puts(_("\tThis exceeds the compiled library version:  "));
-#line 88 "../init.c"
+#line 84 "../init.c"
   puts(_("Automated Options Processing Error!\n"
        "\t%s called AutoOpts function with structure version %d:%d:%d.\n"));
 #line 80 "../autoopts.c"
   puts(_("realloc of %d bytes at 0x%p failed\n"));
-#line 92 "../init.c"
+#line 88 "../init.c"
   puts(_("\tThis is less than the minimum library version:  "));
 #line 121 "../version.c"
   puts(_("Automated Options version %s\n"
        "\tCopyright (C) 1999-2014 by Bruce Korb - all rights reserved\n"));
-#line 82 "../makeshell.c"
+#line 87 "../makeshell.c"
   puts(_("(AutoOpts bug):  %s.\n"));
 #line 90 "../reset.c"
   puts(_("optionResetOpt() called, but reset-option not configured"));
@@ -703,7 +703,7 @@ psktool --help for usage instructions.\n"));
   puts(_("defaulted to option with optional arg"));
 #line 76 "../alias.c"
   puts(_("aliasing option is out of range."));
-#line 234 "../enum.c"
+#line 235 "../enum.c"
   puts(_("%s error:  the keyword '%s' is ambiguous for %s\n"));
 #line 108 "../find.c"
   puts(_("  The following options match:\n"));
@@ -713,9 +713,9 @@ psktool --help for usage instructions.\n"));
   puts(_("%s: Command line arguments required\n"));
 #line 43 "../alias.c"
   puts(_("%d %s%s options allowed\n"));
-#line 89 "../makeshell.c"
+#line 94 "../makeshell.c"
   puts(_("%s error %d (%s) calling %s for '%s'\n"));
-#line 301 "../makeshell.c"
+#line 306 "../makeshell.c"
   puts(_("interprocess pipe"));
 #line 168 "../version.c"
   puts(_("error: version option argument '%c' invalid.  Use:\n"
@@ -742,9 +742,9 @@ psktool --help for usage instructions.\n"));
   puts(_("%s: illegal option -- %s\n"));
 #line 335 "../find.c"
   puts(_("%s: unknown vendor extension option -- %s\n"));
-#line 159 "../enum.c"
+#line 160 "../enum.c"
   puts(_("  or an integer from %d through %d\n"));
-#line 169 "../enum.c"
+#line 170 "../enum.c"
   puts(_("  or an integer from %d through %d\n"));
 #line 747 "../usage.c"
   puts(_("%s error:  invalid option descriptor for %s\n"));
@@ -765,11 +765,11 @@ psktool --help for usage instructions.\n"));
   puts(_("%s: Command line arguments are not allowed.\n"));
 #line 535 "../save.c"
   puts(_("error %d (%s) creating %s\n"));
-#line 234 "../enum.c"
+#line 235 "../enum.c"
   puts(_("%s error:  '%s' does not match any %s keywords.\n"));
 #line 93 "../reset.c"
   puts(_("%s error: The '%s' option requires an argument.\n"));
-#line 184 "../save.c"
+#line 186 "../save.c"
   puts(_("error %d (%s) stat-ing %s\n"));
 #line 238 "../save.c"
   puts(_("error %d (%s) stat-ing %s\n"));
@@ -777,25 +777,25 @@ psktool --help for usage instructions.\n"));
   puts(_("%s error: no saved option state\n"));
 #line 231 "../autoopts.c"
   puts(_("'%s' is not a command line option.\n"));
-#line 111 "../time.c"
+#line 113 "../time.c"
   puts(_("%s error:  '%s' is not a recognizable date/time.\n"));
-#line 132 "../save.c"
+#line 131 "../save.c"
   puts(_("'%s' not defined\n"));
 #line 50 "../time.c"
   puts(_("%s error:  '%s' is not a recognizable time duration.\n"));
 #line 92 "../check.c"
   puts(_("%s error:  The %s option must appear %d times.\n"));
-#line 164 "../numeric.c"
+#line 165 "../numeric.c"
   puts(_("%s error:  '%s' is not a recognizable number.\n"));
-#line 200 "../enum.c"
+#line 201 "../enum.c"
   puts(_("%s error:  %s exceeds %s keyword count\n"));
 #line 330 "../usage.c"
   puts(_("Try '%s %s' for more information.\n"));
 #line 45 "../alias.c"
   puts(_("one %s%s option allowed\n"));
-#line 203 "../makeshell.c"
+#line 208 "../makeshell.c"
   puts(_("standard output"));
-#line 938 "../makeshell.c"
+#line 943 "../makeshell.c"
   puts(_("standard output"));
 #line 274 "../usage.c"
   puts(_("standard output"));
@@ -813,9 +813,9 @@ psktool --help for usage instructions.\n"));
   puts(_("standard error"));
 #line 175 "../version.c"
   puts(_("standard error"));
-#line 203 "../makeshell.c"
+#line 208 "../makeshell.c"
   puts(_("write"));
-#line 938 "../makeshell.c"
+#line 943 "../makeshell.c"
   puts(_("write"));
 #line 273 "../usage.c"
   puts(_("write"));
@@ -829,9 +829,9 @@ psktool --help for usage instructions.\n"));
   puts(_("%s error:  %s option value %ld is out of range.\n"));
 #line 44 "../check.c"
   puts(_("%s error:  %s option requires the %s option\n"));
-#line 131 "../save.c"
+#line 130 "../save.c"
   puts(_("%s warning:  cannot save options - %s not regular file\n"));
-#line 183 "../save.c"
+#line 185 "../save.c"
   puts(_("%s warning:  cannot save options - %s not regular file\n"));
 #line 237 "../save.c"
   puts(_("%s warning:  cannot save options - %s not regular file\n"));
@@ -867,12 +867,12 @@ psktool --help for usage instructions.\n"));
 #line 380 "../usage.c"
   puts(_("Options are specified by doubled hyphens and their name or by a single\n"
        "hyphen and the flag character.\n"));
-#line 916 "../makeshell.c"
+#line 921 "../makeshell.c"
   puts(_("\n"
        "= = = = = = = =\n\n"
        "This incarnation of genshell will produce\n"
        "a shell script to parse the options for %s:\n\n"));
-#line 166 "../enum.c"
+#line 167 "../enum.c"
   puts(_("  or an integer mask with any of the lower %d bits set\n"));
 #line 897 "../usage.c"
   puts(_("\t\t\t\t- is a set membership option\n"));
@@ -947,7 +947,7 @@ psktool --help for usage instructions.\n"));
   puts(_("   Arg Option-Name   Req?  Description\n"));
 #line 1315 "../usage.c"
   puts(_("  Flg Arg Option-Name   Req?  Description\n"));
-#line 167 "../enum.c"
+#line 168 "../enum.c"
   puts(_("or you may use a numeric representation.  Preceding these with a '!'\n"
        "will clear the bits, specifying 'none' will clear all bits, and 'all'\n"
        "will set them all.  Multiple entries may be passed as an option\n"

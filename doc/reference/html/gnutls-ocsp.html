@@ -2,21 +2,20 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>GnuTLS API Reference Manual: ocsp</title>
+<title>ocsp: GnuTLS API Reference Manual</title>
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="index.html" title="GnuTLS API Reference Manual">
 <link rel="up" href="intro.html" title="GnuTLS API Reference Manual">
 <link rel="prev" href="gnutls-pkcs12.html" title="pkcs12">
 <link rel="next" href="gnutls-dtls.html" title="dtls">
-<meta name="generator" content="GTK-Doc V1.20 (XML mode)">
+<meta name="generator" content="GTK-Doc V1.24 (XML mode)">
 <link rel="stylesheet" href="style.css" type="text/css">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
-<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="10"><tr valign="middle">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="5"><tr valign="middle">
 <td width="100%" align="left" class="shortcuts">
-<a href="#" class="shortcut">Top</a><span id="nav_description"> <span class="dim">|</span> 
-                  <a href="#gnutls-ocsp.description" class="shortcut">Description</a></span><span id="nav_hierarchy"> <span class="dim">|</span> 
-                  <a href="#gnutls-ocsp.object-hierarchy" class="shortcut">Object Hierarchy</a></span>
+<a href="#" class="shortcut">Top</a><span id="nav_description">  <span class="dim">|</span> 
+                  <a href="#gnutls-ocsp.description" class="shortcut">Description</a></span>
 </td>
 <td><a accesskey="h" href="index.html"><img src="home.png" width="16" height="16" border="0" alt="Home"></a></td>
 <td><a accesskey="u" href="intro.html"><img src="up.png" width="16" height="16" border="0" alt="Up"></a></td>
@@ -359,11 +358,6 @@
 </table></div>
 </div>
 <div class="refsect1">
-<a name="gnutls-ocsp.object-hierarchy"></a><h2>Object Hierarchy</h2>
-<pre class="screen">
-</pre>
-</div>
-<div class="refsect1">
 <a name="gnutls-ocsp.description"></a><h2>Description</h2>
 <p>
 </p>
@@ -387,7 +381,7 @@ from <em class="parameter"><code>issuer</code></em>
 
 algorithm, normally <a class="link" href="gnutls-gnutls.html#GNUTLS-DIG-SHA1:CAPS"><code class="literal">GNUTLS_DIG_SHA1</code></a>.</p>
 <div class="refsect3">
-<a name="id-1.2.11.7.2.5"></a><h4>Parameters</h4>
+<a name="id-1.2.11.6.2.5"></a><h4>Parameters</h4>
 <div class="informaltable"><table width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
@@ -420,10 +414,9 @@ certificate</p></td>
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.2.11.7.2.6"></a><h4>Returns</h4>
+<a name="id-1.2.11.6.2.6"></a><h4>Returns</h4>
 <p> On success, <a class="link" href="gnutls-gnutls.html#GNUTLS-E-SUCCESS:CAPS" title="GNUTLS_E_SUCCESS"><code class="literal">GNUTLS_E_SUCCESS</code></a> (0) is returned, otherwise a
 negative error code is returned.</p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -464,7 +457,7 @@ hashed using <em class="parameter"><code>digest</code></em>
 </div>
 
 <div class="refsect3">
-<a name="id-1.2.11.7.3.7"></a><h4>Parameters</h4>
+<a name="id-1.2.11.6.3.7"></a><h4>Parameters</h4>
 <div class="informaltable"><table width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
@@ -501,10 +494,9 @@ hashed using <em class="parameter"><code>digest</code></em>
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.2.11.7.3.8"></a><h4>Returns</h4>
+<a name="id-1.2.11.6.3.8"></a><h4>Returns</h4>
 <p> On success, <a class="link" href="gnutls-gnutls.html#GNUTLS-E-SUCCESS:CAPS" title="GNUTLS_E_SUCCESS"><code class="literal">GNUTLS_E_SUCCESS</code></a> (0) is returned, otherwise a
 negative error code is returned.</p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -514,7 +506,7 @@ negative error code is returned.</p>
 gnutls_ocsp_req_deinit (<em class="parameter"><code><a class="link" href="gnutls-ocsp.html#gnutls-ocsp-req-t" title="gnutls_ocsp_req_t"><span class="type">gnutls_ocsp_req_t</span></a> req</code></em>);</pre>
 <p>This function will deinitialize a OCSP request structure.</p>
 <div class="refsect3">
-<a name="id-1.2.11.7.4.5"></a><h4>Parameters</h4>
+<a name="id-1.2.11.6.4.5"></a><h4>Parameters</h4>
 <div class="informaltable"><table width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
@@ -537,7 +529,7 @@ gnutls_ocsp_req_export (<em class="parameter"><code><a class="link" href="gnutls
                         <em class="parameter"><code><span class="type">gnutls_datum_t</span> *data</code></em>);</pre>
 <p>This function will export the OCSP request to DER format.</p>
 <div class="refsect3">
-<a name="id-1.2.11.7.5.5"></a><h4>Parameters</h4>
+<a name="id-1.2.11.6.5.5"></a><h4>Parameters</h4>
 <div class="informaltable"><table width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
@@ -559,10 +551,9 @@ gnutls_ocsp_req_export (<em class="parameter"><code><a class="link" href="gnutls
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.2.11.7.5.6"></a><h4>Returns</h4>
+<a name="id-1.2.11.6.5.6"></a><h4>Returns</h4>
 <p> In case of failure a negative error code will be
 returned, and 0 on success.</p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -601,7 +592,7 @@ corresponds to the CertID structure:</p>
 <p>Each of the pointers to output variables may be NULL to indicate
 that the caller is not interested in that value.</p>
 <div class="refsect3">
-<a name="id-1.2.11.7.6.7"></a><h4>Parameters</h4>
+<a name="id-1.2.11.6.6.7"></a><h4>Parameters</h4>
 <div class="informaltable"><table width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
@@ -643,12 +634,11 @@ that the caller is not interested in that value.</p>
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.2.11.7.6.8"></a><h4>Returns</h4>
+<a name="id-1.2.11.6.6.8"></a><h4>Returns</h4>
 <p> On success, <a class="link" href="gnutls-gnutls.html#GNUTLS-E-SUCCESS:CAPS" title="GNUTLS_E_SUCCESS"><code class="literal">GNUTLS_E_SUCCESS</code></a> (0) is returned, otherwise a
 negative error code is returned.  If you have reached the last
 CertID available <a class="link" href="gnutls-gnutls.html#GNUTLS-E-REQUESTED-DATA-NOT-AVAILABLE:CAPS" title="GNUTLS_E_REQUESTED_DATA_NOT_AVAILABLE"><code class="literal">GNUTLS_E_REQUESTED_DATA_NOT_AVAILABLE</code></a> will be
 returned.</p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -674,7 +664,7 @@ that information back.</p>
  and <em class="parameter"><code>data-&gt;data</code></em>
 .</p>
 <div class="refsect3">
-<a name="id-1.2.11.7.7.6"></a><h4>Parameters</h4>
+<a name="id-1.2.11.6.7.6"></a><h4>Parameters</h4>
 <div class="informaltable"><table width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
@@ -711,12 +701,11 @@ that information back.</p>
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.2.11.7.7.7"></a><h4>Returns</h4>
+<a name="id-1.2.11.6.7.7"></a><h4>Returns</h4>
 <p> On success, <a class="link" href="gnutls-gnutls.html#GNUTLS-E-SUCCESS:CAPS" title="GNUTLS_E_SUCCESS"><code class="literal">GNUTLS_E_SUCCESS</code></a> (0) is returned, otherwise a
 negative error code is returned.  If you have reached the last
 extension available <a class="link" href="gnutls-gnutls.html#GNUTLS-E-REQUESTED-DATA-NOT-AVAILABLE:CAPS" title="GNUTLS_E_REQUESTED_DATA_NOT_AVAILABLE"><code class="literal">GNUTLS_E_REQUESTED_DATA_NOT_AVAILABLE</code></a> will
 be returned.</p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -731,7 +720,7 @@ gnutls_ocsp_req_get_nonce (<em class="parameter"><code><a class="link" href="gnu
 <em class="parameter"><code>nonce-&gt;data</code></em>
 .</p>
 <div class="refsect3">
-<a name="id-1.2.11.7.8.6"></a><h4>Parameters</h4>
+<a name="id-1.2.11.6.8.6"></a><h4>Parameters</h4>
 <div class="informaltable"><table width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
@@ -758,10 +747,9 @@ gnutls_ocsp_req_get_nonce (<em class="parameter"><code><a class="link" href="gnu
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.2.11.7.8.7"></a><h4>Returns</h4>
+<a name="id-1.2.11.6.8.7"></a><h4>Returns</h4>
 <p> On success, <a class="link" href="gnutls-gnutls.html#GNUTLS-E-SUCCESS:CAPS" title="GNUTLS_E_SUCCESS"><code class="literal">GNUTLS_E_SUCCESS</code></a> (0) is returned, otherwise a
 negative error code is returned.</p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -772,7 +760,7 @@ gnutls_ocsp_req_get_version (<em class="parameter"><code><a class="link" href="g
 <p>This function will return the version of the OCSP request.
 Typically this is always 1 indicating version 1.</p>
 <div class="refsect3">
-<a name="id-1.2.11.7.9.5"></a><h4>Parameters</h4>
+<a name="id-1.2.11.6.9.5"></a><h4>Parameters</h4>
 <div class="informaltable"><table width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
@@ -787,9 +775,8 @@ Typically this is always 1 indicating version 1.</p>
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.2.11.7.9.6"></a><h4>Returns</h4>
+<a name="id-1.2.11.6.9.6"></a><h4>Returns</h4>
 <p> version of OCSP request, or a negative error code on error.</p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -803,7 +790,7 @@ the native <a class="link" href="gnutls-ocsp.html#gnutls-ocsp-req-t" title="gnut
 <em class="parameter"><code>req</code></em>
 .</p>
 <div class="refsect3">
-<a name="id-1.2.11.7.10.5"></a><h4>Parameters</h4>
+<a name="id-1.2.11.6.10.5"></a><h4>Parameters</h4>
 <div class="informaltable"><table width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
@@ -825,10 +812,9 @@ the native <a class="link" href="gnutls-ocsp.html#gnutls-ocsp-req-t" title="gnut
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.2.11.7.10.6"></a><h4>Returns</h4>
+<a name="id-1.2.11.6.10.6"></a><h4>Returns</h4>
 <p> On success, <a class="link" href="gnutls-gnutls.html#GNUTLS-E-SUCCESS:CAPS" title="GNUTLS_E_SUCCESS"><code class="literal">GNUTLS_E_SUCCESS</code></a> (0) is returned, otherwise a
 negative error value.</p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -838,7 +824,7 @@ negative error value.</p>
 gnutls_ocsp_req_init (<em class="parameter"><code><a class="link" href="gnutls-ocsp.html#gnutls-ocsp-req-t" title="gnutls_ocsp_req_t"><span class="type">gnutls_ocsp_req_t</span></a> *req</code></em>);</pre>
 <p>This function will initialize an OCSP request structure.</p>
 <div class="refsect3">
-<a name="id-1.2.11.7.11.5"></a><h4>Parameters</h4>
+<a name="id-1.2.11.6.11.5"></a><h4>Parameters</h4>
 <div class="informaltable"><table width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
@@ -853,10 +839,9 @@ gnutls_ocsp_req_init (<em class="parameter"><code><a class="link" href="gnutls-o
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.2.11.7.11.6"></a><h4>Returns</h4>
+<a name="id-1.2.11.6.11.6"></a><h4>Returns</h4>
 <p> On success, <a class="link" href="gnutls-gnutls.html#GNUTLS-E-SUCCESS:CAPS" title="GNUTLS_E_SUCCESS"><code class="literal">GNUTLS_E_SUCCESS</code></a> (0) is returned, otherwise a
 negative error value.</p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -873,7 +858,7 @@ request will be output, on multiple lines.</p>
 <p>The output <em class="parameter"><code>out-&gt;data</code></em>
  needs to be deallocate using <a class="link" href="gnutls-gnutls.html#gnutls-free" title="gnutls_free"><code class="function">gnutls_free()</code></a>.</p>
 <div class="refsect3">
-<a name="id-1.2.11.7.12.7"></a><h4>Parameters</h4>
+<a name="id-1.2.11.6.12.7"></a><h4>Parameters</h4>
 <div class="informaltable"><table width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
@@ -900,10 +885,9 @@ request will be output, on multiple lines.</p>
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.2.11.7.12.8"></a><h4>Returns</h4>
+<a name="id-1.2.11.6.12.8"></a><h4>Returns</h4>
 <p> On success, <a class="link" href="gnutls-gnutls.html#GNUTLS-E-SUCCESS:CAPS" title="GNUTLS_E_SUCCESS"><code class="literal">GNUTLS_E_SUCCESS</code></a> (0) is returned, otherwise a
 negative error value.</p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -914,7 +898,7 @@ gnutls_ocsp_req_randomize_nonce (<em class="parameter"><code><a class="link" hre
 <p>This function will add or update an nonce extension to the OCSP
 request with a newly generated random value.</p>
 <div class="refsect3">
-<a name="id-1.2.11.7.13.5"></a><h4>Parameters</h4>
+<a name="id-1.2.11.6.13.5"></a><h4>Parameters</h4>
 <div class="informaltable"><table width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
@@ -929,10 +913,9 @@ request with a newly generated random value.</p>
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.2.11.7.13.6"></a><h4>Returns</h4>
+<a name="id-1.2.11.6.13.6"></a><h4>Returns</h4>
 <p> On success, <a class="link" href="gnutls-gnutls.html#GNUTLS-E-SUCCESS:CAPS" title="GNUTLS_E_SUCCESS"><code class="literal">GNUTLS_E_SUCCESS</code></a> (0) is returned, otherwise a
 negative error code is returned.</p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -947,7 +930,7 @@ gnutls_ocsp_req_set_extension (<em class="parameter"><code><a class="link" href=
 this function multiple times for the same OID will overwrite values
 from earlier calls.</p>
 <div class="refsect3">
-<a name="id-1.2.11.7.14.5"></a><h4>Parameters</h4>
+<a name="id-1.2.11.6.14.5"></a><h4>Parameters</h4>
 <div class="informaltable"><table width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
@@ -979,10 +962,9 @@ from earlier calls.</p>
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.2.11.7.14.6"></a><h4>Returns</h4>
+<a name="id-1.2.11.6.14.6"></a><h4>Returns</h4>
 <p> On success, <a class="link" href="gnutls-gnutls.html#GNUTLS-E-SUCCESS:CAPS" title="GNUTLS_E_SUCCESS"><code class="literal">GNUTLS_E_SUCCESS</code></a> (0) is returned, otherwise a
 negative error code is returned.</p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -996,7 +978,7 @@ gnutls_ocsp_req_set_nonce (<em class="parameter"><code><a class="link" href="gnu
 Calling this function multiple times will overwrite values from
 earlier calls.</p>
 <div class="refsect3">
-<a name="id-1.2.11.7.15.5"></a><h4>Parameters</h4>
+<a name="id-1.2.11.6.15.5"></a><h4>Parameters</h4>
 <div class="informaltable"><table width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
@@ -1023,10 +1005,9 @@ earlier calls.</p>
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.2.11.7.15.6"></a><h4>Returns</h4>
+<a name="id-1.2.11.6.15.6"></a><h4>Returns</h4>
 <p> On success, <a class="link" href="gnutls-gnutls.html#GNUTLS-E-SUCCESS:CAPS" title="GNUTLS_E_SUCCESS"><code class="literal">GNUTLS_E_SUCCESS</code></a> (0) is returned, otherwise a
 negative error code is returned.</p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -1039,7 +1020,7 @@ gnutls_ocsp_resp_check_crt (<em class="parameter"><code><a class="link" href="gn
 <p>This function will check whether the OCSP response
 is about the provided certificate.</p>
 <div class="refsect3">
-<a name="id-1.2.11.7.16.5"></a><h4>Parameters</h4>
+<a name="id-1.2.11.6.16.5"></a><h4>Parameters</h4>
 <div class="informaltable"><table width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
@@ -1066,12 +1047,11 @@ is about the provided certificate.</p>
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.2.11.7.16.6"></a><h4>Returns</h4>
+<a name="id-1.2.11.6.16.6"></a><h4>Returns</h4>
 <p> On success, <a class="link" href="gnutls-gnutls.html#GNUTLS-E-SUCCESS:CAPS" title="GNUTLS_E_SUCCESS"><code class="literal">GNUTLS_E_SUCCESS</code></a> (0) is returned, otherwise a
 negative error code is returned.  </p>
-<p></p>
 </div>
-<p class="since">Since 3.1.3</p>
+<p class="since">Since: 3.1.3</p>
 </div>
 <hr>
 <div class="refsect2">
@@ -1080,7 +1060,7 @@ negative error code is returned.  </p>
 gnutls_ocsp_resp_deinit (<em class="parameter"><code><a class="link" href="gnutls-ocsp.html#gnutls-ocsp-resp-t" title="gnutls_ocsp_resp_t"><span class="type">gnutls_ocsp_resp_t</span></a> resp</code></em>);</pre>
 <p>This function will deinitialize a OCSP response structure.</p>
 <div class="refsect3">
-<a name="id-1.2.11.7.17.5"></a><h4>Parameters</h4>
+<a name="id-1.2.11.6.17.5"></a><h4>Parameters</h4>
 <div class="informaltable"><table width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
@@ -1103,7 +1083,7 @@ gnutls_ocsp_resp_export (<em class="parameter"><code><a class="link" href="gnutl
                          <em class="parameter"><code><span class="type">gnutls_datum_t</span> *data</code></em>);</pre>
 <p>This function will export the OCSP response to DER format.</p>
 <div class="refsect3">
-<a name="id-1.2.11.7.18.5"></a><h4>Parameters</h4>
+<a name="id-1.2.11.6.18.5"></a><h4>Parameters</h4>
 <div class="informaltable"><table width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
@@ -1125,10 +1105,9 @@ gnutls_ocsp_resp_export (<em class="parameter"><code><a class="link" href="gnutl
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.2.11.7.18.6"></a><h4>Returns</h4>
+<a name="id-1.2.11.6.18.6"></a><h4>Returns</h4>
 <p> In case of failure a negative error code will be
 returned, and 0 on success.</p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -1152,7 +1131,7 @@ function will work as normal but will not return the NULL:d
 information.  This can be used to get the number of certificates
 only, or to just get the certificate array without its size.</p>
 <div class="refsect3">
-<a name="id-1.2.11.7.19.7"></a><h4>Parameters</h4>
+<a name="id-1.2.11.6.19.7"></a><h4>Parameters</h4>
 <div class="informaltable"><table width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
@@ -1179,10 +1158,9 @@ only, or to just get the certificate array without its size.</p>
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.2.11.7.19.8"></a><h4>Returns</h4>
+<a name="id-1.2.11.6.19.8"></a><h4>Returns</h4>
 <p> On success, <a class="link" href="gnutls-gnutls.html#GNUTLS-E-SUCCESS:CAPS" title="GNUTLS_E_SUCCESS"><code class="literal">GNUTLS_E_SUCCESS</code></a> (0) is returned, otherwise a
 negative error value.</p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -1208,7 +1186,7 @@ that information back.</p>
  and <em class="parameter"><code>data-&gt;data</code></em>
 .</p>
 <div class="refsect3">
-<a name="id-1.2.11.7.20.6"></a><h4>Parameters</h4>
+<a name="id-1.2.11.6.20.6"></a><h4>Parameters</h4>
 <div class="informaltable"><table width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
@@ -1245,12 +1223,11 @@ that information back.</p>
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.2.11.7.20.7"></a><h4>Returns</h4>
+<a name="id-1.2.11.6.20.7"></a><h4>Returns</h4>
 <p> On success, <a class="link" href="gnutls-gnutls.html#GNUTLS-E-SUCCESS:CAPS" title="GNUTLS_E_SUCCESS"><code class="literal">GNUTLS_E_SUCCESS</code></a> (0) is returned, otherwise a
 negative error code is returned.  If you have reached the last
 extension available <a class="link" href="gnutls-gnutls.html#GNUTLS-E-REQUESTED-DATA-NOT-AVAILABLE:CAPS" title="GNUTLS_E_REQUESTED_DATA_NOT_AVAILABLE"><code class="literal">GNUTLS_E_REQUESTED_DATA_NOT_AVAILABLE</code></a> will
 be returned.</p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -1266,7 +1243,7 @@ data.</p>
 <em class="parameter"><code>nonce-&gt;data</code></em>
 .</p>
 <div class="refsect3">
-<a name="id-1.2.11.7.21.6"></a><h4>Parameters</h4>
+<a name="id-1.2.11.6.21.6"></a><h4>Parameters</h4>
 <div class="informaltable"><table width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
@@ -1293,10 +1270,9 @@ data.</p>
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.2.11.7.21.7"></a><h4>Returns</h4>
+<a name="id-1.2.11.6.21.7"></a><h4>Returns</h4>
 <p> On success, <a class="link" href="gnutls-gnutls.html#GNUTLS-E-SUCCESS:CAPS" title="GNUTLS_E_SUCCESS"><code class="literal">GNUTLS_E_SUCCESS</code></a> (0) is returned, otherwise a
 negative error code is returned.</p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -1307,7 +1283,7 @@ gnutls_ocsp_resp_get_produced (<em class="parameter"><code><a class="link" href=
 <p>This function will return the time when the OCSP response was
 signed.</p>
 <div class="refsect3">
-<a name="id-1.2.11.7.22.5"></a><h4>Parameters</h4>
+<a name="id-1.2.11.6.22.5"></a><h4>Parameters</h4>
 <div class="informaltable"><table width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
@@ -1322,9 +1298,8 @@ signed.</p>
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.2.11.7.22.6"></a><h4>Returns</h4>
+<a name="id-1.2.11.6.22.6"></a><h4>Returns</h4>
 <p> signing time, or (time_t)-1 on error.</p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -1341,7 +1316,7 @@ will be ASCII or UTF-8 encoded, depending on the certificate data.</p>
 <em class="parameter"><code>dn-&gt;data</code></em>
 .</p>
 <div class="refsect3">
-<a name="id-1.2.11.7.23.6"></a><h4>Parameters</h4>
+<a name="id-1.2.11.6.23.6"></a><h4>Parameters</h4>
 <div class="informaltable"><table width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
@@ -1363,10 +1338,9 @@ will be ASCII or UTF-8 encoded, depending on the certificate data.</p>
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.2.11.7.23.7"></a><h4>Returns</h4>
+<a name="id-1.2.11.6.23.7"></a><h4>Returns</h4>
 <p> On success, <a class="link" href="gnutls-gnutls.html#GNUTLS-E-SUCCESS:CAPS" title="GNUTLS_E_SUCCESS"><code class="literal">GNUTLS_E_SUCCESS</code></a> (0) is returned, otherwise a
 negative error code is returned.</p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -1388,7 +1362,7 @@ response type OID of an response for diagnostic purposes.
 Otherwise <a class="link" href="gnutls-ocsp.html#gnutls-ocsp-resp-import" title="gnutls_ocsp_resp_import ()"><code class="function">gnutls_ocsp_resp_import()</code></a> will decode the basic OCSP
 response part and the caller need not worry about that aspect.</p>
 <div class="refsect3">
-<a name="id-1.2.11.7.24.6"></a><h4>Parameters</h4>
+<a name="id-1.2.11.6.24.6"></a><h4>Parameters</h4>
 <div class="informaltable"><table width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
@@ -1415,10 +1389,9 @@ response part and the caller need not worry about that aspect.</p>
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.2.11.7.24.7"></a><h4>Returns</h4>
+<a name="id-1.2.11.6.24.7"></a><h4>Returns</h4>
 <p> On success, <a class="link" href="gnutls-gnutls.html#GNUTLS-E-SUCCESS:CAPS" title="GNUTLS_E_SUCCESS"><code class="literal">GNUTLS_E_SUCCESS</code></a> (0) is returned, otherwise a
 negative error value.</p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -1429,7 +1402,7 @@ gnutls_ocsp_resp_get_signature (<em class="parameter"><code><a class="link" href
                                 <em class="parameter"><code><span class="type">gnutls_datum_t</span> *sig</code></em>);</pre>
 <p>This function will extract the signature field of a OCSP response.</p>
 <div class="refsect3">
-<a name="id-1.2.11.7.25.5"></a><h4>Parameters</h4>
+<a name="id-1.2.11.6.25.5"></a><h4>Parameters</h4>
 <div class="informaltable"><table width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
@@ -1451,10 +1424,9 @@ gnutls_ocsp_resp_get_signature (<em class="parameter"><code><a class="link" href
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.2.11.7.25.6"></a><h4>Returns</h4>
+<a name="id-1.2.11.6.25.6"></a><h4>Returns</h4>
 <p> On success, <a class="link" href="gnutls-gnutls.html#GNUTLS-E-SUCCESS:CAPS" title="GNUTLS_E_SUCCESS"><code class="literal">GNUTLS_E_SUCCESS</code></a> (0) is returned, otherwise a
 negative error value.</p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -1467,7 +1439,7 @@ gnutls_ocsp_resp_get_signature_algorithm
 enumeration that is the signature algorithm that has been used to
 sign the OCSP response.</p>
 <div class="refsect3">
-<a name="id-1.2.11.7.26.5"></a><h4>Parameters</h4>
+<a name="id-1.2.11.6.26.5"></a><h4>Parameters</h4>
 <div class="informaltable"><table width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
@@ -1482,10 +1454,9 @@ sign the OCSP response.</p>
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.2.11.7.26.6"></a><h4>Returns</h4>
+<a name="id-1.2.11.6.26.6"></a><h4>Returns</h4>
 <p> a <a class="link" href="gnutls-gnutls.html#gnutls-sign-algorithm-t" title="enum gnutls_sign_algorithm_t"><span class="type">gnutls_sign_algorithm_t</span></a> value, or a negative error code
 on error.</p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -1512,7 +1483,7 @@ except the final singleExtensions.</p>
 <p>Each of the pointers to output variables may be NULL to indicate
 that the caller is not interested in that value.</p>
 <div class="refsect3">
-<a name="id-1.2.11.7.27.6"></a><h4>Parameters</h4>
+<a name="id-1.2.11.6.27.6"></a><h4>Parameters</h4>
 <div class="informaltable"><table width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
@@ -1580,12 +1551,11 @@ is <a class="link" href="gnutls-ocsp.html#GNUTLS-OCSP-CERT-REVOKED:CAPS"><code c
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.2.11.7.27.7"></a><h4>Returns</h4>
+<a name="id-1.2.11.6.27.7"></a><h4>Returns</h4>
 <p> On success, <a class="link" href="gnutls-gnutls.html#GNUTLS-E-SUCCESS:CAPS" title="GNUTLS_E_SUCCESS"><code class="literal">GNUTLS_E_SUCCESS</code></a> (0) is returned, otherwise a
 negative error code is returned.  If you have reached the last
 CertID available <a class="link" href="gnutls-gnutls.html#GNUTLS-E-REQUESTED-DATA-NOT-AVAILABLE:CAPS" title="GNUTLS_E_REQUESTED_DATA_NOT_AVAILABLE"><code class="literal">GNUTLS_E_REQUESTED_DATA_NOT_AVAILABLE</code></a> will be
 returned.</p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -1596,7 +1566,7 @@ gnutls_ocsp_resp_get_status (<em class="parameter"><code><a class="link" href="g
 <p>This function will return the status of a OCSP response, an
 <a class="link" href="gnutls-ocsp.html#gnutls-ocsp-resp-status-t" title="enum gnutls_ocsp_resp_status_t"><span class="type">gnutls_ocsp_resp_status_t</span></a> enumeration.</p>
 <div class="refsect3">
-<a name="id-1.2.11.7.28.5"></a><h4>Parameters</h4>
+<a name="id-1.2.11.6.28.5"></a><h4>Parameters</h4>
 <div class="informaltable"><table width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
@@ -1611,10 +1581,9 @@ gnutls_ocsp_resp_get_status (<em class="parameter"><code><a class="link" href="g
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.2.11.7.28.6"></a><h4>Returns</h4>
+<a name="id-1.2.11.6.28.6"></a><h4>Returns</h4>
 <p> status of OCSP request as a <a class="link" href="gnutls-ocsp.html#gnutls-ocsp-resp-status-t" title="enum gnutls_ocsp_resp_status_t"><span class="type">gnutls_ocsp_resp_status_t</span></a>, or
 a negative error code on error.</p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -1625,7 +1594,7 @@ gnutls_ocsp_resp_get_version (<em class="parameter"><code><a class="link" href="
 <p>This function will return the version of the Basic OCSP Response.
 Typically this is always 1 indicating version 1.</p>
 <div class="refsect3">
-<a name="id-1.2.11.7.29.5"></a><h4>Parameters</h4>
+<a name="id-1.2.11.6.29.5"></a><h4>Parameters</h4>
 <div class="informaltable"><table width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
@@ -1640,10 +1609,9 @@ Typically this is always 1 indicating version 1.</p>
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.2.11.7.29.6"></a><h4>Returns</h4>
+<a name="id-1.2.11.6.29.6"></a><h4>Returns</h4>
 <p> version of Basic OCSP response, or a negative error code
 on error.</p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -1657,7 +1625,7 @@ the native <a class="link" href="gnutls-ocsp.html#gnutls-ocsp-resp-t" title="gnu
 OCSP Response part, if any.  The output will be stored in <em class="parameter"><code>resp</code></em>
 .</p>
 <div class="refsect3">
-<a name="id-1.2.11.7.30.5"></a><h4>Parameters</h4>
+<a name="id-1.2.11.6.30.5"></a><h4>Parameters</h4>
 <div class="informaltable"><table width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
@@ -1679,10 +1647,9 @@ OCSP Response part, if any.  The output will be stored in <em class="parameter">
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.2.11.7.30.6"></a><h4>Returns</h4>
+<a name="id-1.2.11.6.30.6"></a><h4>Returns</h4>
 <p> On success, <a class="link" href="gnutls-gnutls.html#GNUTLS-E-SUCCESS:CAPS" title="GNUTLS_E_SUCCESS"><code class="literal">GNUTLS_E_SUCCESS</code></a> (0) is returned, otherwise a
 negative error value.</p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -1692,7 +1659,7 @@ negative error value.</p>
 gnutls_ocsp_resp_init (<em class="parameter"><code><a class="link" href="gnutls-ocsp.html#gnutls-ocsp-resp-t" title="gnutls_ocsp_resp_t"><span class="type">gnutls_ocsp_resp_t</span></a> *resp</code></em>);</pre>
 <p>This function will initialize an OCSP response structure.</p>
 <div class="refsect3">
-<a name="id-1.2.11.7.31.5"></a><h4>Parameters</h4>
+<a name="id-1.2.11.6.31.5"></a><h4>Parameters</h4>
 <div class="informaltable"><table width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
@@ -1707,10 +1674,9 @@ gnutls_ocsp_resp_init (<em class="parameter"><code><a class="link" href="gnutls-
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.2.11.7.31.6"></a><h4>Returns</h4>
+<a name="id-1.2.11.6.31.6"></a><h4>Returns</h4>
 <p> On success, <a class="link" href="gnutls-gnutls.html#GNUTLS-E-SUCCESS:CAPS" title="GNUTLS_E_SUCCESS"><code class="literal">GNUTLS_E_SUCCESS</code></a> (0) is returned, otherwise a
 negative error value.</p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -1727,7 +1693,7 @@ response will be output, on multiple lines.</p>
 <p>The output <em class="parameter"><code>out-&gt;data</code></em>
  needs to be deallocate using <a class="link" href="gnutls-gnutls.html#gnutls-free" title="gnutls_free"><code class="function">gnutls_free()</code></a>.</p>
 <div class="refsect3">
-<a name="id-1.2.11.7.32.7"></a><h4>Parameters</h4>
+<a name="id-1.2.11.6.32.7"></a><h4>Parameters</h4>
 <div class="informaltable"><table width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
@@ -1754,10 +1720,9 @@ response will be output, on multiple lines.</p>
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.2.11.7.32.8"></a><h4>Returns</h4>
+<a name="id-1.2.11.6.32.8"></a><h4>Returns</h4>
 <p> On success, <a class="link" href="gnutls-gnutls.html#GNUTLS-E-SUCCESS:CAPS" title="GNUTLS_E_SUCCESS"><code class="literal">GNUTLS_E_SUCCESS</code></a> (0) is returned, otherwise a
 negative error value.</p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -1792,7 +1757,7 @@ variable to find out the verification status.</p>
 <p>The <em class="parameter"><code>flags</code></em>
  variable should be 0 for now.</p>
 <div class="refsect3">
-<a name="id-1.2.11.7.33.8"></a><h4>Parameters</h4>
+<a name="id-1.2.11.6.33.8"></a><h4>Parameters</h4>
 <div class="informaltable"><table width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
@@ -1824,10 +1789,9 @@ variable to find out the verification status.</p>
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.2.11.7.33.9"></a><h4>Returns</h4>
+<a name="id-1.2.11.6.33.9"></a><h4>Returns</h4>
 <p> On success, <a class="link" href="gnutls-gnutls.html#GNUTLS-E-SUCCESS:CAPS" title="GNUTLS_E_SUCCESS"><code class="literal">GNUTLS_E_SUCCESS</code></a> (0) is returned, otherwise a
 negative error value.</p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -1853,7 +1817,7 @@ variable to find out the verification status.</p>
 <p>The <em class="parameter"><code>flags</code></em>
  variable should be 0 for now.</p>
 <div class="refsect3">
-<a name="id-1.2.11.7.34.8"></a><h4>Parameters</h4>
+<a name="id-1.2.11.6.34.8"></a><h4>Parameters</h4>
 <div class="informaltable"><table width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
@@ -1885,10 +1849,9 @@ variable to find out the verification status.</p>
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.2.11.7.34.9"></a><h4>Returns</h4>
+<a name="id-1.2.11.6.34.9"></a><h4>Returns</h4>
 <p> On success, <a class="link" href="gnutls-gnutls.html#GNUTLS-E-SUCCESS:CAPS" title="GNUTLS_E_SUCCESS"><code class="literal">GNUTLS_E_SUCCESS</code></a> (0) is returned, otherwise a
 negative error value.</p>
-<p></p>
 </div>
 </div>
 </div>
@@ -1906,7 +1869,7 @@ negative error value.</p>
 <a name="gnutls-ocsp-cert-status-t"></a><h3>enum gnutls_ocsp_cert_status_t</h3>
 <p>Enumeration of different OCSP response certificate status codes.</p>
 <div class="refsect3">
-<a name="id-1.2.11.8.3.4"></a><h4>Members</h4>
+<a name="id-1.2.11.7.3.4"></a><h4>Members</h4>
 <div class="informaltable"><table width="100%" border="0">
 <colgroup>
 <col width="300px" class="enum_members_name">
@@ -1945,7 +1908,7 @@ negative error value.</p>
 <a name="gnutls-ocsp-print-formats-t"></a><h3>enum gnutls_ocsp_print_formats_t</h3>
 <p>Enumeration of different OCSP printing variants.</p>
 <div class="refsect3">
-<a name="id-1.2.11.8.4.4"></a><h4>Members</h4>
+<a name="id-1.2.11.7.4.4"></a><h4>Members</h4>
 <div class="informaltable"><table width="100%" border="0">
 <colgroup>
 <col width="300px" class="enum_members_name">
@@ -1998,7 +1961,7 @@ negative error value.</p>
 <a name="gnutls-ocsp-resp-status-t"></a><h3>enum gnutls_ocsp_resp_status_t</h3>
 <p>Enumeration of different OCSP response status codes.</p>
 <div class="refsect3">
-<a name="id-1.2.11.8.8.4"></a><h4>Members</h4>
+<a name="id-1.2.11.7.8.4"></a><h4>Members</h4>
 <div class="informaltable"><table width="100%" border="0">
 <colgroup>
 <col width="300px" class="enum_members_name">
@@ -2066,7 +2029,7 @@ negative error value.</p>
 <p>Enumeration of OCSP verify status codes, used by
 <a class="link" href="gnutls-ocsp.html#gnutls-ocsp-resp-verify" title="gnutls_ocsp_resp_verify ()"><code class="function">gnutls_ocsp_resp_verify()</code></a> and <a class="link" href="gnutls-ocsp.html#gnutls-ocsp-resp-verify-direct" title="gnutls_ocsp_resp_verify_direct ()"><code class="function">gnutls_ocsp_resp_verify_direct()</code></a>.</p>
 <div class="refsect3">
-<a name="id-1.2.11.8.10.4"></a><h4>Members</h4>
+<a name="id-1.2.11.7.10.4"></a><h4>Members</h4>
 <div class="informaltable"><table width="100%" border="0">
 <colgroup>
 <col width="300px" class="enum_members_name">
@@ -2134,7 +2097,7 @@ negative error value.</p>
 corresponds to the CRLReason ASN.1 enumeration type, and not the
 ReasonFlags ASN.1 bit string.</p>
 <div class="refsect3">
-<a name="id-1.2.11.8.11.4"></a><h4>Members</h4>
+<a name="id-1.2.11.7.11.4"></a><h4>Members</h4>
 <div class="informaltable"><table width="100%" border="0">
 <colgroup>
 <col width="300px" class="enum_members_name">
@@ -2219,7 +2182,6 @@ ReasonFlags ASN.1 bit string.</p>
 </div>
 </div>
 <div class="footer">
-<hr>
-          Generated by GTK-Doc V1.20</div>
+<hr>Generated by GTK-Doc V1.24</div>
 </body>
 </html>

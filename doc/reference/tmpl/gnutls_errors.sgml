@@ -43,13 +43,12 @@ gnutls_errors
 
 
 
-<!-- ##### FUNCTION gnutls_assert_val ##### -->
+<!-- ##### MACRO gnutls_assert_val ##### -->
 <para>
 
 </para>
 
-@Param1: 
-@Returns: 
+@x: 
 
 
 <!-- ##### MACRO gnutls_assert_val_fatal ##### -->

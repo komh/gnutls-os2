@@ -1978,23 +1978,22 @@ static int send_client_hello(gnutls_session_t session, int again)
 		if (_gnutls_set_current_version(session, hver->id) < 0)
 			return gnutls_assert_val(GNUTLS_E_UNSUPPORTED_VERSION_PACKET);
 
-		if (session->internals.priorities.ssl3_record_version != 0) {
+		if (session->internals.priorities.min_record_version != 0) {
 			/* Advertize the SSL 3.0 record packet version in
 			 * record packets during the handshake.
 			 * That is to avoid confusing implementations
 			 * that do not support TLS 1.2 and don't know
 			 * how 3,3 version of record packets look like.
 			 */
-			if (!IS_DTLS(session))
+			const version_entry_st *v = _gnutls_version_lowest(session);
+
+			if (v == NULL) {
+				gnutls_assert();
+				return GNUTLS_E_INTERNAL_ERROR;
+			} else {
 				_gnutls_record_set_default_version(session,
-								   3, 0);
-			else if (hver->id == GNUTLS_DTLS0_9)
-				_gnutls_record_set_default_version(session,
-								   1, 0);
-			else
-				_gnutls_record_set_default_version(session,
-								   254,
-								   255);
+								   v->major, v->minor);
+			}
 		}
 
 		/* In order to know when this session was initiated.
@@ -2054,7 +2053,8 @@ static int send_client_hello(gnutls_session_t session, int again)
 			ret =
 			    copy_ciphersuites(session, &extdata,
 					      TRUE);
-			_gnutls_extension_list_add(session,
+			if (session->security_parameters.entity == GNUTLS_CLIENT)
+				_gnutls_extension_list_add(session,
 						   GNUTLS_EXTENSION_SAFE_RENEGOTIATION);
 		} else
 			ret =
@@ -2492,7 +2492,9 @@ static int _gnutls_recv_supplemental(gnutls_session_t session)
  *
  * The non-fatal errors expected by this function are:
  * %GNUTLS_E_INTERRUPTED, %GNUTLS_E_AGAIN, 
- * and %GNUTLS_E_WARNING_ALERT_RECEIVED.
+ * %GNUTLS_E_WARNING_ALERT_RECEIVED, and %GNUTLS_E_GOT_APPLICATION_DATA,
+ * the latter only in a case of rehandshake.
+ *
  * The former two interrupt the handshake procedure due to the lower
  * layer being interrupted, and the latter because of an alert that
  * may be sent by a server (it is always a good idea to check any
@@ -2507,7 +2509,7 @@ static int _gnutls_recv_supplemental(gnutls_session_t session)
  * %GNUTLS_E_WARNING_ALERT_RECEIVED may be returned.  Note that these
  * are non fatal errors, only in the specific case of a rehandshake.
  * Their meaning is that the client rejected the rehandshake request or
- * in the case of %GNUTLS_E_GOT_APPLICATION_DATA it might also mean that
+ * in the case of %GNUTLS_E_GOT_APPLICATION_DATA it could also mean that
  * some data were pending.
  *
  * Returns: %GNUTLS_E_SUCCESS on success, otherwise a negative error code.
@@ -2596,6 +2598,11 @@ int gnutls_handshake(gnutls_session_t session)
 void
 gnutls_handshake_set_timeout(gnutls_session_t session, unsigned int ms)
 {
+	if (IS_DTLS(session)) {
+		gnutls_dtls_set_timeouts(session, 1000, ms);
+		return;
+	}
+
 	if (ms == GNUTLS_DEFAULT_HANDSHAKE_TIMEOUT)
 		ms = 40 * 1000;
 	session->internals.handshake_timeout_ms = ms;
@@ -2606,6 +2613,8 @@ gnutls_handshake_set_timeout(gnutls_session_t session, unsigned int ms)
 	if (ret < 0) { \
 		/* EAGAIN and INTERRUPTED are always non-fatal */ \
 		if (ret == GNUTLS_E_AGAIN || ret == GNUTLS_E_INTERRUPTED) \
+			return ret; \
+		if (ret == GNUTLS_E_GOT_APPLICATION_DATA && session->internals.initial_negotiation_completed != 0) \
 			return ret; \
 		if (ret == GNUTLS_E_LARGE_PACKET && session->internals.handshake_large_loops < 16) { \
 			session->internals.handshake_large_loops++; \
@@ -2970,7 +2979,7 @@ static int send_handshake_final(gnutls_session_t session, int init)
 static int recv_handshake_final(gnutls_session_t session, int init)
 {
 	int ret = 0;
-	uint8_t ch;
+	uint8_t ccs[3];
 	unsigned int ccs_len = 1;
 	unsigned int tleft;
 	const version_entry_st *vers;
@@ -3005,7 +3014,7 @@ static int recv_handshake_final(gnutls_session_t session, int init)
 
 		ret =
 		    _gnutls_recv_int(session, GNUTLS_CHANGE_CIPHER_SPEC,
-				     -1, NULL, &ch, ccs_len, NULL, tleft);
+				     -1, NULL, ccs, ccs_len, NULL, tleft);
 		if (ret <= 0) {
 			ERR("recv ChangeCipherSpec", ret);
 			gnutls_assert();

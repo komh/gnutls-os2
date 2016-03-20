@@ -7,7 +7,7 @@
 
 @var{format}: Indicate the format to use
 
-@var{out}: Newly allocated datum with (0) terminated string.
+@var{out}: Newly allocated datum with null terminated string.
 
 This function will pretty print public key information, suitable for
 display to a human.

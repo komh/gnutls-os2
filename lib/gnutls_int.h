@@ -236,6 +236,8 @@ typedef enum record_flush_t {
 #define GNUTLS_POINTER_TO_INT(_) ((int) GNUTLS_POINTER_TO_INT_CAST (_))
 #define GNUTLS_INT_TO_POINTER(_) ((void*) GNUTLS_POINTER_TO_INT_CAST (_))
 
+#define GNUTLS_KX_INVALID (-1)
+
 typedef struct {
 	uint8_t pint[3];
 } uint24;
@@ -486,6 +488,7 @@ typedef struct mac_entry_st {
 typedef struct {
 	const char *name;
 	gnutls_protocol_t id;	/* gnutls internal version number */
+	unsigned age;		/* internal ordering by protocol age */
 	uint8_t major;		/* defined by the protocol */
 	uint8_t minor;		/* defined by the protocol */
 	transport_t transport;	/* Type of transport, stream or datagram */
@@ -494,6 +497,7 @@ typedef struct {
 	bool extensions;	/* whether it supports extensions */
 	bool selectable_sighash;	/* whether signatures can be selected */
 	bool selectable_prf;	/* whether the PRF is ciphersuite-defined */
+	bool obsolete;		/* Do not use this protocol version as record version */
 } version_entry_st;
 
 
@@ -658,7 +662,7 @@ struct gnutls_priority_st {
 	unsigned int max_empty_records;
 	unsigned int dumbfw;
 	safe_renegotiation_t sr;
-	bool ssl3_record_version;
+	bool min_record_version;
 	bool server_precedence;
 	bool allow_wrong_pms;
 	/* Whether stateless compression will be used */
@@ -872,8 +876,8 @@ typedef struct {
 	struct gnutls_privkey_st *selected_key;
 	bool selected_need_free;
 
-	/* holds the extensions we sent to the peer
-	 * (in case of a client)
+	/* In case of a client holds the extensions we sent to the peer;
+	 * otherwise the extensions we received from the client.
 	 */
 	uint16_t extensions_sent[MAX_EXT_TYPES];
 	uint16_t extensions_sent_size;
@@ -1070,12 +1074,6 @@ inline static size_t max_user_send_size(gnutls_session_t session,
 		max = gnutls_dtls_get_data_mtu(session);
 	else {
 		max = session->security_parameters.max_record_send_size;
-		/* DTLS data MTU accounts for those */
-
-		if (_gnutls_cipher_is_block(record_params->cipher))
-			max -=
-			    _gnutls_cipher_get_block_size(record_params->
-							  cipher);
 	}
 
 	return max;

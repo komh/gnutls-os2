@@ -27,9 +27,15 @@ gnutls_compress
 
 
 
-<!-- ##### TYPEDEF gnutls_compression_entry ##### -->
+<!-- ##### STRUCT gnutls_compression_entry ##### -->
 <para>
 
 </para>
 
+@name: 
+@id: 
+@num: 
+@window_bits: 
+@mem_level: 
+@comp_level: 
 

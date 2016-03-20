@@ -516,8 +516,6 @@ SCM_DEFINE (scm_gnutls_set_server_session_certificate_request_x,
 
 /* Choice of a protocol and cipher suite.  */
 
-#include "priorities.i.c"
-
 SCM_DEFINE (scm_gnutls_set_default_priority_x,
             "set-session-default-priority!", 1, 0, 0,
             (SCM session), "Have @var{session} use the default priorities.")
@@ -531,21 +529,6 @@ SCM_DEFINE (scm_gnutls_set_default_priority_x,
   return SCM_UNSPECIFIED;
 }
 
-#undef FUNC_NAME
-
-SCM_DEFINE (scm_gnutls_set_default_export_priority_x,
-            "set-session-default-export-priority!", 1, 0, 0,
-            (SCM session),
-            "Have @var{session} use the default export priorities.")
-#define FUNC_NAME s_scm_gnutls_set_default_export_priority_x
-{
-  gnutls_session_t c_session;
-
-  c_session = scm_to_gnutls_session (session, 1, FUNC_NAME);
-  gnutls_set_default_export_priority (c_session);
-
-  return SCM_UNSPECIFIED;
-}
 #undef FUNC_NAME
 
 SCM_DEFINE (scm_gnutls_set_session_priorities_x,
@@ -719,7 +702,7 @@ SCM_DEFINE (scm_gnutls_set_session_server_name_x, "set-session-server-name!",
   c_name = scm_to_locale_string (name);
 
   err = gnutls_server_name_set (c_session, c_type, c_name,
-				strlen (c_name) + 1);
+				strlen (c_name));
   free (c_name);
 
   if (EXPECT_FALSE (err != GNUTLS_E_SUCCESS))

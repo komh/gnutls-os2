@@ -235,13 +235,13 @@ gnutls_certificate_type_set_priority(gnutls_session_t session,
 }
 
 static const int supported_ecc_normal[] = {
-#ifdef ENABLE_NON_SUITEB_CURVES
-	GNUTLS_ECC_CURVE_SECP192R1,
-	GNUTLS_ECC_CURVE_SECP224R1,
-#endif
 	GNUTLS_ECC_CURVE_SECP256R1,
 	GNUTLS_ECC_CURVE_SECP384R1,
 	GNUTLS_ECC_CURVE_SECP521R1,
+#ifdef ENABLE_NON_SUITEB_CURVES
+	GNUTLS_ECC_CURVE_SECP224R1,
+	GNUTLS_ECC_CURVE_SECP192R1,
+#endif
 	0
 };
 
@@ -273,7 +273,9 @@ static const int protocol_priority[] = {
 	GNUTLS_TLS1_2,
 	GNUTLS_TLS1_1,
 	GNUTLS_TLS1_0,
+#ifdef ENABLE_SSL3
 	GNUTLS_SSL3,
+#endif
 	GNUTLS_DTLS1_2,
 	GNUTLS_DTLS1_0,
 	0
@@ -343,7 +345,6 @@ static const int kx_priority_secure[] = {
 };
 
 static const int cipher_priority_performance_default[] = {
-	GNUTLS_CIPHER_ARCFOUR_128,
 	GNUTLS_CIPHER_AES_128_GCM,
 	GNUTLS_CIPHER_AES_256_GCM,
 	GNUTLS_CIPHER_CAMELLIA_128_GCM,
@@ -353,6 +354,9 @@ static const int cipher_priority_performance_default[] = {
 	GNUTLS_CIPHER_CAMELLIA_128_CBC,
 	GNUTLS_CIPHER_CAMELLIA_256_CBC,
 	GNUTLS_CIPHER_3DES_CBC,
+#ifdef ENABLE_ARCFOUR128
+	GNUTLS_CIPHER_ARCFOUR_128,
+#endif
 	0
 };
 
@@ -369,7 +373,9 @@ static const int cipher_priority_normal_default[] = {
 	GNUTLS_CIPHER_CAMELLIA_128_CBC,
 	GNUTLS_CIPHER_CAMELLIA_256_CBC,
 	GNUTLS_CIPHER_3DES_CBC,
+#ifdef ENABLE_ARCFOUR128
 	GNUTLS_CIPHER_ARCFOUR_128,
+#endif
 	0
 };
 
@@ -860,11 +866,11 @@ static void disable_safe_renegotiation(gnutls_priority_t c)
 }
 static void enable_latest_record_version(gnutls_priority_t c)
 {
-	c->ssl3_record_version = 0;
+	c->min_record_version = 0;
 }
 static void enable_ssl3_record_version(gnutls_priority_t c)
 {
-	c->ssl3_record_version = 1;
+	c->min_record_version = 1;
 }
 static void enable_verify_allow_rsa_md5(gnutls_priority_t c)
 {
@@ -1017,7 +1023,7 @@ finish:
 /**
  * gnutls_priority_init:
  * @priority_cache: is a #gnutls_prioritity_t structure.
- * @priorities: is a string describing priorities
+ * @priorities: is a string describing priorities (may be %NULL)
  * @err_pos: In case of an error this will have the position in the string the error occurred
  *
  * Sets priorities for the ciphers, key exchange methods, macs and
@@ -1096,6 +1102,9 @@ finish:
  *
  * Note that "NORMAL:%COMPAT" is the most compatible mode.
  *
+ * A %NULL @priorities string indicates the default priorities to be
+ * used (this is available since GnuTLS 3.3.0).
+ *
  * Returns: On syntax error %GNUTLS_E_INVALID_REQUEST is returned,
  * %GNUTLS_E_SUCCESS on success, or an error code.
  **/
@@ -1110,6 +1119,7 @@ gnutls_priority_init(gnutls_priority_t * priority_cache,
 	int algo;
 	rmadd_func *fn;
 	bulk_rmadd_func *bulk_fn;
+	const cipher_entry_st *centry;
 
 	if (err_pos)
 		*err_pos = priorities;
@@ -1125,7 +1135,7 @@ gnutls_priority_init(gnutls_priority_t * priority_cache,
 	 * when we make it the default.
 	 */
 	(*priority_cache)->sr = SR_PARTIAL;
-	(*priority_cache)->ssl3_record_version = 1;
+	(*priority_cache)->min_record_version = 1;
 
 	(*priority_cache)->max_empty_records = DEFAULT_MAX_EMPTY_RECORDS;
 
@@ -1180,17 +1190,18 @@ gnutls_priority_init(gnutls_priority_t * priority_cache,
 				continue;
 			} else if ((algo =
 				    gnutls_mac_get_id(&broken_list[i][1]))
-				   != GNUTLS_MAC_UNKNOWN)
+				   != GNUTLS_MAC_UNKNOWN) {
 				fn(&(*priority_cache)->mac, algo);
-			else if ((algo =
-				  gnutls_cipher_get_id(&broken_list[i][1]))
-				 != GNUTLS_CIPHER_UNKNOWN)
-				fn(&(*priority_cache)->cipher, algo);
-			else if ((algo =
-				  gnutls_kx_get_id(&broken_list[i][1])) !=
-				 GNUTLS_KX_UNKNOWN)
-				fn(&(*priority_cache)->kx, algo);
-			else if (strncasecmp
+			} else if ((centry = cipher_name_to_entry(&broken_list[i][1])) != NULL) {
+				if (_gnutls_cipher_exists(centry->id)) {
+					fn(&(*priority_cache)->cipher, centry->id);
+				}
+			} else if ((algo =
+				  _gnutls_kx_get_id(&broken_list[i][1])) !=
+				 GNUTLS_KX_UNKNOWN) {
+				if (algo != GNUTLS_KX_INVALID)
+					fn(&(*priority_cache)->kx, algo);
+			} else if (strncasecmp
 				 (&broken_list[i][1], "VERS-", 5) == 0) {
 				if (strncasecmp
 				    (&broken_list[i][1], "VERS-TLS-ALL",
@@ -1426,17 +1437,9 @@ break_list(char *list,
  * gnutls_set_default_priority:
  * @session: is a #gnutls_session_t structure.
  *
- * Sets some default priority on the ciphers, key exchange methods,
- * macs and compression methods.
- *
- * This typically sets a default priority that is considered
- * sufficiently secure to establish encrypted sessions.
- *
- * This function is kept around for backwards compatibility, but
- * because of its wide use it is still fully supported.  If you wish
- * to allow users to provide a string that specify which ciphers to
- * use (which is recommended), you should use
- * gnutls_priority_set_direct() or gnutls_priority_set() instead.
+ * Sets the default priority on the ciphers, key exchange methods,
+ * macs and compression methods. For more fine-tuning you could
+ * use gnutls_priority_set_direct() or gnutls_priority_set() instead.
  *
  * Returns: %GNUTLS_E_SUCCESS on success, or an error code.
  **/

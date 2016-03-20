@@ -16,5 +16,8 @@ reading or writing, @code{gnutls_record_get_direction()}  returns 0 if the
 interrupted function was trying to read data, and 1 if it was
 trying to write data.
 
+This function's output is unreliable if you are using the
+ @code{session} in different threads, for sending and receiving.
+
 @strong{Returns:} 0 if trying to read data, 1 if trying to write data.
 @end deftypefun

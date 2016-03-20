@@ -1,7 +1,301 @@
 GnuTLS NEWS -- History of user-visible changes.                -*- outline -*-
-Copyright (C) 2000-2014 Free Software Foundation, Inc.
+Copyright (C) 2000-2015 Free Software Foundation, Inc.
 Copyright (C) 2013, 2014 Nikos Mavrogiannopoulos
 See the end for copying conditions.
+
+* Version 3.3.22 (released 2016-03-10)
+
+** libgnutls: Eliminated issues preventing buffers more than 2^32 bytes
+   to be used with hashing functions.
+
+** libgnutls: Follow closely RFC5280 recommendations and use UTCTime for
+   dates prior to 2050. Backported from 3.4.x branch.
+
+** libgnutls: Several fixes to prevent relying on undefined behavior of C
+   (found with libubsan).
+
+** libgnutls: SSL 3.0 is no longer included in the default priorities
+   list. It has to be explicitly enabled, e.g., with a string like
+   "NORMAL:+VERS-SSL3.0". The previous behavior can be restored using
+   the flag --with-ssl3 to configure.
+
+** API and ABI modifications:
+No changes since last version.
+
+
+* Version 3.3.21 (released 2016-02-03)
+
+** libgnutls: Corrected ALPN protocol negotiation. Before GnuTLS would negotiate
+   the last commonly supported protocol, rather than the first. Reported by
+   Remi Denis-Courmont (#63).
+
+** libgnutls: ARCFOUR (RC4) is no longer included in the default priorities
+   list. It has to be explicitly enabled, e.g., with a string like
+   "NORMAL:+ARCFOUR-128". The previous behavior can be restored using
+   the flag --with-arcfour128 to configure.
+
+** libgnutls: Corrected regression caused by incorrect fix in
+   gnutls_x509_ext_export_key_usage() at 3.3.20 release.
+
+** API and ABI modifications:
+No changes since last version.
+
+
+* Version 3.3.20 (released 2016-01-08)
+
+** libgnutls: Corrected memory leak in gnutls_pubkey_import_privkey() when
+   used with PKCS #11 keys.
+
+** libgnutls: For DSA and ECDSA keys in PKCS #11 objects, import
+   their public keys from either a public key object or a certificate.
+   That is, because private keys do not contain all the required
+   parameters for a direct import. Reported by Jan Vcelak.
+
+** libgnutls: Fixed issue when writing ECDSA private keys in PKCS #11
+   tokens.
+
+** libgnutls: Fixed out-of-bounds read in gnutls_x509_ext_export_key_usage(),
+   report and patch by Tim Kosse.
+
+** libgnutls: Handle DNS name constraints with a leading dot. Backported
+   from 3.4.x branch.
+
+** libgnutls: The max-record extension is no longer negotiated on DTLS. This resolves
+   issue with the max-record being negotiated but ignored.
+
+** API and ABI modifications:
+No changes since last version.
+
+
+* Version 3.3.19 (released 2015-11-22)
+
+** libgnutls: Properly require TLS 1.2 to all the CBC-SHA256 and CBC-SHA384
+   ciphersuites. This solves an interoperability issue with openssl.
+   Reported by Viktor Dukhovni.
+
+** libgnutls: Fixed memory leak in gnutls_pubkey_get_preferred_hash_algorithm(),
+   patch by Lennert Buytenhek.
+
+** libgnutls: When writing a certificate into a PKCS #11 token, ensure
+   that CKA_SERIAL_NUMBER and CKA_ISSUER are written.
+
+** libgnutls: Allow the presence of legacy ciphers and key exchanges in
+   priority strings and consider them a no-op.
+
+** libgnutls: On a rehandshake allow switching from anonymous to ECDHE and
+   DHE ciphersuites.
+
+** libgnutls: Added GNUTLS_SKIP_GLOBAL_INIT macro to allow programs skipping
+   the implicit global initialization.
+
+** gnutls.pc: Don't include libtool specific options to link flags.
+   Reported by Dan Kegel.
+
+** API and ABI modifications:
+GNUTLS_SKIP_GLOBAL_INIT: Added
+
+
+* Version 3.3.18 (released 2015-09-12)
+
+** libgnutls: When re-importing CRLs to a trust list ensure that there
+   are no duplicate entries.
+
+** certtool: Removed any arbitrary limits imposed on input file sizes
+   and maximum number of certificates imported.
+
+** API and ABI modifications:
+   No changes since last version.
+
+
+* Version 3.3.17 (released 2015-08-10)
+
+** libgnutls: Fix issue with server side sending the status request
+   extension even when not requested. Reported by Jeremy Harris.
+
+** libgnutls: gnutls_pkcs11_privkey_generate2() will store the generated
+   public key, unless the GNUTLS_PKCS11_OBJ_FLAG_NO_STORE_PUBKEY flag is
+   specified.
+
+** libgnutls: fixed double free in DN decoding [GNUTLS-SA-2015-3].
+
+** API and ABI modifications:
+   No changes since last version.
+
+
+* Version 3.3.16 (released 2015-07-12)
+
+** libgnutls: Allow compilation with nettle 3.0 or later
+
+** libgnutls: corrected failure when importing plain files 
+   with gnutls_x509_privkey_import2(), and a password was provided.
+
+** libgnutls: Don't reject certificates if a CA has the URI or IP address
+   name constraints, and the end certificate doesn't have an IP address 
+   name or a URI set.
+
+** libgnutls: set and read the hint in DHE-PSK and ECDHE-PSK ciphersuites.
+
+** API and ABI modifications:
+   No changes since last version.
+
+
+* Version 3.3.15 (released 2015-05-03)
+
+** libgnutls: gnutls_certificate_get_ours: will return the certificate even
+if a callback was used to send it.
+
+** libgnutls: Fix for MD5 downgrade in TLS 1.2 signatures. Reported by
+Karthikeyan Bhargavan [GNUTLS-SA-2015-2].
+
+** libgnutls: Check for invalid length in the X.509 version field. Without the check
+certificates with invalid length would be detected as having an arbitrary
+version. Reported by Hanno Böck.
+
+** API and ABI modifications:
+No changes since last version.
+
+
+* Version 3.3.14 (released 2015-03-30)
+
+** libgnutls: When retrieving OCTET STRINGS from PKCS #12 ContentInfo
+structures use BER to decode them (requires libtasn1 4.3). That allows
+to decode some more complex structures.
+
+** libgnutls: When an end-certificate with no name is present and there
+are CA name constraints, don't reject the certificate. This follows RFC5280
+advice closely. Reported by Fotis Loukos.
+
+** libgnutls: Fixed handling of supplemental data with types > 255.
+Patch by Thierry Quemerais.
+
+** libgnutls: Fixed double free in the parsing of CRL distribution points certificate
+extension. Reported by Robert Święcki.
+
+** libgnutls: Fixed a two-byte stack overflow in DTLS 0.9 protocol. That
+protocol is not enabled by default (used by openconnect VPN).
+
+** libgnutls: The maximum user data send size is set to be the same for
+block and non-block ciphersuites. This addresses a regression with wine:
+https://bugs.winehq.org/show_bug.cgi?id=37500
+
+** libgnutls: When generating PKCS #11 keys, set CKA_ID, CKA_SIGN,
+and CKA_DECRYPT when needed.
+
+** libgnutls: Allow names with zero size to be set using
+gnutls_server_name_set(). That will disable the Server Name Indication.
+Resolves issue with wine: https://gitlab.com/gnutls/gnutls/issues/2
+
+** API and ABI modifications:
+No changes since last version.
+
+
+* Version 3.3.13 (released 2015-02-25)
+
+** libgnutls: Enable AESNI in GCM on x86
+
+** libgnutls: Fixes in DTLS message handling
+
+** libgnutls: Check certificate algorithm consistency, i.e.,
+check whether the signatureAlgorithm field matches the signature
+field inside TBSCertificate.
+
+** gnutls-cli: Fixes in OCSP verification.
+
+** API and ABI modifications:
+No changes since last version.
+
+
+* Version 3.3.12 (released 2015-01-17)
+
+** libgnutls: When negotiating TLS use the lowest enabled version in
+the client hello, rather than the lowest supported. In addition, do
+not use SSL 3.0 as a version in the TLS record layer, unless SSL 3.0
+is the only protocol supported. That addresses issues with servers that
+immediately drop the connection when the encounter SSL 3.0 as the record
+version number. See:
+http://lists.gnutls.org/pipermail/gnutls-help/2014-November/003673.html
+
+** libgnutls: Corrected encoding and decoding of ANSI X9.62 parameters.
+
+** libgnutls: Handle zero length plaintext for VIA PadLock functions.
+This solves a potential crash on AES encryption for small size plaintext.
+Patch by Matthias-Christian Ott.
+
+** libgnutls: In DTLS don't combine multiple packets which exceed MTU.
+Reported by Andreas Schultz. https://savannah.gnu.org/support/?108715
+
+** libgnutls: In DTLS decode all handshake packets present in a record
+packet, in a single pass. Reported by Andreas Schultz.
+https://savannah.gnu.org/support/?108712
+
+** libgnutls: When importing a CA file with a PKCS #11 URL, simply
+import the certificates, if the URL specifies objects, rather than
+treating it as trust module.
+
+** libgnutls: When importing a PKCS #11 URL and we know the type of
+object we are importing, don't require the object type in the URL.
+
+** libgnutls: fixed openpgp authentication when gnutls_certificate_set_retrieve_function2
+was used by the server.
+
+** guile: Fix compilation on MinGW. Previously only the static version of the 
+'guile-gnutls-v-2' library would be built, preventing dynamic loading from Guile.
+
+** guile: Fix harmless warning during compilation of gnutls.scm
+Initially reported at <https://bugzilla.redhat.com/show_bug.cgi?id=1177847>.
+
+** certtool: --pubkey-info will also attempt to load a public key
+from stdin.
+
+** gnutls-cli: Added --starttls-proto option. That allows to specify a
+protocol for starttls negotiation.
+
+** API and ABI modifications:
+No changes since last version.
+
+
+* Version 3.3.11 (released 2014-12-11)
+
+** libgnutls: Corrected regression introduced in 3.3.9 related to
+session renegotiation. Reported by Dan Winship.
+
+** libgnutls: Corrected parsing issue with OCSP responses.
+
+** API and ABI modifications:
+No changes since last version.
+
+
+* Version 3.3.10 (released 2014-11-10)
+
+** libgnutls: Refuse to import v1 or v2 certificates that contain
+extensions.
+
+** libgnutls: Fixes in usage of PKCS #11 token callback
+
+** libgnutls: Fixed bug in gnutls_x509_trust_list_get_issuer() when used
+with a PKCS #11 trust module and without the GNUTLS_TL_GET_COPY flag.
+Reported by David Woodhouse.
+
+** libgnutls: Removed superfluous random generator refresh on every call
+of gnutls_deinit(). That reduces load and usage of /dev/urandom.
+
+** libgnutls: Corrected issue in export of ECC parameters to X9.63 format.
+Reported by Sean Burford [GNUTLS-SA-2014-5].
+
+** libgnutls: When gnutls_global_init() is called for a second time, it
+will check whether the /dev/urandom fd kept is still open and matches
+the original one. That behavior works around issues with servers that
+close all file descriptors.
+
+** libgnutls: Corrected behavior with PKCS #11 objects that are marked
+as CKA_ALWAYS_AUTHENTICATE.
+
+** certtool: The default cipher for PKCS #12 structures is 3des-pkcs12.
+That option is more compatible than AES or RC4.
+
+** API and ABI modifications:
+No changes since last version.
+
 
 * Version 3.3.9 (released 2014-10-13)
 

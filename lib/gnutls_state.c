@@ -46,6 +46,7 @@
 #include <system.h>
 #include <random.h>
 #include <fips.h>
+#include <intprops.h>
 #include <gnutls/dtls.h>
 
 /* These should really be static, but src/tests.c calls them.  Make
@@ -190,7 +191,8 @@ _gnutls_session_cert_type_supported(gnutls_session_t session,
 			return GNUTLS_E_UNSUPPORTED_CERTIFICATE_TYPE;
 
 		if (cred->server_get_cert_callback == NULL
-		    && cred->get_cert_callback == NULL) {
+		    && cred->get_cert_callback == NULL
+		    && cred->get_cert_callback2 == NULL) {
 			for (i = 0; i < cred->ncerts; i++) {
 				if (cred->certs[i].cert_list[0].type ==
 				    cert_type) {
@@ -441,8 +443,6 @@ void gnutls_deinit(gnutls_session_t session)
 
 	if (session == NULL)
 		return;
-
-	_gnutls_rnd_refresh();
 
 	/* remove auth info firstly */
 	_gnutls_free_auth_info(session);
@@ -1051,8 +1051,11 @@ gnutls_prf_raw(gnutls_session_t session,
  * @out: pre-allocated buffer to hold the generated data.
  *
  * Applies the TLS Pseudo-Random-Function (PRF) on the master secret
- * and the provided data, seeded with the client and server random fields,
- * as specified in RFC5705.
+ * and the provided data, seeded with the client and server random fields.
+ *
+ * The output of this function is identical to RFC5705 extractor if @extra
+ * and @extra_size are set to zero. Otherwise, @extra should contain the context
+ * value prefixed by a two-byte length.
  *
  * The @label variable usually contains a string denoting the purpose
  * for the generated data.  The @server_random_first indicates whether
@@ -1242,6 +1245,9 @@ void gnutls_session_set_ptr(gnutls_session_t session, void *ptr)
  * interrupted function was trying to read data, and 1 if it was
  * trying to write data.
  *
+ * This function's output is unreliable if you are using the
+ * @session in different threads, for sending and receiving.
+ *
  * Returns: 0 if trying to read data, 1 if trying to write data.
  **/
 int gnutls_record_get_direction(gnutls_session_t session)
@@ -1423,8 +1429,14 @@ gnutls_session_get_random(gnutls_session_t session,
 
 unsigned int timespec_sub_ms(struct timespec *a, struct timespec *b)
 {
-	return (a->tv_sec * 1000 + a->tv_nsec / (1000 * 1000) -
-		(b->tv_sec * 1000 + b->tv_nsec / (1000 * 1000)));
+	time_t dsecs;
+
+	dsecs = a->tv_sec - b->tv_sec;
+	if (!INT_MULTIPLY_OVERFLOW(dsecs, 1000)) {
+		return (dsecs*1000 + (a->tv_nsec - b->tv_nsec) / (1000 * 1000));
+	} else {
+		return UINT_MAX;
+	}
 }
 
 /**

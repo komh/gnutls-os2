@@ -44,6 +44,17 @@ int _gnutls_cipher_exists(gnutls_cipher_algorithm_t cipher)
 	const gnutls_crypto_cipher_st *cc;
 	int ret;
 
+	/* All the other ciphers are disabled on the back-end library.
+	 * The NULL needs to be detected here as it is merely a placeholder
+	 * rather than an actual cipher.
+	 */
+	if (cipher == GNUTLS_CIPHER_NULL) {
+		if (_gnutls_fips_mode_enabled() == 0)
+			return 1;
+		else
+			return 0;
+	}
+
 	cc = _gnutls_get_crypto_cipher(cipher);
 	if (cc != NULL)
 		return 1;
@@ -239,17 +250,19 @@ int _gnutls_auth_cipher_encrypt2_tag(auth_cipher_hd_st * handle,
 
 		if (handle->non_null != 0) {
 			l = (textlen / blocksize) * blocksize;
-			ret =
-			    _gnutls_cipher_encrypt2(&handle->cipher, text,
+			if (l > 0) {
+				ret =
+			    	_gnutls_cipher_encrypt2(&handle->cipher, text,
 						    l, ciphertext,
 						    ciphertextlen);
-			if (ret < 0)
-				return gnutls_assert_val(ret);
+				if (ret < 0)
+					return gnutls_assert_val(ret);
 
-			textlen -= l;
-			text += l;
-			ciphertext += l;
-			ciphertextlen -= l;
+				textlen -= l;
+				text += l;
+				ciphertext += l;
+				ciphertextlen -= l;
+			}
 
 			if (ciphertext != text && textlen > 0)
 				memcpy(ciphertext, text, textlen);

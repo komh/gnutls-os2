@@ -57,15 +57,18 @@
 		} else if (ret < 0) { \
                         return gnutls_assert_val(ret); \
                 } \
-	} while (0);
+                break; \
+	} while (1);
 
 struct gnutls_pkcs11_privkey_st {
 	gnutls_pk_algorithm_t pk_algorithm;
 	unsigned int flags;
 	struct p11_kit_uri *uinfo;
+	char *url;
 
 	struct pkcs11_session_info sinfo;
 	ck_object_handle_t ref;	/* the key in the session */
+	unsigned reauth; /* whether we need to login on each operation */
 
 	struct pin_info_st pin;
 };
@@ -108,6 +111,7 @@ int gnutls_pkcs11_privkey_init(gnutls_pkcs11_privkey_t * key)
 void gnutls_pkcs11_privkey_deinit(gnutls_pkcs11_privkey_t key)
 {
 	p11_kit_uri_free(key->uinfo);
+	gnutls_free(key->url);
 	if (key->sinfo.init != 0)
 		pkcs11_close_session(&key->sinfo);
 	gnutls_free(key);
@@ -229,6 +233,17 @@ _gnutls_pkcs11_privkey_sign_hash(gnutls_pkcs11_privkey_t key,
 	struct pkcs11_session_info *sinfo;
 
 	PKCS11_CHECK_INIT_PRIVKEY(key);
+
+	if (key->reauth) {
+		ret =
+		    pkcs11_login(&key->sinfo, &key->pin,
+		    		 key->uinfo, 0, 1);
+		if (ret < 0) {
+			gnutls_assert();
+			_gnutls_debug_log("PKCS #11 login failed, trying operation anyway\n");
+			/* let's try the operation anyway */
+		}
+	}
 
 	sinfo = &key->sinfo;
 
@@ -361,12 +376,22 @@ gnutls_pkcs11_privkey_import_url(gnutls_pkcs11_privkey_t pkey,
 	struct ck_attribute *attr;
 	struct ck_attribute a[4];
 	ck_key_type_t key_type;
+	ck_bool_t reauth = 0;
 
 	PKCS11_CHECK_INIT;
 
 	memset(&pkey->sinfo, 0, sizeof(pkey->sinfo));
 
-	ret = pkcs11_url_to_info(url, &pkey->uinfo);
+	if (pkey->url) {
+		gnutls_free(pkey->url);
+		pkey->url = NULL;
+	}
+
+	pkey->url = gnutls_strdup(url);
+	if (pkey->url == NULL)
+		return gnutls_assert_val(GNUTLS_E_MEMORY_ERROR);
+
+	ret = pkcs11_url_to_info(url, &pkey->uinfo, flags|GNUTLS_PKCS11_OBJ_FLAG_EXPECT_PRIVKEY);
 	if (ret < 0) {
 		gnutls_assert();
 		return ret;
@@ -407,6 +432,15 @@ gnutls_pkcs11_privkey_import_url(gnutls_pkcs11_privkey_t pkey,
 		}
 	}
 
+	a[0].type = CKA_ALWAYS_AUTHENTICATE;
+	a[0].value = &reauth;
+	a[0].value_len = sizeof(reauth);
+
+	if (pkcs11_get_attribute_value(pkey->sinfo.module, pkey->sinfo.pks, pkey->ref, a, 1)
+	    == CKR_OK) {
+		pkey->reauth = reauth;
+	}
+
 	ret = 0;
 
 	return ret;
@@ -445,6 +479,17 @@ _gnutls_pkcs11_privkey_decrypt_data(gnutls_pkcs11_privkey_t key,
 
 	if (key->pk_algorithm != GNUTLS_PK_RSA)
 		return gnutls_assert_val(GNUTLS_E_INVALID_REQUEST);
+
+	if (key->reauth) {
+		ret =
+		    pkcs11_login(&key->sinfo, &key->pin,
+		    		 key->uinfo, 0, 1);
+		if (ret < 0) {
+			gnutls_assert();
+			_gnutls_debug_log("PKCS #11 login failed, trying operation anyway\n");
+			/* let's try the operation anyway */
+		}
+	}
 
 	mech.mechanism = CKM_RSA_PKCS;
 	mech.parameter = NULL;
@@ -580,7 +625,7 @@ gnutls_pkcs11_privkey_generate2(const char *url, gnutls_pk_algorithm_t pk,
 	struct pkcs11_session_info sinfo;
 	struct p11_kit_uri *info = NULL;
 	ck_rv_t rv;
-	struct ck_attribute a[10], p[10];
+	struct ck_attribute a[22], p[22];
 	ck_object_handle_t pub, priv;
 	unsigned long _bits = bits;
 	int a_val, p_val;
@@ -590,12 +635,13 @@ gnutls_pkcs11_privkey_generate2(const char *url, gnutls_pk_algorithm_t pk,
 	gnutls_datum_t der = {NULL, 0};
 	ck_key_type_t key_type;
 	char pubEx[3] = { 1,0,1 }; // 65537 = 0x10001
+	uint8_t id[20];
 
 	PKCS11_CHECK_INIT;
 
 	memset(&sinfo, 0, sizeof(sinfo));
 
-	ret = pkcs11_url_to_info(url, &info);
+	ret = pkcs11_url_to_info(url, &info, 0);
 	if (ret < 0) {
 		gnutls_assert();
 		return ret;
@@ -618,6 +664,29 @@ gnutls_pkcs11_privkey_generate2(const char *url, gnutls_pk_algorithm_t pk,
 	mech.parameter = NULL;
 	mech.parameter_len = 0;
 	mech.mechanism = pk_to_genmech(pk, &key_type);
+
+	ret = gnutls_rnd(GNUTLS_RND_NONCE, id, sizeof(id));
+	if (ret < 0) {
+		gnutls_assert();
+		goto cleanup;
+	}
+
+	if (!(flags & GNUTLS_PKCS11_OBJ_FLAG_NO_STORE_PUBKEY)) {
+		a[a_val].type = CKA_TOKEN;
+		a[a_val].value = (void *) &tval;
+		a[a_val].value_len = sizeof(tval);
+		a_val++;
+	}
+
+	a[a_val].type = CKA_ID;
+	a[a_val].value = (void *) id;
+	a[a_val].value_len = sizeof(id);
+	a_val++;
+
+	p[p_val].type = CKA_ID;
+	p[p_val].value = (void *) id;
+	p[p_val].value_len = sizeof(id);
+	p_val++;
 
 	switch (pk) {
 	case GNUTLS_PK_RSA:
@@ -770,6 +839,7 @@ gnutls_pkcs11_privkey_generate2(const char *url, gnutls_pk_algorithm_t pk,
 
 	/* extract the public key */
 	if (pubkey) {
+
 		ret = gnutls_pubkey_init(&pkey);
 		if (ret < 0) {
 			gnutls_assert();
@@ -786,7 +856,7 @@ gnutls_pkcs11_privkey_generate2(const char *url, gnutls_pk_algorithm_t pk,
 		obj->type = GNUTLS_PKCS11_OBJ_PUBKEY;
 		ret =
 		    pkcs11_read_pubkey(sinfo.module, sinfo.pks, pub,
-				       key_type, obj->pubkey);
+				       key_type, obj);
 		if (ret < 0) {
 			gnutls_assert();
 			goto cleanup;
@@ -805,7 +875,6 @@ gnutls_pkcs11_privkey_generate2(const char *url, gnutls_pk_algorithm_t pk,
 		}
 	}
 
-
       cleanup:
 	if (obj != NULL)
 		gnutls_pkcs11_obj_deinit(obj);
@@ -819,10 +888,45 @@ gnutls_pkcs11_privkey_generate2(const char *url, gnutls_pk_algorithm_t pk,
 	return ret;
 }
 
+/* loads a the corresponding to the private key public key either from 
+ * a public key object or from a certificate.
+ */
+static int load_pubkey_obj(gnutls_pkcs11_privkey_t pkey, gnutls_pubkey_t pub)
+{
+	int ret, iret;
+	gnutls_x509_crt_t crt;
+
+	ret = gnutls_pubkey_import_url(pub, pkey->url, pkey->flags);
+	if (ret >= 0) {
+		return ret;
+	}
+	iret = ret;
+
+	/* else try certificate */
+	ret = gnutls_x509_crt_init(&crt);
+	if (ret < 0) {
+		gnutls_assert();
+		return ret;
+	}
+
+	gnutls_x509_crt_set_pin_function(crt, pkey->pin.cb, pkey->pin.data);
+
+	ret = gnutls_x509_crt_import_pkcs11_url(crt, pkey->url, pkey->flags);
+	if (ret < 0) {
+		ret = iret;
+		goto cleanup;
+	}
+
+	ret = gnutls_pubkey_import_x509(pub, crt, 0);
+
+ cleanup:
+ 	gnutls_x509_crt_deinit(crt);
+	return ret;
+}
+
 int
 _pkcs11_privkey_get_pubkey (gnutls_pkcs11_privkey_t pkey, gnutls_pubkey_t *pub, unsigned flags)
 {
-	struct ck_mechanism mech;
 	gnutls_pubkey_t pubkey = NULL;
 	gnutls_pkcs11_obj_t obj = NULL;
 	ck_key_type_t key_type;
@@ -849,17 +953,30 @@ _pkcs11_privkey_get_pubkey (gnutls_pkcs11_privkey_t pkey, gnutls_pubkey_t *pub, 
 
 	obj->pk_algorithm = gnutls_pkcs11_privkey_get_pk_algorithm(pkey, 0);
 	obj->type = GNUTLS_PKCS11_OBJ_PUBKEY;
-	mech.mechanism = pk_to_genmech(obj->pk_algorithm, &key_type);
-	ret = pkcs11_read_pubkey(pkey->sinfo.module, pkey->sinfo.pks, pkey->ref, mech.mechanism, obj->pubkey);
-	if (ret < 0) {
-		gnutls_assert();
-		goto cleanup;
-	}
+	pk_to_genmech(obj->pk_algorithm, &key_type);
 
-	ret = gnutls_pubkey_import_pkcs11(pubkey, obj, 0);
-	if (ret < 0) {
-		gnutls_assert();
-		goto cleanup;
+	gnutls_pubkey_set_pin_function(pubkey, pkey->pin.cb, pkey->pin.data);
+
+	/* we can only read the public key from RSA keys */
+	if (key_type != CKK_RSA) {
+		/* try opening the public key object if it exists */
+		ret = load_pubkey_obj(pkey, pubkey);
+		if (ret < 0) {
+			gnutls_assert();
+			goto cleanup;
+		}
+	} else {
+		ret = pkcs11_read_pubkey(pkey->sinfo.module, pkey->sinfo.pks, pkey->ref, key_type, obj);
+		if (ret < 0) {
+			gnutls_assert();
+			goto cleanup;
+		}
+
+		ret = gnutls_pubkey_import_pkcs11(pubkey, obj, 0);
+		if (ret < 0) {
+			gnutls_assert();
+			goto cleanup;
+		}
 	}
 
 	*pub = pubkey;
@@ -867,7 +984,7 @@ _pkcs11_privkey_get_pubkey (gnutls_pkcs11_privkey_t pkey, gnutls_pubkey_t *pub, 
 	pubkey = NULL;
 	ret = 0;
 
-      cleanup:
+ cleanup:
 	if (obj != NULL)
 		gnutls_pkcs11_obj_deinit(obj);
 	if (pubkey != NULL)

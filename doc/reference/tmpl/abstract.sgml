@@ -374,6 +374,8 @@ abstract
 
 </para>
 
+@type: 
+@pk_algorithm: 
 
 <!-- ##### TYPEDEF gnutls_privkey_t ##### -->
 <para>
@@ -743,6 +745,15 @@ abstract
 
 </para>
 
+@pk_algorithm: 
+@bits: 
+@params: 
+@openpgp_key_id: 
+@openpgp_key_id_set: 
+@openpgp_key_fpr: 
+@openpgp_key_fpr_set: 
+@key_usage: 
+@pin: 
 
 <!-- ##### TYPEDEF gnutls_pubkey_t ##### -->
 <para>

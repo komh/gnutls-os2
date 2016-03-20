@@ -6,7 +6,7 @@
  *  From the definitions    cli-args.def
  *  and the template file   options
  *
- * Generated from AutoOpts 41:0:16 templates.
+ * Generated from AutoOpts 41:1:16 templates.
  *
  *  AutoOpts is a copyrighted work.  This header file is not encumbered
  *  by AutoOpts licensing, but is provided under the licensing terms chosen
@@ -19,7 +19,7 @@
  * The gnutls-cli program is copyrighted and licensed
  * under the following terms:
  *
- *  Copyright (C) 2000-2014 Free Software Foundation, and others, all rights reserved.
+ *  Copyright (C) 2000-2016 Free Software Foundation, and others, all rights reserved.
  *  This is free software. It is licensed for use, modification and
  *  redistribution under the terms of the GNU General Public License,
  *  version 3 or later <http://gnu.org/licenses/gpl.html>
@@ -55,7 +55,7 @@
  *  tolerable version is at least as old as what was current when the header
  *  template was released.
  */
-#define AO_TEMPLATE_VERSION 167936
+#define AO_TEMPLATE_VERSION 167937
 #if (AO_TEMPLATE_VERSION < OPTIONS_MINIMUM_VERSION) \
  || (AO_TEMPLATE_VERSION > OPTIONS_STRUCT_VERSION)
 # error option template version mismatches autoopts/options.h header
@@ -77,54 +77,56 @@ typedef enum {
     INDEX_OPT_RESUME                  =  8,
     INDEX_OPT_REHANDSHAKE             =  9,
     INDEX_OPT_STARTTLS                = 10,
-    INDEX_OPT_UDP                     = 11,
-    INDEX_OPT_MTU                     = 12,
-    INDEX_OPT_CRLF                    = 13,
-    INDEX_OPT_X509FMTDER              = 14,
-    INDEX_OPT_FINGERPRINT             = 15,
-    INDEX_OPT_PRINT_CERT              = 16,
-    INDEX_OPT_DH_BITS                 = 17,
-    INDEX_OPT_PRIORITY                = 18,
-    INDEX_OPT_X509CAFILE              = 19,
-    INDEX_OPT_X509CRLFILE             = 20,
-    INDEX_OPT_PGPKEYFILE              = 21,
-    INDEX_OPT_PGPKEYRING              = 22,
-    INDEX_OPT_PGPCERTFILE             = 23,
-    INDEX_OPT_X509KEYFILE             = 24,
-    INDEX_OPT_X509CERTFILE            = 25,
-    INDEX_OPT_PGPSUBKEY               = 26,
-    INDEX_OPT_SRPUSERNAME             = 27,
-    INDEX_OPT_SRPPASSWD               = 28,
-    INDEX_OPT_PSKUSERNAME             = 29,
-    INDEX_OPT_PSKKEY                  = 30,
-    INDEX_OPT_PORT                    = 31,
-    INDEX_OPT_INSECURE                = 32,
-    INDEX_OPT_RANGES                  = 33,
-    INDEX_OPT_BENCHMARK_CIPHERS       = 34,
-    INDEX_OPT_BENCHMARK_TLS_KX        = 35,
-    INDEX_OPT_BENCHMARK_TLS_CIPHERS   = 36,
-    INDEX_OPT_LIST                    = 37,
-    INDEX_OPT_NOTICKET                = 38,
-    INDEX_OPT_SRTP_PROFILES           = 39,
-    INDEX_OPT_ALPN                    = 40,
-    INDEX_OPT_HEARTBEAT               = 41,
-    INDEX_OPT_RECORDSIZE              = 42,
-    INDEX_OPT_DISABLE_SNI             = 43,
-    INDEX_OPT_DISABLE_EXTENSIONS      = 44,
-    INDEX_OPT_INLINE_COMMANDS         = 45,
-    INDEX_OPT_INLINE_COMMANDS_PREFIX  = 46,
-    INDEX_OPT_PROVIDER                = 47,
-    INDEX_OPT_FIPS140_MODE            = 48,
-    INDEX_OPT_VERSION                 = 49,
-    INDEX_OPT_HELP                    = 50,
-    INDEX_OPT_MORE_HELP               = 51
+    INDEX_OPT_APP_PROTO               = 11,
+    INDEX_OPT_STARTTLS_PROTO          = 12,
+    INDEX_OPT_UDP                     = 13,
+    INDEX_OPT_MTU                     = 14,
+    INDEX_OPT_CRLF                    = 15,
+    INDEX_OPT_X509FMTDER              = 16,
+    INDEX_OPT_FINGERPRINT             = 17,
+    INDEX_OPT_PRINT_CERT              = 18,
+    INDEX_OPT_DH_BITS                 = 19,
+    INDEX_OPT_PRIORITY                = 20,
+    INDEX_OPT_X509CAFILE              = 21,
+    INDEX_OPT_X509CRLFILE             = 22,
+    INDEX_OPT_PGPKEYFILE              = 23,
+    INDEX_OPT_PGPKEYRING              = 24,
+    INDEX_OPT_PGPCERTFILE             = 25,
+    INDEX_OPT_X509KEYFILE             = 26,
+    INDEX_OPT_X509CERTFILE            = 27,
+    INDEX_OPT_PGPSUBKEY               = 28,
+    INDEX_OPT_SRPUSERNAME             = 29,
+    INDEX_OPT_SRPPASSWD               = 30,
+    INDEX_OPT_PSKUSERNAME             = 31,
+    INDEX_OPT_PSKKEY                  = 32,
+    INDEX_OPT_PORT                    = 33,
+    INDEX_OPT_INSECURE                = 34,
+    INDEX_OPT_RANGES                  = 35,
+    INDEX_OPT_BENCHMARK_CIPHERS       = 36,
+    INDEX_OPT_BENCHMARK_TLS_KX        = 37,
+    INDEX_OPT_BENCHMARK_TLS_CIPHERS   = 38,
+    INDEX_OPT_LIST                    = 39,
+    INDEX_OPT_NOTICKET                = 40,
+    INDEX_OPT_SRTP_PROFILES           = 41,
+    INDEX_OPT_ALPN                    = 42,
+    INDEX_OPT_HEARTBEAT               = 43,
+    INDEX_OPT_RECORDSIZE              = 44,
+    INDEX_OPT_DISABLE_SNI             = 45,
+    INDEX_OPT_DISABLE_EXTENSIONS      = 46,
+    INDEX_OPT_INLINE_COMMANDS         = 47,
+    INDEX_OPT_INLINE_COMMANDS_PREFIX  = 48,
+    INDEX_OPT_PROVIDER                = 49,
+    INDEX_OPT_FIPS140_MODE            = 50,
+    INDEX_OPT_VERSION                 = 51,
+    INDEX_OPT_HELP                    = 52,
+    INDEX_OPT_MORE_HELP               = 53
 } teOptIndex;
 /** count of all options for gnutls-cli */
-#define OPTION_CT    52
+#define OPTION_CT    54
 /** gnutls-cli version */
-#define GNUTLS_CLI_VERSION       "3.3.9"
+#define GNUTLS_CLI_VERSION       "3.3.22"
 /** Full gnutls-cli version text */
-#define GNUTLS_CLI_FULL_VERSION  "gnutls-cli 3.3.9"
+#define GNUTLS_CLI_FULL_VERSION  "gnutls-cli 3.3.22"
 
 /**
  *  Interface defines for all options.  Replace "n" with the UPPER_CASED
@@ -188,50 +190,52 @@ typedef enum {
 #define VALUE_OPT_RESUME         'r'
 #define VALUE_OPT_REHANDSHAKE    'e'
 #define VALUE_OPT_STARTTLS       's'
+#define VALUE_OPT_APP_PROTO      0x1007
+#define VALUE_OPT_STARTTLS_PROTO 0x1008
 #define VALUE_OPT_UDP            'u'
-#define VALUE_OPT_MTU            0x1007
+#define VALUE_OPT_MTU            0x1009
 
 #define OPT_VALUE_MTU            (DESC(MTU).optArg.argInt)
-#define VALUE_OPT_CRLF           0x1008
-#define VALUE_OPT_X509FMTDER     0x1009
+#define VALUE_OPT_CRLF           0x100A
+#define VALUE_OPT_X509FMTDER     0x100B
 #define VALUE_OPT_FINGERPRINT    'f'
-#define VALUE_OPT_PRINT_CERT     0x100A
-#define VALUE_OPT_DH_BITS        0x100B
+#define VALUE_OPT_PRINT_CERT     0x100C
+#define VALUE_OPT_DH_BITS        0x100D
 
 #define OPT_VALUE_DH_BITS        (DESC(DH_BITS).optArg.argInt)
-#define VALUE_OPT_PRIORITY       0x100C
-#define VALUE_OPT_X509CAFILE     0x100D
-#define VALUE_OPT_X509CRLFILE    0x100E
-#define VALUE_OPT_PGPKEYFILE     0x100F
-#define VALUE_OPT_PGPKEYRING     0x1010
-#define VALUE_OPT_PGPCERTFILE    0x1011
-#define VALUE_OPT_X509KEYFILE    0x1012
-#define VALUE_OPT_X509CERTFILE   0x1013
-#define VALUE_OPT_PGPSUBKEY      0x1014
-#define VALUE_OPT_SRPUSERNAME    0x1015
-#define VALUE_OPT_SRPPASSWD      0x1016
-#define VALUE_OPT_PSKUSERNAME    0x1017
-#define VALUE_OPT_PSKKEY         0x1018
+#define VALUE_OPT_PRIORITY       0x100E
+#define VALUE_OPT_X509CAFILE     0x100F
+#define VALUE_OPT_X509CRLFILE    0x1010
+#define VALUE_OPT_PGPKEYFILE     0x1011
+#define VALUE_OPT_PGPKEYRING     0x1012
+#define VALUE_OPT_PGPCERTFILE    0x1013
+#define VALUE_OPT_X509KEYFILE    0x1014
+#define VALUE_OPT_X509CERTFILE   0x1015
+#define VALUE_OPT_PGPSUBKEY      0x1016
+#define VALUE_OPT_SRPUSERNAME    0x1017
+#define VALUE_OPT_SRPPASSWD      0x1018
+#define VALUE_OPT_PSKUSERNAME    0x1019
+#define VALUE_OPT_PSKKEY         0x101A
 #define VALUE_OPT_PORT           'p'
-#define VALUE_OPT_INSECURE       0x1019
-#define VALUE_OPT_RANGES         0x101A
-#define VALUE_OPT_BENCHMARK_CIPHERS 0x101B
-#define VALUE_OPT_BENCHMARK_TLS_KX 0x101C
-#define VALUE_OPT_BENCHMARK_TLS_CIPHERS 0x101D
+#define VALUE_OPT_INSECURE       0x101B
+#define VALUE_OPT_RANGES         0x101C
+#define VALUE_OPT_BENCHMARK_CIPHERS 0x101D
+#define VALUE_OPT_BENCHMARK_TLS_KX 0x101E
+#define VALUE_OPT_BENCHMARK_TLS_CIPHERS 0x101F
 #define VALUE_OPT_LIST           'l'
-#define VALUE_OPT_NOTICKET       0x101E
-#define VALUE_OPT_SRTP_PROFILES  0x101F
-#define VALUE_OPT_ALPN           0x1020
+#define VALUE_OPT_NOTICKET       0x1020
+#define VALUE_OPT_SRTP_PROFILES  0x1021
+#define VALUE_OPT_ALPN           0x1022
 #define VALUE_OPT_HEARTBEAT      'b'
-#define VALUE_OPT_RECORDSIZE     0x1021
+#define VALUE_OPT_RECORDSIZE     0x1023
 
 #define OPT_VALUE_RECORDSIZE     (DESC(RECORDSIZE).optArg.argInt)
-#define VALUE_OPT_DISABLE_SNI    0x1022
-#define VALUE_OPT_DISABLE_EXTENSIONS 0x1023
-#define VALUE_OPT_INLINE_COMMANDS 0x1024
-#define VALUE_OPT_INLINE_COMMANDS_PREFIX 0x1025
-#define VALUE_OPT_PROVIDER       0x1026
-#define VALUE_OPT_FIPS140_MODE   0x1027
+#define VALUE_OPT_DISABLE_SNI    0x1024
+#define VALUE_OPT_DISABLE_EXTENSIONS 0x1025
+#define VALUE_OPT_INLINE_COMMANDS 0x1026
+#define VALUE_OPT_INLINE_COMMANDS_PREFIX 0x1027
+#define VALUE_OPT_PROVIDER       0x1028
+#define VALUE_OPT_FIPS140_MODE   0x1029
 /** option flag (value) for help-value option */
 #define VALUE_OPT_HELP          'h'
 /** option flag (value) for more-help-value option */

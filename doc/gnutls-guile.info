@@ -1,7 +1,7 @@
-This is gnutls-guile.info, produced by makeinfo version 5.2 from
+This is gnutls-guile.info, produced by makeinfo version 6.0 from
 gnutls-guile.texi.
 
-This manual is last updated 29 July 2014 for version 3.3.9 of GnuTLS.
+This manual is last updated 23 March 2015 for version 3.3.22 of GnuTLS.
 
 Copyright (C) 2001-2012, 2014 Free Software Foundation, Inc.
 
@@ -22,7 +22,7 @@ File: gnutls-guile.info,  Node: Top,  Next: Preface,  Up: (dir)
 GnuTLS-Guile
 ************
 
-This manual is last updated 29 July 2014 for version 3.3.9 of GnuTLS.
+This manual is last updated 23 March 2015 for version 3.3.22 of GnuTLS.
 
 Copyright (C) 2001-2012, 2014 Free Software Foundation, Inc.
 
@@ -129,7 +129,7 @@ the version number of the loaded library as follows:
      $ guile
      guile> (use-modules (gnutls))
      guile> (gnutls-version)
-     "3.3.9"
+     "3.3.22"
      guile>
 
 
@@ -859,33 +859,8 @@ This chapter lists the GnuTLS Scheme procedures exported by the
      parsed, an 'error/invalid-request' error is raised, with an extra
      argument indication the position of the error.
 
- -- Scheme Procedure: set-session-default-export-priority! session
-     Have SESSION use the default export priorities.
-
  -- Scheme Procedure: set-session-default-priority! session
      Have SESSION use the default priorities.
-
- -- Scheme Procedure: set-session-certificate-type-priority! session
-          items
-     Use ITEMS (a list) as the list of preferred certificate-type for
-     SESSION.
-
- -- Scheme Procedure: set-session-protocol-priority! session items
-     Use ITEMS (a list) as the list of preferred protocol for SESSION.
-
- -- Scheme Procedure: set-session-kx-priority! session items
-     Use ITEMS (a list) as the list of preferred kx for SESSION.
-
- -- Scheme Procedure: set-session-compression-method-priority! session
-          items
-     Use ITEMS (a list) as the list of preferred compression-method for
-     SESSION.
-
- -- Scheme Procedure: set-session-mac-priority! session items
-     Use ITEMS (a list) as the list of preferred mac for SESSION.
-
- -- Scheme Procedure: set-session-cipher-priority! session items
-     Use ITEMS (a list) as the list of preferred cipher for SESSION.
 
  -- Scheme Procedure: set-server-session-certificate-request! session
           request
@@ -1018,6 +993,9 @@ This chapter lists the GnuTLS Scheme procedures exported by the
 
  -- Scheme Procedure: psk-key-format->string enumval
      Return a string describing ENUMVAL, a 'psk-key-format' value.
+
+ -- Scheme Procedure: server-name-type->string enumval
+     Return a string describing ENUMVAL, a 'server-name-type' value.
 
  -- Scheme Procedure: sign-algorithm->string enumval
      Return a string describing ENUMVAL, a 'sign-algorithm' value.
@@ -1576,39 +1554,39 @@ Procedure Index
  [index ]
 * Menu:
 
-* alert-description->string:             Guile Reference.     (line 491)
-* alert-get:                             Guile Reference.     (line 377)
-* alert-level->string:                   Guile Reference.     (line 494)
-* alert-send:                            Guile Reference.     (line 374)
-* anonymous-client-credentials?:         Guile Reference.     (line 436)
-* anonymous-server-credentials?:         Guile Reference.     (line 433)
-* bye:                                   Guile Reference.     (line 386)
-* certificate-credentials?:              Guile Reference.     (line 424)
-* certificate-request->string:           Guile Reference.     (line 481)
-* certificate-status->string:            Guile Reference.     (line 484)
-* certificate-type->string:              Guile Reference.     (line 472)
-* certificate-verify->string:            Guile Reference.     (line 449)
-* cipher->string:                        Guile Reference.     (line 518)
+* alert-description->string:             Guile Reference.     (line 469)
+* alert-get:                             Guile Reference.     (line 352)
+* alert-level->string:                   Guile Reference.     (line 472)
+* alert-send:                            Guile Reference.     (line 349)
+* anonymous-client-credentials?:         Guile Reference.     (line 411)
+* anonymous-server-credentials?:         Guile Reference.     (line 408)
+* bye:                                   Guile Reference.     (line 361)
+* certificate-credentials?:              Guile Reference.     (line 399)
+* certificate-request->string:           Guile Reference.     (line 459)
+* certificate-status->string:            Guile Reference.     (line 462)
+* certificate-type->string:              Guile Reference.     (line 450)
+* certificate-verify->string:            Guile Reference.     (line 424)
+* cipher->string:                        Guile Reference.     (line 496)
 * cipher-suite->string:                  Guile Reference.     (line 288)
-* close-request->string:                 Guile Reference.     (line 478)
-* compression-method->string:            Guile Reference.     (line 500)
-* connection-end->string:                Guile Reference.     (line 497)
-* credentials->string:                   Guile Reference.     (line 509)
-* dh-parameters?:                        Guile Reference.     (line 430)
-* digest->string:                        Guile Reference.     (line 503)
+* close-request->string:                 Guile Reference.     (line 456)
+* compression-method->string:            Guile Reference.     (line 478)
+* connection-end->string:                Guile Reference.     (line 475)
+* credentials->string:                   Guile Reference.     (line 487)
+* dh-parameters?:                        Guile Reference.     (line 405)
+* digest->string:                        Guile Reference.     (line 481)
 * error->string:                         Exception Handling.  (line   6)
-* error->string <1>:                     Guile Reference.     (line 446)
-* gnutls-version:                        Guile Reference.     (line 393)
-* handshake:                             Guile Reference.     (line 383)
-* handshake-description->string:         Guile Reference.     (line 487)
+* error->string <1>:                     Guile Reference.     (line 421)
+* gnutls-version:                        Guile Reference.     (line 368)
+* handshake:                             Guile Reference.     (line 358)
+* handshake-description->string:         Guile Reference.     (line 465)
 * import-openpgp-certificate:            Guile Reference.     (line  64)
 * import-openpgp-keyring:                Guile Reference.     (line  24)
 * import-openpgp-private-key:            Guile Reference.     (line  59)
 * import-x509-certificate:               Guile Reference.     (line 134)
 * import-x509-private-key:               Guile Reference.     (line 130)
-* key-usage->string:                     Guile Reference.     (line 452)
-* kx->string:                            Guile Reference.     (line 515)
-* mac->string:                           Guile Reference.     (line 506)
+* key-usage->string:                     Guile Reference.     (line 427)
+* kx->string:                            Guile Reference.     (line 493)
+* mac->string:                           Guile Reference.     (line 484)
 * make-anonymous-client-credentials:     Guile Reference.     (line 239)
 * make-anonymous-server-credentials:     Guile Reference.     (line 242)
 * make-certificate-credentials:          Guile Reference.     (line 218)
@@ -1618,24 +1596,24 @@ Procedure Index
 * make-rsa-parameters:                   Representation of Binary Data.
                                                               (line  19)
 * make-rsa-parameters <1>:               Guile Reference.     (line 232)
-* make-session:                          Guile Reference.     (line 389)
+* make-session:                          Guile Reference.     (line 364)
 * openpgp-certificate-algorithm:         Guile Reference.     (line  35)
 * openpgp-certificate-fingerprint:       Guile Reference.     (line  45)
 * openpgp-certificate-fingerprint!:      Guile Reference.     (line  48)
-* openpgp-certificate-format->string:    Guile Reference.     (line 442)
+* openpgp-certificate-format->string:    Guile Reference.     (line 417)
 * openpgp-certificate-id:                Guile Reference.     (line  56)
 * openpgp-certificate-id!:               Guile Reference.     (line  52)
 * openpgp-certificate-name:              Guile Reference.     (line  42)
 * openpgp-certificate-names:             Guile Reference.     (line  39)
 * openpgp-certificate-usage:             Guile Reference.     (line  28)
 * openpgp-certificate-version:           Guile Reference.     (line  31)
-* openpgp-certificate?:                  Guile Reference.     (line 403)
+* openpgp-certificate?:                  Guile Reference.     (line 378)
 * openpgp-keyring-contains-key-id?:      Guile Reference.     (line  21)
-* openpgp-keyring?:                      Guile Reference.     (line 397)
-* openpgp-private-key?:                  Guile Reference.     (line 400)
-* params->string:                        Guile Reference.     (line 512)
+* openpgp-keyring?:                      Guile Reference.     (line 372)
+* openpgp-private-key?:                  Guile Reference.     (line 375)
+* params->string:                        Guile Reference.     (line 490)
 * peer-certificate-status:               Guile Reference.     (line 155)
-* pk-algorithm->string:                  Guile Reference.     (line 461)
+* pk-algorithm->string:                  Guile Reference.     (line 439)
 * pkcs1-export-rsa-parameters:           Representation of Binary Data.
                                                               (line  19)
 * pkcs1-export-rsa-parameters <1>:       Guile Reference.     (line 222)
@@ -1643,33 +1621,34 @@ Procedure Index
 * pkcs3-export-dh-parameters:            Guile Reference.     (line 248)
 * pkcs3-import-dh-parameters:            Guile Reference.     (line 253)
 * pkcs8-import-x509-private-key:         Guile Reference.     (line 123)
-* protocol->string:                      Guile Reference.     (line 475)
-* psk-client-credentials?:               Guile Reference.     (line 412)
-* psk-key-format->string:                Guile Reference.     (line 455)
-* psk-server-credentials?:               Guile Reference.     (line 415)
+* protocol->string:                      Guile Reference.     (line 453)
+* psk-client-credentials?:               Guile Reference.     (line 387)
+* psk-key-format->string:                Guile Reference.     (line 430)
+* psk-server-credentials?:               Guile Reference.     (line 390)
 * record-receive!:                       Input and Output.    (line  47)
 * record-receive! <1>:                   Guile Reference.     (line 272)
 * record-send:                           Input and Output.    (line  47)
 * record-send <1>:                       Guile Reference.     (line 276)
-* rehandshake:                           Guile Reference.     (line 380)
-* rsa-parameters?:                       Guile Reference.     (line 427)
+* rehandshake:                           Guile Reference.     (line 355)
+* rsa-parameters?:                       Guile Reference.     (line 402)
+* server-name-type->string:              Guile Reference.     (line 433)
 * server-session-psk-username:           Guile Reference.     (line 138)
-* session-authentication-type:           Guile Reference.     (line 352)
-* session-certificate-type:              Guile Reference.     (line 359)
+* session-authentication-type:           Guile Reference.     (line 327)
+* session-certificate-type:              Guile Reference.     (line 334)
 * session-cipher:                        Enumerates and Constants.
                                                               (line  47)
-* session-cipher <1>:                    Guile Reference.     (line 371)
-* session-client-authentication-type:    Guile Reference.     (line 344)
-* session-compression-method:            Guile Reference.     (line 362)
-* session-kx:                            Guile Reference.     (line 368)
-* session-mac:                           Guile Reference.     (line 365)
-* session-our-certificate-chain:         Guile Reference.     (line 332)
-* session-peer-certificate-chain:        Guile Reference.     (line 337)
-* session-protocol:                      Guile Reference.     (line 356)
+* session-cipher <1>:                    Guile Reference.     (line 346)
+* session-client-authentication-type:    Guile Reference.     (line 319)
+* session-compression-method:            Guile Reference.     (line 337)
+* session-kx:                            Guile Reference.     (line 343)
+* session-mac:                           Guile Reference.     (line 340)
+* session-our-certificate-chain:         Guile Reference.     (line 307)
+* session-peer-certificate-chain:        Guile Reference.     (line 312)
+* session-protocol:                      Guile Reference.     (line 331)
 * session-record-port:                   Input and Output.    (line  28)
 * session-record-port <1>:               Guile Reference.     (line 267)
-* session-server-authentication-type:    Guile Reference.     (line 348)
-* session?:                              Guile Reference.     (line 439)
+* session-server-authentication-type:    Guile Reference.     (line 323)
+* session?:                              Guile Reference.     (line 414)
 * set-anonymous-server-dh-parameters!:   Guile Reference.     (line 235)
 * set-certificate-credentials-dh-parameters!: Guile Reference.
                                                               (line 213)
@@ -1696,30 +1675,23 @@ Procedure Index
 * set-log-procedure!:                    Guile Reference.     (line  12)
 * set-psk-client-credentials!:           Guile Reference.     (line 141)
 * set-psk-server-credentials-file!:      Guile Reference.     (line 149)
-* set-server-session-certificate-request!: Guile Reference.   (line 326)
-* set-session-certificate-type-priority!: Guile Reference.    (line 304)
-* set-session-cipher-priority!:          Guile Reference.     (line 323)
-* set-session-compression-method-priority!: Guile Reference.  (line 315)
+* set-server-session-certificate-request!: Guile Reference.   (line 301)
 * set-session-credentials!:              Guile Reference.     (line 285)
-* set-session-default-export-priority!:  Guile Reference.     (line 298)
-* set-session-default-priority!:         Guile Reference.     (line 301)
+* set-session-default-priority!:         Guile Reference.     (line 298)
 * set-session-dh-prime-bits!:            Guile Reference.     (line 245)
-* set-session-kx-priority!:              Guile Reference.     (line 312)
-* set-session-mac-priority!:             Guile Reference.     (line 320)
 * set-session-priorities!:               Guile Reference.     (line 291)
-* set-session-protocol-priority!:        Guile Reference.     (line 309)
 * set-session-server-name!:              Guile Reference.     (line 279)
 * set-session-transport-fd!:             Input and Output.    (line   6)
 * set-session-transport-fd! <1>:         Guile Reference.     (line 264)
 * set-session-transport-port!:           Input and Output.    (line   6)
 * set-session-transport-port! <1>:       Guile Reference.     (line 261)
-* sign-algorithm->string:                Guile Reference.     (line 458)
-* srp-client-credentials?:               Guile Reference.     (line 418)
-* srp-server-credentials?:               Guile Reference.     (line 421)
+* sign-algorithm->string:                Guile Reference.     (line 436)
+* srp-client-credentials?:               Guile Reference.     (line 393)
+* srp-server-credentials?:               Guile Reference.     (line 396)
 * x509-certificate-authority-key-id:     Guile Reference.     (line  78)
 * x509-certificate-dn:                   Guile Reference.     (line 118)
 * x509-certificate-dn-oid:               Guile Reference.     (line 111)
-* x509-certificate-format->string:       Guile Reference.     (line 468)
+* x509-certificate-format->string:       Guile Reference.     (line 446)
 * x509-certificate-issuer-dn:            Guile Reference.     (line 115)
 * x509-certificate-issuer-dn-oid:        Guile Reference.     (line 107)
 * x509-certificate-key-id:               Guile Reference.     (line  82)
@@ -1730,9 +1702,9 @@ Procedure Index
 * x509-certificate-subject-alternative-name: Guile Reference. (line  68)
 * x509-certificate-subject-key-id:       Guile Reference.     (line  75)
 * x509-certificate-version:              Guile Reference.     (line  87)
-* x509-certificate?:                     Guile Reference.     (line 409)
-* x509-private-key?:                     Guile Reference.     (line 406)
-* x509-subject-alternative-name->string: Guile Reference.     (line 464)
+* x509-certificate?:                     Guile Reference.     (line 384)
+* x509-private-key?:                     Guile Reference.     (line 381)
+* x509-subject-alternative-name->string: Guile Reference.     (line 442)
 
 
 File: gnutls-guile.info,  Node: Concept Index,  Prev: Procedure Index,  Up: Top
@@ -1759,22 +1731,22 @@ Concept Index
 
 
 Tag Table:
-Node: Top781
-Node: Preface1832
-Node: Guile Preparations2337
-Node: Guile API Conventions4975
-Node: Enumerates and Constants5549
-Node: Procedure Names7874
-Node: Representation of Binary Data8857
-Node: Input and Output9964
-Node: Exception Handling11837
-Node: Guile Examples13665
-Node: Anonymous Authentication Guile Example14119
-Node: OpenPGP Authentication Guile Example16681
-Node: Importing OpenPGP Keys Guile Example19563
-Node: Guile Reference21003
-Node: Copying Information41750
-Node: Procedure Index66936
-Node: Concept Index78478
+Node: Top783
+Node: Preface1836
+Node: Guile Preparations2341
+Node: Guile API Conventions4980
+Node: Enumerates and Constants5554
+Node: Procedure Names7879
+Node: Representation of Binary Data8862
+Node: Input and Output9969
+Node: Exception Handling11842
+Node: Guile Examples13670
+Node: Anonymous Authentication Guile Example14124
+Node: OpenPGP Authentication Guile Example16686
+Node: Importing OpenPGP Keys Guile Example19568
+Node: Guile Reference21008
+Node: Copying Information40885
+Node: Procedure Index66071
+Node: Concept Index77175
 
 End Tag Table

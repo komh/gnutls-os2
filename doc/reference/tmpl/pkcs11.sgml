@@ -276,6 +276,14 @@ pkcs11
 
 </para>
 
+@raw: 
+@type: 
+@flags: 
+@info: 
+@pubkey: 
+@pk_algorithm: 
+@key_usage: 
+@pin: 
 
 <!-- ##### TYPEDEF gnutls_pkcs11_obj_t ##### -->
 <para>

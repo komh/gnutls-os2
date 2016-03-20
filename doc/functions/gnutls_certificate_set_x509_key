@@ -21,6 +21,9 @@ the certificate chain in  @code{cert_list} .
 Note that the certificates and keys provided, can be safely deinitialized
 after this function is called.
 
+If that function fails to load the  @code{res} structure is at an undefined state, it must
+not be reused to load other keys or certificates.
+
 @strong{Returns:} @code{GNUTLS_E_SUCCESS}  (0) on success, or a negative error code.
 
 @strong{Since:} 2.4.0

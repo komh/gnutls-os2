@@ -197,9 +197,13 @@ _gnutls_x509_get_dn(ASN1_TYPE asn1_struct,
 	}
 	while (1);
 
+	DATA_APPEND("\x00", 1);
 	result = _gnutls_buffer_to_datum(&out_str, dn);
 	if (result < 0)
 		gnutls_assert();
+	if (dn->size > 0) {
+		dn->size--;
+	}
 
 	goto cleanup1;
 
@@ -640,7 +644,7 @@ _gnutls_x509_decode_and_read_attribute(ASN1_TYPE asn1_struct,
 	if (octet_string)
 		result =
 		    _gnutls_x509_read_string(asn1_struct, tmpbuffer, value,
-					     ASN1_ETYPE_OCTET_STRING);
+					     ASN1_ETYPE_OCTET_STRING, 0);
 	else
 		result =
 		    _gnutls_x509_read_value(asn1_struct, tmpbuffer, value);

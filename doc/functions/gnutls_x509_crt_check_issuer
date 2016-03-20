@@ -11,6 +11,9 @@ This function will check if the given certificate was issued by the
 given issuer. It checks the DN fields and the authority
 key identifier and subject key identifier fields match.
 
+If the same certificate is provided at the  @code{cert} and  @code{issuer} fields,
+it will check whether the certificate is self-signed.
+
 @strong{Returns:} It will return true (1) if the given certificate is issued
 by the given issuer, and false (0) if not.  
 @end deftypefun

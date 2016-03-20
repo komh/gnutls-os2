@@ -41,7 +41,7 @@ Digital signature algorithm ECDSA with SHA-384.
 @item GNUTLS_@-SIGN_@-ECDSA_@-SHA512
 Digital signature algorithm ECDSA with SHA-512.
 @item GNUTLS_@-SIGN_@-DSA_@-SHA384
--- undescribed --
+Digital signature algorithm DSA with SHA-384
 @item GNUTLS_@-SIGN_@-DSA_@-SHA512
--- undescribed --
+Digital signature algorithm DSA with SHA-512
 @end table

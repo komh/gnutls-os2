@@ -20,13 +20,3 @@ context
 <!-- ##### SECTION Image ##### -->
 
 
-<!-- ##### USER_FUNCTION passphrase_cb ##### -->
-<para>
-
-</para>
-
-@uint8_t: 
-@prompt: 
-@Returns: 
-
-

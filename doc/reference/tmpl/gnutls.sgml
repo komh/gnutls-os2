@@ -3510,6 +3510,26 @@ gnutls
 
 </para>
 
+@cipher: 
+@mac: 
+@kx: 
+@compression: 
+@protocol: 
+@cert_type: 
+@sign_algo: 
+@supported_ecc: 
+@no_extensions: 
+@allow_large_records: 
+@max_empty_records: 
+@dumbfw: 
+@sr: 
+@min_record_version: 
+@server_precedence: 
+@allow_wrong_pms: 
+@stateless_compression: 
+@additional_verify_flags: 
+@level: 
+@dh_prime_bits: 
 
 <!-- ##### TYPEDEF gnutls_priority_t ##### -->
 <para>
@@ -4048,6 +4068,10 @@ gnutls
 
 </para>
 
+@security_parameters: 
+@record_parameters: 
+@internals: 
+@key: 
 
 <!-- ##### FUNCTION gnutls_session_is_resumed ##### -->
 <para>

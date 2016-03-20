@@ -253,14 +253,16 @@ If no information via DANE can be obtained the flag @code{DANE_VERIFY_NO_DANE_IN
 is set. If a DNSSEC signature is not available for the DANE
 record then the verify flag @code{DANE_VERIFY_NO_DNSSEC_DATA}  is set.
 
-Note that the CA constraint only applies for the directly certifying CA
-and does not account for long CA chains. Moreover this function does not
-validate the provided chain.
-
 Due to the many possible options of DANE, there is no single threat
 model countered. When notifying the user about DANE verification results
 it may be better to mention: DANE verification did not reject the certificate,
 rather than mentioning a successful DANE verication.
+
+Note that this function is designed to be run in addition to
+PKIX - certificate chain - verification. To be run independently
+the @code{DANE_VFLAG_ONLY_CHECK_EE_USAGE}  flag should be specified; 
+then the function will check whether the key of the peer matches the
+key advertized in the DANE entry.
 
 If the  @code{q} parameter is provided it will be used for caching entries.
 
@@ -293,13 +295,16 @@ If no information via DANE can be obtained the flag @code{DANE_VERIFY_NO_DANE_IN
 is set. If a DNSSEC signature is not available for the DANE
 record then the verify flag @code{DANE_VERIFY_NO_DNSSEC_DATA}  is set.
 
-Note that the CA constraint only applies for the directly certifying CA
-and does not account for long CA chains.
-
 Due to the many possible options of DANE, there is no single threat
 model countered. When notifying the user about DANE verification results
 it may be better to mention: DANE verification did not reject the certificate,
 rather than mentioning a successful DANE verication.
+
+Note that this function is designed to be run in addition to
+PKIX - certificate chain - verification. To be run independently
+the @code{DANE_VFLAG_ONLY_CHECK_EE_USAGE}  flag should be specified; 
+then the function will check whether the key of the peer matches the
+key advertized in the DANE entry.
 
 If the  @code{q} parameter is provided it will be used for caching entries.
 
@@ -331,7 +336,7 @@ CA constrains and/or the certificate available via DANE.
 See @code{dane_verify_crt()}  for more information.
 
 This will not verify the chain for validity; unless the DANE
-verification is restricted to end certificates, this has to
+verification is restricted to end certificates, this must be
 be performed separately using @code{gnutls_certificate_verify_peers3()} .
 
 @strong{Returns:} On success, @code{DANE_E_SUCCESS}  (0) is returned, otherwise a

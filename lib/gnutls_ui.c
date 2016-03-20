@@ -89,8 +89,8 @@ int gnutls_random_art(gnutls_random_art_t type,
  * a server sends a prime with less bits than that
  * %GNUTLS_E_DH_PRIME_UNACCEPTABLE will be returned by the handshake.
  *
- * Note that values lower than 512 bits may allow decryption of the
- * exchanged data.
+ * Note that this function will warn via the audit log for value that
+ * are believed to be weak.
  *
  * The function has no effect in server side.
  * 
@@ -103,7 +103,7 @@ int gnutls_random_art(gnutls_random_art_t type,
  **/
 void gnutls_dh_set_prime_bits(gnutls_session_t session, unsigned int bits)
 {
-	if (bits <= gnutls_sec_param_to_pk_bits(GNUTLS_PK_DH, GNUTLS_SEC_PARAM_VERY_WEAK)
+	if (bits < gnutls_sec_param_to_pk_bits(GNUTLS_PK_DH, GNUTLS_SEC_PARAM_WEAK)
 		&& bits != 0)
 		_gnutls_audit_log(session,
 				  "Note that the security level of the Diffie-Hellman key exchange has been lowered to %u bits and this may allow decryption of the session data\n",
@@ -123,6 +123,9 @@ void gnutls_dh_set_prime_bits(gnutls_session_t session, unsigned int bits)
  * the generator used.  This function should be used for both
  * anonymous and ephemeral Diffie-Hellman.  The output parameters must
  * be freed with gnutls_free().
+ *
+ * Note, that the prime and generator are exported as non-negative
+ * integers and may include a leading zero byte.
  *
  * Returns: On success, %GNUTLS_E_SUCCESS (0) is returned, otherwise
  *   an error code is returned.
@@ -188,6 +191,9 @@ gnutls_dh_get_group(gnutls_session_t session,
  * Diffie-Hellman key exchange.  This function should be used for both
  * anonymous and ephemeral Diffie-Hellman.  The output parameters must
  * be freed with gnutls_free().
+ *
+ * Note, that public key is exported as non-negative
+ * integer and may include a leading zero byte.
  *
  * Returns: On success, %GNUTLS_E_SUCCESS (0) is returned, otherwise
  *   an error code is returned.
@@ -356,6 +362,9 @@ int gnutls_dh_get_prime_bits(gnutls_session_t session)
 		return GNUTLS_E_INVALID_REQUEST;
 	}
 
+	if(dh->prime.size == 0)
+		return 0;
+
 	return mpi_buf2bits(&dh->prime);
 }
 
@@ -459,7 +468,7 @@ const gnutls_datum_t *gnutls_certificate_get_ours(gnutls_session_t session)
 
 	cred = (gnutls_certificate_credentials_t)
 	    _gnutls_get_cred(session, GNUTLS_CRD_CERTIFICATE);
-	if (cred == NULL || cred->certs == NULL) {
+	if (cred == NULL) {
 		gnutls_assert();
 		return NULL;
 	}
@@ -813,6 +822,7 @@ gnutls_certificate_set_rsa_export_params(gnutls_certificate_credentials_t
 char *gnutls_session_get_desc(gnutls_session_t session)
 {
 	gnutls_kx_algorithm_t kx;
+	const char *kx_str;
 	unsigned type;
 	char kx_name[32];
 	char proto_name[32];
@@ -833,15 +843,20 @@ char *gnutls_session_get_desc(gnutls_session_t session)
 		dh_bits = gnutls_dh_get_prime_bits(session);
 	}
 
-	if (curve_name != NULL)
-		snprintf(kx_name, sizeof(kx_name), "%s-%s",
-			 gnutls_kx_get_name(kx), curve_name);
-	else if (dh_bits != 0)
-		snprintf(kx_name, sizeof(kx_name), "%s-%u",
-			 gnutls_kx_get_name(kx), dh_bits);
-	else
-		snprintf(kx_name, sizeof(kx_name), "%s",
-			 gnutls_kx_get_name(kx));
+	kx_str = gnutls_kx_get_name(kx);
+	if (kx_str) {
+		if (curve_name != NULL)
+			snprintf(kx_name, sizeof(kx_name), "%s-%s",
+				 kx_str, curve_name);
+		else if (dh_bits != 0)
+			snprintf(kx_name, sizeof(kx_name), "%s-%u",
+				 kx_str, dh_bits);
+		else
+			snprintf(kx_name, sizeof(kx_name), "%s",
+				 kx_str);
+	} else {
+		strcpy(kx_name, "NULL");
+	}
 
 	type = gnutls_certificate_type_get(session);
 	if (type == GNUTLS_CRT_X509)

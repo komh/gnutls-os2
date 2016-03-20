@@ -730,7 +730,7 @@ negative error code on failure.
 @subheading gnutls_openpgp_keyring_deinit
 @anchor{gnutls_openpgp_keyring_deinit}
 @deftypefun {void} {gnutls_openpgp_keyring_deinit} (gnutls_openpgp_keyring_t @var{keyring})
-@var{keyring}: The structure to be initialized
+@var{keyring}: A pointer to the type to be initialized
 
 This function will deinitialize a keyring structure.
 @end deftypefun
@@ -742,7 +742,7 @@ This function will deinitialize a keyring structure.
 
 @var{idx}: the index of the certificate to export
 
-@var{cert}: An uninitialized @code{gnutls_openpgp_crt_t}  structure
+@var{cert}: An uninitialized @code{gnutls_openpgp_crt_t}  type
 
 This function will extract an OpenPGP certificate from the given
 keyring.  If the index given is out of range
@@ -782,7 +782,7 @@ stored in 'keyring'.
 @subheading gnutls_openpgp_keyring_init
 @anchor{gnutls_openpgp_keyring_init}
 @deftypefun {int} {gnutls_openpgp_keyring_init} (gnutls_openpgp_keyring_t * @var{keyring})
-@var{keyring}: The structure to be initialized
+@var{keyring}: A pointer to the type to be initialized
 
 This function will initialize an keyring structure.
 

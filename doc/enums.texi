@@ -33,9 +33,9 @@ AES in GCM mode with 256-bit keys.
 @item GNUTLS_@-CIPHER_@-CAMELLIA_@-192_@-CBC
 Camellia in CBC mode with 192-bit keys.
 @item GNUTLS_@-CIPHER_@-SALSA20_@-256
--- undescribed --
+Salsa20 with 256-bit keys.
 @item GNUTLS_@-CIPHER_@-ESTREAM_@-SALSA20_@-256
--- undescribed --
+Estream's Salsa20 variant with 256-bit keys.
 @item GNUTLS_@-CIPHER_@-CAMELLIA_@-128_@-GCM
 CAMELLIA in GCM mode with 128-bit keys.
 @item GNUTLS_@-CIPHER_@-CAMELLIA_@-256_@-GCM
@@ -257,7 +257,8 @@ recognized.
 The SRP/PSK username is missing
 or not known.
 @item GNUTLS_@-A_@-NO_@-APPLICATION_@-PROTOCOL
--- undescribed --
+The ALPN protocol requested is
+not supported by the peer.
 @end table
 
 @c gnutls_handshake_description_t
@@ -478,9 +479,9 @@ Digital signature algorithm ECDSA with SHA-384.
 @item GNUTLS_@-SIGN_@-ECDSA_@-SHA512
 Digital signature algorithm ECDSA with SHA-512.
 @item GNUTLS_@-SIGN_@-DSA_@-SHA384
--- undescribed --
+Digital signature algorithm DSA with SHA-384
 @item GNUTLS_@-SIGN_@-DSA_@-SHA512
--- undescribed --
+Digital signature algorithm DSA with SHA-512
 @end table
 
 @c gnutls_ecc_curve_t
@@ -835,7 +836,8 @@ marked as not private.
 @item GNUTLS_@-PKCS11_@-OBJ_@-FLAG_@-RETRIEVE_@-ANY
 When retrieving an object, do not set any requirements.
 @item GNUTLS_@-PKCS11_@-OBJ_@-FLAG_@-RETRIEVE_@-TRUSTED
--- undescribed --
+When retrieving an object, only retrieve the marked as trusted.
+In @code{gnutls_pkcs11_crt_is_known()}  it implies @code{GNUTLS_PKCS11_OBJ_FLAG_RETRIEVE_COMPARE}  if @code{GNUTLS_PKCS11_OBJ_FLAG_COMPARE_KEY}  is not given.
 @item GNUTLS_@-PKCS11_@-OBJ_@-FLAG_@-RETRIEVE_@-DISTRUSTED
 When retrieving an object, only retrieve the marked as distrusted.
 @item GNUTLS_@-PKCS11_@-OBJ_@-FLAG_@-COMPARE
@@ -850,6 +852,8 @@ Mark the generated key pair as wrapping and unwrapping keys.
 When checking an object's presence, compare the key before returning any result.
 @item GNUTLS_@-PKCS11_@-OBJ_@-FLAG_@-OVERWRITE_@-TRUSTMOD_@-EXT
 When an issuer is requested, override its extensions with the ones present in the trust module.
+@item GNUTLS_@-PKCS11_@-OBJ_@-FLAG_@-NO_@-STORE_@-PUBKEY
+When generating a keypair don't store the public key (store).
 @end table
 
 @c gnutls_pkcs11_url_type_t
@@ -933,7 +937,7 @@ Secret key.
 @item GNUTLS_@-PKCS11_@-OBJ_@-DATA
 Data object.
 @item GNUTLS_@-PKCS11_@-OBJ_@-X509_@-CRT_@-EXTENSION
--- undescribed --
+X.509 certificate extension (supported by p11-kit trust module only).
 @end table
 
 @c gnutls_pubkey_flags_t

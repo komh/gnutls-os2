@@ -1,5 +1,5 @@
 # DO NOT EDIT! GENERATED AUTOMATICALLY!
-# Copyright (C) 2002-2014 Free Software Foundation, Inc.
+# Copyright (C) 2002-2015 Free Software Foundation, Inc.
 #
 # This file is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -62,6 +62,9 @@ AC_DEFUN([ggl_EARLY],
   # Code from module fseeko:
   AC_REQUIRE([AC_FUNC_FSEEKO])
   # Code from module fstat:
+  # Code from module ftell:
+  # Code from module ftello:
+  AC_REQUIRE([AC_FUNC_FSEEKO])
   # Code from module getaddrinfo:
   # Code from module getdelim:
   # Code from module getline:
@@ -82,6 +85,7 @@ AC_DEFUN([ggl_EARLY],
   # Code from module malloc-posix:
   # Code from module malloca:
   # Code from module memchr:
+  # Code from module minmax:
   # Code from module mktime:
   # Code from module msvc-inval:
   # Code from module msvc-nothrow:
@@ -90,6 +94,7 @@ AC_DEFUN([ggl_EARLY],
   # Code from module netinet_in:
   # Code from module parse-datetime:
   # Code from module progname:
+  # Code from module read-file:
   # Code from module realloc-posix:
   # Code from module recv:
   # Code from module recvfrom:
@@ -226,6 +231,17 @@ AC_SUBST([LTALLOCA])
     gl_PREREQ_FSTAT
   fi
   gl_SYS_STAT_MODULE_INDICATOR([fstat])
+  gl_FUNC_FTELL
+  if test $REPLACE_FTELL = 1; then
+    AC_LIBOBJ([ftell])
+  fi
+  gl_STDIO_MODULE_INDICATOR([ftell])
+  gl_FUNC_FTELLO
+  if test $HAVE_FTELLO = 0 || test $REPLACE_FTELLO = 1; then
+    AC_LIBOBJ([ftello])
+    gl_PREREQ_FTELLO
+  fi
+  gl_STDIO_MODULE_INDICATOR([ftello])
   gl_GETADDRINFO
   if test $HAVE_GETADDRINFO = 0; then
     AC_LIBOBJ([getaddrinfo])
@@ -301,6 +317,7 @@ AC_SUBST([LTALLOCA])
     gl_PREREQ_MEMCHR
   fi
   gl_STRING_MODULE_INDICATOR([memchr])
+  gl_MINMAX
   gl_FUNC_MKTIME
   if test $REPLACE_MKTIME = 1; then
     AC_LIBOBJ([mktime])
@@ -322,6 +339,7 @@ AC_SUBST([LTALLOCA])
   gl_PARSE_DATETIME
   AC_CHECK_DECLS([program_invocation_name], [], [], [#include <errno.h>])
   AC_CHECK_DECLS([program_invocation_short_name], [], [], [#include <errno.h>])
+  gl_PREREQ_READ_FILE
   gl_FUNC_REALLOC_POSIX
   if test $REPLACE_REALLOC = 1; then
     AC_LIBOBJ([realloc])
@@ -387,8 +405,8 @@ AC_SUBST([LTALLOCA])
     SYS_IOCTL_H_HAVE_WINSOCK2_H_AND_USE_SOCKETS=1
   fi
   gl_SYS_SOCKET_MODULE_INDICATOR([socket])
-  gl_SOCKETLIB
-  gl_SOCKETS
+  AC_REQUIRE([gl_SOCKETLIB])
+  AC_REQUIRE([gl_SOCKETS])
   gl_TYPE_SOCKLEN_T
   gt_TYPE_SSIZE_T
   gl_STDALIGN_H
@@ -418,7 +436,7 @@ AC_SUBST([LTALLOCA])
   gl_HEADER_STRING_H
   gl_HEADER_SYS_SELECT
   AC_PROG_MKDIR_P
-  gl_HEADER_SYS_SOCKET
+  AC_REQUIRE([gl_HEADER_SYS_SOCKET])
   AC_PROG_MKDIR_P
   gl_HEADER_SYS_STAT_H
   AC_PROG_MKDIR_P
@@ -612,6 +630,8 @@ AC_DEFUN([ggl_FILE_LIST], [
   lib/fseek.c
   lib/fseeko.c
   lib/fstat.c
+  lib/ftell.c
+  lib/ftello.c
   lib/gai_strerror.c
   lib/getaddrinfo.c
   lib/getdelim.c
@@ -634,6 +654,7 @@ AC_DEFUN([ggl_FILE_LIST], [
   lib/malloca.valgrind
   lib/memchr.c
   lib/memchr.valgrind
+  lib/minmax.h
   lib/mktime-internal.h
   lib/mktime.c
   lib/msvc-inval.c
@@ -650,6 +671,8 @@ AC_DEFUN([ggl_FILE_LIST], [
   lib/printf-parse.h
   lib/progname.c
   lib/progname.h
+  lib/read-file.c
+  lib/read-file.h
   lib/realloc.c
   lib/recv.c
   lib/recvfrom.c
@@ -721,6 +744,8 @@ AC_DEFUN([ggl_FILE_LIST], [
   m4/fseek.m4
   m4/fseeko.m4
   m4/fstat.m4
+  m4/ftell.m4
+  m4/ftello.m4
   m4/getaddrinfo.m4
   m4/getdelim.m4
   m4/getline.m4
@@ -741,6 +766,7 @@ AC_DEFUN([ggl_FILE_LIST], [
   m4/malloca.m4
   m4/math_h.m4
   m4/memchr.m4
+  m4/minmax.m4
   m4/mktime.m4
   m4/mmap-anon.m4
   m4/msvc-inval.m4
@@ -751,6 +777,7 @@ AC_DEFUN([ggl_FILE_LIST], [
   m4/off_t.m4
   m4/parse-datetime.m4
   m4/printf.m4
+  m4/read-file.m4
   m4/realloc.m4
   m4/select.m4
   m4/servent.m4

@@ -432,7 +432,9 @@ Returns the size of the nonce used by the MAC in TLS.
 This function will generate random data and store it to output
 buffer.
 
-@strong{Returns:} Zero or a negative error code on error.
+This function is thread-safe and also fork-safe.
+
+@strong{Returns:} Zero on success, or a negative error code on error.
 
 @strong{Since:} 2.12.0
 @end deftypefun

@@ -16,7 +16,7 @@ issuer's certificate, then the issuer's issuer etc.
 In case of OpenPGP keys a single key will be returned in raw
 format.
 
-@strong{Returns:} a pointer to a @code{gnutls_datum_t}  containing our
+@strong{Returns:} a pointer to a @code{gnutls_datum_t}  containing the peer's
 certificates, or @code{NULL}  in case of an error or if no certificate
 was used.
 @end deftypefun

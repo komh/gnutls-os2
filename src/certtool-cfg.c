@@ -164,7 +164,7 @@ typedef struct _cfg_ctx {
 	int ipsec_ike_key;
 	char **key_purpose_oids;
 	int crl_next_update;
-	int crl_number;
+	int64_t crl_number;
 	int crq_extensions;
 	char *proxy_policy_language;
 	char **ocsp_uris;
@@ -241,6 +241,13 @@ void cfg_init(void)
     { \
       s_name = 1; \
     }
+
+/* READ_NUMERIC only returns a long */
+#define CHECK_LONG_OVERFLOW(x) \
+      if (x == LONG_MAX) { \
+      	fprintf(stderr, "overflow in number\n"); \
+      	exit(1); \
+      }
 
 #define READ_NUMERIC(name, s_name) \
   val = optionGetValue(pov, name); \
@@ -404,9 +411,13 @@ int template_parse(const char *template)
 
 
 	READ_NUMERIC("serial", cfg.serial);
+	CHECK_LONG_OVERFLOW(cfg.serial);
+
 	READ_NUMERIC("expiration_days", cfg.expiration_days);
 	READ_NUMERIC("crl_next_update", cfg.crl_next_update);
 	READ_NUMERIC("crl_number", cfg.crl_number);
+	CHECK_LONG_OVERFLOW(cfg.crl_number);
+
 	READ_NUMERIC("path_len", cfg.path_len);
 
 	val = optionGetValue(pov, "proxy_policy_language");
@@ -482,10 +493,10 @@ read_crq_set(gnutls_x509_crq_t crq, const char *input_str, const char *oid)
 
 /* The input_str should contain %d or %u to print the default.
  */
-static long read_int_with_default(const char *input_str, long def)
+static int64_t read_int_with_default(const char *input_str, long def)
 {
 	char *endptr;
-	long l;
+	int64_t l;
 	static char input[128];
 
 	fprintf(stderr, input_str, def);
@@ -495,18 +506,39 @@ static long read_int_with_default(const char *input_str, long def)
 	if (IS_NEWLINE(input))
 		return def;
 
+#if SIZEOF_LONG < 8
+	l = strtoll(input, &endptr, 0);
+
+	if (*endptr != '\0' && *endptr != '\r' && *endptr != '\n') {
+		fprintf(stderr, "Trailing garbage ignored: `%s'\n",
+			endptr);
+		return 0;
+	} else {
+		*endptr = 0;
+	}
+
+	if (l <= LLONG_MIN || l >= LLONG_MAX) {
+		fprintf(stderr, "Integer out of range: `%s' (max: %llu)\n", input, LLONG_MAX-1);
+		return 0;
+	}
+#else
 	l = strtol(input, &endptr, 0);
 
 	if (*endptr != '\0' && *endptr != '\r' && *endptr != '\n') {
 		fprintf(stderr, "Trailing garbage ignored: `%s'\n",
 			endptr);
 		return 0;
+	} else {
+		*endptr = 0;
 	}
 
-	if (l <= INT_MIN || l >= INT_MAX) {
-		fprintf(stderr, "Integer out of range: `%s'\n", input);
+	if (l <= LONG_MIN || l >= LONG_MAX) {
+		fprintf(stderr, "Integer out of range: `%s' (max: %lu)\n", input, LONG_MAX-1);
 		return 0;
 	}
+#endif
+
+
 
 	if (input == endptr)
 		l = def;
@@ -514,7 +546,7 @@ static long read_int_with_default(const char *input_str, long def)
 	return l;
 }
 
-long read_int(const char *input_str)
+int64_t read_int(const char *input_str)
 {
 	return read_int_with_default(input_str, 0);
 }
@@ -1090,7 +1122,7 @@ void get_rand_int_value(unsigned char* serial, size_t * size, int64_t cfg_val, c
 		default_serial[0] = cfg_val >> 32;
 		default_serial[1] = cfg_val;
 	} else {
-		unsigned long default_serial_int;
+		uint64_t default_serial_int;
 		char tmsg[256];
 
 #if SIZEOF_LONG < 8

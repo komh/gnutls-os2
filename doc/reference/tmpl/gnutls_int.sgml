@@ -480,11 +480,33 @@ gnutls_int
 @GNUTLS_EXT_MANDATORY: 
 @GNUTLS_EXT_NONE: 
 
-<!-- ##### TYPEDEF gnutls_key_st ##### -->
+<!-- ##### STRUCT gnutls_key_st ##### -->
 <para>
 
 </para>
 
+@ecdh_params: 
+@ecdh_x: 
+@ecdh_y: 
+@key: 
+@dh_params: 
+@client_Y: 
+@srp_key: 
+@srp_g: 
+@srp_p: 
+@A: 
+@B: 
+@u: 
+@b: 
+@a: 
+@x: 
+@rsa: 
+@auth_info: 
+@auth_info_type: 
+@auth_info_size: 
+@crypt_algo: 
+@cred: 
+@crt_requested: 
 
 <!-- ##### FUNCTION gnutls_protocol_get_version ##### -->
 <para>

@@ -47,9 +47,11 @@
 #include <stdlib.h>
 #include <unistd.h>
 #ifndef _WIN32
+#include <arpa/inet.h>
 #include <signal.h>
 #endif
 #include <socket.h>
+#include <c-ctype.h>
 #include "sockets.h"
 
 #define MAX_BUF 4096
@@ -148,10 +150,19 @@ ssize_t wait_for_text(int fd, const char *txt, unsigned txt_size)
 	char buf[512];
 	char *p;
 	int ret;
+	fd_set read_fds;
+	struct timeval tv;
 
-	alarm(10);
 	do {
-		ret = recv(fd, buf, sizeof(buf)-1, 0);
+		FD_ZERO(&read_fds);
+		FD_SET(fd, &read_fds);
+		tv.tv_sec = 10;
+		tv.tv_usec = 0;
+		ret = select(fd + 1, &read_fds, NULL, NULL, &tv);
+		if (ret <= 0)
+			ret = -1;
+		else
+			ret = recv(fd, buf, sizeof(buf)-1, 0);
 		if (ret == -1) {
 			fprintf(stderr, "error receiving %s\n", txt);
 			exit(1);
@@ -166,8 +177,6 @@ ssize_t wait_for_text(int fd, const char *txt, unsigned txt_size)
 		}
 	} while(ret < (int)txt_size || strncmp(buf, txt, txt_size) != 0);
 
-	alarm(0);
-
 	return ret;
 }
 
@@ -181,17 +190,38 @@ socket_starttls(socket_st * socket, const char *app_proto)
 		return;
 
 	if (strcasecmp(app_proto, "smtp") == 0 || strcasecmp(app_proto, "submission") == 0) {
-		send_line(socket->fd, "EHLO mail.example.com\n");
+		if (socket->verbose)
+			printf("Negotiating SMTP STARTTLS\n");
+
 		wait_for_text(socket->fd, "220 ", 4);
+		send_line(socket->fd, "EHLO mail.example.com\n");
+		wait_for_text(socket->fd, "250 ", 4);
 		send_line(socket->fd, "STARTTLS\n");
 		wait_for_text(socket->fd, "220 ", 4);
 	} else if (strcasecmp(app_proto, "imap") == 0 || strcasecmp(app_proto, "imap2") == 0) {
+		if (socket->verbose)
+			printf("Negotiating IMAP STARTTLS\n");
+
 		send_line(socket->fd, "a CAPABILITY\r\n");
 		wait_for_text(socket->fd, "a OK", 4);
 		send_line(socket->fd, "a STARTTLS\r\n");
 		wait_for_text(socket->fd, "a OK", 4);
+	} else if (strcasecmp(app_proto, "ftp") == 0 || strcasecmp(app_proto, "ftps") == 0) {
+		if (socket->verbose)
+			printf("Negotiating FTP STARTTLS\n");
+
+		send_line(socket->fd, "FEAT\n");
+		wait_for_text(socket->fd, "211 End", 7);
+		send_line(socket->fd, "AUTH TLS\n");
+		wait_for_text(socket->fd, "234", 3);
 	} else {
-		fprintf(stderr, "unknown protocol %s\n", app_proto);
+		if (!c_isdigit(app_proto[0])) {
+			static int warned = 0;
+			if (warned == 0) {
+				fprintf(stderr, "unknown protocol %s\n", app_proto);
+				warned = 1;
+			}
+		}
 	}
 
 	return;
@@ -341,6 +371,9 @@ const char *port_to_service(const char *sport, const char *proto)
 	unsigned int port;
 	struct servent *sr;
 
+	if (!c_isdigit(sport[0]))
+		return sport;
+
 	port = atoi(sport);
 	if (port == 0)
 		return sport;
@@ -350,7 +383,7 @@ const char *port_to_service(const char *sport, const char *proto)
 	sr = getservbyport(port, proto);
 	if (sr == NULL) {
 		fprintf(stderr,
-			"Warning: getservbyport() failed. Using port number as service.\n");
+			"Warning: getservbyport(%s) failed. Using port number as service.\n", sport);
 		return sport;
 	}
 

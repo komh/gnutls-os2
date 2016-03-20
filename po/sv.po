@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgnutls 3.0.12\n"
 "Report-Msgid-Bugs-To: bug-gnutls@gnu.org\n"
-"POT-Creation-Date: 2014-10-13 06:19+0200\n"
+"POT-Creation-Date: 2016-03-03 08:50+0100\n"
 "PO-Revision-Date: 2012-01-22 10:09+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
@@ -162,7 +162,8 @@ msgid "An algorithm that is not enabled was negotiated."
 msgstr "En algoritm som inte är aktiverad blev förhandlad."
 
 #: lib/gnutls_errors.c:65
-msgid "A record packet with illegal version was received."
+#, fuzzy
+msgid "A packet with illegal or unsupported version was received."
 msgstr "Ett journalpaket med otillåten version togs emot."
 
 # Stort?
@@ -843,8 +844,8 @@ msgstr "\t\tUtgångsdatum: Aldrig\n"
 msgid "\t\tExpiration: %s\n"
 msgstr "\t\tUtgångsdatum: %s\n"
 
-#: lib/openpgp/output.c:230 lib/x509/ocsp_output.c:522 lib/x509/output.c:1011
-#: lib/x509/output.c:1371 lib/x509/output.c:1562 lib/x509/output.c:2012
+#: lib/openpgp/output.c:230 lib/x509/ocsp_output.c:524 lib/x509/output.c:1012
+#: lib/x509/output.c:1372 lib/x509/output.c:1563 lib/x509/output.c:2013
 msgid "unknown"
 msgstr "okänd"
 
@@ -858,7 +859,7 @@ msgstr "\tAlgoritm för publik nyckel: %s\n"
 msgid "\tKey Security Level: %s\n"
 msgstr "\tSäkerhetsnivå för nyckel: %s\n"
 
-#: lib/openpgp/output.c:257 lib/x509/output.c:1047
+#: lib/openpgp/output.c:257 lib/x509/output.c:1048
 #, c-format
 msgid "\t\tModulus (bits %d):\n"
 msgstr "\t\tModulus (bitar %d):\n"
@@ -867,41 +868,45 @@ msgstr "\t\tModulus (bitar %d):\n"
 msgid "\t\tExponent:\n"
 msgstr "\t\tExponent:\n"
 
-#: lib/openpgp/output.c:293 lib/x509/output.c:1150
+#: lib/openpgp/output.c:293 lib/x509/output.c:1151
 #, c-format
 msgid "\t\tPublic key (bits %d):\n"
 msgstr "\t\tPublik nyckel (bitar %d):\n"
 
-#: lib/openpgp/output.c:298 lib/x509/output.c:1155
+#: lib/openpgp/output.c:295 lib/x509/output.c:1100
+msgid "\t\tY:\n"
+msgstr "\t\tY:\n"
+
+#: lib/openpgp/output.c:299 lib/x509/output.c:1156
 msgid "\t\tP:\n"
 msgstr "\t\tP:\n"
 
-#: lib/openpgp/output.c:302 lib/x509/output.c:1159
+#: lib/openpgp/output.c:303 lib/x509/output.c:1160
 msgid "\t\tQ:\n"
 msgstr "\t\tQ:\n"
 
-#: lib/openpgp/output.c:306 lib/x509/output.c:1163
+#: lib/openpgp/output.c:307 lib/x509/output.c:1164
 msgid "\t\tG:\n"
 msgstr "\t\tG:\n"
 
-#: lib/openpgp/output.c:339 lib/x509/ocsp_output.c:53
-#: lib/x509/ocsp_output.c:280 lib/x509/output.c:1216 lib/x509/output.c:1746
-#: lib/x509/output.c:2121
+#: lib/openpgp/output.c:341 lib/x509/ocsp_output.c:53
+#: lib/x509/ocsp_output.c:281 lib/x509/output.c:1217 lib/x509/output.c:1747
+#: lib/x509/output.c:2122
 #, c-format
 msgid "\tVersion: %d\n"
 msgstr "\tVersion: %d\n"
 
-#: lib/openpgp/output.c:376
+#: lib/openpgp/output.c:381
 #, c-format
 msgid "\tName[%d]: %s\n"
 msgstr "\tNamn[%d]: %s\n"
 
-#: lib/openpgp/output.c:381
+#: lib/openpgp/output.c:386
 #, c-format
 msgid "\tRevoked Name[%d]: %s\n"
 msgstr "\tSpärrat namn[%d]: %s\n"
 
-#: lib/openpgp/output.c:402
+#: lib/openpgp/output.c:407
 #, c-format
 msgid ""
 "\n"
@@ -910,102 +915,102 @@ msgstr ""
 "\n"
 "\tUndernyckel[%d]:\n"
 
-#: lib/openpgp/output.c:445
+#: lib/openpgp/output.c:453
 #, c-format
 msgid "name[%d]: %s, "
 msgstr "namn[%d]: %s, "
 
-#: lib/openpgp/output.c:450
+#: lib/openpgp/output.c:458
 #, c-format
 msgid "revoked name[%d]: %s, "
 msgstr "spärrat namn[%d]: %s, "
 
-#: lib/openpgp/output.c:473
+#: lib/openpgp/output.c:481
 msgid "fingerprint: "
 msgstr "fingeravtryck: "
 
-#: lib/openpgp/output.c:497
+#: lib/openpgp/output.c:505
 #, c-format
 msgid "created: %s, "
 msgstr "skapat: %s, "
 
-#: lib/openpgp/output.c:507
+#: lib/openpgp/output.c:515
 msgid "never expires, "
 msgstr "går aldrig ut, "
 
-#: lib/openpgp/output.c:520
+#: lib/openpgp/output.c:528
 #, c-format
 msgid "expires: %s, "
 msgstr "går ut: %s, "
 
-#: lib/openpgp/output.c:532
+#: lib/openpgp/output.c:540
 #, c-format
 msgid "key algorithm %s (%d bits)"
 msgstr "nyckelalgoritm %s (%d bitar)"
 
-#: lib/openpgp/output.c:535
+#: lib/openpgp/output.c:543
 #, c-format
 msgid "unknown key algorithm (%d)"
 msgstr "okänd nyckelalgoritm (%d)"
 
-#: lib/openpgp/output.c:574
+#: lib/openpgp/output.c:582
 msgid "OpenPGP Certificate Information:\n"
 msgstr "Information om OpenPGP-certifikat:\n"
 
-#: lib/x509/ocsp_output.c:138 lib/x509/ocsp_output.c:495
-#: lib/x509/output.c:1929 lib/x509/output.c:2294
+#: lib/x509/ocsp_output.c:139 lib/x509/ocsp_output.c:497
+#: lib/x509/output.c:1930 lib/x509/output.c:2295
 msgid "\t\t\tASCII: "
 msgstr "\t\t\tASCII: "
 
-#: lib/x509/ocsp_output.c:143 lib/x509/ocsp_output.c:500
-#: lib/x509/output.c:1933 lib/x509/output.c:2299
+#: lib/x509/ocsp_output.c:144 lib/x509/ocsp_output.c:502
+#: lib/x509/output.c:1934 lib/x509/output.c:2300
 msgid "\t\t\tHexdump: "
 msgstr "\t\t\tHexdump: "
 
-#: lib/x509/ocsp_output.c:188
+#: lib/x509/ocsp_output.c:189
 msgid "OCSP Request Information:\n"
 msgstr "Information om OCSP-begäran:\n"
 
-#: lib/x509/ocsp_output.c:294
+#: lib/x509/ocsp_output.c:295
 #, c-format
 msgid "\tResponder ID: %.*s\n"
 msgstr "\tSvararens id: %.*s\n"
 
-#: lib/x509/ocsp_output.c:316
+#: lib/x509/ocsp_output.c:317
 #, c-format
 msgid "\tProduced At: %s\n"
 msgstr "\tProducerat: %s\n"
 
-#: lib/x509/ocsp_output.c:410
+#: lib/x509/ocsp_output.c:411
 #, c-format
 msgid "\t\tRevocation time: %s\n"
 msgstr "\t\tTid för spärrning: %s\n"
 
-#: lib/x509/ocsp_output.c:430
+#: lib/x509/ocsp_output.c:431
 #, c-format
 msgid "\t\tThis Update: %s\n"
 msgstr "\t\tDenna uppdatering: %s\n"
 
-#: lib/x509/ocsp_output.c:449
+#: lib/x509/ocsp_output.c:450
 #, c-format
 msgid "\t\tNext Update: %s\n"
 msgstr "\t\tNästa uppdatering: %s\n"
 
-#: lib/x509/ocsp_output.c:523 lib/x509/output.c:1372 lib/x509/output.c:2013
+#: lib/x509/ocsp_output.c:525 lib/x509/output.c:1373 lib/x509/output.c:2014
 #, c-format
 msgid "\tSignature Algorithm: %s\n"
 msgstr "\tSignaturalgoritm: %s\n"
 
-#: lib/x509/ocsp_output.c:527 lib/x509/output.c:1376 lib/x509/output.c:2017
+#: lib/x509/ocsp_output.c:529 lib/x509/output.c:1377 lib/x509/output.c:2018
 msgid ""
 "warning: signed using a broken signature algorithm that can be forged.\n"
 msgstr "varning: signerad med en trasig signaturalgoritm som kan förfalskas.\n"
 
-#: lib/x509/ocsp_output.c:536 lib/x509/output.c:1402 lib/x509/output.c:2043
+#: lib/x509/ocsp_output.c:538 lib/x509/output.c:1403 lib/x509/output.c:2044
 msgid "\tSignature:\n"
 msgstr "\tSignatur:\n"
 
-#: lib/x509/ocsp_output.c:641
+#: lib/x509/ocsp_output.c:643
 msgid "OCSP Response Information:\n"
 msgstr "Information om OCSP-svar:\n"
 
@@ -1032,7 +1037,7 @@ msgstr ""
 #: lib/x509/output.c:129
 #, fuzzy, c-format
 msgid "%sdirectoryName: %.*s\n"
-msgstr "%s\t\t\totherName DER: "
+msgstr "%s\t\t\totherName OID: %.*s\n"
 
 #: lib/x509/output.c:133
 #, fuzzy, c-format
@@ -1044,17 +1049,17 @@ msgstr "%s\t\t\tXMPP-adress: %.*s\n"
 msgid "%sUnknown name: "
 msgstr ""
 
-#: lib/x509/output.c:158
+#: lib/x509/output.c:159
 #, c-format
 msgid "\t\t\tPath Length Constraint: %d\n"
 msgstr "\t\t\tBegränsning för sökvägslängd: %d\n"
 
-#: lib/x509/output.c:160
+#: lib/x509/output.c:161
 #, c-format
 msgid "\t\t\tPolicy Language: %s"
 msgstr "\t\t\tPolicyspråk: %s"
 
-#: lib/x509/output.c:168
+#: lib/x509/output.c:169
 msgid ""
 "\t\t\tPolicy:\n"
 "\t\t\t\tASCII: "
@@ -1062,7 +1067,7 @@ msgstr ""
 "\t\t\tPolicy:\n"
 "\t\t\t\tASCII: "
 
-#: lib/x509/output.c:170
+#: lib/x509/output.c:171
 msgid ""
 "\n"
 "\t\t\t\tHexdump: "
@@ -1070,144 +1075,144 @@ msgstr ""
 "\n"
 "\t\t\t\tHexdump: "
 
-#: lib/x509/output.c:203
+#: lib/x509/output.c:204
 #, c-format
 msgid "%s\t\t\tPermitted:\n"
 msgstr ""
 
-#: lib/x509/output.c:215
+#: lib/x509/output.c:216
 #, c-format
 msgid "%s\t\t\tExcluded:\n"
 msgstr ""
 
-#: lib/x509/output.c:255 lib/x509/output.c:257 lib/x509/output.c:259
+#: lib/x509/output.c:256 lib/x509/output.c:258 lib/x509/output.c:260
 #, fuzzy, c-format
 msgid "\t\t\tAccess Method: %s (%s)\n"
 msgstr "\t\t\tÅtkomstmetod: %.*s"
 
-#: lib/x509/output.c:364
+#: lib/x509/output.c:365
 #, fuzzy, c-format
 msgid "%sDigital signature.\n"
 msgstr "%s\t\t\tDigital signatur.\n"
 
 # Klassisk term inom digitala certifikat.
-#: lib/x509/output.c:366
+#: lib/x509/output.c:367
 #, fuzzy, c-format
 msgid "%sNon repudiation.\n"
 msgstr "%s\t\t\tOförnekbarhet.\n"
 
-#: lib/x509/output.c:368
+#: lib/x509/output.c:369
 #, fuzzy, c-format
 msgid "%sKey encipherment.\n"
 msgstr "%s\t\t\tNyckelkryptering.\n"
 
-#: lib/x509/output.c:370
+#: lib/x509/output.c:371
 #, fuzzy, c-format
 msgid "%sData encipherment.\n"
 msgstr "%s\t\t\tDatakryptering.\n"
 
-#: lib/x509/output.c:372
+#: lib/x509/output.c:373
 #, fuzzy, c-format
 msgid "%sKey agreement.\n"
 msgstr "%s\t\t\tNyckelförhandling.\n"
 
-#: lib/x509/output.c:374
+#: lib/x509/output.c:375
 #, fuzzy, c-format
 msgid "%sCertificate signing.\n"
 msgstr "%s\t\t\tCertifikatsignering.\n"
 
-#: lib/x509/output.c:376
+#: lib/x509/output.c:377
 #, fuzzy, c-format
 msgid "%sCRL signing.\n"
 msgstr "%s\t\t\tCRL-signering.\n"
 
-#: lib/x509/output.c:378
+#: lib/x509/output.c:379
 #, fuzzy, c-format
 msgid "%sKey encipher only.\n"
 msgstr "%s\t\t\tEndast nyckelkryptering.\n"
 
-#: lib/x509/output.c:380
+#: lib/x509/output.c:381
 #, fuzzy, c-format
 msgid "%sKey decipher only.\n"
 msgstr "%s\t\t\tEndast nyckeldekryptering.\n"
 
-#: lib/x509/output.c:424
+#: lib/x509/output.c:425
 #, fuzzy, c-format
 msgid "\t\t\tNot Before: %s\n"
 msgstr "\t\tInte före: %s\n"
 
-#: lib/x509/output.c:433
+#: lib/x509/output.c:434
 #, fuzzy, c-format
 msgid "\t\t\tNot After: %s\n"
 msgstr "\t\tInte efter: %s\n"
 
-#: lib/x509/output.c:511
+#: lib/x509/output.c:512
 #, c-format
 msgid "%s\t\t\tTLS WWW Server.\n"
 msgstr "%s\t\t\tTLS WWW-server.\n"
 
-#: lib/x509/output.c:513
+#: lib/x509/output.c:514
 #, c-format
 msgid "%s\t\t\tTLS WWW Client.\n"
 msgstr "%s\t\t\tTLS WWW-klient.\n"
 
 # Källkodssignering?
-#: lib/x509/output.c:515
+#: lib/x509/output.c:516
 #, c-format
 msgid "%s\t\t\tCode signing.\n"
 msgstr "%s\t\t\tKodsignering.\n"
 
-#: lib/x509/output.c:517
+#: lib/x509/output.c:518
 #, c-format
 msgid "%s\t\t\tEmail protection.\n"
 msgstr "%s\t\t\tE-postskydd.\n"
 
-#: lib/x509/output.c:520
+#: lib/x509/output.c:521
 #, c-format
 msgid "%s\t\t\tTime stamping.\n"
 msgstr "%s\t\t\tTidsstämpling.\n"
 
-#: lib/x509/output.c:522
+#: lib/x509/output.c:523
 #, c-format
 msgid "%s\t\t\tOCSP signing.\n"
 msgstr "%s\t\t\tOCSP-signering.\n"
 
-#: lib/x509/output.c:524
+#: lib/x509/output.c:525
 #, c-format
 msgid "%s\t\t\tIpsec IKE.\n"
 msgstr "%s\t\t\tIpsec IKE.\n"
 
-#: lib/x509/output.c:526
+#: lib/x509/output.c:527
 #, c-format
 msgid "%s\t\t\tAny purpose.\n"
 msgstr "%s\t\t\tValfritt syfte.\n"
 
-#: lib/x509/output.c:549
+#: lib/x509/output.c:550
 #, c-format
 msgid "%s\t\t\tCertificate Authority (CA): FALSE\n"
 msgstr "%s\t\t\tCertifikatutfärdare (CA): FALSKT\n"
 
-#: lib/x509/output.c:552
+#: lib/x509/output.c:553
 #, c-format
 msgid "%s\t\t\tCertificate Authority (CA): TRUE\n"
 msgstr "%s\t\t\tCertifikatutfärdare (CA): SANT\n"
 
-#: lib/x509/output.c:556
+#: lib/x509/output.c:557
 #, c-format
 msgid "%s\t\t\tPath Length Constraint: %d\n"
 msgstr "%s\t\t\tBegränsning för sökvägslängd: %d\n"
 
-#: lib/x509/output.c:612
+#: lib/x509/output.c:613
 #, c-format
 msgid "%s\t\t\totherName OID: %.*s\n"
 msgstr "%s\t\t\totherName OID: %.*s\n"
 
-#: lib/x509/output.c:614
+#: lib/x509/output.c:615
 #, c-format
 msgid "%s\t\t\totherName DER: "
 msgstr "%s\t\t\totherName DER: "
 
-#: lib/x509/output.c:617
+#: lib/x509/output.c:618
 #, c-format
 msgid ""
 "\n"
@@ -1216,206 +1221,202 @@ msgstr ""
 "\n"
 "%s\t\t\totherName ASCII: "
 
-#: lib/x509/output.c:714
+#: lib/x509/output.c:715
 #, c-format
 msgid "%s\t\tBasic Constraints (%s):\n"
 msgstr "%s\t\tAllmänna begränsningar (%s):\n"
 
-#: lib/x509/output.c:716 lib/x509/output.c:730 lib/x509/output.c:774
-#: lib/x509/output.c:804 lib/x509/output.c:816 lib/x509/output.c:831
-#: lib/x509/output.c:843 lib/x509/output.c:856 lib/x509/output.c:868
-#: lib/x509/output.c:882 lib/x509/output.c:896 lib/x509/output.c:904
-#: lib/x509/output.c:915 lib/x509/output.c:921 lib/x509/output.c:1870
-#: lib/x509/output.c:1895 lib/x509/output.c:1915
+#: lib/x509/output.c:717 lib/x509/output.c:731 lib/x509/output.c:775
+#: lib/x509/output.c:805 lib/x509/output.c:817 lib/x509/output.c:832
+#: lib/x509/output.c:844 lib/x509/output.c:857 lib/x509/output.c:869
+#: lib/x509/output.c:883 lib/x509/output.c:897 lib/x509/output.c:905
+#: lib/x509/output.c:916 lib/x509/output.c:922 lib/x509/output.c:1871
+#: lib/x509/output.c:1896 lib/x509/output.c:1916
 msgid "critical"
 msgstr "kritisk"
 
-#: lib/x509/output.c:716 lib/x509/output.c:730 lib/x509/output.c:775
-#: lib/x509/output.c:804 lib/x509/output.c:816 lib/x509/output.c:831
-#: lib/x509/output.c:843 lib/x509/output.c:856 lib/x509/output.c:868
-#: lib/x509/output.c:882 lib/x509/output.c:896 lib/x509/output.c:904
-#: lib/x509/output.c:915 lib/x509/output.c:921 lib/x509/output.c:1871
-#: lib/x509/output.c:1896 lib/x509/output.c:1916
+#: lib/x509/output.c:717 lib/x509/output.c:731 lib/x509/output.c:776
+#: lib/x509/output.c:805 lib/x509/output.c:817 lib/x509/output.c:832
+#: lib/x509/output.c:844 lib/x509/output.c:857 lib/x509/output.c:869
+#: lib/x509/output.c:883 lib/x509/output.c:897 lib/x509/output.c:905
+#: lib/x509/output.c:916 lib/x509/output.c:922 lib/x509/output.c:1872
+#: lib/x509/output.c:1897 lib/x509/output.c:1917
 msgid "not critical"
 msgstr "ej kritisk"
 
-#: lib/x509/output.c:728
+#: lib/x509/output.c:729
 #, c-format
 msgid "%s\t\tSubject Key Identifier (%s):\n"
 msgstr "%s\t\tInnehavarens nyckelidentifierare (%s):\n"
 
-#: lib/x509/output.c:802
+#: lib/x509/output.c:803
 #, c-format
 msgid "%s\t\tAuthority Key Identifier (%s):\n"
 msgstr "%s\t\tUtfärdarens nyckelidentifierare (%s):\n"
 
-#: lib/x509/output.c:815
+#: lib/x509/output.c:816
 #, c-format
 msgid "%s\t\tKey Usage (%s):\n"
 msgstr "%s\t\tNyckelanvändning (%s):\n"
 
-#: lib/x509/output.c:829
+#: lib/x509/output.c:830
 #, fuzzy, c-format
 msgid "%s\t\tPrivate Key Usage Period (%s):\n"
 msgstr "%s\t\tNyckelanvändning (%s):\n"
 
-#: lib/x509/output.c:842
+#: lib/x509/output.c:843
 #, c-format
 msgid "%s\t\tKey Purpose (%s):\n"
 msgstr "%s\t\tNyckelsyfte (%s):\n"
 
-#: lib/x509/output.c:854
+#: lib/x509/output.c:855
 #, c-format
 msgid "%s\t\tSubject Alternative Name (%s):\n"
 msgstr "%s\t\tInnehavarens alternativa namn (%s):\n"
 
-#: lib/x509/output.c:866
+#: lib/x509/output.c:867
 #, c-format
 msgid "%s\t\tIssuer Alternative Name (%s):\n"
 msgstr "%s\t\tUtfärdarens alternativa namn (%s):\n"
 
-#: lib/x509/output.c:880
+#: lib/x509/output.c:881
 #, c-format
 msgid "%s\t\tCRL Distribution points (%s):\n"
 msgstr "%s\t\tCRL-distributionspunkter (%s):\n"
 
-#: lib/x509/output.c:894
+#: lib/x509/output.c:895
 #, c-format
 msgid "%s\t\tProxy Certificate Information (%s):\n"
 msgstr "%s\t\tInformation om proxycertifikat (%s):\n"
 
-#: lib/x509/output.c:902
+#: lib/x509/output.c:903
 #, c-format
 msgid "%s\t\tAuthority Information Access (%s):\n"
 msgstr "%s\t\tUtfärdarens informationsåtkomst (%s):\n"
 
-#: lib/x509/output.c:914
+#: lib/x509/output.c:915
 #, fuzzy, c-format
 msgid "%s\t\tName Constraints (%s):\n"
 msgstr "%s\t\tAllmänna begränsningar (%s):\n"
 
-#: lib/x509/output.c:919
+#: lib/x509/output.c:920
 #, c-format
 msgid "%s\t\tUnknown extension %s (%s):\n"
 msgstr "%s\t\tOkänt tillägg %s (%s):\n"
 
-#: lib/x509/output.c:923
+#: lib/x509/output.c:924
 #, c-format
 msgid "%s\t\t\tASCII: "
 msgstr "%s\t\t\tASCII: "
 
-#: lib/x509/output.c:927
+#: lib/x509/output.c:928
 #, c-format
 msgid "%s\t\t\tHexdump: "
 msgstr "%s\t\t\tHexdump: "
 
-#: lib/x509/output.c:976
+#: lib/x509/output.c:977
 #, c-format
 msgid "%s\tExtensions:\n"
 msgstr "%s\tTillägg:\n"
 
-#: lib/x509/output.c:1015
+#: lib/x509/output.c:1016
 #, fuzzy, c-format
 msgid "\t%sPublic Key Algorithm: %s\n"
 msgstr "\tAlgoritm för publik nyckel: %s\n"
 
-#: lib/x509/output.c:1016
+#: lib/x509/output.c:1017
 #, fuzzy, c-format
 msgid "\tAlgorithm Security Level: %s (%d bits)\n"
 msgstr "\tSäkerhetsnivå för certifikat: %s (%d bitar)\n"
 
-#: lib/x509/output.c:1032
+#: lib/x509/output.c:1033
 #, fuzzy, c-format
 msgid "\t\tModulus (bits %d): "
 msgstr "\t\tModulus (bitar %d):\n"
 
-#: lib/x509/output.c:1039
+#: lib/x509/output.c:1040
 #, fuzzy, c-format
 msgid "\t\tExponent (bits %d): "
 msgstr "\t\tExponent (bitar %d):\n"
 
-#: lib/x509/output.c:1054
+#: lib/x509/output.c:1055
 #, c-format
 msgid "\t\tExponent (bits %d):\n"
 msgstr "\t\tExponent (bitar %d):\n"
 
-#: lib/x509/output.c:1080
+#: lib/x509/output.c:1081
 #, c-format
 msgid "\t\tCurve:\t%s\n"
 msgstr "\t\tKurva:\t%s\n"
 
-#: lib/x509/output.c:1084
+#: lib/x509/output.c:1085
 #, fuzzy
 msgid "\t\tX: "
 msgstr "\t\tX:\n"
 
-#: lib/x509/output.c:1089
+#: lib/x509/output.c:1090
 #, fuzzy
 msgid "\t\tY: "
 msgstr "\t\tY:\n"
 
-#: lib/x509/output.c:1095
+#: lib/x509/output.c:1096
 msgid "\t\tX:\n"
 msgstr "\t\tX:\n"
 
-#: lib/x509/output.c:1099
-msgid "\t\tY:\n"
-msgstr "\t\tY:\n"
-
-#: lib/x509/output.c:1126
+#: lib/x509/output.c:1127
 #, fuzzy, c-format
 msgid "\t\tPublic key (bits %d): "
 msgstr "\t\tPublik nyckel (bitar %d):\n"
 
-#: lib/x509/output.c:1132
+#: lib/x509/output.c:1133
 #, fuzzy
 msgid "\t\tP: "
 msgstr "\t\tP:\n"
 
-#: lib/x509/output.c:1137
+#: lib/x509/output.c:1138
 #, fuzzy
 msgid "\t\tQ: "
 msgstr "\t\tQ:\n"
 
-#: lib/x509/output.c:1142
+#: lib/x509/output.c:1143
 #, fuzzy
 msgid "\t\tG: "
 msgstr "\t\tG:\n"
 
-#: lib/x509/output.c:1198 lib/x509/output.c:2103
+#: lib/x509/output.c:1199 lib/x509/output.c:2104
 #, fuzzy
 msgid "Subject "
 msgstr "\tInnehavare: %s\n"
 
-#: lib/x509/output.c:1231
+#: lib/x509/output.c:1232
 msgid "\tSerial Number (hex): "
 msgstr "\tSerienummer (hex): "
 
-#: lib/x509/output.c:1263 lib/x509/output.c:1775
+#: lib/x509/output.c:1264 lib/x509/output.c:1776
 #, c-format
 msgid "\tIssuer: %s\n"
 msgstr "\tUtfärdare: %s\n"
 
-#: lib/x509/output.c:1273
+#: lib/x509/output.c:1274
 msgid "\tValidity:\n"
 msgstr "\tGiltighet:\n"
 
-#: lib/x509/output.c:1290
+#: lib/x509/output.c:1291
 #, c-format
 msgid "\t\tNot Before: %s\n"
 msgstr "\t\tInte före: %s\n"
 
-#: lib/x509/output.c:1308
+#: lib/x509/output.c:1309
 #, c-format
 msgid "\t\tNot After: %s\n"
 msgstr "\t\tInte efter: %s\n"
 
-#: lib/x509/output.c:1337 lib/x509/output.c:2149
+#: lib/x509/output.c:1338 lib/x509/output.c:2150
 #, c-format
 msgid "\tSubject: %s\n"
 msgstr "\tInnehavare: %s\n"
 
-#: lib/x509/output.c:1424
+#: lib/x509/output.c:1425
 #, fuzzy, c-format
 msgid ""
 "\t%s fingerprint:\n"
@@ -1424,7 +1425,7 @@ msgstr ""
 "\tMD5-fingeravtryck:\n"
 "\t\t"
 
-#: lib/x509/output.c:1445 lib/x509/output.c:2337
+#: lib/x509/output.c:1446 lib/x509/output.c:2338
 #, fuzzy
 msgid ""
 "\tPublic Key ID:\n"
@@ -1433,121 +1434,121 @@ msgstr ""
 "\tPublik nyckel-identitet:\n"
 "\t\t"
 
-#: lib/x509/output.c:1462
+#: lib/x509/output.c:1463
 msgid "\tPublic key's random art:\n"
 msgstr "\tPublika nyckelns slumpmässiga konst:\n"
 
-#: lib/x509/output.c:1564
+#: lib/x509/output.c:1565
 #, c-format
 msgid "signed using %s (broken!), "
 msgstr "signerat med %s (trasig!), "
 
-#: lib/x509/output.c:1567
+#: lib/x509/output.c:1568
 #, c-format
 msgid "signed using %s, "
 msgstr "signerat med %s, "
 
-#: lib/x509/output.c:1716
+#: lib/x509/output.c:1717
 msgid "X.509 Certificate Information:\n"
 msgstr "Information om X.509-certifikat:\n"
 
-#: lib/x509/output.c:1720 lib/x509/output.c:2375
+#: lib/x509/output.c:1721 lib/x509/output.c:2376
 msgid "Other Information:\n"
 msgstr "Övrig information:\n"
 
-#: lib/x509/output.c:1741
+#: lib/x509/output.c:1742
 msgid "\tVersion: 1 (default)\n"
 msgstr "\tVersion: 1 (standard)\n"
 
-#: lib/x509/output.c:1785
+#: lib/x509/output.c:1786
 msgid "\tUpdate dates:\n"
 msgstr "\tUppdateringsdatum:\n"
 
-#: lib/x509/output.c:1802
+#: lib/x509/output.c:1803
 #, c-format
 msgid "\t\tIssued: %s\n"
 msgstr "\t\tUtfärdat: %s\n"
 
-#: lib/x509/output.c:1822
+#: lib/x509/output.c:1823
 #, c-format
 msgid "\t\tNext at: %s\n"
 msgstr "\t\tNästa den: %s\n"
 
-#: lib/x509/output.c:1853
+#: lib/x509/output.c:1854
 msgid "\tExtensions:\n"
 msgstr "\tTillägg:\n"
 
 # Nummer? Antal?
-#: lib/x509/output.c:1869
+#: lib/x509/output.c:1870
 #, c-format
 msgid "\t\tCRL Number (%s): "
 msgstr "\t\tCRL-nummer (%s): "
 
-#: lib/x509/output.c:1894
+#: lib/x509/output.c:1895
 #, c-format
 msgid "\t\tAuthority Key Identifier (%s):\n"
 msgstr "\t\tUtfärdarens nyckelidentifierare (%s):\n"
 
-#: lib/x509/output.c:1913
+#: lib/x509/output.c:1914
 #, c-format
 msgid "\t\tUnknown extension %s (%s):\n"
 msgstr "\t\tOkänt tillägg %s (%s):\n"
 
-#: lib/x509/output.c:1950
+#: lib/x509/output.c:1951
 #, c-format
 msgid "\tRevoked certificates (%d):\n"
 msgstr "\tSpärrade certifikat (%d):\n"
 
-#: lib/x509/output.c:1953
+#: lib/x509/output.c:1954
 msgid "\tNo revoked certificates.\n"
 msgstr "\tInga spärrade certifikat.\n"
 
-#: lib/x509/output.c:1974
+#: lib/x509/output.c:1975
 msgid "\t\tSerial Number (hex): "
 msgstr "\t\tSerienummer (hex): "
 
-#: lib/x509/output.c:1992
+#: lib/x509/output.c:1993
 #, c-format
 msgid "\t\tRevoked at: %s\n"
 msgstr "\t\tSpärrat den: %s\n"
 
-#: lib/x509/output.c:2075
+#: lib/x509/output.c:2076
 msgid "X.509 Certificate Revocation List Information:\n"
 msgstr "Information om spärrlista för X.509-certifikat:\n"
 
-#: lib/x509/output.c:2195
+#: lib/x509/output.c:2196
 msgid "\tAttributes:\n"
 msgstr "\tAttribut:\n"
 
-#: lib/x509/output.c:2252
+#: lib/x509/output.c:2253
 #, c-format
 msgid "\t\tChallenge password: %s\n"
 msgstr "\t\tMotsvarslösenord: %s\n"
 
-#: lib/x509/output.c:2262
+#: lib/x509/output.c:2263
 #, c-format
 msgid "\t\tUnknown attribute %s:\n"
 msgstr "\t\tOkänt attribut %s:\n"
 
-#: lib/x509/output.c:2371
+#: lib/x509/output.c:2372
 msgid "PKCS #10 Certificate Request Information:\n"
 msgstr "Information om begäran av PKCS #10-certifikat:\n"
 
-#: lib/x509/output.c:2405
+#: lib/x509/output.c:2406
 #, fuzzy
 msgid "Public Key Usage:\n"
 msgstr ""
 "\tPublik nyckel-identitet:\n"
 "\t\t"
 
-#: lib/x509/output.c:2415
+#: lib/x509/output.c:2416
 #, fuzzy
 msgid "Public Key ID: "
 msgstr ""
 "\tPublik nyckel-identitet:\n"
 "\t\t"
 
-#: lib/x509/output.c:2449
+#: lib/x509/output.c:2450
 #, fuzzy
 msgid "Public Key Information:\n"
 msgstr "Övrig information:\n"
@@ -1558,15 +1559,11 @@ msgstr "Övrig information:\n"
 #~ msgid "Received a TLS/IA Final Phase Finished message"
 #~ msgstr "Tog emot ett TLS/IA Final Phase Finished-meddelande"
 
-#~ msgid "warning: altname contains an embedded NUL, replacing with '!'\n"
-#~ msgstr "varning: altname innehåller en inbäddad NUL, ersätter med \"!\"\n"
+#~ msgid "PKCS #11 error in PIN."
+#~ msgstr "PKCS #11-fel i PIN-kod."
 
-#~ msgid ""
-#~ "\tSHA-1 fingerprint:\n"
-#~ "\t\t"
-#~ msgstr ""
-#~ "\tSHA-1-fingeravtryck:\n"
-#~ "\t\t"
+#~ msgid "PKCS #11 PIN should be saved."
+#~ msgstr "PKCS #11 PIN-kod bör sparas."
 
 #~ msgid ""
 #~ "warning: distributionPoint contains an embedded NUL, replacing with '!'\n"
@@ -1574,14 +1571,15 @@ msgstr "Övrig information:\n"
 #~ "varning: distributionPoint innehåller en inbäddad NUL, ersätter med \"!"
 #~ "\"\n"
 
-#~ msgid "PKCS #11 error in PIN."
-#~ msgstr "PKCS #11-fel i PIN-kod."
-
-#~ msgid "PKCS #11 PIN should be saved."
-#~ msgstr "PKCS #11 PIN-kod bör sparas."
-
 #~ msgid "\tSubject Public Key Algorithm: %s\n"
 #~ msgstr "\tAlgoritm för innehavarens publika nyckel: %s\n"
+
+#~ msgid ""
+#~ "\tSHA-1 fingerprint:\n"
+#~ "\t\t"
+#~ msgstr ""
+#~ "\tSHA-1-fingeravtryck:\n"
+#~ "\t\t"
 
 #~ msgid "The peer did not send any certificate."
 #~ msgstr "Motparten skickade inget certifikat."

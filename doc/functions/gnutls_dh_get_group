@@ -15,6 +15,9 @@ the generator used.  This function should be used for both
 anonymous and ephemeral Diffie-Hellman.  The output parameters must
 be freed with @code{gnutls_free()} .
 
+Note, that the prime and generator are exported as non-negative
+integers and may include a leading zero byte.
+
 @strong{Returns:} On success, @code{GNUTLS_E_SUCCESS}  (0) is returned, otherwise
 an error code is returned.
 @end deftypefun

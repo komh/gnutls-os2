@@ -59,13 +59,12 @@ gnutls_handshake
 
 
 
-<!-- ##### FUNCTION gnutls_assert_val ##### -->
+<!-- ##### MACRO gnutls_assert_val ##### -->
 <para>
 
 </para>
 
-@Param1: 
-@Returns: 
+@x: 
 
 
 <!-- ##### VARIABLE now ##### -->

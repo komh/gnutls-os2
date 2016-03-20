@@ -24,6 +24,10 @@ AM_CPPFLAGS = -I$(top_srcdir)/lib/includes		\
 	-I$(top_srcdir)/lib \
 	-I$(top_srcdir)/gl
 
+if ENABLE_MINITASN1
+AM_CPPFLAGS += -I$(top_builddir)/lib/minitasn1
+endif
+
 AM_LDFLAGS = -no-install
 LDADD = ../libutils.la \
 	$(top_builddir)/lib/libgnutls.la $(LTLIBGCRYPT) $(LIBSOCKET)
@@ -34,10 +38,12 @@ else
 cipher_test_CPPFLAGS = $(AM_CPPFLAGS)
 endif
 
+dist_check_SCRIPTS = test-hash-large
+
 ctests = gendh keygen cipher-test
 
-check_PROGRAMS = $(ctests)
-TESTS = $(ctests)
+check_PROGRAMS = $(ctests) hash-large
+TESTS = $(ctests) test-hash-large
 
 EXTRA_DIST = README
 

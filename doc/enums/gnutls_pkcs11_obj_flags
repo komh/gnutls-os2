@@ -35,7 +35,8 @@ marked as not private.
 @item GNUTLS_@-PKCS11_@-OBJ_@-FLAG_@-RETRIEVE_@-ANY
 When retrieving an object, do not set any requirements.
 @item GNUTLS_@-PKCS11_@-OBJ_@-FLAG_@-RETRIEVE_@-TRUSTED
--- undescribed --
+When retrieving an object, only retrieve the marked as trusted.
+In @code{gnutls_pkcs11_crt_is_known()}  it implies @code{GNUTLS_PKCS11_OBJ_FLAG_RETRIEVE_COMPARE}  if @code{GNUTLS_PKCS11_OBJ_FLAG_COMPARE_KEY}  is not given.
 @item GNUTLS_@-PKCS11_@-OBJ_@-FLAG_@-RETRIEVE_@-DISTRUSTED
 When retrieving an object, only retrieve the marked as distrusted.
 @item GNUTLS_@-PKCS11_@-OBJ_@-FLAG_@-COMPARE
@@ -50,4 +51,6 @@ Mark the generated key pair as wrapping and unwrapping keys.
 When checking an object's presence, compare the key before returning any result.
 @item GNUTLS_@-PKCS11_@-OBJ_@-FLAG_@-OVERWRITE_@-TRUSTMOD_@-EXT
 When an issuer is requested, override its extensions with the ones present in the trust module.
+@item GNUTLS_@-PKCS11_@-OBJ_@-FLAG_@-NO_@-STORE_@-PUBKEY
+When generating a keypair don't store the public key (store).
 @end table

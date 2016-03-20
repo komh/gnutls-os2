@@ -55,9 +55,14 @@ algorithms
 
 
 
-<!-- ##### TYPEDEF gnutls_ecc_curve_entry_st ##### -->
+<!-- ##### STRUCT gnutls_ecc_curve_entry_st ##### -->
 <para>
 
 </para>
 
+@name: 
+@oid: 
+@id: 
+@tls_id: 
+@size: 
 

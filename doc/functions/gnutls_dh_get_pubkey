@@ -12,6 +12,9 @@ Diffie-Hellman key exchange.  This function should be used for both
 anonymous and ephemeral Diffie-Hellman.  The output parameters must
 be freed with @code{gnutls_free()} .
 
+Note, that public key is exported as non-negative
+integer and may include a leading zero byte.
+
 @strong{Returns:} On success, @code{GNUTLS_E_SUCCESS}  (0) is returned, otherwise
 an error code is returned.
 @end deftypefun

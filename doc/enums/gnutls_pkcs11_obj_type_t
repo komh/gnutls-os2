@@ -15,5 +15,5 @@ Secret key.
 @item GNUTLS_@-PKCS11_@-OBJ_@-DATA
 Data object.
 @item GNUTLS_@-PKCS11_@-OBJ_@-X509_@-CRT_@-EXTENSION
--- undescribed --
+X.509 certificate extension (supported by p11-kit trust module only).
 @end table

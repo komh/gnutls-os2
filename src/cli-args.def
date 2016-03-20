@@ -88,6 +88,19 @@ flag = {
 };
 
 flag = {
+    name      = app-proto;
+    aliases   = starttls-proto;
+};
+
+flag = {
+    name      = starttls-proto;
+    descrip   = "The application protocol to be used to obtain the server's certificate (https, ftp, smtp, imap)";
+    arg-type  = string;
+    doc       = "Specify the application layer protocol for STARTTLS. If the protocol is supported, gnutls-cli will proceed to the TLS negotiation.";
+    flags-cant = starttls;
+};
+
+flag = {
     name      = udp;
     value     = u;
     descrip   = "Use DTLS (datagram TLS) over UDP";
@@ -278,6 +291,7 @@ flag = {
     value     = l;
     descrip   = "Print a list of the supported algorithms and modes";
     doc      = "Print a list of the supported algorithms and modes. If a priority string is given then only the enabled ciphersuites are shown.";
+    flags-cant = port;
 };
 
 flag = {
@@ -338,9 +352,8 @@ flag = {
 flag = {
     name      = inline-commands-prefix;
     arg-type  = string;
-    descrip   = "Change the default (^) used as a delimiter for inline commands.
-\t\t\t\tThe value is a single US-ASCII character (octets 0 - 127).";
-    doc       = "Change the default (^) delimiter used for inline commands. The delimiter is expected to be a single US-ASCII character (octets 0 - 127). This option is only relevant if inline commands are enabled via the inline-commands option";
+    descrip   = "Change the default delimiter for inline commands.";
+    doc       = "Change the default delimiter (^) used for inline commands. The delimiter is expected to be a single US-ASCII character (octets 0 - 127). This option is only relevant if inline commands are enabled via the inline-commands option";
 };
 
 flag = {

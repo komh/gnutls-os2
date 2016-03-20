@@ -48,23 +48,6 @@ system
 
 
 
-<!-- ##### FUNCTION gnutls_system_global_deinit ##### -->
-<para>
-
-</para>
-
-@void: 
-
-
-<!-- ##### FUNCTION gnutls_system_global_init ##### -->
-<para>
-
-</para>
-
-@void: 
-@Returns: 
-
-
 <!-- ##### VARIABLE gnutls_time ##### -->
 <para>
 

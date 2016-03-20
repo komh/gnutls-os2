@@ -27,11 +27,17 @@ EXTRA_DIST = ca-no-pathlen.pem no-ca-or-pathlen.pem aki-cert.pem \
 	template-overflow.tmpl template-overflow2.pem template-overflow2.tmpl \
 	template-date.tmpl template-date.pem template-dn-err.tmpl \
 	template-nc.tmpl template-nc.pem xmpp-othername.pem \
-	suppressions.valgrind
+	suppressions.valgrind csr-invalid.der invalid-sig2.pem invalid-sig3.pem \
+	template-generalized.pem template-generalized.tmpl
 
-dist_check_SCRIPTS = pathlen aki template-test pem-decoding dane
+dist_check_SCRIPTS = pathlen aki template-test pem-decoding dane crq invalid-sig \
+	crl
 
-TESTS = pathlen aki pem-decoding
+TESTS = pathlen aki pem-decoding invalid-sig
+
+if ENABLE_NON_SUITEB_CURVES
+TESTS += crq
+endif
 
 if !WINDOWS
 TESTS += template-test

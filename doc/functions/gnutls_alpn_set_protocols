@@ -12,7 +12,7 @@
 @var{flags}: zero or @code{GNUTLS_ALPN_} *
 
 This function is to be used by both clients and servers, to declare
-the supported ALPN protocols, which are used during peer negotiation.
+the supported ALPN protocols, which are used during negotiation with peer.
 
 If @code{GNUTLS_ALPN_MAND}  is specified the connection will be aborted
 if no matching ALPN protocol is found.
@@ -20,5 +20,5 @@ if no matching ALPN protocol is found.
 @strong{Returns:} On success, @code{GNUTLS_E_SUCCESS}  (0) is returned,
 otherwise a negative error code is returned.
 
-Since 3.1.11
+Since 3.2.0
 @end deftypefun

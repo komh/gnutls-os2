@@ -41,15 +41,12 @@ struct event_st {
 #endif
 		unsigned count; /* a running counter */
 		unsigned err; /* the last errno */
-} 
-#ifdef __GNUC__
-__attribute__((packed))
-#endif
-;
+};
 
 void _rnd_get_event(struct event_st *e);
 
 int _rnd_system_entropy_init(void);
+int _rnd_system_entropy_check(void);
 void _rnd_system_entropy_deinit(void);
 
 typedef int (*get_entropy_func)(void* rnd, size_t size);

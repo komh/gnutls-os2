@@ -21,12 +21,12 @@ dnl Process this file with autoconf to produce a configure script.
 # USA
 
 AC_PREREQ(2.61)
-AC_INIT([GnuTLS], [3.3.9], [bugs@gnutls.org])
+AC_INIT([GnuTLS], [3.3.22], [bugs@gnutls.org])
 AC_CONFIG_AUX_DIR([build-aux])
 AC_CONFIG_MACRO_DIR([m4])
 AC_CANONICAL_HOST
 
-AM_INIT_AUTOMAKE([1.12.2 subdir-objects no-dist-gzip dist-xz dist-lzip -Wall -Wno-override])
+AM_INIT_AUTOMAKE([1.12.2 subdir-objects no-dist-gzip dist-xz -Wall -Wno-override])
 m4_ifdef([AM_SILENT_RULES], [AM_SILENT_RULES([yes])])
 AC_CONFIG_HEADERS([config.h])
 
@@ -79,12 +79,21 @@ AM_CONDITIONAL(ENABLE_CXX, test "$use_cxx" != "no")
 AM_CONDITIONAL(WANT_TEST_SUITE, [test -f tests/suite/mini-eagain2.c])
 
 dnl Detect windows build
+use_accel=yes
 case "$host" in
   *mingw32* | *mingw64*)
     have_win=yes
   ;;
   *darwin*)
     have_macosx=yes
+  ;;
+  *solaris*)
+    use_accel=no
+    AC_MSG_WARN([[
+***
+*** In solaris hardware acceleration is disabled by default due to issues
+*** with the assembler. Use --enable-hardware-acceleration to enable it.
+*** ]])
   ;;
   *)
     have_elf=yes
@@ -98,7 +107,7 @@ AM_CONDITIONAL(ELF, test "$have_elf" = yes)
 dnl Hardware Acceleration
 AC_ARG_ENABLE(hardware-acceleration,
   AS_HELP_STRING([--disable-hardware-acceleration], [unconditionally disable hardware acceleration]),
-    use_accel=$enableval, use_accel=yes)
+    use_accel=$enableval)
 hw_accel=none
 
 
@@ -196,6 +205,10 @@ fi
 if test "$ac_cv_func_nanosleep" != "yes";then
   AC_LIB_HAVE_LINKFLAGS(rt,, [#include <time.h>], [nanosleep (0, 0);])
   gnutls_needs_librt=yes
+fi
+
+if test "$ac_cv_func_inet_pton" != "yes";then
+  AC_LIB_HAVE_LINKFLAGS(nsl,, [#include <arpa/inet.h>], [inet_pton(0,0,0);])
 fi
 
 if test "$ac_cv_func_clock_gettime" != "yes";then
@@ -330,11 +343,28 @@ AC_ARG_ENABLE(non-suiteb-curves,
 if [ test "$enable_non_suiteb" = "yes" ];then
   AC_DEFINE([ENABLE_NON_SUITEB_CURVES], 1, [Enable all curves])
 fi
+AM_CONDITIONAL(ENABLE_NON_SUITEB_CURVES, test "$enable_non_suiteb" = "yes")
 
 AM_CONDITIONAL(ENABLE_SELF_CHECKS, test "$enable_self_checks" = "yes")
 if [ test "$enable_self_checks" = "yes" ];then
    AC_DEFINE([ENABLE_SELF_CHECKS], 1, [Self checks are included in the library])
 fi
+
+AC_ARG_WITH(arcfour128,
+  AS_HELP_STRING([--with-arcfour128], [include ARCFOUR128 in priority strings]),
+    enable_arcfour=$withval, enable_arcfour=no)
+if [ test "$enable_arcfour" = "yes" ];then
+  AC_DEFINE([ENABLE_ARCFOUR128], 1, [Enable ARCFOUR128])
+fi
+AM_CONDITIONAL(ENABLE_ARCFOUR128, test "$enable_arcfour" = "yes")
+
+AC_ARG_WITH(ssl3,
+  AS_HELP_STRING([--with-ssl3], [include SSL3.0 in priority strings]),
+    enable_ssl3=$withval, enable_ssl3=no)
+if [ test "$enable_ssl3" = "yes" ];then
+  AC_DEFINE([ENABLE_SSL3], 1, [Enable SSL3.0])
+fi
+AM_CONDITIONAL(ENABLE_SSL3, test "$enable_ssl3" = "yes")
 
 AC_MSG_CHECKING([whether to build libdane])
 AC_ARG_ENABLE(libdane,
@@ -375,7 +405,11 @@ else
     if test -f /var/lib/unbound/root.key;then
     	unbound_root_key_file="/var/lib/unbound/root.key"
     else
-        unbound_root_key_file="/etc/unbound/root.key"
+        if test -f /usr/share/dns/root.key;then
+	    unbound_root_key_file="/usr/share/dns/root.key"
+        else
+            unbound_root_key_file="/etc/unbound/root.key"
+        fi
     fi
 fi
 )
@@ -819,6 +853,7 @@ AC_MSG_NOTICE([summary of build options:
   Local libopts:        ${enable_local_libopts}
   Local libtasn1:       ${included_libtasn1}
   Use nettle-mini:      ${mini_nettle}
+  nettle-version:       ${nettle_version}
 ])
 
 AC_MSG_NOTICE([External hardware support:
