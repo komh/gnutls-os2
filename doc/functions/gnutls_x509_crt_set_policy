@@ -3,9 +3,9 @@
 
 
 @deftypefun {int} {gnutls_x509_crt_set_policy} (gnutls_x509_crt_t @var{crt}, const struct gnutls_x509_policy_st * @var{policy}, unsigned int @var{critical})
-@var{crt}: should contain a @code{gnutls_x509_crt_t}  structure
+@var{crt}: should contain a @code{gnutls_x509_crt_t}  type
 
-@var{policy}: A pointer to a policy structure.
+@var{policy}: A pointer to a policy
 
 @var{critical}: use non-zero if the extension is marked as critical
 

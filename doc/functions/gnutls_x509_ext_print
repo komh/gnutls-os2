@@ -3,7 +3,7 @@
 
 
 @deftypefun {int} {gnutls_x509_ext_print} (gnutls_x509_ext_st * @var{exts}, unsigned int @var{exts_size}, gnutls_certificate_print_formats_t @var{format}, gnutls_datum_t * @var{out})
-@var{exts}: The structures to be printed
+@var{exts}: The data to be printed
 
 @var{exts_size}: the number of available structures
 

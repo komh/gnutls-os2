@@ -3,7 +3,7 @@
 
 
 @deftypefun {int} {gnutls_dh_params_import_pkcs3} (gnutls_dh_params_t @var{params}, const gnutls_datum_t * @var{pkcs3_params}, gnutls_x509_crt_fmt_t @var{format})
-@var{params}: A structure where the parameters will be copied to
+@var{params}: The parameters
 
 @var{pkcs3_params}: should contain a PKCS3 DHParams structure PEM or DER encoded
 

@@ -3,7 +3,7 @@
 
 
 @deftypefun {void} {gnutls_hash_output} (gnutls_hash_hd_t @var{handle}, void * @var{digest})
-@var{handle}: is a @code{gnutls_hash_hd_t}  structure.
+@var{handle}: is a @code{gnutls_hash_hd_t}  type
 
 @var{digest}: is the output value of the hash
 

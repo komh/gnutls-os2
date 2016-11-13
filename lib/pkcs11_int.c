@@ -96,6 +96,16 @@ ck_rv_t pkcs11_close_session(struct pkcs11_session_info * sinfo)
 }
 
 ck_rv_t
+pkcs11_set_attribute_value(struct ck_function_list * module,
+			   ck_session_handle_t sess,
+			   ck_object_handle_t object,
+			   struct ck_attribute * templ,
+			   unsigned long count)
+{
+	return (module)->C_SetAttributeValue(sess, object, templ, count);
+}
+
+ck_rv_t
 pkcs11_get_attribute_value(struct ck_function_list * module,
 			   ck_session_handle_t sess,
 			   ck_object_handle_t object,
@@ -127,6 +137,12 @@ pkcs11_get_attribute_avalue(struct ck_function_list * module,
 	templ.value_len = 0;
 	rv = (module)->C_GetAttributeValue(sess, object, &templ, 1);
 	if (rv == CKR_OK) {
+		/* PKCS#11 v2.20 requires sensitive values to set a length
+		 * of -1. In that case an error should have been returned,
+		 * but some implementations return CKR_OK instead. */
+		if (templ.value_len == (unsigned long)-1)
+			return CKR_ATTRIBUTE_SENSITIVE;
+
 		if (templ.value_len == 0)
 			return rv;
 
@@ -138,6 +154,7 @@ pkcs11_get_attribute_avalue(struct ck_function_list * module,
 		rv = (module)->C_GetAttributeValue(sess, object, &templ, 1);
 		if (rv != CKR_OK) {
 			gnutls_free(t);
+			return rv;
 		}
 		res->data = t;
 		res->size = templ.value_len;
@@ -172,6 +189,17 @@ pkcs11_sign(struct ck_function_list * module,
 {
 	return (module)->C_Sign(sess, data, data_len, signature,
 				signature_len);
+}
+
+ck_rv_t
+pkcs11_generate_key(struct ck_function_list * module,
+		    ck_session_handle_t sess,
+		    struct ck_mechanism * mechanism,
+		    struct ck_attribute * templ,
+		    unsigned long count,
+		    ck_object_handle_t * key)
+{
+	return (module)->C_GenerateKey(sess, mechanism, templ, count, key);
 }
 
 ck_rv_t

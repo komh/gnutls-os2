@@ -3,7 +3,7 @@
 
 
 @deftypefun {int} {gnutls_x509_crq_get_private_key_usage_period} (gnutls_x509_crq_t @var{crq}, time_t * @var{activation}, time_t * @var{expiration}, unsigned int * @var{critical})
-@var{crq}: should contain a @code{gnutls_x509_crq_t}  structure
+@var{crq}: should contain a @code{gnutls_x509_crq_t}  type
 
 @var{activation}: The activation time
 

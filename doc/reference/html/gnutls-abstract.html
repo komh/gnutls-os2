@@ -3,12 +3,12 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>abstract: GnuTLS API Reference Manual</title>
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="index.html" title="GnuTLS API Reference Manual">
 <link rel="up" href="intro.html" title="GnuTLS API Reference Manual">
 <link rel="prev" href="gnutls-gnutls.html" title="gnutls">
 <link rel="next" href="gnutls-x509.html" title="x509">
-<meta name="generator" content="GTK-Doc V1.24 (XML mode)">
+<meta name="generator" content="GTK-Doc V1.25 (XML mode)">
 <link rel="stylesheet" href="style.css" type="text/css">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -33,7 +33,7 @@
 </tr></table></div>
 <div class="refsect1">
 <a name="gnutls-abstract.functions"></a><h2>Functions</h2>
-<div class="informaltable"><table width="100%" border="0">
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="functions_return">
 <col class="functions_name">
@@ -348,14 +348,6 @@
 <span class="returnvalue">int</span>
 </td>
 <td class="function_name">
-<a class="link" href="gnutls-abstract.html#gnutls-pubkey-get-verify-algorithm" title="gnutls_pubkey_get_verify_algorithm ()">gnutls_pubkey_get_verify_algorithm</a> <span class="c_punctuation">()</span>
-</td>
-</tr>
-<tr>
-<td class="function_type">
-<span class="returnvalue">int</span>
-</td>
-<td class="function_name">
 <a class="link" href="gnutls-abstract.html#gnutls-pubkey-import" title="gnutls_pubkey_import ()">gnutls_pubkey_import</a> <span class="c_punctuation">()</span>
 </td>
 </tr>
@@ -408,11 +400,9 @@
 </td>
 </tr>
 <tr>
-<td class="function_type">
-<span class="returnvalue">int</span>
-</td>
+<td class="define_keyword">#define</td>
 <td class="function_name">
-<a class="link" href="gnutls-abstract.html#gnutls-pubkey-import-pkcs11-url" title="gnutls_pubkey_import_pkcs11_url ()">gnutls_pubkey_import_pkcs11_url</a> <span class="c_punctuation">()</span>
+<a class="link" href="gnutls-abstract.html#gnutls-pubkey-import-pkcs11-url" title="gnutls_pubkey_import_pkcs11_url()">gnutls_pubkey_import_pkcs11_url</a><span class="c_punctuation">()</span>
 </td>
 </tr>
 <tr>
@@ -508,14 +498,6 @@
 <span class="returnvalue">int</span>
 </td>
 <td class="function_name">
-<a class="link" href="gnutls-abstract.html#gnutls-pubkey-verify-data" title="gnutls_pubkey_verify_data ()">gnutls_pubkey_verify_data</a> <span class="c_punctuation">()</span>
-</td>
-</tr>
-<tr>
-<td class="function_type">
-<span class="returnvalue">int</span>
-</td>
-<td class="function_name">
 <a class="link" href="gnutls-abstract.html#gnutls-pubkey-verify-data2" title="gnutls_pubkey_verify_data2 ()">gnutls_pubkey_verify_data2</a> <span class="c_punctuation">()</span>
 </td>
 </tr>
@@ -572,7 +554,7 @@
 </div>
 <div class="refsect1">
 <a name="gnutls-abstract.other"></a><h2>Types and Values</h2>
-<div class="informaltable"><table width="100%" border="0">
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="name">
 <col class="description">
@@ -638,24 +620,24 @@ gnutls_certificate_set_key (<em class="parameter"><code><span class="type">gnutl
                             <em class="parameter"><code><span class="type">int</span> pcert_list_size</code></em>,
                             <em class="parameter"><code><a class="link" href="gnutls-abstract.html#gnutls-privkey-t" title="gnutls_privkey_t"><span class="type">gnutls_privkey_t</span></a> key</code></em>);</pre>
 <p>This function sets a certificate/private key pair in the
-gnutls_certificate_credentials_t structure.  This function may be
+gnutls_certificate_credentials_t type.  This function may be
 called more than once, in case multiple keys/certificates exist for
 the server.  For clients that wants to send more than its own end
 entity certificate (e.g., also an intermediate CA cert) then put
 the certificate chain in <em class="parameter"><code>pcert_list</code></em>
 . </p>
-<p>Note that the <em class="parameter"><code>pcert_list</code></em>
- and <em class="parameter"><code>key</code></em>
+<p>Note that the <em class="parameter"><code>key</code></em>
+ and the elements of <em class="parameter"><code>pcert_list</code></em>
  will become part of the credentials 
 structure and must not be deallocated. They will be automatically deallocated 
 when the <em class="parameter"><code>res</code></em>
- structure is deinitialized.</p>
+ type is deinitialized.</p>
 <p>If that function fails to load the <em class="parameter"><code>res</code></em>
  structure is at an undefined state, it must
 not be reused to load other keys or certificates.</p>
 <div class="refsect3">
-<a name="id-1.2.5.6.2.7"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="gnutls-certificate-set-key.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -664,7 +646,7 @@ not be reused to load other keys or certificates.</p>
 <tbody>
 <tr>
 <td class="parameter_name"><p>res</p></td>
-<td class="parameter_description"><p>is a <span class="type">gnutls_certificate_credentials_t</span> structure.</p></td>
+<td class="parameter_description"><p>is a <span class="type">gnutls_certificate_credentials_t</span> type.</p></td>
 <td class="parameter_annotations"> </td>
 </tr>
 <tr>
@@ -696,7 +678,7 @@ not be reused to load other keys or certificates.</p>
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.2.5.6.2.8"></a><h4>Returns</h4>
+<a name="gnutls-certificate-set-key.returns"></a><h4>Returns</h4>
 <p> <a class="link" href="gnutls-gnutls.html#GNUTLS-E-SUCCESS:CAPS" title="GNUTLS_E_SUCCESS"><code class="literal">GNUTLS_E_SUCCESS</code></a> (0) on success, or a negative error code.</p>
 </div>
 <p class="since">Since: 3.0</p>
@@ -709,7 +691,8 @@ gnutls_certificate_set_retrieve_function2
                                (<em class="parameter"><code><span class="type">gnutls_certificate_credentials_t</span> cred</code></em>,
                                 <em class="parameter"><code><span class="type">gnutls_certificate_retrieve_function2</span> *func</code></em>);</pre>
 <p>This function sets a callback to be called in order to retrieve the
-certificate to be used in the handshake.</p>
+certificate to be used in the handshake. The callback will take control
+only if a certificate is requested by the peer.</p>
 <p>The callback's function prototype is:
 int (*callback)(gnutls_session_t, const gnutls_datum_t* req_ca_dn, int nreqs,
 const gnutls_pk_algorithm_t* pk_algos, int pk_algos_length, gnutls_pcert_st** pcert,
@@ -717,8 +700,8 @@ unsigned int *pcert_length, gnutls_privkey_t * pkey);</p>
 <p><em class="parameter"><code>req_ca_dn</code></em>
  is only used in X.509 certificates.
 Contains a list with the CA names that the server considers trusted.
-Normally we should send a certificate that is signed
-by one of these CAs. These names are DER encoded. To get a more
+This is a hint and typically the client should send a certificate that is signed
+by one of these CAs. These names, when available, are DER encoded. To get a more
 meaningful value use the function <a class="link" href="gnutls-x509.html#gnutls-x509-rdn-get" title="gnutls_x509_rdn_get ()"><code class="function">gnutls_x509_rdn_get()</code></a>.</p>
 <p><em class="parameter"><code>pk_algos</code></em>
  contains a list with server's acceptable signature algorithms.
@@ -737,10 +720,12 @@ modified by gnutls.</p>
 <p>The callback function should set the certificate list to be sent,
 and return 0 on success. If no certificate was selected then the
 number of certificates should be set to zero. The value (-1)
-indicates error and the handshake will be terminated.</p>
+indicates error and the handshake will be terminated. If both certificates
+are set in the credentials and a callback is available, the callback
+takes predence.</p>
 <div class="refsect3">
-<a name="id-1.2.5.6.3.14"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="gnutls-certificate-set-retrieve-function2.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -749,7 +734,7 @@ indicates error and the handshake will be terminated.</p>
 <tbody>
 <tr>
 <td class="parameter_name"><p>cred</p></td>
-<td class="parameter_description"><p>is a <span class="type">gnutls_certificate_credentials_t</span> structure.</p></td>
+<td class="parameter_description"><p>is a <span class="type">gnutls_certificate_credentials_t</span> type.</p></td>
 <td class="parameter_annotations"> </td>
 </tr>
 <tr>
@@ -769,8 +754,8 @@ indicates error and the handshake will be terminated.</p>
 gnutls_pcert_deinit (<em class="parameter"><code><span class="type">gnutls_pcert_st</span> *pcert</code></em>);</pre>
 <p>This function will deinitialize a pcert structure.</p>
 <div class="refsect3">
-<a name="id-1.2.5.6.4.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="gnutls-pcert-deinit.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -796,8 +781,8 @@ gnutls_pcert_import_openpgp (<em class="parameter"><code><span class="type">gnut
 <span class="type">gnutls_pcert_st</span> structure. The structure must be deinitialized
 afterwards using <a class="link" href="gnutls-abstract.html#gnutls-pcert-deinit" title="gnutls_pcert_deinit ()"><code class="function">gnutls_pcert_deinit()</code></a>;</p>
 <div class="refsect3">
-<a name="id-1.2.5.6.5.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="gnutls-pcert-import-openpgp.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -823,7 +808,7 @@ afterwards using <a class="link" href="gnutls-abstract.html#gnutls-pcert-deinit"
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.2.5.6.5.6"></a><h4>Returns</h4>
+<a name="gnutls-pcert-import-openpgp.returns"></a><h4>Returns</h4>
 <p> On success, <a class="link" href="gnutls-gnutls.html#GNUTLS-E-SUCCESS:CAPS" title="GNUTLS_E_SUCCESS"><code class="literal">GNUTLS_E_SUCCESS</code></a> (0) is returned, otherwise a
 negative error value.</p>
 </div>
@@ -842,8 +827,8 @@ gnutls_pcert_import_openpgp_raw (<em class="parameter"><code><span class="type">
 <span class="type">gnutls_pcert_st</span> structure. The structure must be deinitialized
 afterwards using <a class="link" href="gnutls-abstract.html#gnutls-pcert-deinit" title="gnutls_pcert_deinit ()"><code class="function">gnutls_pcert_deinit()</code></a>;</p>
 <div class="refsect3">
-<a name="id-1.2.5.6.6.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="gnutls-pcert-import-openpgp-raw.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -879,7 +864,7 @@ afterwards using <a class="link" href="gnutls-abstract.html#gnutls-pcert-deinit"
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.2.5.6.6.6"></a><h4>Returns</h4>
+<a name="gnutls-pcert-import-openpgp-raw.returns"></a><h4>Returns</h4>
 <p> On success, <a class="link" href="gnutls-gnutls.html#GNUTLS-E-SUCCESS:CAPS" title="GNUTLS_E_SUCCESS"><code class="literal">GNUTLS_E_SUCCESS</code></a> (0) is returned, otherwise a
 negative error value.</p>
 </div>
@@ -896,8 +881,8 @@ gnutls_pcert_import_x509 (<em class="parameter"><code><span class="type">gnutls_
 <span class="type">gnutls_pcert_st</span> structure. The structure must be deinitialized
 afterwards using <a class="link" href="gnutls-abstract.html#gnutls-pcert-deinit" title="gnutls_pcert_deinit ()"><code class="function">gnutls_pcert_deinit()</code></a>;</p>
 <div class="refsect3">
-<a name="id-1.2.5.6.7.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="gnutls-pcert-import-x509.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -911,7 +896,7 @@ afterwards using <a class="link" href="gnutls-abstract.html#gnutls-pcert-deinit"
 </tr>
 <tr>
 <td class="parameter_name"><p>crt</p></td>
-<td class="parameter_description"><p>The raw certificate to be imported</p></td>
+<td class="parameter_description"><p>The certificate to be imported</p></td>
 <td class="parameter_annotations"> </td>
 </tr>
 <tr>
@@ -923,7 +908,7 @@ afterwards using <a class="link" href="gnutls-abstract.html#gnutls-pcert-deinit"
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.2.5.6.7.6"></a><h4>Returns</h4>
+<a name="gnutls-pcert-import-x509.returns"></a><h4>Returns</h4>
 <p> On success, <a class="link" href="gnutls-gnutls.html#GNUTLS-E-SUCCESS:CAPS" title="GNUTLS_E_SUCCESS"><code class="literal">GNUTLS_E_SUCCESS</code></a> (0) is returned, otherwise a
 negative error value.</p>
 </div>
@@ -941,8 +926,8 @@ gnutls_pcert_import_x509_raw (<em class="parameter"><code><span class="type">gnu
 <span class="type">gnutls_pcert_st</span> structure. The structure must be deinitialized
 afterwards using <a class="link" href="gnutls-abstract.html#gnutls-pcert-deinit" title="gnutls_pcert_deinit ()"><code class="function">gnutls_pcert_deinit()</code></a>;</p>
 <div class="refsect3">
-<a name="id-1.2.5.6.8.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="gnutls-pcert-import-x509-raw.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -973,7 +958,7 @@ afterwards using <a class="link" href="gnutls-abstract.html#gnutls-pcert-deinit"
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.2.5.6.8.6"></a><h4>Returns</h4>
+<a name="gnutls-pcert-import-x509-raw.returns"></a><h4>Returns</h4>
 <p> On success, <a class="link" href="gnutls-gnutls.html#GNUTLS-E-SUCCESS:CAPS" title="GNUTLS_E_SUCCESS"><code class="literal">GNUTLS_E_SUCCESS</code></a> (0) is returned, otherwise a
 negative error value.</p>
 </div>
@@ -995,8 +980,8 @@ in <em class="parameter"><code>certs</code></em>
 <p>If the Certificate is PEM encoded it should have a header of "X509
 CERTIFICATE", or "CERTIFICATE".</p>
 <div class="refsect3">
-<a name="id-1.2.5.6.9.6"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="gnutls-pcert-list-import-x509-raw.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -1032,7 +1017,7 @@ CERTIFICATE", or "CERTIFICATE".</p>
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.2.5.6.9.7"></a><h4>Returns</h4>
+<a name="gnutls-pcert-list-import-x509-raw.returns"></a><h4>Returns</h4>
 <p> the number of certificates read or a negative error value.</p>
 </div>
 <p class="since">Since: 3.0</p>
@@ -1048,8 +1033,8 @@ gnutls_privkey_decrypt_data (<em class="parameter"><code><a class="link" href="g
 <p>This function will decrypt the given data using the algorithm
 supported by the private key.</p>
 <div class="refsect3">
-<a name="id-1.2.5.6.10.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="gnutls-privkey-decrypt-data.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -1073,14 +1058,14 @@ supported by the private key.</p>
 </tr>
 <tr>
 <td class="parameter_name"><p>plaintext</p></td>
-<td class="parameter_description"><p>will contain the decrypted data, allocated with <a class="link" href="gnutls-gnutls.html#gnutls-malloc" title="gnutls_malloc"><code class="function">gnutls_malloc()</code></a></p></td>
+<td class="parameter_description"><p>will contain the decrypted data, allocated with <code class="function">gnutls_malloc()</code></p></td>
 <td class="parameter_annotations"> </td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.2.5.6.10.6"></a><h4>Returns</h4>
+<a name="gnutls-privkey-decrypt-data.returns"></a><h4>Returns</h4>
 <p> On success, <a class="link" href="gnutls-gnutls.html#GNUTLS-E-SUCCESS:CAPS" title="GNUTLS_E_SUCCESS"><code class="literal">GNUTLS_E_SUCCESS</code></a> (0) is returned, otherwise a
 negative error value.</p>
 </div>
@@ -1104,8 +1089,8 @@ negative error value.</p>
 gnutls_privkey_deinit (<em class="parameter"><code><a class="link" href="gnutls-abstract.html#gnutls-privkey-t" title="gnutls_privkey_t"><span class="type">gnutls_privkey_t</span></a> key</code></em>);</pre>
 <p>This function will deinitialize a private key structure.</p>
 <div class="refsect3">
-<a name="id-1.2.5.6.12.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="gnutls-privkey-deinit.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -1113,7 +1098,7 @@ gnutls_privkey_deinit (<em class="parameter"><code><a class="link" href="gnutls-
 </colgroup>
 <tbody><tr>
 <td class="parameter_name"><p>key</p></td>
-<td class="parameter_description"><p>The structure to be deinitialized</p></td>
+<td class="parameter_description"><p>The key to be deinitialized</p></td>
 <td class="parameter_annotations"> </td>
 </tr></tbody>
 </table></div>
@@ -1139,8 +1124,8 @@ gnutls_privkey_get_pk_algorithm (<em class="parameter"><code><a class="link" hre
 key and if possible will return a number of bits that indicates
 the security parameter of the key.</p>
 <div class="refsect3">
-<a name="id-1.2.5.6.14.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="gnutls-privkey-get-pk-algorithm.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -1149,7 +1134,7 @@ the security parameter of the key.</p>
 <tbody>
 <tr>
 <td class="parameter_name"><p>key</p></td>
-<td class="parameter_description"><p>should contain a <a class="link" href="gnutls-abstract.html#gnutls-privkey-t" title="gnutls_privkey_t"><span class="type">gnutls_privkey_t</span></a> structure</p></td>
+<td class="parameter_description"><p>should contain a <a class="link" href="gnutls-abstract.html#gnutls-privkey-t" title="gnutls_privkey_t"><span class="type">gnutls_privkey_t</span></a> type</p></td>
 <td class="parameter_annotations"> </td>
 </tr>
 <tr>
@@ -1161,7 +1146,7 @@ the security parameter of the key.</p>
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.2.5.6.14.6"></a><h4>Returns</h4>
+<a name="gnutls-privkey-get-pk-algorithm.returns"></a><h4>Returns</h4>
 <p> a member of the <a class="link" href="gnutls-gnutls.html#gnutls-pk-algorithm-t" title="enum gnutls_pk_algorithm_t"><span class="type">gnutls_pk_algorithm_t</span></a> enumeration on
 success, or a negative error code on error.</p>
 </div>
@@ -1178,12 +1163,12 @@ gnutls_privkey_import_ext (<em class="parameter"><code><a class="link" href="gnu
                            <em class="parameter"><code><a class="link" href="gnutls-abstract.html#gnutls-privkey-decrypt-func" title="gnutls_privkey_decrypt_func ()"><span class="type">gnutls_privkey_decrypt_func</span></a> decrypt_func</code></em>,
                            <em class="parameter"><code>unsigned <span class="type">int</span> flags</code></em>);</pre>
 <p>This function will associate the given callbacks with the
-<a class="link" href="gnutls-abstract.html#gnutls-privkey-t" title="gnutls_privkey_t"><span class="type">gnutls_privkey_t</span></a> structure. At least one of the two callbacks
+<a class="link" href="gnutls-abstract.html#gnutls-privkey-t" title="gnutls_privkey_t"><span class="type">gnutls_privkey_t</span></a> type. At least one of the two callbacks
 must be non-null.</p>
-<p>See also <a class="link" href="gnutls-abstract.html#gnutls-privkey-import-ext2" title="gnutls_privkey_import_ext2 ()"><code class="function">gnutls_privkey_import_ext2()</code></a>.</p>
+<p>See also <code class="function">gnutls_privkey_import_ext3()</code>.</p>
 <div class="refsect3">
-<a name="id-1.2.5.6.15.6"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="gnutls-privkey-import-ext.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -1224,7 +1209,7 @@ must be non-null.</p>
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.2.5.6.15.7"></a><h4>Returns</h4>
+<a name="gnutls-privkey-import-ext.returns"></a><h4>Returns</h4>
 <p> On success, <a class="link" href="gnutls-gnutls.html#GNUTLS-E-SUCCESS:CAPS" title="GNUTLS_E_SUCCESS"><code class="literal">GNUTLS_E_SUCCESS</code></a> (0) is returned, otherwise a
 negative error value.</p>
 </div>
@@ -1242,16 +1227,17 @@ gnutls_privkey_import_ext2 (<em class="parameter"><code><a class="link" href="gn
                             <em class="parameter"><code><a class="link" href="gnutls-abstract.html#gnutls-privkey-deinit-func" title="gnutls_privkey_deinit_func ()"><span class="type">gnutls_privkey_deinit_func</span></a> deinit_func</code></em>,
                             <em class="parameter"><code>unsigned <span class="type">int</span> flags</code></em>);</pre>
 <p>This function will associate the given callbacks with the
-<a class="link" href="gnutls-abstract.html#gnutls-privkey-t" title="gnutls_privkey_t"><span class="type">gnutls_privkey_t</span></a> structure. At least one of the two callbacks
+<a class="link" href="gnutls-abstract.html#gnutls-privkey-t" title="gnutls_privkey_t"><span class="type">gnutls_privkey_t</span></a> type. At least one of the two callbacks
 must be non-null. If a deinitialization function is provided
 then flags is assumed to contain <code class="literal">GNUTLS_PRIVKEY_IMPORT_AUTO_RELEASE</code>.</p>
 <p>Note that the signing function is supposed to "raw" sign data, i.e.,
 without any hashing or preprocessing. In case of RSA the DigestInfo
 will be provided, and the signing function is expected to do the PKCS #1
 1.5 padding and the exponentiation.</p>
+<p>See also <code class="function">gnutls_privkey_import_ext3()</code>.</p>
 <div class="refsect3">
-<a name="id-1.2.5.6.16.6"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="gnutls-privkey-import-ext2.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -1274,21 +1260,6 @@ will be provided, and the signing function is expected to do the PKCS #1
 <td class="parameter_annotations"> </td>
 </tr>
 <tr>
-<td class="parameter_name"><p>sign_func</p></td>
-<td class="parameter_description"><p>callback for signature operations</p></td>
-<td class="parameter_annotations"> </td>
-</tr>
-<tr>
-<td class="parameter_name"><p>decrypt_func</p></td>
-<td class="parameter_description"><p>callback for decryption operations</p></td>
-<td class="parameter_annotations"> </td>
-</tr>
-<tr>
-<td class="parameter_name"><p>deinit_func</p></td>
-<td class="parameter_description"><p>a deinitialization function</p></td>
-<td class="parameter_annotations"> </td>
-</tr>
-<tr>
 <td class="parameter_name"><p>flags</p></td>
 <td class="parameter_description"><p>Flags for the import</p></td>
 <td class="parameter_annotations"> </td>
@@ -1297,7 +1268,7 @@ will be provided, and the signing function is expected to do the PKCS #1
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.2.5.6.16.7"></a><h4>Returns</h4>
+<a name="gnutls-privkey-import-ext2.returns"></a><h4>Returns</h4>
 <p> On success, <a class="link" href="gnutls-gnutls.html#GNUTLS-E-SUCCESS:CAPS" title="GNUTLS_E_SUCCESS"><code class="literal">GNUTLS_E_SUCCESS</code></a> (0) is returned, otherwise a
 negative error value.</p>
 </div>
@@ -1311,7 +1282,7 @@ gnutls_privkey_import_openpgp (<em class="parameter"><code><a class="link" href=
                                <em class="parameter"><code><a class="link" href="gnutls-gnutls.html#gnutls-openpgp-privkey-t" title="gnutls_openpgp_privkey_t"><span class="type">gnutls_openpgp_privkey_t</span></a> key</code></em>,
                                <em class="parameter"><code>unsigned <span class="type">int</span> flags</code></em>);</pre>
 <p>This function will import the given private key to the abstract
-<a class="link" href="gnutls-abstract.html#gnutls-privkey-t" title="gnutls_privkey_t"><span class="type">gnutls_privkey_t</span></a> structure.</p>
+<a class="link" href="gnutls-abstract.html#gnutls-privkey-t" title="gnutls_privkey_t"><span class="type">gnutls_privkey_t</span></a> type.</p>
 <p>The <a class="link" href="gnutls-gnutls.html#gnutls-openpgp-privkey-t" title="gnutls_openpgp_privkey_t"><span class="type">gnutls_openpgp_privkey_t</span></a> object must not be deallocated
 during the lifetime of this structure. The subkey set as
 preferred will be used, or the master key otherwise.</p>
@@ -1319,8 +1290,8 @@ preferred will be used, or the master key otherwise.</p>
  might be zero or one of <code class="literal">GNUTLS_PRIVKEY_IMPORT_AUTO_RELEASE</code>
 and <code class="literal">GNUTLS_PRIVKEY_IMPORT_COPY</code>.</p>
 <div class="refsect3">
-<a name="id-1.2.5.6.17.7"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="gnutls-privkey-import-openpgp.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -1346,7 +1317,7 @@ and <code class="literal">GNUTLS_PRIVKEY_IMPORT_COPY</code>.</p>
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.2.5.6.17.8"></a><h4>Returns</h4>
+<a name="gnutls-privkey-import-openpgp.returns"></a><h4>Returns</h4>
 <p> On success, <a class="link" href="gnutls-gnutls.html#GNUTLS-E-SUCCESS:CAPS" title="GNUTLS_E_SUCCESS"><code class="literal">GNUTLS_E_SUCCESS</code></a> (0) is returned, otherwise a
 negative error value.</p>
 </div>
@@ -1362,10 +1333,10 @@ gnutls_privkey_import_openpgp_raw (<em class="parameter"><code><a class="link" h
                                    <em class="parameter"><code>const <span class="type">gnutls_openpgp_keyid_t</span> keyid</code></em>,
                                    <em class="parameter"><code>const <span class="type">char</span> *password</code></em>);</pre>
 <p>This function will import the given private key to the abstract
-<a class="link" href="gnutls-abstract.html#gnutls-privkey-t" title="gnutls_privkey_t"><span class="type">gnutls_privkey_t</span></a> structure.</p>
+<a class="link" href="gnutls-abstract.html#gnutls-privkey-t" title="gnutls_privkey_t"><span class="type">gnutls_privkey_t</span></a> type.</p>
 <div class="refsect3">
-<a name="id-1.2.5.6.18.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="gnutls-privkey-import-openpgp-raw.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -1401,7 +1372,7 @@ gnutls_privkey_import_openpgp_raw (<em class="parameter"><code><a class="link" h
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.2.5.6.18.6"></a><h4>Returns</h4>
+<a name="gnutls-privkey-import-openpgp-raw.returns"></a><h4>Returns</h4>
 <p> On success, <a class="link" href="gnutls-gnutls.html#GNUTLS-E-SUCCESS:CAPS" title="GNUTLS_E_SUCCESS"><code class="literal">GNUTLS_E_SUCCESS</code></a> (0) is returned, otherwise a
 negative error value.</p>
 </div>
@@ -1415,15 +1386,15 @@ gnutls_privkey_import_pkcs11 (<em class="parameter"><code><a class="link" href="
                               <em class="parameter"><code><a class="link" href="gnutls-gnutls.html#gnutls-pkcs11-privkey-t" title="gnutls_pkcs11_privkey_t"><span class="type">gnutls_pkcs11_privkey_t</span></a> key</code></em>,
                               <em class="parameter"><code>unsigned <span class="type">int</span> flags</code></em>);</pre>
 <p>This function will import the given private key to the abstract
-<a class="link" href="gnutls-abstract.html#gnutls-privkey-t" title="gnutls_privkey_t"><span class="type">gnutls_privkey_t</span></a> structure.</p>
+<a class="link" href="gnutls-abstract.html#gnutls-privkey-t" title="gnutls_privkey_t"><span class="type">gnutls_privkey_t</span></a> type.</p>
 <p>The <a class="link" href="gnutls-gnutls.html#gnutls-pkcs11-privkey-t" title="gnutls_pkcs11_privkey_t"><span class="type">gnutls_pkcs11_privkey_t</span></a> object must not be deallocated
 during the lifetime of this structure.</p>
 <p><em class="parameter"><code>flags</code></em>
  might be zero or one of <code class="literal">GNUTLS_PRIVKEY_IMPORT_AUTO_RELEASE</code>
 and <code class="literal">GNUTLS_PRIVKEY_IMPORT_COPY</code>.</p>
 <div class="refsect3">
-<a name="id-1.2.5.6.19.7"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="gnutls-privkey-import-pkcs11.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -1449,7 +1420,7 @@ and <code class="literal">GNUTLS_PRIVKEY_IMPORT_COPY</code>.</p>
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.2.5.6.19.8"></a><h4>Returns</h4>
+<a name="gnutls-privkey-import-pkcs11.returns"></a><h4>Returns</h4>
 <p> On success, <a class="link" href="gnutls-gnutls.html#GNUTLS-E-SUCCESS:CAPS" title="GNUTLS_E_SUCCESS"><code class="literal">GNUTLS_E_SUCCESS</code></a> (0) is returned, otherwise a
 negative error value.</p>
 </div>
@@ -1462,10 +1433,10 @@ negative error value.</p>
 gnutls_privkey_import_pkcs11_url (<em class="parameter"><code><a class="link" href="gnutls-abstract.html#gnutls-privkey-t" title="gnutls_privkey_t"><span class="type">gnutls_privkey_t</span></a> key</code></em>,
                                   <em class="parameter"><code>const <span class="type">char</span> *url</code></em>);</pre>
 <p>This function will import a PKCS 11 private key to a <span class="type">gnutls_private_key_t</span>
-structure.</p>
+type.</p>
 <div class="refsect3">
-<a name="id-1.2.5.6.20.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="gnutls-privkey-import-pkcs11-url.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -1486,7 +1457,7 @@ structure.</p>
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.2.5.6.20.6"></a><h4>Returns</h4>
+<a name="gnutls-privkey-import-pkcs11-url.returns"></a><h4>Returns</h4>
 <p> On success, <a class="link" href="gnutls-gnutls.html#GNUTLS-E-SUCCESS:CAPS" title="GNUTLS_E_SUCCESS"><code class="literal">GNUTLS_E_SUCCESS</code></a> (0) is returned, otherwise a
 negative error value.</p>
 </div>
@@ -1503,11 +1474,11 @@ gnutls_privkey_import_tpm_raw (<em class="parameter"><code><a class="link" href=
                                <em class="parameter"><code>const <span class="type">char</span> *key_password</code></em>,
                                <em class="parameter"><code>unsigned <span class="type">int</span> flags</code></em>);</pre>
 <p>This function will import the given private key to the abstract
-<a class="link" href="gnutls-abstract.html#gnutls-privkey-t" title="gnutls_privkey_t"><span class="type">gnutls_privkey_t</span></a> structure. </p>
+<a class="link" href="gnutls-abstract.html#gnutls-privkey-t" title="gnutls_privkey_t"><span class="type">gnutls_privkey_t</span></a> type. </p>
 <p>With respect to passwords the same as in <a class="link" href="gnutls-abstract.html#gnutls-privkey-import-tpm-url" title="gnutls_privkey_import_tpm_url ()"><code class="function">gnutls_privkey_import_tpm_url()</code></a> apply.</p>
 <div class="refsect3">
-<a name="id-1.2.5.6.21.6"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="gnutls-privkey-import-tpm-raw.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -1548,7 +1519,7 @@ gnutls_privkey_import_tpm_raw (<em class="parameter"><code><a class="link" href=
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.2.5.6.21.7"></a><h4>Returns</h4>
+<a name="gnutls-privkey-import-tpm-raw.returns"></a><h4>Returns</h4>
 <p> On success, <a class="link" href="gnutls-gnutls.html#GNUTLS-E-SUCCESS:CAPS" title="GNUTLS_E_SUCCESS"><code class="literal">GNUTLS_E_SUCCESS</code></a> (0) is returned, otherwise a
 negative error value.</p>
 </div>
@@ -1564,7 +1535,7 @@ gnutls_privkey_import_tpm_url (<em class="parameter"><code><a class="link" href=
                                <em class="parameter"><code>const <span class="type">char</span> *key_password</code></em>,
                                <em class="parameter"><code>unsigned <span class="type">int</span> flags</code></em>);</pre>
 <p>This function will import the given private key to the abstract
-<a class="link" href="gnutls-abstract.html#gnutls-privkey-t" title="gnutls_privkey_t"><span class="type">gnutls_privkey_t</span></a> structure.</p>
+<a class="link" href="gnutls-abstract.html#gnutls-privkey-t" title="gnutls_privkey_t"><span class="type">gnutls_privkey_t</span></a> type.</p>
 <p>Note that unless <code class="literal">GNUTLS_PRIVKEY_DISABLE_CALLBACKS</code>
 is specified, if incorrect (or NULL) passwords are given
 the PKCS11 callback functions will be used to obtain the
@@ -1573,8 +1544,8 @@ correct passwords. Otherwise if the SRK password is wrong
 is wrong or not provided then <a class="link" href="gnutls-gnutls.html#GNUTLS-E-TPM-KEY-PASSWORD-ERROR:CAPS" title="GNUTLS_E_TPM_KEY_PASSWORD_ERROR"><code class="literal">GNUTLS_E_TPM_KEY_PASSWORD_ERROR</code></a>
 is returned.</p>
 <div class="refsect3">
-<a name="id-1.2.5.6.22.6"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="gnutls-privkey-import-tpm-url.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -1610,7 +1581,7 @@ is returned.</p>
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.2.5.6.22.7"></a><h4>Returns</h4>
+<a name="gnutls-privkey-import-tpm-url.returns"></a><h4>Returns</h4>
 <p> On success, <a class="link" href="gnutls-gnutls.html#GNUTLS-E-SUCCESS:CAPS" title="GNUTLS_E_SUCCESS"><code class="literal">GNUTLS_E_SUCCESS</code></a> (0) is returned, otherwise a
 negative error value.</p>
 </div>
@@ -1627,8 +1598,8 @@ gnutls_privkey_import_url (<em class="parameter"><code><a class="link" href="gnu
 private key. The supported URL types can be checked
 using <a class="link" href="gnutls-gnutls.html#gnutls-url-is-supported" title="gnutls_url_is_supported ()"><code class="function">gnutls_url_is_supported()</code></a>.</p>
 <div class="refsect3">
-<a name="id-1.2.5.6.23.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="gnutls-privkey-import-url.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -1654,7 +1625,7 @@ using <a class="link" href="gnutls-gnutls.html#gnutls-url-is-supported" title="g
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.2.5.6.23.6"></a><h4>Returns</h4>
+<a name="gnutls-privkey-import-url.returns"></a><h4>Returns</h4>
 <p> On success, <a class="link" href="gnutls-gnutls.html#GNUTLS-E-SUCCESS:CAPS" title="GNUTLS_E_SUCCESS"><code class="literal">GNUTLS_E_SUCCESS</code></a> (0) is returned, otherwise a
 negative error value.</p>
 </div>
@@ -1668,15 +1639,15 @@ gnutls_privkey_import_x509 (<em class="parameter"><code><a class="link" href="gn
                             <em class="parameter"><code><a class="link" href="gnutls-gnutls.html#gnutls-x509-privkey-t" title="gnutls_x509_privkey_t"><span class="type">gnutls_x509_privkey_t</span></a> key</code></em>,
                             <em class="parameter"><code>unsigned <span class="type">int</span> flags</code></em>);</pre>
 <p>This function will import the given private key to the abstract
-<a class="link" href="gnutls-abstract.html#gnutls-privkey-t" title="gnutls_privkey_t"><span class="type">gnutls_privkey_t</span></a> structure.</p>
+<a class="link" href="gnutls-abstract.html#gnutls-privkey-t" title="gnutls_privkey_t"><span class="type">gnutls_privkey_t</span></a> type.</p>
 <p>The <a class="link" href="gnutls-gnutls.html#gnutls-x509-privkey-t" title="gnutls_x509_privkey_t"><span class="type">gnutls_x509_privkey_t</span></a> object must not be deallocated
 during the lifetime of this structure.</p>
 <p><em class="parameter"><code>flags</code></em>
  might be zero or one of <code class="literal">GNUTLS_PRIVKEY_IMPORT_AUTO_RELEASE</code>
 and <code class="literal">GNUTLS_PRIVKEY_IMPORT_COPY</code>.</p>
 <div class="refsect3">
-<a name="id-1.2.5.6.24.7"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="gnutls-privkey-import-x509.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -1702,7 +1673,7 @@ and <code class="literal">GNUTLS_PRIVKEY_IMPORT_COPY</code>.</p>
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.2.5.6.24.8"></a><h4>Returns</h4>
+<a name="gnutls-privkey-import-x509.returns"></a><h4>Returns</h4>
 <p> On success, <a class="link" href="gnutls-gnutls.html#GNUTLS-E-SUCCESS:CAPS" title="GNUTLS_E_SUCCESS"><code class="literal">GNUTLS_E_SUCCESS</code></a> (0) is returned, otherwise a
 negative error value.</p>
 </div>
@@ -1718,12 +1689,12 @@ gnutls_privkey_import_x509_raw (<em class="parameter"><code><a class="link" href
                                 <em class="parameter"><code>const <span class="type">char</span> *password</code></em>,
                                 <em class="parameter"><code>unsigned <span class="type">int</span> flags</code></em>);</pre>
 <p>This function will import the given private key to the abstract
-<a class="link" href="gnutls-abstract.html#gnutls-privkey-t" title="gnutls_privkey_t"><span class="type">gnutls_privkey_t</span></a> structure. </p>
+<a class="link" href="gnutls-abstract.html#gnutls-privkey-t" title="gnutls_privkey_t"><span class="type">gnutls_privkey_t</span></a> type. </p>
 <p>The supported formats are basic unencrypted key, PKCS8, PKCS12, 
 and the openssl format.</p>
 <div class="refsect3">
-<a name="id-1.2.5.6.25.6"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="gnutls-privkey-import-x509-raw.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -1759,7 +1730,7 @@ and the openssl format.</p>
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.2.5.6.25.7"></a><h4>Returns</h4>
+<a name="gnutls-privkey-import-x509-raw.returns"></a><h4>Returns</h4>
 <p> On success, <a class="link" href="gnutls-gnutls.html#GNUTLS-E-SUCCESS:CAPS" title="GNUTLS_E_SUCCESS"><code class="literal">GNUTLS_E_SUCCESS</code></a> (0) is returned, otherwise a
 negative error value.</p>
 </div>
@@ -1770,10 +1741,10 @@ negative error value.</p>
 <a name="gnutls-privkey-init"></a><h3>gnutls_privkey_init ()</h3>
 <pre class="programlisting"><span class="returnvalue">int</span>
 gnutls_privkey_init (<em class="parameter"><code><a class="link" href="gnutls-abstract.html#gnutls-privkey-t" title="gnutls_privkey_t"><span class="type">gnutls_privkey_t</span></a> *key</code></em>);</pre>
-<p>This function will initialize an private key structure.</p>
+<p>This function will initialize a private key.</p>
 <div class="refsect3">
-<a name="id-1.2.5.6.26.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="gnutls-privkey-init.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -1781,13 +1752,13 @@ gnutls_privkey_init (<em class="parameter"><code><a class="link" href="gnutls-ab
 </colgroup>
 <tbody><tr>
 <td class="parameter_name"><p>key</p></td>
-<td class="parameter_description"><p>The structure to be initialized</p></td>
+<td class="parameter_description"><p>A pointer to the type to be initialized</p></td>
 <td class="parameter_annotations"> </td>
 </tr></tbody>
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.2.5.6.26.6"></a><h4>Returns</h4>
+<a name="gnutls-privkey-init.returns"></a><h4>Returns</h4>
 <p> On success, <a class="link" href="gnutls-gnutls.html#GNUTLS-E-SUCCESS:CAPS" title="GNUTLS_E_SUCCESS"><code class="literal">GNUTLS_E_SUCCESS</code></a> (0) is returned, otherwise a
 negative error value.</p>
 </div>
@@ -1806,8 +1777,8 @@ global PIN functions.</p>
 <p>Note that this function must be called right after initialization
 to have effect.</p>
 <div class="refsect3">
-<a name="id-1.2.5.6.27.6"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="gnutls-privkey-set-pin-function.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -1850,8 +1821,8 @@ used for the RSA algorithm, but only the SHA family for the DSA keys.</p>
 <p>You may use <a class="link" href="gnutls-abstract.html#gnutls-pubkey-get-preferred-hash-algorithm" title="gnutls_pubkey_get_preferred_hash_algorithm ()"><code class="function">gnutls_pubkey_get_preferred_hash_algorithm()</code></a> to determine
 the hash algorithm.</p>
 <div class="refsect3">
-<a name="id-1.2.5.6.28.6"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="gnutls-privkey-sign-data.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -1880,14 +1851,14 @@ the hash algorithm.</p>
 </tr>
 <tr>
 <td class="parameter_name"><p>signature</p></td>
-<td class="parameter_description"><p>will contain the signature allocate with <a class="link" href="gnutls-gnutls.html#gnutls-malloc" title="gnutls_malloc"><code class="function">gnutls_malloc()</code></a></p></td>
+<td class="parameter_description"><p>will contain the signature allocated with <code class="function">gnutls_malloc()</code></p></td>
 <td class="parameter_annotations"> </td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.2.5.6.28.7"></a><h4>Returns</h4>
+<a name="gnutls-privkey-sign-data.returns"></a><h4>Returns</h4>
 <p> On success, <a class="link" href="gnutls-gnutls.html#GNUTLS-E-SUCCESS:CAPS" title="GNUTLS_E_SUCCESS"><code class="literal">GNUTLS_E_SUCCESS</code></a> (0) is returned, otherwise a
 negative error value.</p>
 </div>
@@ -1923,8 +1894,8 @@ the hash algorithm.</p>
 will ignore <em class="parameter"><code>hash_algo</code></em>
  and perform a raw PKCS1 signature.</p>
 <div class="refsect3">
-<a name="id-1.2.5.6.30.7"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="gnutls-privkey-sign-hash.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -1960,7 +1931,7 @@ will ignore <em class="parameter"><code>hash_algo</code></em>
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.2.5.6.30.8"></a><h4>Returns</h4>
+<a name="gnutls-privkey-sign-hash.returns"></a><h4>Returns</h4>
 <p> On success, <a class="link" href="gnutls-gnutls.html#GNUTLS-E-SUCCESS:CAPS" title="GNUTLS_E_SUCCESS"><code class="literal">GNUTLS_E_SUCCESS</code></a> (0) is returned, otherwise a
 negative error value.</p>
 </div>
@@ -1973,8 +1944,8 @@ negative error value.</p>
 gnutls_pubkey_deinit (<em class="parameter"><code><a class="link" href="gnutls-abstract.html#gnutls-pubkey-t" title="gnutls_pubkey_t"><span class="type">gnutls_pubkey_t</span></a> key</code></em>);</pre>
 <p>This function will deinitialize a public key structure.</p>
 <div class="refsect3">
-<a name="id-1.2.5.6.31.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="gnutls-pubkey-deinit.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -1982,7 +1953,7 @@ gnutls_pubkey_deinit (<em class="parameter"><code><a class="link" href="gnutls-a
 </colgroup>
 <tbody><tr>
 <td class="parameter_name"><p>key</p></td>
-<td class="parameter_description"><p>The structure to be deinitialized</p></td>
+<td class="parameter_description"><p>The key to be deinitialized</p></td>
 <td class="parameter_annotations"> </td>
 </tr></tbody>
 </table></div>
@@ -1998,10 +1969,11 @@ gnutls_pubkey_encrypt_data (<em class="parameter"><code><a class="link" href="gn
                             <em class="parameter"><code>const <span class="type">gnutls_datum_t</span> *plaintext</code></em>,
                             <em class="parameter"><code><span class="type">gnutls_datum_t</span> *ciphertext</code></em>);</pre>
 <p>This function will encrypt the given data, using the public
-key.</p>
+key. On success the <em class="parameter"><code>ciphertext</code></em>
+ will be allocated using <code class="function">gnutls_malloc()</code>.</p>
 <div class="refsect3">
-<a name="id-1.2.5.6.32.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="gnutls-pubkey-encrypt-data.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -2032,7 +2004,7 @@ key.</p>
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.2.5.6.32.6"></a><h4>Returns</h4>
+<a name="gnutls-pubkey-encrypt-data.returns"></a><h4>Returns</h4>
 <p> On success, <a class="link" href="gnutls-gnutls.html#GNUTLS-E-SUCCESS:CAPS" title="GNUTLS_E_SUCCESS"><code class="literal">GNUTLS_E_SUCCESS</code></a> (0) is returned, otherwise a
 negative error value.</p>
 </div>
@@ -2055,8 +2027,8 @@ be returned.</p>
 <p>If the structure is PEM encoded, it will have a header
 of "BEGIN CERTIFICATE".</p>
 <div class="refsect3">
-<a name="id-1.2.5.6.33.7"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="gnutls-pubkey-export.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -2088,7 +2060,7 @@ replaced by the actual size of parameters)</p></td>
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.2.5.6.33.8"></a><h4>Returns</h4>
+<a name="gnutls-pubkey-export.returns"></a><h4>Returns</h4>
 <p> In case of failure a negative error code will be
 returned, and 0 on success.</p>
 </div>
@@ -2104,12 +2076,12 @@ gnutls_pubkey_export2 (<em class="parameter"><code><a class="link" href="gnutls-
 <p>This function will export the public key to DER or PEM format.
 The contents of the exported data is the SubjectPublicKeyInfo
 X.509 structure.</p>
-<p>The output buffer will be allocated using <a class="link" href="gnutls-gnutls.html#gnutls-malloc" title="gnutls_malloc"><code class="function">gnutls_malloc()</code></a>.</p>
+<p>The output buffer will be allocated using <code class="function">gnutls_malloc()</code>.</p>
 <p>If the structure is PEM encoded, it will have a header
 of "BEGIN CERTIFICATE".</p>
 <div class="refsect3">
-<a name="id-1.2.5.6.34.7"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="gnutls-pubkey-export2.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -2135,7 +2107,7 @@ of "BEGIN CERTIFICATE".</p>
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.2.5.6.34.8"></a><h4>Returns</h4>
+<a name="gnutls-pubkey-export2.returns"></a><h4>Returns</h4>
 <p> In case of failure a negative error code will be
 returned, and 0 on success.</p>
 </div>
@@ -2157,8 +2129,8 @@ certificate corresponds to the given public key.</p>
 be returned.  The output will normally be a SHA-1 hash output,
 which is 20 bytes.</p>
 <div class="refsect3">
-<a name="id-1.2.5.6.35.6"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="gnutls-pubkey-get-key-id.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -2172,7 +2144,7 @@ which is 20 bytes.</p>
 </tr>
 <tr>
 <td class="parameter_name"><p>flags</p></td>
-<td class="parameter_description"><p>should be 0 for now</p></td>
+<td class="parameter_description"><p>should be one of the flags from <code class="literal">gnutls_keyid_flags_t</code></p></td>
 <td class="parameter_annotations"> </td>
 </tr>
 <tr>
@@ -2190,7 +2162,7 @@ replaced by the actual size of parameters)</p></td>
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.2.5.6.35.7"></a><h4>Returns</h4>
+<a name="gnutls-pubkey-get-key-id.returns"></a><h4>Returns</h4>
 <p> In case of failure a negative error code will be
 returned, and 0 on success.</p>
 </div>
@@ -2204,8 +2176,8 @@ gnutls_pubkey_get_key_usage (<em class="parameter"><code><a class="link" href="g
                              <em class="parameter"><code>unsigned <span class="type">int</span> *usage</code></em>);</pre>
 <p>This function will return the key usage of the public key.</p>
 <div class="refsect3">
-<a name="id-1.2.5.6.36.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="gnutls-pubkey-get-key-usage.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -2214,7 +2186,7 @@ gnutls_pubkey_get_key_usage (<em class="parameter"><code><a class="link" href="g
 <tbody>
 <tr>
 <td class="parameter_name"><p>key</p></td>
-<td class="parameter_description"><p>should contain a <a class="link" href="gnutls-abstract.html#gnutls-pubkey-t" title="gnutls_pubkey_t"><span class="type">gnutls_pubkey_t</span></a> structure</p></td>
+<td class="parameter_description"><p>should contain a <a class="link" href="gnutls-abstract.html#gnutls-pubkey-t" title="gnutls_pubkey_t"><span class="type">gnutls_pubkey_t</span></a> type</p></td>
 <td class="parameter_annotations"> </td>
 </tr>
 <tr>
@@ -2226,7 +2198,7 @@ gnutls_pubkey_get_key_usage (<em class="parameter"><code><a class="link" href="g
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.2.5.6.36.6"></a><h4>Returns</h4>
+<a name="gnutls-pubkey-get-key-usage.returns"></a><h4>Returns</h4>
 <p> On success, <a class="link" href="gnutls-gnutls.html#GNUTLS-E-SUCCESS:CAPS" title="GNUTLS_E_SUCCESS"><code class="literal">GNUTLS_E_SUCCESS</code></a> (0) is returned, otherwise a
 negative error value.</p>
 </div>
@@ -2250,8 +2222,8 @@ this function returns the fingerprint of the master key.</p>
 *output_data_size is updated and <a class="link" href="gnutls-gnutls.html#GNUTLS-E-SHORT-MEMORY-BUFFER:CAPS" title="GNUTLS_E_SHORT_MEMORY_BUFFER"><code class="literal">GNUTLS_E_SHORT_MEMORY_BUFFER</code></a> will
 be returned.  The output is <a class="link" href="gnutls-openpgp.html#GNUTLS-OPENPGP-KEYID-SIZE:CAPS" title="GNUTLS_OPENPGP_KEYID_SIZE"><code class="literal">GNUTLS_OPENPGP_KEYID_SIZE</code></a> bytes long.</p>
 <div class="refsect3">
-<a name="id-1.2.5.6.37.7"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="gnutls-pubkey-get-openpgp-key-id.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -2288,7 +2260,7 @@ replaced by the actual size of parameters)</p></td>
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.2.5.6.37.8"></a><h4>Returns</h4>
+<a name="gnutls-pubkey-get-openpgp-key-id.returns"></a><h4>Returns</h4>
 <p> In case of failure a negative error code will be
 returned, and 0 on success.</p>
 </div>
@@ -2304,8 +2276,8 @@ gnutls_pubkey_get_pk_algorithm (<em class="parameter"><code><a class="link" href
 key and if possible will return a number of bits that indicates
 the security parameter of the key.</p>
 <div class="refsect3">
-<a name="id-1.2.5.6.38.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="gnutls-pubkey-get-pk-algorithm.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -2314,7 +2286,7 @@ the security parameter of the key.</p>
 <tbody>
 <tr>
 <td class="parameter_name"><p>key</p></td>
-<td class="parameter_description"><p>should contain a <a class="link" href="gnutls-abstract.html#gnutls-pubkey-t" title="gnutls_pubkey_t"><span class="type">gnutls_pubkey_t</span></a> structure</p></td>
+<td class="parameter_description"><p>should contain a <a class="link" href="gnutls-abstract.html#gnutls-pubkey-t" title="gnutls_pubkey_t"><span class="type">gnutls_pubkey_t</span></a> type</p></td>
 <td class="parameter_annotations"> </td>
 </tr>
 <tr>
@@ -2326,7 +2298,7 @@ the security parameter of the key.</p>
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.2.5.6.38.6"></a><h4>Returns</h4>
+<a name="gnutls-pubkey-get-pk-algorithm.returns"></a><h4>Returns</h4>
 <p> a member of the <a class="link" href="gnutls-gnutls.html#gnutls-pk-algorithm-t" title="enum gnutls_pk_algorithm_t"><span class="type">gnutls_pk_algorithm_t</span></a> enumeration on
 success, or a negative error code on error.</p>
 </div>
@@ -2340,15 +2312,15 @@ gnutls_pubkey_get_preferred_hash_algorithm
                                (<em class="parameter"><code><a class="link" href="gnutls-abstract.html#gnutls-pubkey-t" title="gnutls_pubkey_t"><span class="type">gnutls_pubkey_t</span></a> key</code></em>,
                                 <em class="parameter"><code><a class="link" href="gnutls-gnutls.html#gnutls-digest-algorithm-t" title="enum gnutls_digest_algorithm_t"><span class="type">gnutls_digest_algorithm_t</span></a> *hash</code></em>,
                                 <em class="parameter"><code>unsigned <span class="type">int</span> *mand</code></em>);</pre>
-<p>This function will read the certifcate and return the appropriate digest
+<p>This function will read the certificate and return the appropriate digest
 algorithm to use for signing with this certificate. Some certificates (i.e.
 DSA might not be able to sign without the preferred algorithm).</p>
 <p>To get the signature algorithm instead of just the hash use <a class="link" href="gnutls-gnutls.html#gnutls-pk-to-sign" title="gnutls_pk_to_sign ()"><code class="function">gnutls_pk_to_sign()</code></a>
 with the algorithm of the certificate/key and the provided <em class="parameter"><code>hash</code></em>
 .</p>
 <div class="refsect3">
-<a name="id-1.2.5.6.39.6"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="gnutls-pubkey-get-preferred-hash-algorithm.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -2374,53 +2346,9 @@ with the algorithm of the certificate/key and the provided <em class="parameter"
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.2.5.6.39.7"></a><h4>Returns</h4>
+<a name="gnutls-pubkey-get-preferred-hash-algorithm.returns"></a><h4>Returns</h4>
 <p> the 0 if the hash algorithm is found. A negative error code is
 returned on error.</p>
-</div>
-<p class="since">Since: 2.12.0</p>
-</div>
-<hr>
-<div class="refsect2">
-<a name="gnutls-pubkey-get-verify-algorithm"></a><h3>gnutls_pubkey_get_verify_algorithm ()</h3>
-<pre class="programlisting"><span class="returnvalue">int</span>
-gnutls_pubkey_get_verify_algorithm (<em class="parameter"><code><a class="link" href="gnutls-abstract.html#gnutls-pubkey-t" title="gnutls_pubkey_t"><span class="type">gnutls_pubkey_t</span></a> key</code></em>,
-                                    <em class="parameter"><code>const <span class="type">gnutls_datum_t</span> *signature</code></em>,
-                                    <em class="parameter"><code><a class="link" href="gnutls-gnutls.html#gnutls-digest-algorithm-t" title="enum gnutls_digest_algorithm_t"><span class="type">gnutls_digest_algorithm_t</span></a> *hash</code></em>);</pre>
-<div class="warning"><p><code class="literal">gnutls_pubkey_get_verify_algorithm</code> is deprecated and should not be used in newly-written code.</p></div>
-<p>This function will read the certifcate and the signed data to
-determine the hash algorithm used to generate the signature.</p>
-<div class="refsect3">
-<a name="id-1.2.5.6.40.7"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
-<colgroup>
-<col width="150px" class="parameters_name">
-<col class="parameters_description">
-<col width="200px" class="parameters_annotations">
-</colgroup>
-<tbody>
-<tr>
-<td class="parameter_name"><p>key</p></td>
-<td class="parameter_description"><p>Holds the certificate</p></td>
-<td class="parameter_annotations"> </td>
-</tr>
-<tr>
-<td class="parameter_name"><p>signature</p></td>
-<td class="parameter_description"><p>contains the signature</p></td>
-<td class="parameter_annotations"> </td>
-</tr>
-<tr>
-<td class="parameter_name"><p>hash</p></td>
-<td class="parameter_description"><p>The result of the call with the hash algorithm used for signature</p></td>
-<td class="parameter_annotations"> </td>
-</tr>
-</tbody>
-</table></div>
-</div>
-<div class="refsect3">
-<a name="id-1.2.5.6.40.8"></a><h4>Returns</h4>
-<p> On success, <a class="link" href="gnutls-gnutls.html#GNUTLS-E-SUCCESS:CAPS" title="GNUTLS_E_SUCCESS"><code class="literal">GNUTLS_E_SUCCESS</code></a> (0) is returned, otherwise a
-negative error value.</p>
 </div>
 <p class="since">Since: 2.12.0</p>
 </div>
@@ -2433,13 +2361,13 @@ gnutls_pubkey_import (<em class="parameter"><code><a class="link" href="gnutls-a
                       <em class="parameter"><code><a class="link" href="gnutls-gnutls.html#gnutls-x509-crt-fmt-t" title="enum gnutls_x509_crt_fmt_t"><span class="type">gnutls_x509_crt_fmt_t</span></a> format</code></em>);</pre>
 <p>This function will import the provided public key in
 a SubjectPublicKeyInfo X.509 structure to a native
-<a class="link" href="gnutls-abstract.html#gnutls-pubkey-t" title="gnutls_pubkey_t"><code class="literal">gnutls_pubkey_t</code></a> structure. The output will be stored 
+<a class="link" href="gnutls-abstract.html#gnutls-pubkey-t" title="gnutls_pubkey_t"><code class="literal">gnutls_pubkey_t</code></a> type. The output will be stored 
 in <em class="parameter"><code>key</code></em>
 . If the public key is PEM encoded it should have a header 
 of "PUBLIC KEY".</p>
 <div class="refsect3">
-<a name="id-1.2.5.6.41.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="gnutls-pubkey-import.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -2448,7 +2376,7 @@ of "PUBLIC KEY".</p>
 <tbody>
 <tr>
 <td class="parameter_name"><p>key</p></td>
-<td class="parameter_description"><p>The structure to store the parsed public key. </p></td>
+<td class="parameter_description"><p>The public key. </p></td>
 <td class="parameter_annotations"> </td>
 </tr>
 <tr>
@@ -2465,7 +2393,7 @@ of "PUBLIC KEY".</p>
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.2.5.6.41.6"></a><h4>Returns</h4>
+<a name="gnutls-pubkey-import.returns"></a><h4>Returns</h4>
 <p> On success, <a class="link" href="gnutls-gnutls.html#GNUTLS-E-SUCCESS:CAPS" title="GNUTLS_E_SUCCESS"><code class="literal">GNUTLS_E_SUCCESS</code></a> (0) is returned, otherwise a
 negative error value.</p>
 </div>
@@ -2485,8 +2413,8 @@ native <a class="link" href="gnutls-abstract.html#gnutls-pubkey-t" title="gnutls
 in <em class="parameter"><code>key</code></em>
 .</p>
 <div class="refsect3">
-<a name="id-1.2.5.6.42.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="gnutls-pubkey-import-dsa-raw.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -2522,7 +2450,7 @@ in <em class="parameter"><code>key</code></em>
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.2.5.6.42.6"></a><h4>Returns</h4>
+<a name="gnutls-pubkey-import-dsa-raw.returns"></a><h4>Returns</h4>
 <p> On success, <a class="link" href="gnutls-gnutls.html#GNUTLS-E-SUCCESS:CAPS" title="GNUTLS_E_SUCCESS"><code class="literal">GNUTLS_E_SUCCESS</code></a> (0) is returned, otherwise a
 negative error value.</p>
 </div>
@@ -2540,8 +2468,8 @@ gnutls_pubkey_import_ecc_raw (<em class="parameter"><code><a class="link" href="
 <a class="link" href="gnutls-abstract.html#gnutls-pubkey-t" title="gnutls_pubkey_t"><span class="type">gnutls_pubkey_t</span></a>.  The output will be stored in <em class="parameter"><code>key</code></em>
 .</p>
 <div class="refsect3">
-<a name="id-1.2.5.6.43.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="gnutls-pubkey-import-ecc-raw.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -2572,7 +2500,7 @@ gnutls_pubkey_import_ecc_raw (<em class="parameter"><code><a class="link" href="
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.2.5.6.43.6"></a><h4>Returns</h4>
+<a name="gnutls-pubkey-import-ecc-raw.returns"></a><h4>Returns</h4>
 <p> On success, <a class="link" href="gnutls-gnutls.html#GNUTLS-E-SUCCESS:CAPS" title="GNUTLS_E_SUCCESS"><code class="literal">GNUTLS_E_SUCCESS</code></a> (0) is returned, otherwise a
 negative error value.</p>
 </div>
@@ -2589,8 +2517,8 @@ gnutls_pubkey_import_ecc_x962 (<em class="parameter"><code><a class="link" href=
 <a class="link" href="gnutls-abstract.html#gnutls-pubkey-t" title="gnutls_pubkey_t"><span class="type">gnutls_pubkey_t</span></a>.  The output will be stored in <em class="parameter"><code>key</code></em>
 .</p>
 <div class="refsect3">
-<a name="id-1.2.5.6.44.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="gnutls-pubkey-import-ecc-x962.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -2616,7 +2544,7 @@ gnutls_pubkey_import_ecc_x962 (<em class="parameter"><code><a class="link" href=
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.2.5.6.44.6"></a><h4>Returns</h4>
+<a name="gnutls-pubkey-import-ecc-x962.returns"></a><h4>Returns</h4>
 <p> On success, <a class="link" href="gnutls-gnutls.html#GNUTLS-E-SUCCESS:CAPS" title="GNUTLS_E_SUCCESS"><code class="literal">GNUTLS_E_SUCCESS</code></a> (0) is returned, otherwise a
 negative error value.</p>
 </div>
@@ -2631,11 +2559,11 @@ gnutls_pubkey_import_openpgp (<em class="parameter"><code><a class="link" href="
                               <em class="parameter"><code>unsigned <span class="type">int</span> flags</code></em>);</pre>
 <p>Imports a public key from an openpgp key. This function will import
 the given public key to the abstract <a class="link" href="gnutls-abstract.html#gnutls-pubkey-t" title="gnutls_pubkey_t"><span class="type">gnutls_pubkey_t</span></a>
-structure. The subkey set as preferred will be imported or the
+type. The subkey set as preferred will be imported or the
 master key otherwise.</p>
 <div class="refsect3">
-<a name="id-1.2.5.6.45.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="gnutls-pubkey-import-openpgp.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -2661,7 +2589,7 @@ master key otherwise.</p>
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.2.5.6.45.6"></a><h4>Returns</h4>
+<a name="gnutls-pubkey-import-openpgp.returns"></a><h4>Returns</h4>
 <p> On success, <a class="link" href="gnutls-gnutls.html#GNUTLS-E-SUCCESS:CAPS" title="GNUTLS_E_SUCCESS"><code class="literal">GNUTLS_E_SUCCESS</code></a> (0) is returned, otherwise a
 negative error value.</p>
 </div>
@@ -2677,10 +2605,10 @@ gnutls_pubkey_import_openpgp_raw (<em class="parameter"><code><a class="link" hr
                                   <em class="parameter"><code>const <span class="type">gnutls_openpgp_keyid_t</span> keyid</code></em>,
                                   <em class="parameter"><code>unsigned <span class="type">int</span> flags</code></em>);</pre>
 <p>This function will import the given public key to the abstract
-<a class="link" href="gnutls-abstract.html#gnutls-pubkey-t" title="gnutls_pubkey_t"><span class="type">gnutls_pubkey_t</span></a> structure.</p>
+<a class="link" href="gnutls-abstract.html#gnutls-pubkey-t" title="gnutls_pubkey_t"><span class="type">gnutls_pubkey_t</span></a> type.</p>
 <div class="refsect3">
-<a name="id-1.2.5.6.46.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="gnutls-pubkey-import-openpgp-raw.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -2716,7 +2644,7 @@ gnutls_pubkey_import_openpgp_raw (<em class="parameter"><code><a class="link" hr
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.2.5.6.46.6"></a><h4>Returns</h4>
+<a name="gnutls-pubkey-import-openpgp-raw.returns"></a><h4>Returns</h4>
 <p> On success, <a class="link" href="gnutls-gnutls.html#GNUTLS-E-SUCCESS:CAPS" title="GNUTLS_E_SUCCESS"><code class="literal">GNUTLS_E_SUCCESS</code></a> (0) is returned, otherwise a
 negative error value.</p>
 </div>
@@ -2730,10 +2658,10 @@ gnutls_pubkey_import_pkcs11 (<em class="parameter"><code><a class="link" href="g
                              <em class="parameter"><code><a class="link" href="gnutls-pkcs11.html#gnutls-pkcs11-obj-t" title="gnutls_pkcs11_obj_t"><span class="type">gnutls_pkcs11_obj_t</span></a> obj</code></em>,
                              <em class="parameter"><code>unsigned <span class="type">int</span> flags</code></em>);</pre>
 <p>Imports a public key from a pkcs11 key. This function will import
-the given public key to the abstract <a class="link" href="gnutls-abstract.html#gnutls-pubkey-t" title="gnutls_pubkey_t"><span class="type">gnutls_pubkey_t</span></a> structure.</p>
+the given public key to the abstract <a class="link" href="gnutls-abstract.html#gnutls-pubkey-t" title="gnutls_pubkey_t"><span class="type">gnutls_pubkey_t</span></a> type.</p>
 <div class="refsect3">
-<a name="id-1.2.5.6.47.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="gnutls-pubkey-import-pkcs11.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -2759,7 +2687,7 @@ the given public key to the abstract <a class="link" href="gnutls-abstract.html#
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.2.5.6.47.6"></a><h4>Returns</h4>
+<a name="gnutls-pubkey-import-pkcs11.returns"></a><h4>Returns</h4>
 <p> On success, <a class="link" href="gnutls-gnutls.html#GNUTLS-E-SUCCESS:CAPS" title="GNUTLS_E_SUCCESS"><code class="literal">GNUTLS_E_SUCCESS</code></a> (0) is returned, otherwise a
 negative error value.</p>
 </div>
@@ -2767,16 +2695,14 @@ negative error value.</p>
 </div>
 <hr>
 <div class="refsect2">
-<a name="gnutls-pubkey-import-pkcs11-url"></a><h3>gnutls_pubkey_import_pkcs11_url ()</h3>
-<pre class="programlisting"><span class="returnvalue">int</span>
-gnutls_pubkey_import_pkcs11_url (<em class="parameter"><code><a class="link" href="gnutls-abstract.html#gnutls-pubkey-t" title="gnutls_pubkey_t"><span class="type">gnutls_pubkey_t</span></a> key</code></em>,
-                                 <em class="parameter"><code>const <span class="type">char</span> *url</code></em>,
-                                 <em class="parameter"><code>unsigned <span class="type">int</span> flags</code></em>);</pre>
+<a name="gnutls-pubkey-import-pkcs11-url"></a><h3>gnutls_pubkey_import_pkcs11_url()</h3>
+<pre class="programlisting">#define gnutls_pubkey_import_pkcs11_url(key, url, flags) gnutls_pubkey_import_url(key, url, flags)
+</pre>
 <p>This function will import a PKCS 11 certificate to a <a class="link" href="gnutls-abstract.html#gnutls-pubkey-t" title="gnutls_pubkey_t"><span class="type">gnutls_pubkey_t</span></a>
 structure.</p>
 <div class="refsect3">
-<a name="id-1.2.5.6.48.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="gnutls-pubkey-import-pkcs11-url.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -2802,7 +2728,7 @@ structure.</p>
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.2.5.6.48.6"></a><h4>Returns</h4>
+<a name="gnutls-pubkey-import-pkcs11-url.returns"></a><h4>Returns</h4>
 <p> On success, <a class="link" href="gnutls-gnutls.html#GNUTLS-E-SUCCESS:CAPS" title="GNUTLS_E_SUCCESS"><code class="literal">GNUTLS_E_SUCCESS</code></a> (0) is returned, otherwise a
 negative error value.</p>
 </div>
@@ -2817,10 +2743,10 @@ gnutls_pubkey_import_privkey (<em class="parameter"><code><a class="link" href="
                               <em class="parameter"><code>unsigned <span class="type">int</span> usage</code></em>,
                               <em class="parameter"><code>unsigned <span class="type">int</span> flags</code></em>);</pre>
 <p>Imports the public key from a private.  This function will import
-the given public key to the abstract <a class="link" href="gnutls-abstract.html#gnutls-pubkey-t" title="gnutls_pubkey_t"><span class="type">gnutls_pubkey_t</span></a> structure.</p>
+the given public key to the abstract <a class="link" href="gnutls-abstract.html#gnutls-pubkey-t" title="gnutls_pubkey_t"><span class="type">gnutls_pubkey_t</span></a> type.</p>
 <div class="refsect3">
-<a name="id-1.2.5.6.49.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="gnutls-pubkey-import-privkey.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -2851,7 +2777,7 @@ the given public key to the abstract <a class="link" href="gnutls-abstract.html#
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.2.5.6.49.6"></a><h4>Returns</h4>
+<a name="gnutls-pubkey-import-privkey.returns"></a><h4>Returns</h4>
 <p> On success, <a class="link" href="gnutls-gnutls.html#GNUTLS-E-SUCCESS:CAPS" title="GNUTLS_E_SUCCESS"><code class="literal">GNUTLS_E_SUCCESS</code></a> (0) is returned, otherwise a
 negative error value.</p>
 </div>
@@ -2868,8 +2794,8 @@ gnutls_pubkey_import_rsa_raw (<em class="parameter"><code><a class="link" href="
 The new parameters should be stored in the appropriate
 gnutls_datum.</p>
 <div class="refsect3">
-<a name="id-1.2.5.6.50.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="gnutls-pubkey-import-rsa-raw.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -2878,7 +2804,7 @@ gnutls_datum.</p>
 <tbody>
 <tr>
 <td class="parameter_name"><p>key</p></td>
-<td class="parameter_description"><p>Is a structure will hold the parameters</p></td>
+<td class="parameter_description"><p>The key</p></td>
 <td class="parameter_annotations"> </td>
 </tr>
 <tr>
@@ -2895,7 +2821,7 @@ gnutls_datum.</p>
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.2.5.6.50.6"></a><h4>Returns</h4>
+<a name="gnutls-pubkey-import-rsa-raw.returns"></a><h4>Returns</h4>
 <p> <a class="link" href="gnutls-gnutls.html#GNUTLS-E-SUCCESS:CAPS" title="GNUTLS_E_SUCCESS"><code class="literal">GNUTLS_E_SUCCESS</code></a> on success, or an negative error code.</p>
 </div>
 <p class="since">Since: 2.12.0</p>
@@ -2914,8 +2840,8 @@ structure.</p>
 <p>With respect to passwords the same as in
 <a class="link" href="gnutls-abstract.html#gnutls-pubkey-import-tpm-url" title="gnutls_pubkey_import_tpm_url ()"><code class="function">gnutls_pubkey_import_tpm_url()</code></a> apply.</p>
 <div class="refsect3">
-<a name="id-1.2.5.6.51.6"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="gnutls-pubkey-import-tpm-raw.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -2951,7 +2877,7 @@ structure.</p>
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.2.5.6.51.7"></a><h4>Returns</h4>
+<a name="gnutls-pubkey-import-tpm-raw.returns"></a><h4>Returns</h4>
 <p> On success, <a class="link" href="gnutls-gnutls.html#GNUTLS-E-SUCCESS:CAPS" title="GNUTLS_E_SUCCESS"><code class="literal">GNUTLS_E_SUCCESS</code></a> (0) is returned, otherwise a
 negative error value.</p>
 </div>
@@ -2966,15 +2892,15 @@ gnutls_pubkey_import_tpm_url (<em class="parameter"><code><a class="link" href="
                               <em class="parameter"><code>const <span class="type">char</span> *srk_password</code></em>,
                               <em class="parameter"><code>unsigned <span class="type">int</span> flags</code></em>);</pre>
 <p>This function will import the given private key to the abstract
-<a class="link" href="gnutls-abstract.html#gnutls-privkey-t" title="gnutls_privkey_t"><span class="type">gnutls_privkey_t</span></a> structure. </p>
+<a class="link" href="gnutls-abstract.html#gnutls-privkey-t" title="gnutls_privkey_t"><span class="type">gnutls_privkey_t</span></a> type. </p>
 <p>Note that unless <code class="literal">GNUTLS_PUBKEY_DISABLE_CALLBACKS</code>
 is specified, if incorrect (or NULL) passwords are given
 the PKCS11 callback functions will be used to obtain the
 correct passwords. Otherwise if the SRK password is wrong
 <a class="link" href="gnutls-gnutls.html#GNUTLS-E-TPM-SRK-PASSWORD-ERROR:CAPS" title="GNUTLS_E_TPM_SRK_PASSWORD_ERROR"><code class="literal">GNUTLS_E_TPM_SRK_PASSWORD_ERROR</code></a> is returned.</p>
 <div class="refsect3">
-<a name="id-1.2.5.6.52.6"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="gnutls-pubkey-import-tpm-url.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -3005,7 +2931,7 @@ correct passwords. Otherwise if the SRK password is wrong
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.2.5.6.52.7"></a><h4>Returns</h4>
+<a name="gnutls-pubkey-import-tpm-url.returns"></a><h4>Returns</h4>
 <p> On success, <a class="link" href="gnutls-gnutls.html#GNUTLS-E-SUCCESS:CAPS" title="GNUTLS_E_SUCCESS"><code class="literal">GNUTLS_E_SUCCESS</code></a> (0) is returned, otherwise a
 negative error value.</p>
 </div>
@@ -3018,11 +2944,10 @@ negative error value.</p>
 gnutls_pubkey_import_url (<em class="parameter"><code><a class="link" href="gnutls-abstract.html#gnutls-pubkey-t" title="gnutls_pubkey_t"><span class="type">gnutls_pubkey_t</span></a> key</code></em>,
                           <em class="parameter"><code>const <span class="type">char</span> *url</code></em>,
                           <em class="parameter"><code>unsigned <span class="type">int</span> flags</code></em>);</pre>
-<p>This function will import a PKCS11 certificate or a TPM key 
-as a public key.</p>
+<p>This function will import a public key from the provided URL.</p>
 <div class="refsect3">
-<a name="id-1.2.5.6.53.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="gnutls-pubkey-import-url.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -3048,7 +2973,7 @@ as a public key.</p>
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.2.5.6.53.6"></a><h4>Returns</h4>
+<a name="gnutls-pubkey-import-url.returns"></a><h4>Returns</h4>
 <p> On success, <a class="link" href="gnutls-gnutls.html#GNUTLS-E-SUCCESS:CAPS" title="GNUTLS_E_SUCCESS"><code class="literal">GNUTLS_E_SUCCESS</code></a> (0) is returned, otherwise a
 negative error value.</p>
 </div>
@@ -3062,10 +2987,10 @@ gnutls_pubkey_import_x509 (<em class="parameter"><code><a class="link" href="gnu
                            <em class="parameter"><code><a class="link" href="gnutls-gnutls.html#gnutls-x509-crt-t" title="gnutls_x509_crt_t"><span class="type">gnutls_x509_crt_t</span></a> crt</code></em>,
                            <em class="parameter"><code>unsigned <span class="type">int</span> flags</code></em>);</pre>
 <p>This function will import the given public key to the abstract
-<a class="link" href="gnutls-abstract.html#gnutls-pubkey-t" title="gnutls_pubkey_t"><span class="type">gnutls_pubkey_t</span></a> structure.</p>
+<a class="link" href="gnutls-abstract.html#gnutls-pubkey-t" title="gnutls_pubkey_t"><span class="type">gnutls_pubkey_t</span></a> type.</p>
 <div class="refsect3">
-<a name="id-1.2.5.6.54.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="gnutls-pubkey-import-x509.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -3091,7 +3016,7 @@ gnutls_pubkey_import_x509 (<em class="parameter"><code><a class="link" href="gnu
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.2.5.6.54.6"></a><h4>Returns</h4>
+<a name="gnutls-pubkey-import-x509.returns"></a><h4>Returns</h4>
 <p> On success, <a class="link" href="gnutls-gnutls.html#GNUTLS-E-SUCCESS:CAPS" title="GNUTLS_E_SUCCESS"><code class="literal">GNUTLS_E_SUCCESS</code></a> (0) is returned, otherwise a
 negative error value.</p>
 </div>
@@ -3105,10 +3030,10 @@ gnutls_pubkey_import_x509_crq (<em class="parameter"><code><a class="link" href=
                                <em class="parameter"><code><a class="link" href="gnutls-gnutls.html#gnutls-x509-crq-t" title="gnutls_x509_crq_t"><span class="type">gnutls_x509_crq_t</span></a> crq</code></em>,
                                <em class="parameter"><code>unsigned <span class="type">int</span> flags</code></em>);</pre>
 <p>This function will import the given public key to the abstract
-<a class="link" href="gnutls-abstract.html#gnutls-pubkey-t" title="gnutls_pubkey_t"><span class="type">gnutls_pubkey_t</span></a> structure.</p>
+<a class="link" href="gnutls-abstract.html#gnutls-pubkey-t" title="gnutls_pubkey_t"><span class="type">gnutls_pubkey_t</span></a> type.</p>
 <div class="refsect3">
-<a name="id-1.2.5.6.55.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="gnutls-pubkey-import-x509-crq.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -3134,7 +3059,7 @@ gnutls_pubkey_import_x509_crq (<em class="parameter"><code><a class="link" href=
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.2.5.6.55.6"></a><h4>Returns</h4>
+<a name="gnutls-pubkey-import-x509-crq.returns"></a><h4>Returns</h4>
 <p> On success, <a class="link" href="gnutls-gnutls.html#GNUTLS-E-SUCCESS:CAPS" title="GNUTLS_E_SUCCESS"><code class="literal">GNUTLS_E_SUCCESS</code></a> (0) is returned, otherwise a
 negative error value.</p>
 </div>
@@ -3149,10 +3074,10 @@ gnutls_pubkey_import_x509_raw (<em class="parameter"><code><a class="link" href=
                                <em class="parameter"><code><a class="link" href="gnutls-gnutls.html#gnutls-x509-crt-fmt-t" title="enum gnutls_x509_crt_fmt_t"><span class="type">gnutls_x509_crt_fmt_t</span></a> format</code></em>,
                                <em class="parameter"><code>unsigned <span class="type">int</span> flags</code></em>);</pre>
 <p>This function will import the given public key to the abstract
-<a class="link" href="gnutls-abstract.html#gnutls-pubkey-t" title="gnutls_pubkey_t"><span class="type">gnutls_pubkey_t</span></a> structure.</p>
+<a class="link" href="gnutls-abstract.html#gnutls-pubkey-t" title="gnutls_pubkey_t"><span class="type">gnutls_pubkey_t</span></a> type.</p>
 <div class="refsect3">
-<a name="id-1.2.5.6.56.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="gnutls-pubkey-import-x509-raw.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -3183,7 +3108,7 @@ gnutls_pubkey_import_x509_raw (<em class="parameter"><code><a class="link" href=
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.2.5.6.56.6"></a><h4>Returns</h4>
+<a name="gnutls-pubkey-import-x509-raw.returns"></a><h4>Returns</h4>
 <p> On success, <a class="link" href="gnutls-gnutls.html#GNUTLS-E-SUCCESS:CAPS" title="GNUTLS_E_SUCCESS"><code class="literal">GNUTLS_E_SUCCESS</code></a> (0) is returned, otherwise a
 negative error value.</p>
 </div>
@@ -3194,10 +3119,10 @@ negative error value.</p>
 <a name="gnutls-pubkey-init"></a><h3>gnutls_pubkey_init ()</h3>
 <pre class="programlisting"><span class="returnvalue">int</span>
 gnutls_pubkey_init (<em class="parameter"><code><a class="link" href="gnutls-abstract.html#gnutls-pubkey-t" title="gnutls_pubkey_t"><span class="type">gnutls_pubkey_t</span></a> *key</code></em>);</pre>
-<p>This function will initialize an public key structure.</p>
+<p>This function will initialize a public key.</p>
 <div class="refsect3">
-<a name="id-1.2.5.6.57.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="gnutls-pubkey-init.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -3205,13 +3130,13 @@ gnutls_pubkey_init (<em class="parameter"><code><a class="link" href="gnutls-abs
 </colgroup>
 <tbody><tr>
 <td class="parameter_name"><p>key</p></td>
-<td class="parameter_description"><p>The structure to be initialized</p></td>
+<td class="parameter_description"><p>A pointer to the type to be initialized</p></td>
 <td class="parameter_annotations"> </td>
 </tr></tbody>
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.2.5.6.57.6"></a><h4>Returns</h4>
+<a name="gnutls-pubkey-init.returns"></a><h4>Returns</h4>
 <p> On success, <a class="link" href="gnutls-gnutls.html#GNUTLS-E-SUCCESS:CAPS" title="GNUTLS_E_SUCCESS"><code class="literal">GNUTLS_E_SUCCESS</code></a> (0) is returned, otherwise a
 negative error value.</p>
 </div>
@@ -3227,8 +3152,8 @@ gnutls_pubkey_set_key_usage (<em class="parameter"><code><a class="link" href="g
 is only useful if the key is to be exported to a certificate or
 certificate request.</p>
 <div class="refsect3">
-<a name="id-1.2.5.6.58.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="gnutls-pubkey-set-key-usage.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -3249,7 +3174,7 @@ certificate request.</p>
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.2.5.6.58.6"></a><h4>Returns</h4>
+<a name="gnutls-pubkey-set-key-usage.returns"></a><h4>Returns</h4>
 <p> On success, <a class="link" href="gnutls-gnutls.html#GNUTLS-E-SUCCESS:CAPS" title="GNUTLS_E_SUCCESS"><code class="literal">GNUTLS_E_SUCCESS</code></a> (0) is returned, otherwise a
 negative error value.</p>
 </div>
@@ -3268,8 +3193,8 @@ global PIN functions.</p>
 <p>Note that this function must be called right after initialization
 to have effect.</p>
 <div class="refsect3">
-<a name="id-1.2.5.6.59.6"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="gnutls-pubkey-set-pin-function.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -3298,58 +3223,6 @@ to have effect.</p>
 </div>
 <hr>
 <div class="refsect2">
-<a name="gnutls-pubkey-verify-data"></a><h3>gnutls_pubkey_verify_data ()</h3>
-<pre class="programlisting"><span class="returnvalue">int</span>
-gnutls_pubkey_verify_data (<em class="parameter"><code><a class="link" href="gnutls-abstract.html#gnutls-pubkey-t" title="gnutls_pubkey_t"><span class="type">gnutls_pubkey_t</span></a> pubkey</code></em>,
-                           <em class="parameter"><code>unsigned <span class="type">int</span> flags</code></em>,
-                           <em class="parameter"><code>const <span class="type">gnutls_datum_t</span> *data</code></em>,
-                           <em class="parameter"><code>const <span class="type">gnutls_datum_t</span> *signature</code></em>);</pre>
-<div class="warning"><p><code class="literal">gnutls_pubkey_verify_data</code> is deprecated and should not be used in newly-written code.</p></div>
-<p>This function will verify the given signed data, using the
-parameters from the certificate.</p>
-<p>Deprecated. This function cannot be easily used securely. 
-Use <a class="link" href="gnutls-abstract.html#gnutls-pubkey-verify-data2" title="gnutls_pubkey_verify_data2 ()"><code class="function">gnutls_pubkey_verify_data2()</code></a> instead.</p>
-<div class="refsect3">
-<a name="id-1.2.5.6.60.8"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
-<colgroup>
-<col width="150px" class="parameters_name">
-<col class="parameters_description">
-<col width="200px" class="parameters_annotations">
-</colgroup>
-<tbody>
-<tr>
-<td class="parameter_name"><p>pubkey</p></td>
-<td class="parameter_description"><p>Holds the public key</p></td>
-<td class="parameter_annotations"> </td>
-</tr>
-<tr>
-<td class="parameter_name"><p>flags</p></td>
-<td class="parameter_description"><p>Zero or one of <code class="literal">gnutls_pubkey_flags_t</code></p></td>
-<td class="parameter_annotations"> </td>
-</tr>
-<tr>
-<td class="parameter_name"><p>data</p></td>
-<td class="parameter_description"><p>holds the signed data</p></td>
-<td class="parameter_annotations"> </td>
-</tr>
-<tr>
-<td class="parameter_name"><p>signature</p></td>
-<td class="parameter_description"><p>contains the signature</p></td>
-<td class="parameter_annotations"> </td>
-</tr>
-</tbody>
-</table></div>
-</div>
-<div class="refsect3">
-<a name="id-1.2.5.6.60.9"></a><h4>Returns</h4>
-<p> In case of a verification failure <a class="link" href="gnutls-gnutls.html#GNUTLS-E-PK-SIG-VERIFY-FAILED:CAPS" title="GNUTLS_E_PK_SIG_VERIFY_FAILED"><code class="literal">GNUTLS_E_PK_SIG_VERIFY_FAILED</code></a>
-is returned, and zero or positive code on success. </p>
-</div>
-<p class="since">Since: 2.12.0</p>
-</div>
-<hr>
-<div class="refsect2">
 <a name="gnutls-pubkey-verify-data2"></a><h3>gnutls_pubkey_verify_data2 ()</h3>
 <pre class="programlisting"><span class="returnvalue">int</span>
 gnutls_pubkey_verify_data2 (<em class="parameter"><code><a class="link" href="gnutls-abstract.html#gnutls-pubkey-t" title="gnutls_pubkey_t"><span class="type">gnutls_pubkey_t</span></a> pubkey</code></em>,
@@ -3360,8 +3233,8 @@ gnutls_pubkey_verify_data2 (<em class="parameter"><code><a class="link" href="gn
 <p>This function will verify the given signed data, using the
 parameters from the certificate.</p>
 <div class="refsect3">
-<a name="id-1.2.5.6.61.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="gnutls-pubkey-verify-data2.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -3380,7 +3253,7 @@ parameters from the certificate.</p>
 </tr>
 <tr>
 <td class="parameter_name"><p>flags</p></td>
-<td class="parameter_description"><p>Zero or one of <code class="literal">gnutls_pubkey_flags_t</code></p></td>
+<td class="parameter_description"><p>Zero or an OR list of <a class="link" href="gnutls-x509.html#gnutls-certificate-verify-flags" title="enum gnutls_certificate_verify_flags"><span class="type">gnutls_certificate_verify_flags</span></a></p></td>
 <td class="parameter_annotations"> </td>
 </tr>
 <tr>
@@ -3397,9 +3270,11 @@ parameters from the certificate.</p>
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.2.5.6.61.6"></a><h4>Returns</h4>
+<a name="gnutls-pubkey-verify-data2.returns"></a><h4>Returns</h4>
 <p> In case of a verification failure <a class="link" href="gnutls-gnutls.html#GNUTLS-E-PK-SIG-VERIFY-FAILED:CAPS" title="GNUTLS_E_PK_SIG_VERIFY_FAILED"><code class="literal">GNUTLS_E_PK_SIG_VERIFY_FAILED</code></a>
-is returned, and zero or positive code on success.</p>
+is returned, and zero or positive code on success. For known to be insecure
+signatures this function will return <code class="literal">GNUTLS_E_INSUFFICIENT_SECURITY</code> unless
+the flag <code class="literal">GNUTLS_VERIFY_ALLOW_BROKEN</code> is specified.</p>
 </div>
 <p class="since">Since: 3.0</p>
 </div>
@@ -3417,8 +3292,8 @@ parameters from the public key. Note that unlike <a class="link" href="gnutls-ab
 this function accepts a signature algorithm instead of a digest algorithm.
 You can use <a class="link" href="gnutls-gnutls.html#gnutls-pk-to-sign" title="gnutls_pk_to_sign ()"><code class="function">gnutls_pk_to_sign()</code></a> to get the appropriate value.</p>
 <div class="refsect3">
-<a name="id-1.2.5.6.62.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="gnutls-pubkey-verify-hash2.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -3437,7 +3312,7 @@ You can use <a class="link" href="gnutls-gnutls.html#gnutls-pk-to-sign" title="g
 </tr>
 <tr>
 <td class="parameter_name"><p>flags</p></td>
-<td class="parameter_description"><p>Zero or one of <code class="literal">gnutls_pubkey_flags_t</code></p></td>
+<td class="parameter_description"><p>Zero or an OR list of <a class="link" href="gnutls-x509.html#gnutls-certificate-verify-flags" title="enum gnutls_certificate_verify_flags"><span class="type">gnutls_certificate_verify_flags</span></a></p></td>
 <td class="parameter_annotations"> </td>
 </tr>
 <tr>
@@ -3454,7 +3329,7 @@ You can use <a class="link" href="gnutls-gnutls.html#gnutls-pk-to-sign" title="g
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.2.5.6.62.6"></a><h4>Returns</h4>
+<a name="gnutls-pubkey-verify-hash2.returns"></a><h4>Returns</h4>
 <p> In case of a verification failure <a class="link" href="gnutls-gnutls.html#GNUTLS-E-PK-SIG-VERIFY-FAILED:CAPS" title="GNUTLS_E_PK_SIG_VERIFY_FAILED"><code class="literal">GNUTLS_E_PK_SIG_VERIFY_FAILED</code></a>
 is returned, and zero or positive code on success.</p>
 </div>
@@ -3474,8 +3349,8 @@ will copy the issuer's information into the CRL.</p>
 <p>This must be the last step in a certificate CRL since all
 the previously set parameters are now signed.</p>
 <div class="refsect3">
-<a name="id-1.2.5.6.63.6"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="gnutls-x509-crl-privkey-sign.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -3484,7 +3359,7 @@ the previously set parameters are now signed.</p>
 <tbody>
 <tr>
 <td class="parameter_name"><p>crl</p></td>
-<td class="parameter_description"><p>should contain a gnutls_x509_crl_t structure</p></td>
+<td class="parameter_description"><p>should contain a gnutls_x509_crl_t type</p></td>
 <td class="parameter_annotations"> </td>
 </tr>
 <tr>
@@ -3511,7 +3386,7 @@ the previously set parameters are now signed.</p>
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.2.5.6.63.7"></a><h4>Returns</h4>
+<a name="gnutls-x509-crl-privkey-sign.returns"></a><h4>Returns</h4>
 <p> On success, <a class="link" href="gnutls-gnutls.html#GNUTLS-E-SUCCESS:CAPS" title="GNUTLS_E_SUCCESS"><code class="literal">GNUTLS_E_SUCCESS</code></a> (0) is returned, otherwise a
 negative error value.</p>
 <p>Since 2.12.0</p>
@@ -3532,8 +3407,8 @@ signed.</p>
 <p>This must be the last step in a certificate request generation
 since all the previously set parameters are now signed.</p>
 <div class="refsect3">
-<a name="id-1.2.5.6.64.6"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="gnutls-x509-crq-privkey-sign.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -3542,7 +3417,7 @@ since all the previously set parameters are now signed.</p>
 <tbody>
 <tr>
 <td class="parameter_name"><p>crq</p></td>
-<td class="parameter_description"><p>should contain a <a class="link" href="gnutls-gnutls.html#gnutls-x509-crq-t" title="gnutls_x509_crq_t"><span class="type">gnutls_x509_crq_t</span></a> structure</p></td>
+<td class="parameter_description"><p>should contain a <a class="link" href="gnutls-gnutls.html#gnutls-x509-crq-t" title="gnutls_x509_crq_t"><span class="type">gnutls_x509_crq_t</span></a> type</p></td>
 <td class="parameter_annotations"> </td>
 </tr>
 <tr>
@@ -3564,7 +3439,7 @@ since all the previously set parameters are now signed.</p>
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.2.5.6.64.7"></a><h4>Returns</h4>
+<a name="gnutls-x509-crq-privkey-sign.returns"></a><h4>Returns</h4>
 <p> <a class="link" href="gnutls-gnutls.html#GNUTLS-E-SUCCESS:CAPS" title="GNUTLS_E_SUCCESS"><code class="literal">GNUTLS_E_SUCCESS</code></a> on success, otherwise a negative error code.
 <a class="link" href="gnutls-gnutls.html#GNUTLS-E-ASN1-VALUE-NOT-FOUND:CAPS" title="GNUTLS_E_ASN1_VALUE_NOT_FOUND"><code class="literal">GNUTLS_E_ASN1_VALUE_NOT_FOUND</code></a> is returned if you didn't set all
 information in the certificate request (e.g., the version using
@@ -3579,10 +3454,11 @@ information in the certificate request (e.g., the version using
 gnutls_x509_crq_set_pubkey (<em class="parameter"><code><a class="link" href="gnutls-gnutls.html#gnutls-x509-crq-t" title="gnutls_x509_crq_t"><span class="type">gnutls_x509_crq_t</span></a> crq</code></em>,
                             <em class="parameter"><code><a class="link" href="gnutls-abstract.html#gnutls-pubkey-t" title="gnutls_pubkey_t"><span class="type">gnutls_pubkey_t</span></a> key</code></em>);</pre>
 <p>This function will set the public parameters from the given public
-key to the request.</p>
+key to the request. The <em class="parameter"><code>key</code></em>
+ can be deallocated after that.</p>
 <div class="refsect3">
-<a name="id-1.2.5.6.65.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="gnutls-x509-crq-set-pubkey.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -3591,7 +3467,7 @@ key to the request.</p>
 <tbody>
 <tr>
 <td class="parameter_name"><p>crq</p></td>
-<td class="parameter_description"><p>should contain a <a class="link" href="gnutls-gnutls.html#gnutls-x509-crq-t" title="gnutls_x509_crq_t"><span class="type">gnutls_x509_crq_t</span></a> structure</p></td>
+<td class="parameter_description"><p>should contain a <a class="link" href="gnutls-gnutls.html#gnutls-x509-crq-t" title="gnutls_x509_crq_t"><span class="type">gnutls_x509_crq_t</span></a> type</p></td>
 <td class="parameter_annotations"> </td>
 </tr>
 <tr>
@@ -3603,7 +3479,7 @@ key to the request.</p>
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.2.5.6.65.6"></a><h4>Returns</h4>
+<a name="gnutls-x509-crq-set-pubkey.returns"></a><h4>Returns</h4>
 <p> On success, <a class="link" href="gnutls-gnutls.html#GNUTLS-E-SUCCESS:CAPS" title="GNUTLS_E_SUCCESS"><code class="literal">GNUTLS_E_SUCCESS</code></a> (0) is returned, otherwise a
 negative error value.</p>
 </div>
@@ -3623,8 +3499,8 @@ will copy the issuer's information into the certificate.</p>
 <p>This must be the last step in a certificate generation since all
 the previously set parameters are now signed.</p>
 <div class="refsect3">
-<a name="id-1.2.5.6.66.6"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="gnutls-x509-crt-privkey-sign.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -3660,7 +3536,7 @@ the previously set parameters are now signed.</p>
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.2.5.6.66.7"></a><h4>Returns</h4>
+<a name="gnutls-x509-crt-privkey-sign.returns"></a><h4>Returns</h4>
 <p> On success, <a class="link" href="gnutls-gnutls.html#GNUTLS-E-SUCCESS:CAPS" title="GNUTLS_E_SUCCESS"><code class="literal">GNUTLS_E_SUCCESS</code></a> (0) is returned, otherwise a
 negative error value.</p>
 </div>
@@ -3672,10 +3548,11 @@ negative error value.</p>
 gnutls_x509_crt_set_pubkey (<em class="parameter"><code><a class="link" href="gnutls-gnutls.html#gnutls-x509-crt-t" title="gnutls_x509_crt_t"><span class="type">gnutls_x509_crt_t</span></a> crt</code></em>,
                             <em class="parameter"><code><a class="link" href="gnutls-abstract.html#gnutls-pubkey-t" title="gnutls_pubkey_t"><span class="type">gnutls_pubkey_t</span></a> key</code></em>);</pre>
 <p>This function will set the public parameters from the given public
-key to the request.</p>
+key to the certificate. The <em class="parameter"><code>key</code></em>
+ can be deallocated after that.</p>
 <div class="refsect3">
-<a name="id-1.2.5.6.67.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="gnutls-x509-crt-set-pubkey.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -3684,7 +3561,7 @@ key to the request.</p>
 <tbody>
 <tr>
 <td class="parameter_name"><p>crt</p></td>
-<td class="parameter_description"><p>should contain a <a class="link" href="gnutls-gnutls.html#gnutls-x509-crt-t" title="gnutls_x509_crt_t"><span class="type">gnutls_x509_crt_t</span></a> structure</p></td>
+<td class="parameter_description"><p>should contain a <a class="link" href="gnutls-gnutls.html#gnutls-x509-crt-t" title="gnutls_x509_crt_t"><span class="type">gnutls_x509_crt_t</span></a> type</p></td>
 <td class="parameter_annotations"> </td>
 </tr>
 <tr>
@@ -3696,7 +3573,7 @@ key to the request.</p>
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.2.5.6.67.6"></a><h4>Returns</h4>
+<a name="gnutls-x509-crt-set-pubkey.returns"></a><h4>Returns</h4>
 <p> On success, <a class="link" href="gnutls-gnutls.html#GNUTLS-E-SUCCESS:CAPS" title="GNUTLS_E_SUCCESS"><code class="literal">GNUTLS_E_SUCCESS</code></a> (0) is returned, otherwise a
 negative error value.</p>
 </div>
@@ -3739,11 +3616,13 @@ negative error value.</p>
 			gnutls_privkey_sign_func sign_func;
 			gnutls_privkey_decrypt_func decrypt_func;
 			gnutls_privkey_deinit_func deinit_func;
+			gnutls_privkey_info_func info_func;
 			void *userdata;
 		} ext;
 	} key;
 
 	unsigned int flags;
+	gnutls_sign_algorithm_t preferred_sign_algo;
 	struct pin_info_st pin;
 };
 </pre>
@@ -3835,6 +3714,6 @@ negative error value.</p>
 </div>
 </div>
 <div class="footer">
-<hr>Generated by GTK-Doc V1.24</div>
+<hr>Generated by GTK-Doc V1.25</div>
 </body>
 </html>

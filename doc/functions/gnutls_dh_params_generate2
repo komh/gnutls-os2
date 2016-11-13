@@ -3,7 +3,7 @@
 
 
 @deftypefun {int} {gnutls_dh_params_generate2} (gnutls_dh_params_t @var{dparams}, unsigned int @var{bits})
-@var{dparams}: Is the structure that the DH parameters will be stored
+@var{dparams}: The parameters
 
 @var{bits}: is the prime's number of bits
 

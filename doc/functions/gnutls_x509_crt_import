@@ -3,7 +3,7 @@
 
 
 @deftypefun {int} {gnutls_x509_crt_import} (gnutls_x509_crt_t @var{cert}, const gnutls_datum_t * @var{data}, gnutls_x509_crt_fmt_t @var{format})
-@var{cert}: The structure to store the parsed certificate.
+@var{cert}: The data to store the parsed certificate.
 
 @var{data}: The DER or PEM encoded certificate.
 

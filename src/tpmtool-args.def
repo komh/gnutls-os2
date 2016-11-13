@@ -51,7 +51,7 @@ flag = {
 
 flag = {
     name      = system;
-    descrip   = "Any registred key will be a system key";
+    descrip   = "Any registered key will be a system key";
     flags_must = register;
     flags_cant = user;
     doc = "The generated key will be stored in system persistent storage.";
@@ -78,6 +78,15 @@ flag = {
     arg-name  = "url";
     descrip   = "Delete the key identified by the given URL (UUID).";
     doc      = "";
+};
+
+flag = {
+    name      = test-sign;
+    arg-type  = string;
+    arg-name  = "url";
+    descrip   = "Tests the signature operation of the provided object";
+    doc = "It can be used to test the correct operation of the signature operation.
+This operation will sign and verify the signed data.";
 };
 
 flag = {

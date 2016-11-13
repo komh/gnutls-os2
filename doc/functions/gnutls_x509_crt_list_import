@@ -3,7 +3,7 @@
 
 
 @deftypefun {int} {gnutls_x509_crt_list_import} (gnutls_x509_crt_t * @var{certs}, unsigned int * @var{cert_max}, const gnutls_datum_t * @var{data}, gnutls_x509_crt_fmt_t @var{format}, unsigned int @var{flags})
-@var{certs}: The structures to store the parsed certificate. Must not be initialized.
+@var{certs}: Indicates where the parsed list will be copied to. Must not be initialized.
 
 @var{cert_max}: Initially must hold the maximum number of certs. It will be updated with the number of certs available.
 

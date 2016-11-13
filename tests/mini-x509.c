@@ -157,7 +157,7 @@ void doit(void)
 	global_init();
 	gnutls_global_set_log_function(tls_log_func);
 	if (debug)
-		gnutls_global_set_log_level(2);
+		gnutls_global_set_log_level(6);
 
 	/* Init server */
 	gnutls_certificate_allocate_credentials(&serverx509cred);
@@ -204,6 +204,17 @@ void doit(void)
 
 	HANDSHAKE(client, server);
 
+	/* check gnutls_certificate_get_ours() - client side */
+	{
+		const gnutls_datum_t *mcert;
+
+		mcert = gnutls_certificate_get_ours(client);
+		if (mcert != NULL) {
+			fail("gnutls_certificate_get_ours(): failed\n");
+			exit(1);
+		}
+	}
+
 	/* check the number of certificates received */
 	{
 		unsigned cert_list_size = 0;
@@ -248,6 +259,18 @@ void doit(void)
 			fprintf(stderr, "could not verify certificate: %.4x\n", status);
 			exit(1);
 		}
+	}
+
+	ret = gnutls_session_ext_master_secret_status(client);
+	if (ret != 1) {
+		fprintf(stderr, "Extended master secret wasn't negotiated by default (client ret: %d)\n", ret);
+		exit(1);
+	}
+
+	ret = gnutls_session_ext_master_secret_status(server);
+	if (ret != 1) {
+		fprintf(stderr, "Extended master secret wasn't negotiated by default (server ret: %d)\n", ret);
+		exit(1);
 	}
 
 	gnutls_bye(client, GNUTLS_SHUT_RDWR);

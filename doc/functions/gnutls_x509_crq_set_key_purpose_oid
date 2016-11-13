@@ -5,7 +5,7 @@
 @deftypefun {int} {gnutls_x509_crq_set_key_purpose_oid} (gnutls_x509_crq_t @var{crq}, const void * @var{oid}, unsigned int @var{critical})
 @var{crq}: a certificate of type @code{gnutls_x509_crq_t} 
 
-@var{oid}: a pointer to a (0)-terminated string that holds the OID
+@var{oid}: a pointer to a null-terminated string that holds the OID
 
 @var{critical}: Whether this extension will be critical or not
 

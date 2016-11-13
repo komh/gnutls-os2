@@ -45,7 +45,7 @@ int _gnutls_x509_read_der_int(uint8_t * der, int dersize, bigint_t * out)
 		return _gnutls_asn2err(result);
 	}
 
-	result = asn1_der_decoding(&spk, der, dersize, NULL);
+	result = _asn1_strict_der_decode(&spk, der, dersize, NULL);
 
 	if (result != ASN1_SUCCESS) {
 		gnutls_assert();
@@ -172,21 +172,27 @@ _gnutls_x509_crq_get_mpis(gnutls_x509_crq_t cert,
 /*
  * This function writes and encodes the parameters for DSS or RSA keys.
  * This is the "signatureAlgorithm" fields.
+ *
+ * If @legacy is non-zero then the legacy value for PKCS#7 signatures
+ * will be written for RSA signatures.
  */
 int
 _gnutls_x509_write_sig_params(ASN1_TYPE dst, const char *dst_name,
 			      gnutls_pk_algorithm_t pk_algorithm,
-			      gnutls_digest_algorithm_t dig)
+			      gnutls_digest_algorithm_t dig, unsigned legacy)
 {
 	int result;
 	char name[128];
-	const char *pk;
+	const char *oid;
 
 	_gnutls_str_cpy(name, sizeof(name), dst_name);
 	_gnutls_str_cat(name, sizeof(name), ".algorithm");
 
-	pk = _gnutls_x509_sign_to_oid(pk_algorithm, dig);
-	if (pk == NULL) {
+	if (legacy && pk_algorithm == GNUTLS_PK_RSA)
+		oid = PK_PKIX1_RSA_OID;
+	else
+		oid = gnutls_sign_get_oid(gnutls_pk_to_sign(pk_algorithm, dig));
+	if (oid == NULL) {
 		gnutls_assert();
 		_gnutls_debug_log
 		    ("Cannot find OID for sign algorithm pk: %d dig: %d\n",
@@ -196,7 +202,7 @@ _gnutls_x509_write_sig_params(ASN1_TYPE dst, const char *dst_name,
 
 	/* write the OID.
 	 */
-	result = asn1_write_value(dst, name, pk, 1);
+	result = asn1_write_value(dst, name, oid, 1);
 	if (result != ASN1_SUCCESS) {
 		gnutls_assert();
 		return _gnutls_asn2err(result);

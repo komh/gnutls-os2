@@ -3,7 +3,7 @@
 
 
 @deftypefun {void} {gnutls_handshake_set_max_packet_length} (gnutls_session_t @var{session}, size_t @var{max})
-@var{session}: is a @code{gnutls_session_t}  structure.
+@var{session}: is a @code{gnutls_session_t}  type.
 
 @var{max}: is the maximum number.
 

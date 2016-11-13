@@ -3,7 +3,7 @@
 
 
 @deftypefun {int} {gnutls_x509_trust_list_add_cas} (gnutls_x509_trust_list_t @var{list}, const gnutls_x509_crt_t * @var{clist}, unsigned @var{clist_size}, unsigned int @var{flags})
-@var{list}: The structure of the list
+@var{list}: The list
 
 @var{clist}: A list of CAs
 

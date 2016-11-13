@@ -3,7 +3,7 @@
 
 
 @deftypefun {int} {gnutls_pkcs7_import} (gnutls_pkcs7_t @var{pkcs7}, const gnutls_datum_t * @var{data}, gnutls_x509_crt_fmt_t @var{format})
-@var{pkcs7}: The structure to store the parsed PKCS7.
+@var{pkcs7}: The data to store the parsed PKCS7.
 
 @var{data}: The DER or PEM encoded PKCS7.
 

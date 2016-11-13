@@ -3,7 +3,7 @@
 
 
 @deftypefun {int} {gnutls_x509_crl_init} (gnutls_x509_crl_t * @var{crl})
-@var{crl}: The structure to be initialized
+@var{crl}: A pointer to the type to be initialized
 
 This function will initialize a CRL structure. CRL stands for
 Certificate Revocation List. A revocation list usually contains

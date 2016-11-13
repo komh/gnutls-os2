@@ -1,6 +1,7 @@
 /*
- * Copyright (C) 2000-2014 Free Software Foundation, Inc.
- * Copyright (C) 2013-2014 Nikos Mavrogiannopoulos
+ * Copyright (C) 2000-2016 Free Software Foundation, Inc.
+ * Copyright (C) 2013-2016 Nikos Mavrogiannopoulos
+ * Copyright (C) 2015-2016 Red Hat, Inc.
  *
  * This file is part of GnuTLS.
  *
@@ -103,6 +104,10 @@ static gnutls_srp_client_credentials_t srp_cred;
 static gnutls_psk_client_credentials_t psk_cred;
 static gnutls_anon_client_credentials_t anon_cred;
 static gnutls_certificate_credentials_t xcred;
+
+/* The number of seconds we wait for a reply from peer prior to
+ * closing the connection. */
+#define TERM_TIMEOUT 8000
 
 /* end of global stuff */
 
@@ -374,6 +379,43 @@ static int read_yesno(const char *input_str)
 	return 0;
 }
 
+static void try_save_cert(gnutls_session_t session)
+{
+	const gnutls_datum_t *cert_list;
+	unsigned int cert_list_size = 0;
+	int ret;
+	unsigned i;
+	gnutls_datum_t t;
+	FILE *fp;
+
+	cert_list = gnutls_certificate_get_peers(session, &cert_list_size);
+	if (cert_list_size == 0) {
+		fprintf(stderr, "no certificates sent by server!\n");
+		exit(1);
+	}
+
+	fp = fopen(OPT_ARG(SAVE_CERT), "w");
+	if (fp == NULL) {
+		fprintf(stderr, "could not open %s\n", OPT_ARG(SAVE_CERT));
+		exit(1);
+	}
+
+	for (i=0;i<cert_list_size;i++) {
+		ret = gnutls_pem_base64_encode_alloc("CERTIFICATE", &cert_list[i], &t);
+		if (ret < 0) {
+			fprintf(stderr, "error[%d]: %s\n", __LINE__,
+				gnutls_strerror(ret));
+			exit(1);
+		}
+
+		fwrite(t.data, t.size, 1, fp);
+		gnutls_free(t.data);
+	}
+	fclose(fp);
+
+	return;
+}
+
 static int cert_verify_callback(gnutls_session_t session)
 {
 	int rc;
@@ -392,6 +434,10 @@ static int cert_verify_callback(gnutls_session_t session)
 
 	if (strictssh) {
 		ssh = strictssh;
+	}
+
+	if (HAVE_OPT(SAVE_CERT)) {
+		try_save_cert(session);
 	}
 
 	print_cert_info(session, verbose, print_cert);
@@ -606,7 +652,7 @@ cert_callback(gnutls_session_t session,
 
 /* initializes a gnutls_session_t with some defaults.
  */
-static gnutls_session_t init_tls_session(const char *hostname)
+static gnutls_session_t init_tls_session(const char *host)
 {
 	const char *err;
 	int ret;
@@ -633,9 +679,9 @@ static gnutls_session_t init_tls_session(const char *hostname)
 	/* allow the use of private ciphersuites.
 	 */
 	if (disable_extensions == 0 && disable_sni == 0) {
-		if (hostname != NULL && is_ip(hostname) == 0)
+		if (host != NULL && is_ip(host) == 0)
 			gnutls_server_name_set(session, GNUTLS_NAME_DNS,
-					       hostname, strlen(hostname));
+					       host, strlen(host));
 	}
 
 	if (HAVE_OPT(DH_BITS))
@@ -788,7 +834,7 @@ static int check_net_or_keyboard_input(socket_st * hd)
 #endif
 
 		tv.tv_sec = 0;
-		tv.tv_usec = 50 * 1000;
+		tv.tv_usec = 500 * 1000;
 
 		if (hd->secure == 1)
 			if (gnutls_record_check_pending(hd->session))
@@ -1049,6 +1095,77 @@ int do_inline_command_processing(char *buffer_ptr, size_t curr_bytes,
 	}
 }
 
+static void
+print_other_info(gnutls_session_t session)
+{
+	int ret;
+	gnutls_datum_t oresp;
+
+	ret = gnutls_ocsp_status_request_get(session, &oresp);
+	if (ret < 0) {
+		oresp.data = NULL;
+		oresp.size = 0;
+	}
+
+	if (ENABLED_OPT(VERBOSE) && oresp.data) {
+		gnutls_ocsp_resp_t r;
+		gnutls_datum_t p;
+		unsigned flag;
+
+		ret = gnutls_ocsp_resp_init(&r);
+		if (ret < 0) {
+			fprintf(stderr, "ocsp_resp_init: %s\n",
+				gnutls_strerror(ret));
+			return;
+		}
+
+		ret = gnutls_ocsp_resp_import(r, &oresp);
+		if (ret < 0) {
+			fprintf(stderr, "importing response: %s\n",
+				gnutls_strerror(ret));
+			return;
+		}
+
+		if (print_cert != 0)
+			flag = GNUTLS_OCSP_PRINT_FULL;
+		else
+			flag = GNUTLS_OCSP_PRINT_COMPACT;
+		ret =
+		    gnutls_ocsp_resp_print(r, flag, &p);
+		gnutls_ocsp_resp_deinit(r);
+		fputs((char*)p.data, stdout);
+	}
+
+	if (HAVE_OPT(SAVE_OCSP) && oresp.data) {
+		FILE *fp = fopen(OPT_ARG(SAVE_OCSP), "w");
+
+		if (fp != NULL) {
+			fwrite(oresp.data, 1, oresp.size, fp);
+			fclose(fp);
+		}
+	}
+}
+
+static void flush_socket(socket_st *hd, unsigned ms)
+{
+	int ret, ii;
+	char buffer[MAX_BUF + 1];
+
+	memset(buffer, 0, MAX_BUF + 1);
+	ret = socket_recv_timeout(hd, buffer, MAX_BUF, ms);
+	if (ret == 0)
+		return;
+	else if (ret > 0) {
+		if (verbose != 0)
+			printf("- Received[%d]: ", ret);
+
+		for (ii = 0; ii < ret; ii++) {
+			fputc(buffer[ii], stdout);
+		}
+		fflush(stdout);
+	}
+}
+
 int main(int argc, char **argv)
 {
 	int ret;
@@ -1059,6 +1176,7 @@ int main(int argc, char **argv)
 	ssize_t bytes, keyboard_bytes;
 	char *keyboard_buffer_ptr;
 	inline_cmds_st inline_cmds;
+	unsigned last_op_is_write = 0;
 #ifndef _WIN32
 	struct sigaction new_action;
 #endif
@@ -1105,6 +1223,8 @@ int main(int argc, char **argv)
 	if (resume != 0)
 		if (try_resume(&hd))
 			return 1;
+
+	print_other_info(hd.session);
 
       after_handshake:
 
@@ -1159,6 +1279,7 @@ int main(int argc, char **argv)
 
 		if (inp == IN_NET) {
 			memset(buffer, 0, MAX_BUF + 1);
+			last_op_is_write = 0;
 			ret = socket_recv(&hd, buffer, MAX_BUF);
 
 			if (ret == 0) {
@@ -1204,6 +1325,8 @@ int main(int argc, char **argv)
 						break;
 					}
 				} else {
+					if (last_op_is_write)
+						flush_socket(&hd, TERM_TIMEOUT);
 					user_term = 1;
 					break;
 				}
@@ -1243,6 +1366,7 @@ int main(int argc, char **argv)
 				}
 			}
 
+			last_op_is_write = 1;
 			if (ranges
 			    && gnutls_record_can_use_length_hiding(hd.
 								   session))
@@ -1304,6 +1428,47 @@ int main(int argc, char **argv)
 	return retval;
 }
 
+static
+void print_priority_list(void)
+{
+	unsigned int idx;
+	const char *str;
+	unsigned int lineb = 0;
+
+	printf("Priority strings in GnuTLS %s:\n", gnutls_check_version(NULL));
+
+	fputs("\t", stdout);
+	for (idx=0;;idx++) {
+		str = gnutls_priority_string_list(idx, GNUTLS_PRIORITY_LIST_INIT_KEYWORDS);
+		if (str == NULL)
+			break;
+		lineb += printf("%s ", str);
+		if (lineb > 64) {
+			lineb = 0;
+			printf("\n\t");
+		}
+	}
+
+	printf("\n\nSpecial strings:\n");
+	lineb = 0;
+	fputs("\t", stdout);
+	for (idx=0;;idx++) {
+		str = gnutls_priority_string_list(idx, GNUTLS_PRIORITY_LIST_SPECIAL);
+		if (str == NULL)
+			break;
+		if (str[0] == 0)
+			continue;
+		lineb += printf("%%%s ", str);
+		if (lineb > 64) {
+			lineb = 0;
+			printf("\n\t");
+		}
+	}
+	printf("\n");
+
+	return;
+}
+
 static void cmd_parser(int argc, char **argv)
 {
 	const char *rest = NULL;
@@ -1354,6 +1519,11 @@ static void cmd_parser(int argc, char **argv)
 		exit(0);
 	}
 
+	if (HAVE_OPT(PRIORITY_LIST)) {
+		print_priority_list();
+		exit(0);
+	}
+
 	disable_sni = HAVE_OPT(DISABLE_SNI);
 	disable_extensions = HAVE_OPT(DISABLE_EXTENSIONS);
 	if (disable_extensions)
@@ -1388,7 +1558,10 @@ static void cmd_parser(int argc, char **argv)
 	if (HAVE_OPT(PORT)) {
 		service = OPT_ARG(PORT);
 	} else {
-		service = "443";
+		if (HAVE_OPT(STARTTLS_PROTO))
+			service = starttls_proto_to_service(OPT_ARG(STARTTLS_PROTO));
+		else
+			service = "443";
 	}
 
 	record_max_size = OPT_VALUE_RECORDSIZE;
@@ -1489,7 +1662,7 @@ static int do_handshake(socket_st * socket)
 
 	if (ret == 0) {
 		/* print some information */
-		print_info(socket->session, verbose, 0);
+		print_info(socket->session, verbose, (HAVE_OPT(X509CERTFILE)||HAVE_OPT(PGPCERTFILE))?P_WAIT_FOR_CERT:0);
 		socket->secure = 1;
 	} else {
 		gnutls_alert_send_appropriate(socket->session, ret);
@@ -1532,26 +1705,26 @@ psk_callback(gnutls_session_t session, char **username,
 	if (HAVE_OPT(PSKUSERNAME))
 		*username = gnutls_strdup(OPT_ARG(PSKUSERNAME));
 	else {
-		char *tmp = NULL;
+		char *p = NULL;
 		size_t n;
 
 		printf("Enter PSK identity: ");
 		fflush(stdout);
-		getline(&tmp, &n, stdin);
+		getline(&p, &n, stdin);
 
-		if (tmp == NULL) {
+		if (p == NULL) {
 			fprintf(stderr,
 				"No username given, aborting...\n");
 			return GNUTLS_E_INSUFFICIENT_CREDENTIALS;
 		}
 
-		if (tmp[strlen(tmp) - 1] == '\n')
-			tmp[strlen(tmp) - 1] = '\0';
-		if (tmp[strlen(tmp) - 1] == '\r')
-			tmp[strlen(tmp) - 1] = '\0';
+		if (p[strlen(p) - 1] == '\n')
+			p[strlen(p) - 1] = '\0';
+		if (p[strlen(p) - 1] == '\r')
+			p[strlen(p) - 1] = '\0';
 
-		*username = gnutls_strdup(tmp);
-		free(tmp);
+		*username = gnutls_strdup(p);
+		free(p);
 	}
 	if (!*username)
 		return GNUTLS_E_MEMORY_ERROR;
@@ -1574,6 +1747,7 @@ psk_callback(gnutls_session_t session, char **username,
 	if (ret < 0) {
 		fprintf(stderr, "Error deriving password: %s\n",
 			gnutls_strerror(ret));
+		gnutls_free(rawkey);
 		gnutls_free(*username);
 		return ret;
 	}
@@ -1722,7 +1896,7 @@ static int cert_verify_ocsp(gnutls_session_t session)
 	const gnutls_datum_t *cert_list;
 	unsigned int cert_list_size = 0, ok = 0;
 	unsigned failed = 0;
-	int deinit_issuer = 0, deinit_cert;
+	int deinit_issuer = 0, deinit_cert = 0;
 	gnutls_datum_t resp;
 	unsigned char noncebuf[23];
 	gnutls_datum_t nonce = { noncebuf, sizeof(noncebuf) };
@@ -1799,5 +1973,5 @@ cleanup:
 
 	if (failed > 0)
 		return -1;
-	return ok > 1 ? (int) ok : -1;
+	return ok >= 1 ? (int) ok : -1;
 }

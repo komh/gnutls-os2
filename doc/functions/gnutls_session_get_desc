@@ -8,6 +8,9 @@
 This function returns a string describing the current session.
 The string is null terminated and allocated using @code{gnutls_malloc()} .
 
+If initial negotiation is not complete when this function is called,
+@code{NULL}  will be returned.
+
 @strong{Returns:} a description of the protocols and algorithms in the current session.
 
 @strong{Since:} 3.1.10

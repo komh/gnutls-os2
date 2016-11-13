@@ -1,5 +1,6 @@
 /*
- * Copyright (C) 2002-2013 Free Software Foundation, Inc.
+ * Copyright (C) 2002-2015 Free Software Foundation, Inc.
+ * Copyright (C) 2014-2015 Nikos Mavrogiannopoulos
  *
  * Author: Nikos Mavrogiannopoulos
  *
@@ -48,6 +49,7 @@
 #include <fips.h>
 #include <intprops.h>
 #include <gnutls/dtls.h>
+#include "gnutls_dtls.h"
 
 /* These should really be static, but src/tests.c calls them.  Make
    them public functions?  */
@@ -76,7 +78,7 @@ _gnutls_session_ecc_curve_set(gnutls_session_t session,
 
 /**
  * gnutls_cipher_get:
- * @session: is a #gnutls_session_t structure.
+ * @session: is a #gnutls_session_t type.
  *
  * Get currently used cipher.
  *
@@ -98,7 +100,7 @@ gnutls_cipher_algorithm_t gnutls_cipher_get(gnutls_session_t session)
 
 /**
  * gnutls_certificate_type_get:
- * @session: is a #gnutls_session_t structure.
+ * @session: is a #gnutls_session_t type.
  *
  * The certificate type is by default X.509, unless it is negotiated
  * as a TLS extension.
@@ -114,7 +116,7 @@ gnutls_certificate_type_get(gnutls_session_t session)
 
 /**
  * gnutls_kx_get:
- * @session: is a #gnutls_session_t structure.
+ * @session: is a #gnutls_session_t type.
  *
  * Get currently used key exchange algorithm.
  *
@@ -128,7 +130,7 @@ gnutls_kx_algorithm_t gnutls_kx_get(gnutls_session_t session)
 
 /**
  * gnutls_mac_get:
- * @session: is a #gnutls_session_t structure.
+ * @session: is a #gnutls_session_t type.
  *
  * Get currently used MAC algorithm.
  *
@@ -150,7 +152,7 @@ gnutls_mac_algorithm_t gnutls_mac_get(gnutls_session_t session)
 
 /**
  * gnutls_compression_get:
- * @session: is a #gnutls_session_t structure.
+ * @session: is a #gnutls_session_t type.
  *
  * Get currently used compression algorithm.
  *
@@ -190,9 +192,7 @@ _gnutls_session_cert_type_supported(gnutls_session_t session,
 		if (cred == NULL)
 			return GNUTLS_E_UNSUPPORTED_CERTIFICATE_TYPE;
 
-		if (cred->server_get_cert_callback == NULL
-		    && cred->get_cert_callback == NULL
-		    && cred->get_cert_callback2 == NULL) {
+		if (cred->get_cert_callback == NULL && cred->get_cert_callback2 == NULL) {
 			for (i = 0; i < cred->ncerts; i++) {
 				if (cred->certs[i].cert_list[0].type ==
 				    cert_type) {
@@ -282,7 +282,7 @@ void _gnutls_handshake_internal_state_clear(gnutls_session_t session)
 
 /**
  * gnutls_init:
- * @session: is a pointer to a #gnutls_session_t structure.
+ * @session: is a pointer to a #gnutls_session_t type.
  * @flags: indicate if this session is to be used for server or client.
  *
  * This function initializes the current session to null. Every
@@ -290,10 +290,8 @@ void _gnutls_handshake_internal_state_clear(gnutls_session_t session)
  * be allocated.  This function allocates structures which can only
  * be free'd by calling gnutls_deinit().  Returns %GNUTLS_E_SUCCESS (0) on success.
  *
- * @flags can be one of %GNUTLS_CLIENT and %GNUTLS_SERVER. For a DTLS
- * entity, the flags %GNUTLS_DATAGRAM and  %GNUTLS_NONBLOCK are
- * also available. The latter flag will enable a non-blocking
- * operation of the DTLS timers. 
+ * @flags can be one of %GNUTLS_CLIENT, %GNUTLS_SERVER, %GNUTLS_DATAGRAM,
+ * %GNUTLS_NONBLOCK or %GNUTLS_NOSIGNAL (since 3.4.2).
  *
  * The flag %GNUTLS_NO_REPLAY_PROTECTION will disable any 
  * replay protection in DTLS mode. That must only used when 
@@ -378,15 +376,20 @@ int gnutls_init(gnutls_session_t * session, unsigned int flags)
 	(*session)->internals.priorities.sr = SR_PARTIAL;
 
 #ifdef HAVE_WRITEV
-	gnutls_transport_set_vec_push_function(*session, system_writev);
+#ifdef MSG_NOSIGNAL
+	if (flags & GNUTLS_NO_SIGNAL)
+		gnutls_transport_set_vec_push_function(*session, system_writev_nosignal);
+	else
+#endif
+		gnutls_transport_set_vec_push_function(*session, system_writev);
 #else
 	gnutls_transport_set_push_function(*session, system_write);
 #endif
-	gnutls_transport_set_pull_function(*session, system_read);
-	gnutls_transport_set_errno_function(*session, system_errno);
-	gnutls_transport_set_pull_timeout_function(*session,
-						   system_recv_timeout);
+	(*session)->internals.pull_timeout_func = gnutls_system_recv_timeout;
+	(*session)->internals.pull_func = system_read;
+	(*session)->internals.errno_func = system_errno;
 
+	/* heartbeat timeouts */
 	(*session)->internals.hb_retrans_timeout_ms = 1000;
 	(*session)->internals.hb_total_timeout_ms = 60000;
 
@@ -394,15 +397,15 @@ int gnutls_init(gnutls_session_t * session, unsigned int flags)
 		(*session)->internals.dtls.mtu = DTLS_DEFAULT_MTU;
 		(*session)->internals.transport = GNUTLS_DGRAM;
 
-		(*session)->internals.dtls.retrans_timeout_ms = 1000;
-		(*session)->internals.dtls.total_timeout_ms = 60000;
-	} else
+		gnutls_dtls_set_timeouts(*session, DTLS_RETRANS_TIMEOUT, 60000);
+	} else {
 		(*session)->internals.transport = GNUTLS_STREAM;
+	}
 
 	if (flags & GNUTLS_NONBLOCK)
-		(*session)->internals.dtls.blocking = 0;
+		(*session)->internals.blocking = 0;
 	else
-		(*session)->internals.dtls.blocking = 1;
+		(*session)->internals.blocking = 1;
 
 	/* Enable useful extensions */
 	if ((flags & GNUTLS_CLIENT) && !(flags & GNUTLS_NO_EXTENSIONS)) {
@@ -414,6 +417,9 @@ int gnutls_init(gnutls_session_t * session, unsigned int flags)
 							 NULL);
 #endif
 	}
+
+	if (!(flags & GNUTLS_NO_EXTENSIONS))
+		(*session)->internals.try_ext_master_secret = 1;
 
 	if (flags & GNUTLS_NO_REPLAY_PROTECTION)
 		(*session)->internals.no_replay_protection = 1;
@@ -431,7 +437,7 @@ int _gnutls_session_is_resumable(gnutls_session_t session)
 
 /**
  * gnutls_deinit:
- * @session: is a #gnutls_session_t structure.
+ * @session: is a #gnutls_session_t type.
  *
  * This function clears all buffers associated with the @session.
  * This function will also remove session data from the session
@@ -510,7 +516,7 @@ int _gnutls_dh_set_peer_public(gnutls_session_t session, bigint_t public)
 			anon_auth_info_t info;
 			info = _gnutls_get_auth_info(session, GNUTLS_CRD_ANON);
 			if (info == NULL)
-				return GNUTLS_E_INTERNAL_ERROR;
+				return gnutls_assert_val(GNUTLS_E_INTERNAL_ERROR);
 
 			dh = &info->dh;
 			break;
@@ -520,7 +526,7 @@ int _gnutls_dh_set_peer_public(gnutls_session_t session, bigint_t public)
 			psk_auth_info_t info;
 			info = _gnutls_get_auth_info(session, GNUTLS_CRD_PSK);
 			if (info == NULL)
-				return GNUTLS_E_INTERNAL_ERROR;
+				return gnutls_assert_val(GNUTLS_E_INTERNAL_ERROR);
 
 			dh = &info->dh;
 			break;
@@ -531,14 +537,13 @@ int _gnutls_dh_set_peer_public(gnutls_session_t session, bigint_t public)
 
 			info = _gnutls_get_auth_info(session, GNUTLS_CRD_CERTIFICATE);
 			if (info == NULL)
-				return GNUTLS_E_INTERNAL_ERROR;
+				return gnutls_assert_val(GNUTLS_E_INTERNAL_ERROR);
 
 			dh = &info->dh;
 			break;
 		}
 	default:
-		gnutls_assert();
-		return GNUTLS_E_INTERNAL_ERROR;
+		return gnutls_assert_val(GNUTLS_E_INTERNAL_ERROR);
 	}
 
 	if (dh->public_key.data)
@@ -561,7 +566,7 @@ int _gnutls_dh_set_secret_bits(gnutls_session_t session, unsigned bits)
 			anon_auth_info_t info;
 			info = _gnutls_get_auth_info(session, GNUTLS_CRD_ANON);
 			if (info == NULL)
-				return GNUTLS_E_INTERNAL_ERROR;
+				return gnutls_assert_val(GNUTLS_E_INTERNAL_ERROR);
 			info->dh.secret_bits = bits;
 			break;
 		}
@@ -570,7 +575,7 @@ int _gnutls_dh_set_secret_bits(gnutls_session_t session, unsigned bits)
 			psk_auth_info_t info;
 			info = _gnutls_get_auth_info(session, GNUTLS_CRD_PSK);
 			if (info == NULL)
-				return GNUTLS_E_INTERNAL_ERROR;
+				return gnutls_assert_val(GNUTLS_E_INTERNAL_ERROR);
 			info->dh.secret_bits = bits;
 			break;
 		}
@@ -580,13 +585,12 @@ int _gnutls_dh_set_secret_bits(gnutls_session_t session, unsigned bits)
 
 			info = _gnutls_get_auth_info(session, GNUTLS_CRD_CERTIFICATE);
 			if (info == NULL)
-				return GNUTLS_E_INTERNAL_ERROR;
+				return gnutls_assert_val(GNUTLS_E_INTERNAL_ERROR);
 
 			info->dh.secret_bits = bits;
 			break;
 	default:
-			gnutls_assert();
-			return GNUTLS_E_INTERNAL_ERROR;
+			return gnutls_assert_val(GNUTLS_E_INTERNAL_ERROR);
 		}
 	}
 
@@ -608,7 +612,7 @@ _gnutls_dh_set_group(gnutls_session_t session, bigint_t gen,
 			anon_auth_info_t info;
 			info = _gnutls_get_auth_info(session, GNUTLS_CRD_ANON);
 			if (info == NULL)
-				return GNUTLS_E_INTERNAL_ERROR;
+				return gnutls_assert_val(GNUTLS_E_INTERNAL_ERROR);
 
 			dh = &info->dh;
 			break;
@@ -618,7 +622,7 @@ _gnutls_dh_set_group(gnutls_session_t session, bigint_t gen,
 			psk_auth_info_t info;
 			info = _gnutls_get_auth_info(session, GNUTLS_CRD_PSK);
 			if (info == NULL)
-				return GNUTLS_E_INTERNAL_ERROR;
+				return gnutls_assert_val(GNUTLS_E_INTERNAL_ERROR);
 
 			dh = &info->dh;
 			break;
@@ -629,14 +633,13 @@ _gnutls_dh_set_group(gnutls_session_t session, bigint_t gen,
 
 			info = _gnutls_get_auth_info(session, GNUTLS_CRD_CERTIFICATE);
 			if (info == NULL)
-				return GNUTLS_E_INTERNAL_ERROR;
+				return gnutls_assert_val(GNUTLS_E_INTERNAL_ERROR);
 
 			dh = &info->dh;
 			break;
 		}
 	default:
-		gnutls_assert();
-		return GNUTLS_E_INTERNAL_ERROR;
+		return gnutls_assert_val(GNUTLS_E_INTERNAL_ERROR);
 	}
 
 	if (dh->prime.data)
@@ -668,7 +671,7 @@ _gnutls_dh_set_group(gnutls_session_t session, bigint_t gen,
 #ifdef ENABLE_OPENPGP
 /**
  * gnutls_openpgp_send_cert:
- * @session: is a pointer to a #gnutls_session_t structure.
+ * @session: a #gnutls_session_t type.
  * @status: is one of GNUTLS_OPENPGP_CERT, or GNUTLS_OPENPGP_CERT_FINGERPRINT
  *
  * This function will order gnutls to send the key fingerprint
@@ -686,7 +689,7 @@ gnutls_openpgp_send_cert(gnutls_session_t session,
 
 /**
  * gnutls_certificate_send_x509_rdn_sequence:
- * @session: is a pointer to a #gnutls_session_t structure.
+ * @session: a #gnutls_session_t type.
  * @status: is 0 or 1
  *
  * If status is non zero, this function will order gnutls not to send
@@ -714,7 +717,7 @@ int _gnutls_openpgp_send_fingerprint(gnutls_session_t session)
 
 /*-
  * _gnutls_record_set_default_version - Used to set the default version for the first record packet
- * @session: is a #gnutls_session_t structure.
+ * @session: is a #gnutls_session_t type.
  * @major: is a tls major version
  * @minor: is a tls minor version
  *
@@ -731,9 +734,28 @@ _gnutls_record_set_default_version(gnutls_session_t session,
 	session->internals.default_record_version[1] = minor;
 }
 
+/*-
+ * _gnutls_hello_set_default_version - Used to set the default version for the first record packet
+ * @session: is a #gnutls_session_t type.
+ * @major: is a tls major version
+ * @minor: is a tls minor version
+ *
+ * This function sets the default version that we will use in the first
+ * record packet (client hello). This function is only useful to people
+ * that know TLS internals and want to debug other implementations.
+ -*/
+void
+_gnutls_hello_set_default_version(gnutls_session_t session,
+				   unsigned char major,
+				   unsigned char minor)
+{
+	session->internals.default_hello_version[0] = major;
+	session->internals.default_hello_version[1] = minor;
+}
+
 /**
  * gnutls_handshake_set_private_extensions:
- * @session: is a #gnutls_session_t structure.
+ * @session: is a #gnutls_session_t type.
  * @allow: is an integer (0 or 1)
  *
  * This function will enable or disable the use of private cipher
@@ -993,7 +1015,7 @@ _gnutls_prf_raw(gnutls_mac_algorithm_t mac,
 
 /**
  * gnutls_prf_raw:
- * @session: is a #gnutls_session_t structure.
+ * @session: is a #gnutls_session_t type.
  * @label_size: length of the @label variable.
  * @label: label used in PRF computation, typically a short string.
  * @seed_size: length of the @seed variable.
@@ -1040,8 +1062,75 @@ gnutls_prf_raw(gnutls_session_t session,
 }
 
 /**
+ * gnutls_prf_rfc5705:
+ * @session: is a #gnutls_session_t type.
+ * @label_size: length of the @label variable.
+ * @label: label used in PRF computation, typically a short string.
+ * @context_size: length of the @extra variable.
+ * @context: optional extra data to seed the PRF with.
+ * @outsize: size of pre-allocated output buffer to hold the output.
+ * @out: pre-allocated buffer to hold the generated data.
+ *
+ * Applies the TLS Pseudo-Random-Function (PRF) on the master secret
+ * and the provided data, seeded with the client and server random fields,
+ * as specified in RFC5705.
+ *
+ * The @label variable usually contains a string denoting the purpose
+ * for the generated data.  The @server_random_first indicates whether
+ * the client random field or the server random field should be first
+ * in the seed.  Non-zero indicates that the server random field is first,
+ * 0 that the client random field is first.
+ *
+ * The @context variable can be used to add more data to the seed, after
+ * the random variables.  It can be used to make sure the
+ * generated output is strongly connected to some additional data
+ * (e.g., a string used in user authentication). 
+ *
+ * The output is placed in @out, which must be pre-allocated.
+ *
+ * Note that, to provide the RFC5705 context, the @contect variable
+ * must be non-null.
+ *
+ * Returns: %GNUTLS_E_SUCCESS on success, or an error code.
+ *
+ * Since: 3.4.4
+ **/
+int
+gnutls_prf_rfc5705(gnutls_session_t session,
+		   size_t label_size, const char *label,
+		   size_t context_size, const char *context,
+		   size_t outsize, char *out)
+{
+	char *pctx = NULL;
+	int ret;
+
+	if (context != NULL && context_size > 65535)  {
+		gnutls_assert();
+		return GNUTLS_E_INVALID_REQUEST;
+	}
+
+	if (context != NULL) {
+		pctx = gnutls_malloc(context_size+2);
+		if (!pctx) {
+			gnutls_assert();
+			return GNUTLS_E_MEMORY_ERROR;
+		}
+
+		memcpy(pctx+2, context, context_size);
+		_gnutls_write_uint16(context_size, (void*)pctx);
+		context_size += 2;
+	}
+
+	ret = gnutls_prf(session, label_size, label, 0,
+			 context_size, pctx, outsize, out);
+
+	gnutls_free(pctx);
+	return ret;
+}
+
+/**
  * gnutls_prf:
- * @session: is a #gnutls_session_t structure.
+ * @session: is a #gnutls_session_t type.
  * @label_size: length of the @label variable.
  * @label: label used in PRF computation, typically a short string.
  * @server_random_first: non-zero if server random field should be first in seed
@@ -1052,10 +1141,7 @@ gnutls_prf_raw(gnutls_session_t session,
  *
  * Applies the TLS Pseudo-Random-Function (PRF) on the master secret
  * and the provided data, seeded with the client and server random fields.
- *
- * The output of this function is identical to RFC5705 extractor if @extra
- * and @extra_size are set to zero. Otherwise, @extra should contain the context
- * value prefixed by a two-byte length.
+ * For the key expansion specified in RFC5705 see gnutls_prf_rfc5705().
  *
  * The @label variable usually contains a string denoting the purpose
  * for the generated data.  The @server_random_first indicates whether
@@ -1077,7 +1163,8 @@ gnutls_prf(gnutls_session_t session,
 	   size_t label_size,
 	   const char *label,
 	   int server_random_first,
-	   size_t extra_size, const char *extra, size_t outsize, char *out)
+	   size_t extra_size, const char *extra,
+	   size_t outsize, char *out)
 {
 	int ret;
 	uint8_t *seed;
@@ -1098,7 +1185,9 @@ gnutls_prf(gnutls_session_t session,
 	       client_random : session->security_parameters.server_random,
 	       GNUTLS_RANDOM_SIZE);
 
-	memcpy(seed + 2 * GNUTLS_RANDOM_SIZE, extra, extra_size);
+	if (extra && extra_size) {
+		memcpy(seed + 2 * GNUTLS_RANDOM_SIZE, extra, extra_size);
+	}
 
 	ret =
 	    _gnutls_PRF(session,
@@ -1113,7 +1202,7 @@ gnutls_prf(gnutls_session_t session,
 
 /**
  * gnutls_session_is_resumed:
- * @session: is a #gnutls_session_t structure.
+ * @session: is a #gnutls_session_t type.
  *
  * Check whether session is resumed or not.
  *
@@ -1144,7 +1233,7 @@ int gnutls_session_is_resumed(gnutls_session_t session)
 
 /**
  * gnutls_session_resumption_requested:
- * @session: is a #gnutls_session_t structure.
+ * @session: is a #gnutls_session_t type.
  *
  * Check whether the client has asked for session resumption.
  * This function is valid only on server side.
@@ -1162,7 +1251,7 @@ int gnutls_session_resumption_requested(gnutls_session_t session)
 
 /*-
  * _gnutls_session_is_psk - Used to check whether this session uses PSK kx
- * @session: is a #gnutls_session_t structure.
+ * @session: is a #gnutls_session_t type.
  *
  * This function will return non zero if this session uses a PSK key
  * exchange algorithm.
@@ -1182,7 +1271,7 @@ int _gnutls_session_is_psk(gnutls_session_t session)
 
 /*-
  * _gnutls_session_is_ecc - Used to check whether this session uses ECC kx
- * @session: is a #gnutls_session_t structure.
+ * @session: is a #gnutls_session_t type.
  *
  * This function will return non zero if this session uses an elliptic
  * curves key exchange exchange algorithm.
@@ -1202,7 +1291,7 @@ int _gnutls_session_is_ecc(gnutls_session_t session)
 
 /**
  * gnutls_session_get_ptr:
- * @session: is a #gnutls_session_t structure.
+ * @session: is a #gnutls_session_t type.
  *
  * Get user pointer for session.  Useful in callbacks.  This is the
  *   pointer set with gnutls_session_set_ptr().
@@ -1217,7 +1306,7 @@ void *gnutls_session_get_ptr(gnutls_session_t session)
 
 /**
  * gnutls_session_set_ptr:
- * @session: is a #gnutls_session_t structure.
+ * @session: is a #gnutls_session_t type.
  * @ptr: is the user pointer
  *
  * This function will set (associate) the user given pointer @ptr to
@@ -1229,26 +1318,53 @@ void gnutls_session_set_ptr(gnutls_session_t session, void *ptr)
 	session->internals.user_ptr = ptr;
 }
 
+/**
+ * gnutls_session_set_verify_function:
+ * @session: is a #gnutls_session_t type.
+ * @func: is the callback function
+ *
+ * This function sets a callback to be called when peer's certificate
+ * has been received in order to verify it on receipt rather than
+ * doing after the handshake is completed. This overrides any callback
+ * set using gnutls_certificate_set_verify_function().
+ *
+ * The callback's function prototype is:
+ * int (*callback)(gnutls_session_t);
+ *
+ * If the callback function is provided then gnutls will call it, in the
+ * handshake, just after the certificate message has been received.
+ * To verify or obtain the certificate the gnutls_certificate_verify_peers2(),
+ * gnutls_certificate_type_get(), gnutls_certificate_get_peers() functions
+ * can be used.
+ *
+ * The callback function should return 0 for the handshake to continue
+ * or non-zero to terminate.
+ *
+ * Since: 3.4.6
+ **/
+void
+ gnutls_session_set_verify_function
+    (gnutls_session_t session,
+     gnutls_certificate_verify_function * func)
+{
+	session->internals.verify_callback = func;
+}
 
 /**
  * gnutls_record_get_direction:
- * @session: is a #gnutls_session_t structure.
+ * @session: is a #gnutls_session_t type.
  *
  * This function provides information about the internals of the
- * record protocol and is only useful if a prior gnutls function call
- * (e.g.  gnutls_handshake()) was interrupted for some reason, that
+ * record protocol and is only useful if a prior gnutls function call,
+ * e.g.  gnutls_handshake(), was interrupted for some reason. That
  * is, if a function returned %GNUTLS_E_INTERRUPTED or
- * %GNUTLS_E_AGAIN.  In such a case, you might want to call select()
- * or poll() before calling the interrupted gnutls function again.  To
- * tell you whether a file descriptor should be selected for either
- * reading or writing, gnutls_record_get_direction() returns 0 if the
- * interrupted function was trying to read data, and 1 if it was
- * trying to write data.
+ * %GNUTLS_E_AGAIN. In such a case, you might want to call select()
+ * or poll() before restoring the interrupted gnutls function.
  *
- * This function's output is unreliable if you are using the
+ * This function's output is unreliable if you are using the same
  * @session in different threads, for sending and receiving.
  *
- * Returns: 0 if trying to read data, 1 if trying to write data.
+ * Returns: 0 if interrupted while trying to read data, or 1 while trying to write data.
  **/
 int gnutls_record_get_direction(gnutls_session_t session)
 {
@@ -1257,7 +1373,7 @@ int gnutls_record_get_direction(gnutls_session_t session)
 
 /*-
  * _gnutls_rsa_pms_set_version - Sets a version to be used at the RSA PMS
- * @session: is a #gnutls_session_t structure.
+ * @session: is a #gnutls_session_t type.
  * @major: is the major version to use
  * @minor: is the minor version to use
  *
@@ -1275,7 +1391,7 @@ _gnutls_rsa_pms_set_version(gnutls_session_t session,
 
 /**
  * gnutls_handshake_set_post_client_hello_function:
- * @session: is a #gnutls_session_t structure.
+ * @session: is a #gnutls_session_t type.
  * @func: is the function to be called
  *
  * This function will set a callback to be called after the client
@@ -1310,7 +1426,7 @@ gnutls_handshake_set_post_client_hello_function(gnutls_session_t session,
 
 /**
  * gnutls_session_enable_compatibility_mode:
- * @session: is a #gnutls_session_t structure.
+ * @session: is a #gnutls_session_t type.
  *
  * This function can be used to disable certain (security) features in
  * TLS in order to maintain maximum compatibility with buggy
@@ -1330,7 +1446,7 @@ void gnutls_session_enable_compatibility_mode(gnutls_session_t session)
 
 /**
  * gnutls_session_channel_binding:
- * @session: is a #gnutls_session_t structure.
+ * @session: is a #gnutls_session_t type.
  * @cbtype: an #gnutls_channel_binding_t enumeration type
  * @cb: output buffer array with data
  *
@@ -1367,7 +1483,7 @@ gnutls_session_channel_binding(gnutls_session_t session,
 
 /**
  * gnutls_ecc_curve_get:
- * @session: is a #gnutls_session_t structure.
+ * @session: is a #gnutls_session_t type.
  *
  * Returns the currently used elliptic curve. Only valid
  * when using an elliptic curve ciphersuite.
@@ -1384,7 +1500,7 @@ gnutls_ecc_curve_t gnutls_ecc_curve_get(gnutls_session_t session)
 
 /**
  * gnutls_protocol_get_version:
- * @session: is a #gnutls_session_t structure.
+ * @session: is a #gnutls_session_t type.
  *
  * Get TLS version, a #gnutls_protocol_t value.
  *
@@ -1397,7 +1513,7 @@ gnutls_protocol_t gnutls_protocol_get_version(gnutls_session_t session)
 
 /**
  * gnutls_session_get_random:
- * @session: is a #gnutls_session_t structure.
+ * @session: is a #gnutls_session_t type.
  * @client: the client part of the random
  * @server: the server part of the random
  *
@@ -1441,7 +1557,7 @@ unsigned int timespec_sub_ms(struct timespec *a, struct timespec *b)
 
 /**
  * gnutls_handshake_set_random:
- * @session: is a #gnutls_session_t structure.
+ * @session: is a #gnutls_session_t type.
  * @random: a random value of 32-bytes
  *
  * This function will explicitly set the server or client hello 
@@ -1477,7 +1593,7 @@ gnutls_handshake_set_random(gnutls_session_t session,
 
 /**
  * gnutls_handshake_set_hook_function:
- * @session: is a #gnutls_session_t structure
+ * @session: is a #gnutls_session_t type
  * @htype: the %gnutls_handshake_description_t of the message to hook at
  * @post: %GNUTLS_HOOK_* depending on when the hook function should be called
  * @func: is the function to be called
@@ -1509,4 +1625,113 @@ gnutls_handshake_set_hook_function(gnutls_session_t session,
 	session->internals.h_hook = func;
 	session->internals.h_type = htype;
 	session->internals.h_post = post;
+}
+
+/**
+ * gnutls_record_get_state:
+ * @session: is a #gnutls_session_t type
+ * @read: if non-zero the read parameters are returned, otherwise the write
+ * @mac_key: the key used for MAC (if a MAC is used)
+ * @IV: the initialization vector or nonce used
+ * @cipher_key: the cipher key
+ * @seq_number: A 64-bit sequence number
+ *
+ * This function will return the parameters of the current record state.
+ * These are only useful to be provided to an external off-loading device
+ * or subsystem.
+ *
+ * In that case, to sync the state you must call gnutls_record_set_state().
+ *
+ * Returns: %GNUTLS_E_SUCCESS on success, or an error code.
+ *
+ * Since 3.4.0
+ **/
+int
+gnutls_record_get_state(gnutls_session_t session,
+			unsigned read,
+			gnutls_datum_t *mac_key,
+			gnutls_datum_t *IV,
+			gnutls_datum_t *cipher_key,
+			unsigned char seq_number[8])
+{
+	record_parameters_st *record_params;
+	record_state_st *record_state;
+	unsigned int epoch;
+	int ret;
+
+	if (read)
+		epoch = EPOCH_READ_CURRENT;
+	else
+		epoch = EPOCH_WRITE_CURRENT;
+
+	ret = _gnutls_epoch_get(session, epoch, &record_params);
+	if (ret < 0)
+		return gnutls_assert_val(ret);
+
+	if (!record_params->initialized)
+		return gnutls_assert_val(GNUTLS_E_INVALID_REQUEST);
+
+	if (read)
+		record_state = &record_params->read;
+	else
+		record_state = &record_params->write;
+
+	if (mac_key)
+		memcpy(mac_key, &record_state->mac_secret, sizeof(gnutls_datum_t));
+	if (IV)
+		memcpy(IV, &record_state->IV, sizeof(gnutls_datum_t));
+	if (cipher_key)
+		memcpy(cipher_key, &record_state->key, sizeof(gnutls_datum_t));
+	if (seq_number)
+		memcpy(seq_number, UINT64DATA(record_state->sequence_number), 8);
+	return 0;
+}
+
+/**
+ * gnutls_record_set_state:
+ * @session: is a #gnutls_session_t type
+ * @read: if non-zero the read parameters are returned, otherwise the write
+ * @seq_number: A 64-bit sequence number
+ *
+ * This function will set the sequence number in the current record state.
+ * This function is useful if sending and receiving are offloaded from
+ * gnutls. That is, if gnutls_record_get_state() was used.
+ *
+ * Returns: %GNUTLS_E_SUCCESS on success, or an error code.
+ *
+ * Since 3.4.0
+ **/
+int
+gnutls_record_set_state(gnutls_session_t session,
+			unsigned read,
+			unsigned char seq_number[8])
+{
+	record_parameters_st *record_params;
+	record_state_st *record_state;
+	int epoch, ret;
+
+	if (read)
+		epoch = EPOCH_READ_CURRENT;
+	else
+		epoch = EPOCH_WRITE_CURRENT;
+
+	ret = _gnutls_epoch_get(session, epoch, &record_params);
+	if (ret < 0)
+		return gnutls_assert_val(ret);
+
+	if (!record_params->initialized)
+		return gnutls_assert_val(GNUTLS_E_INVALID_REQUEST);
+
+	if (read)
+		record_state = &record_params->read;
+	else
+		record_state = &record_params->write;
+
+	memcpy(UINT64DATA(record_state->sequence_number), seq_number, 8);
+
+	if (IS_DTLS(session)) {
+		_dtls_reset_window(session, seq_number);
+	}
+
+	return 0;
 }

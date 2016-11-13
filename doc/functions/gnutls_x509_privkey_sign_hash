@@ -3,7 +3,7 @@
 
 
 @deftypefun {int} {gnutls_x509_privkey_sign_hash} (gnutls_x509_privkey_t @var{key}, const gnutls_datum_t * @var{hash}, gnutls_datum_t * @var{signature})
-@var{key}: Holds the key
+@var{key}: a key
 
 @var{hash}: holds the data to be signed
 

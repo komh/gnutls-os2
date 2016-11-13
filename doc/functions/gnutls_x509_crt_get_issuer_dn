@@ -3,7 +3,7 @@
 
 
 @deftypefun {int} {gnutls_x509_crt_get_issuer_dn} (gnutls_x509_crt_t @var{cert}, char * @var{buf}, size_t * @var{buf_size})
-@var{cert}: should contain a @code{gnutls_x509_crt_t}  structure
+@var{cert}: should contain a @code{gnutls_x509_crt_t}  type
 
 @var{buf}: a pointer to a structure to hold the name (may be null)
 

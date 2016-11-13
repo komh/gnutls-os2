@@ -1,15 +1,73 @@
 
+@subheading gnutls_certificate_get_openpgp_crt
+@anchor{gnutls_certificate_get_openpgp_crt}
+@deftypefun {int} {gnutls_certificate_get_openpgp_crt} (gnutls_certificate_credentials_t @var{res}, unsigned @var{index}, gnutls_openpgp_crt_t ** @var{crt_list}, unsigned * @var{crt_list_size})
+@var{res}: is a @code{gnutls_certificate_credentials_t}  type.
+
+@var{index}: The index of the certificate list to obtain.
+
+@var{crt_list}: Where to store the certificate list.
+
+@var{crt_list_size}: -- undescribed --
+
+Obtains a X.509 certificate list that has been stored in  @code{res} with one of
+@code{gnutls_certificate_set_openpgp_key()} ,
+@code{gnutls_certificate_set_openpgp_key_file()} ,
+@code{gnutls_certificate_set_openpgp_key_file2()} ,
+@code{gnutls_certificate_set_openpgp_key_mem()} , or
+@code{gnutls_certificate_set_openpgp_key_mem2()} .  Each certificate in the
+returned certificate list must be deallocated with
+@code{gnutls_openpgp_crt_deinit()} , and the list itself must be freed with
+@code{gnutls_free()} .
+
+If there is no certificate with the given index,
+@code{GNUTLS_E_REQUESTED_DATA_NOT_AVAILABLE}  is returned. If the certificate
+with the given index is not a X.509 certificate, @code{GNUTLS_E_INVALID_REQUEST} 
+is returned.
+
+@strong{Returns:} @code{GNUTLS_E_SUCCESS}  (0) on success, or a negative error code.
+
+@strong{Since:} 3.4.0
+@end deftypefun
+
+@subheading gnutls_certificate_get_openpgp_key
+@anchor{gnutls_certificate_get_openpgp_key}
+@deftypefun {int} {gnutls_certificate_get_openpgp_key} (gnutls_certificate_credentials_t @var{res}, unsigned @var{index}, gnutls_openpgp_privkey_t * @var{key})
+@var{res}: is a @code{gnutls_certificate_credentials_t}  type.
+
+@var{index}: The index of the key to obtain.
+
+@var{key}: Location to store the key.
+
+Obtains a OpenPGP private key that has been stored in  @code{res} with one of
+@code{gnutls_certificate_set_openpgp_key()} ,
+@code{gnutls_certificate_set_openpgp_key_file()} ,
+@code{gnutls_certificate_set_openpgp_key_file2()} ,
+@code{gnutls_certificate_set_openpgp_key_mem()} , or
+@code{gnutls_certificate_set_openpgp_key_mem2()} .
+The returned key must be deallocated with @code{gnutls_openpgp_privkey_deinit()} 
+when no longer needed.
+
+If there is no key with the given index,
+@code{GNUTLS_E_REQUESTED_DATA_NOT_AVAILABLE}  is returned. If the key with the
+given index is not a X.509 key, @code{GNUTLS_E_INVALID_REQUEST}  is returned.
+
+@strong{Returns:} @code{GNUTLS_E_SUCCESS}  (0) on success, or a negative error code.
+
+@strong{Since:} 3.4.0
+@end deftypefun
+
 @subheading gnutls_certificate_set_openpgp_key
 @anchor{gnutls_certificate_set_openpgp_key}
 @deftypefun {int} {gnutls_certificate_set_openpgp_key} (gnutls_certificate_credentials_t @var{res}, gnutls_openpgp_crt_t @var{crt}, gnutls_openpgp_privkey_t @var{pkey})
-@var{res}: is a @code{gnutls_certificate_credentials_t}  structure.
+@var{res}: is a @code{gnutls_certificate_credentials_t}  type.
 
 @var{crt}: contains an openpgp public key
 
 @var{pkey}: is an openpgp private key
 
 This function sets a certificate/private key pair in the
-gnutls_certificate_credentials_t structure.  This function may be
+gnutls_certificate_credentials_t type.  This function may be
 called more than once (in case multiple keys/certificates exist
 for the server).
 
@@ -32,7 +90,7 @@ otherwise a negative error code is returned.
 
 @var{format}: the format of the keys
 
-This funtion is used to load OpenPGP keys into the GnuTLS
+This function is used to load OpenPGP keys into the GnuTLS
 credentials structure. The file should contain at least one valid non encrypted subkey.
 
 @strong{Returns:} On success, @code{GNUTLS_E_SUCCESS}  (0) is returned, otherwise a
@@ -52,7 +110,7 @@ negative error value.
 
 @var{format}: the format of the keys
 
-This funtion is used to load OpenPGP keys into the GnuTLS credential 
+This function is used to load OpenPGP keys into the GnuTLS credential 
 structure. The file should contain at least one valid non encrypted subkey.
 
 The special keyword "auto" is also accepted as  @code{subkey_id} .  In that
@@ -76,7 +134,7 @@ negative error value.
 
 @var{format}: the format of the keys
 
-This funtion is used to load OpenPGP keys into the GnuTLS credential 
+This function is used to load OpenPGP keys into the GnuTLS credential 
 structure. The datum should contain at least one valid non encrypted subkey.
 
 @strong{Returns:} On success, @code{GNUTLS_E_SUCCESS}  (0) is returned, otherwise a
@@ -96,7 +154,7 @@ negative error value.
 
 @var{format}: the format of the keys
 
-This funtion is used to load OpenPGP keys into the GnuTLS
+This function is used to load OpenPGP keys into the GnuTLS
 credentials structure. The datum should contain at least one valid non encrypted subkey.
 
 The special keyword "auto" is also accepted as  @code{subkey_id} .  In that
@@ -147,10 +205,25 @@ verification functions.
 negative error value.
 @end deftypefun
 
+@subheading gnutls_openpgp_crt_check_email
+@anchor{gnutls_openpgp_crt_check_email}
+@deftypefun {int} {gnutls_openpgp_crt_check_email} (gnutls_openpgp_crt_t @var{key}, const char * @var{email}, unsigned @var{flags})
+@var{key}: should contain a @code{gnutls_openpgp_crt_t}  type
+
+@var{email}: A null terminated string that contains an RFC822 address (email)
+
+@var{flags}: gnutls_certificate_verify_flags
+
+This function will check if the given key's owner matches the
+given email address. 
+
+@strong{Returns:} non-zero for a successful match, and zero on failure.
+@end deftypefun
+
 @subheading gnutls_openpgp_crt_check_hostname
 @anchor{gnutls_openpgp_crt_check_hostname}
 @deftypefun {int} {gnutls_openpgp_crt_check_hostname} (gnutls_openpgp_crt_t @var{key}, const char * @var{hostname})
-@var{key}: should contain a @code{gnutls_openpgp_crt_t}  structure
+@var{key}: should contain a @code{gnutls_openpgp_crt_t}  type
 
 @var{hostname}: A null terminated string that contains a DNS name
 
@@ -164,7 +237,7 @@ described in RFC2818 (HTTPS), which takes into account wildcards.
 @subheading gnutls_openpgp_crt_check_hostname2
 @anchor{gnutls_openpgp_crt_check_hostname2}
 @deftypefun {int} {gnutls_openpgp_crt_check_hostname2} (gnutls_openpgp_crt_t @var{key}, const char * @var{hostname}, unsigned @var{flags})
-@var{key}: should contain a @code{gnutls_openpgp_crt_t}  structure
+@var{key}: should contain a @code{gnutls_openpgp_crt_t}  type
 
 @var{hostname}: A null terminated string that contains a DNS name
 
@@ -183,7 +256,7 @@ components or more, and the wildcard starts at the leftmost position.
 @subheading gnutls_openpgp_crt_deinit
 @anchor{gnutls_openpgp_crt_deinit}
 @deftypefun {void} {gnutls_openpgp_crt_deinit} (gnutls_openpgp_crt_t @var{key})
-@var{key}: The structure to be initialized
+@var{key}: A pointer to the type to be initialized
 
 This function will deinitialize a key structure.
 @end deftypefun
@@ -294,7 +367,7 @@ Get key id string.
 @subheading gnutls_openpgp_crt_get_key_usage
 @anchor{gnutls_openpgp_crt_get_key_usage}
 @deftypefun {int} {gnutls_openpgp_crt_get_key_usage} (gnutls_openpgp_crt_t @var{key}, unsigned int * @var{key_usage})
-@var{key}: should contain a gnutls_openpgp_crt_t structure
+@var{key}: should contain a gnutls_openpgp_crt_t type
 
 @var{key_usage}: where the key usage bits will be stored
 
@@ -582,7 +655,7 @@ has not.
 @subheading gnutls_openpgp_crt_get_subkey_usage
 @anchor{gnutls_openpgp_crt_get_subkey_usage}
 @deftypefun {int} {gnutls_openpgp_crt_get_subkey_usage} (gnutls_openpgp_crt_t @var{key}, unsigned int @var{idx}, unsigned int * @var{key_usage})
-@var{key}: should contain a gnutls_openpgp_crt_t structure
+@var{key}: should contain a gnutls_openpgp_crt_t type
 
 @var{idx}: the subkey index
 
@@ -628,7 +701,7 @@ in 'key'.
 @subheading gnutls_openpgp_crt_init
 @anchor{gnutls_openpgp_crt_init}
 @deftypefun {int} {gnutls_openpgp_crt_init} (gnutls_openpgp_crt_t * @var{key})
-@var{key}: The structure to be initialized
+@var{key}: A pointer to the type to be initialized
 
 This function will initialize an OpenPGP key structure.
 
@@ -792,7 +865,7 @@ This function will initialize an keyring structure.
 @subheading gnutls_openpgp_privkey_deinit
 @anchor{gnutls_openpgp_privkey_deinit}
 @deftypefun {void} {gnutls_openpgp_privkey_deinit} (gnutls_openpgp_privkey_t @var{key})
-@var{key}: The structure to be initialized
+@var{key}: A pointer to the type to be initialized
 
 This function will deinitialize a key structure.
 @end deftypefun
@@ -1175,7 +1248,7 @@ stored in 'key'.
 @subheading gnutls_openpgp_privkey_init
 @anchor{gnutls_openpgp_privkey_init}
 @deftypefun {int} {gnutls_openpgp_privkey_init} (gnutls_openpgp_privkey_t * @var{key})
-@var{key}: The structure to be initialized
+@var{key}: A pointer to the type to be initialized
 
 This function will initialize an OpenPGP key structure.
 
@@ -1220,7 +1293,7 @@ otherwise a negative error code is returned.
 
 @var{func}: the callback
 
-This funtion will set a key retrieval function for OpenPGP keys. This
+This function will set a key retrieval function for OpenPGP keys. This
 callback is only useful in server side, and will be used if the peer
 sent a key fingerprint instead of a full key.
 

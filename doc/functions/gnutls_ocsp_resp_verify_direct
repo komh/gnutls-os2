@@ -3,11 +3,11 @@
 
 
 @deftypefun {int} {gnutls_ocsp_resp_verify_direct} (gnutls_ocsp_resp_t @var{resp}, gnutls_x509_crt_t @var{issuer}, unsigned int * @var{verify}, unsigned int @var{flags})
-@var{resp}: should contain a @code{gnutls_ocsp_resp_t}  structure
+@var{resp}: should contain a @code{gnutls_ocsp_resp_t}  type
 
 @var{issuer}: certificate believed to have signed the response
 
-@var{verify}: output variable with verification status, an @code{gnutls_ocsp_cert_status_t} 
+@var{verify}: output variable with verification status, an @code{gnutls_ocsp_verify_reason_t} 
 
 @var{flags}: verification flags, 0 for now.
 

@@ -9,8 +9,7 @@
 
 @var{flags}: One of GNUTLS_PKCS11_OBJ_* flags
 
-This function will import a PKCS11 certificate or a TPM key 
-as a public key.
+This function will import a public key from the provided URL.
 
 @strong{Returns:} On success, @code{GNUTLS_E_SUCCESS}  (0) is returned, otherwise a
 negative error value.

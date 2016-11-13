@@ -3,7 +3,7 @@
 
 
 @deftypefun {int} {gnutls_x509_crt_get_serial} (gnutls_x509_crt_t @var{cert}, void * @var{result}, size_t * @var{result_size})
-@var{cert}: should contain a @code{gnutls_x509_crt_t}  structure
+@var{cert}: should contain a @code{gnutls_x509_crt_t}  type
 
 @var{result}: The place where the serial number will be copied
 

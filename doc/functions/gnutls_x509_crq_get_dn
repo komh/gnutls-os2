@@ -3,7 +3,7 @@
 
 
 @deftypefun {int} {gnutls_x509_crq_get_dn} (gnutls_x509_crq_t @var{crq}, char * @var{buf}, size_t * @var{buf_size})
-@var{crq}: should contain a @code{gnutls_x509_crq_t}  structure
+@var{crq}: should contain a @code{gnutls_x509_crq_t}  type
 
 @var{buf}: a pointer to a structure to hold the name (may be @code{NULL} )
 

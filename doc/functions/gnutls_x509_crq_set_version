@@ -3,7 +3,7 @@
 
 
 @deftypefun {int} {gnutls_x509_crq_set_version} (gnutls_x509_crq_t @var{crq}, unsigned int @var{version})
-@var{crq}: should contain a @code{gnutls_x509_crq_t}  structure
+@var{crq}: should contain a @code{gnutls_x509_crq_t}  type
 
 @var{version}: holds the version number, for v1 Requests must be 1
 

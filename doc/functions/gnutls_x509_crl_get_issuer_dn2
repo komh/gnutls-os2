@@ -3,7 +3,7 @@
 
 
 @deftypefun {int} {gnutls_x509_crl_get_issuer_dn2} (gnutls_x509_crl_t @var{crl}, gnutls_datum_t * @var{dn})
-@var{crl}: should contain a @code{gnutls_x509_crl_t}  structure
+@var{crl}: should contain a @code{gnutls_x509_crl_t}  type
 
 @var{dn}: a pointer to a structure to hold the name
 

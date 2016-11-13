@@ -11,7 +11,7 @@
 
 @var{label}: a label
 
-@var{fmt}: the format of output params. PEM or DER.
+@var{fmt}: the format of output params. PEM or DER
 
 @var{pubkey}: will hold the public key (may be @code{NULL} )
 

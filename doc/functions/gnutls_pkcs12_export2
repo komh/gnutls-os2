@@ -3,7 +3,7 @@
 
 
 @deftypefun {int} {gnutls_pkcs12_export2} (gnutls_pkcs12_t @var{pkcs12}, gnutls_x509_crt_fmt_t @var{format}, gnutls_datum_t * @var{out})
-@var{pkcs12}: Holds the pkcs12 structure
+@var{pkcs12}: A pkcs12 type
 
 @var{format}: the format of output params. One of PEM or DER.
 

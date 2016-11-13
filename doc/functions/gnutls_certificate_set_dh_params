@@ -3,9 +3,9 @@
 
 
 @deftypefun {void} {gnutls_certificate_set_dh_params} (gnutls_certificate_credentials_t @var{res}, gnutls_dh_params_t @var{dh_params})
-@var{res}: is a gnutls_certificate_credentials_t structure
+@var{res}: is a gnutls_certificate_credentials_t type
 
-@var{dh_params}: is a structure that holds Diffie-Hellman parameters.
+@var{dh_params}: the Diffie-Hellman parameters.
 
 This function will set the Diffie-Hellman parameters for a
 certificate server to use. These parameters will be used in

@@ -8,7 +8,7 @@
 @var{url}: A PKCS 11 url
 
 This function will import a PKCS 11 private key to a @code{gnutls_private_key_t} 
-structure.
+type.
 
 @strong{Returns:} On success, @code{GNUTLS_E_SUCCESS}  (0) is returned, otherwise a
 negative error value.

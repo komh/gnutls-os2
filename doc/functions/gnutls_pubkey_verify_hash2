@@ -7,7 +7,7 @@
 
 @var{algo}: The signature algorithm used
 
-@var{flags}: Zero or one of @code{gnutls_pubkey_flags_t} 
+@var{flags}: Zero or an OR list of @code{gnutls_certificate_verify_flags} 
 
 @var{hash}: holds the hash digest to be verified
 

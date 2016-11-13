@@ -63,12 +63,12 @@ int _gnutls_map_cdk_rc(int rc)
 
 /**
  * gnutls_certificate_set_openpgp_key:
- * @res: is a #gnutls_certificate_credentials_t structure.
+ * @res: is a #gnutls_certificate_credentials_t type.
  * @crt: contains an openpgp public key
  * @pkey: is an openpgp private key
  *
  * This function sets a certificate/private key pair in the
- * gnutls_certificate_credentials_t structure.  This function may be
+ * gnutls_certificate_credentials_t type.  This function may be
  * called more than once (in case multiple keys/certificates exist
  * for the server).
  *
@@ -166,6 +166,105 @@ gnutls_certificate_set_openpgp_key(gnutls_certificate_credentials_t res,
 	return ret;
 }
 
+/**
+ * gnutls_certificate_get_openpgp_key:
+ * @res: is a #gnutls_certificate_credentials_t type.
+ * @index: The index of the key to obtain.
+ * @key: Location to store the key.
+ *
+ * Obtains a OpenPGP private key that has been stored in @res with one of
+ * gnutls_certificate_set_openpgp_key(),
+ * gnutls_certificate_set_openpgp_key_file(),
+ * gnutls_certificate_set_openpgp_key_file2(),
+ * gnutls_certificate_set_openpgp_key_mem(), or
+ * gnutls_certificate_set_openpgp_key_mem2().
+ * The returned key must be deallocated with gnutls_openpgp_privkey_deinit()
+ * when no longer needed.
+ *
+ * If there is no key with the given index,
+ * %GNUTLS_E_REQUESTED_DATA_NOT_AVAILABLE is returned. If the key with the
+ * given index is not a X.509 key, %GNUTLS_E_INVALID_REQUEST is returned.
+ *
+ * Returns: %GNUTLS_E_SUCCESS (0) on success, or a negative error code.
+ *
+ * Since: 3.4.0
+ */
+int
+gnutls_certificate_get_openpgp_key(gnutls_certificate_credentials_t res,
+                                   unsigned index,
+                                   gnutls_openpgp_privkey_t *key)
+{
+	if (index >= res->ncerts) {
+		gnutls_assert();
+		return GNUTLS_E_REQUESTED_DATA_NOT_AVAILABLE;
+	}
+
+	return gnutls_privkey_export_openpgp(res->pkey[index], key);
+}
+
+/**
+ * gnutls_certificate_get_openpgp_crt:
+ * @res: is a #gnutls_certificate_credentials_t type.
+ * @index: The index of the certificate list to obtain.
+ * @crt_list: Where to store the certificate list.
+ * @key: Will hold the number of certificates.
+ *
+ * Obtains a X.509 certificate list that has been stored in @res with one of
+ * gnutls_certificate_set_openpgp_key(),
+ * gnutls_certificate_set_openpgp_key_file(),
+ * gnutls_certificate_set_openpgp_key_file2(),
+ * gnutls_certificate_set_openpgp_key_mem(), or
+ * gnutls_certificate_set_openpgp_key_mem2().  Each certificate in the
+ * returned certificate list must be deallocated with
+ * gnutls_openpgp_crt_deinit(), and the list itself must be freed with
+ * gnutls_free().
+ *
+ * If there is no certificate with the given index,
+ * %GNUTLS_E_REQUESTED_DATA_NOT_AVAILABLE is returned. If the certificate
+ * with the given index is not a X.509 certificate, %GNUTLS_E_INVALID_REQUEST
+ * is returned.
+ *
+ * Returns: %GNUTLS_E_SUCCESS (0) on success, or a negative error code.
+ *
+ * Since: 3.4.0
+ */
+int
+gnutls_certificate_get_openpgp_crt(gnutls_certificate_credentials_t res,
+                                   unsigned index,
+                                   gnutls_openpgp_crt_t **crt_list,
+                                   unsigned *crt_list_size)
+{
+	int ret;
+	unsigned i;
+
+	if (index >= res->ncerts) {
+		gnutls_assert();
+		return GNUTLS_E_REQUESTED_DATA_NOT_AVAILABLE;
+	}
+
+	*crt_list_size = res->certs[index].cert_list_length;
+	*crt_list = gnutls_malloc(
+		res->certs[index].cert_list_length * sizeof (gnutls_openpgp_crt_t));
+	if (*crt_list == NULL) {
+		gnutls_assert();
+		return GNUTLS_E_MEMORY_ERROR;
+	}
+
+	for (i = 0; i < res->certs[index].cert_list_length; ++i) {
+		ret = gnutls_pcert_export_openpgp(&res->certs[index].cert_list[i], crt_list[i]);
+		if (ret < 0) {
+			while (i--)
+				gnutls_openpgp_crt_deinit(*crt_list[i]);
+			gnutls_free(*crt_list);
+			*crt_list = NULL;
+
+			return gnutls_assert_val(ret);
+		}
+	}
+
+	return 0;
+}
+
 /*-
  * gnutls_openpgp_get_key:
  * @key: the destination context to save the key.
@@ -240,7 +339,7 @@ gnutls_openpgp_get_key(gnutls_datum_t * key,
  * @key: the datum that contains the secret key.
  * @format: the format of the keys
  *
- * This funtion is used to load OpenPGP keys into the GnuTLS credential 
+ * This function is used to load OpenPGP keys into the GnuTLS credential 
  * structure. The datum should contain at least one valid non encrypted subkey.
  *
  * Returns: On success, %GNUTLS_E_SUCCESS (0) is returned, otherwise a
@@ -263,7 +362,7 @@ gnutls_certificate_set_openpgp_key_mem(gnutls_certificate_credentials_t
  * @keyfile: the file that contains the secret key.
  * @format: the format of the keys
  *
- * This funtion is used to load OpenPGP keys into the GnuTLS
+ * This function is used to load OpenPGP keys into the GnuTLS
  * credentials structure. The file should contain at least one valid non encrypted subkey.
  *
  * Returns: On success, %GNUTLS_E_SUCCESS (0) is returned, otherwise a
@@ -283,14 +382,20 @@ gnutls_certificate_set_openpgp_key_file(gnutls_certificate_credentials_t
 static int get_keyid(gnutls_openpgp_keyid_t keyid, const char *str)
 {
 	size_t keyid_size = GNUTLS_OPENPGP_KEYID_SIZE;
+	size_t len = strlen(str);
+	gnutls_datum_t tmp;
+	int ret;
 
-	if (strlen(str) != 16) {
+	if (len != 16) {
 		_gnutls_debug_log
 		    ("The OpenPGP subkey ID has to be 16 hexadecimal characters.\n");
 		return GNUTLS_E_INVALID_REQUEST;
 	}
 
-	if (_gnutls_hex2bin(str, strlen(str), keyid, &keyid_size) < 0) {
+	tmp.data = (void*)str;
+	tmp.size = len;
+	ret = gnutls_hex_decode(&tmp, keyid, &keyid_size);
+	if (ret < 0) {
 		_gnutls_debug_log("Error converting hex string: %s.\n",
 				  str);
 		return GNUTLS_E_INVALID_REQUEST;
@@ -307,7 +412,7 @@ static int get_keyid(gnutls_openpgp_keyid_t keyid, const char *str)
  * @subkey_id: a hex encoded subkey id
  * @format: the format of the keys
  *
- * This funtion is used to load OpenPGP keys into the GnuTLS
+ * This function is used to load OpenPGP keys into the GnuTLS
  * credentials structure. The datum should contain at least one valid non encrypted subkey.
  *
  * The special keyword "auto" is also accepted as @subkey_id.  In that
@@ -404,7 +509,7 @@ gnutls_certificate_set_openpgp_key_mem2(gnutls_certificate_credentials_t
  * @subkey_id: a hex encoded subkey id
  * @format: the format of the keys
  *
- * This funtion is used to load OpenPGP keys into the GnuTLS credential 
+ * This function is used to load OpenPGP keys into the GnuTLS credential 
  * structure. The file should contain at least one valid non encrypted subkey.
  *
  * The special keyword "auto" is also accepted as @subkey_id.  In that
@@ -591,8 +696,8 @@ gnutls_certificate_set_openpgp_keyring_mem(gnutls_certificate_credentials_t
 
 /*-
  * _gnutls_openpgp_request_key - Receives a key from a database, key server etc
- * @ret - a pointer to gnutls_datum_t structure.
- * @cred - a gnutls_certificate_credentials_t structure.
+ * @ret - a pointer to gnutls_datum_t type.
+ * @cred - a gnutls_certificate_credentials_t type.
  * @key_fingerprint - The keyFingerprint
  * @key_fingerprint_size - the size of the fingerprint
  *
@@ -647,7 +752,7 @@ _gnutls_openpgp_request_key(gnutls_session_t session, gnutls_datum_t * ret,
  * @session: a TLS session
  * @func: the callback
  *
- * This funtion will set a key retrieval function for OpenPGP keys. This
+ * This function will set a key retrieval function for OpenPGP keys. This
  * callback is only useful in server side, and will be used if the peer
  * sent a key fingerprint instead of a full key.
  *

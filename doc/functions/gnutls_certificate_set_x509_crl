@@ -3,7 +3,7 @@
 
 
 @deftypefun {int} {gnutls_certificate_set_x509_crl} (gnutls_certificate_credentials_t @var{res}, gnutls_x509_crl_t * @var{crl_list}, int @var{crl_list_size})
-@var{res}: is a @code{gnutls_certificate_credentials_t}  structure.
+@var{res}: is a @code{gnutls_certificate_credentials_t}  type.
 
 @var{crl_list}: is a list of trusted CRLs. They should have been verified before.
 

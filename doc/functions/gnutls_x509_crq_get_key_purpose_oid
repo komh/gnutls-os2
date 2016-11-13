@@ -3,11 +3,11 @@
 
 
 @deftypefun {int} {gnutls_x509_crq_get_key_purpose_oid} (gnutls_x509_crq_t @var{crq}, int @var{indx}, void * @var{oid}, size_t * @var{sizeof_oid}, unsigned int * @var{critical})
-@var{crq}: should contain a @code{gnutls_x509_crq_t}  structure
+@var{crq}: should contain a @code{gnutls_x509_crq_t}  type
 
 @var{indx}: This specifies which OID to return, use (0) to get the first one
 
-@var{oid}: a pointer to a buffer to hold the OID (may be @code{NULL} )
+@var{oid}: a pointer to store the OID (may be @code{NULL} )
 
 @var{sizeof_oid}: initially holds the size of  @code{oid} 
 

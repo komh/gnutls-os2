@@ -3,11 +3,11 @@
 
 
 @deftypefun {int} {gnutls_priority_set_direct} (gnutls_session_t @var{session}, const char * @var{priorities}, const char ** @var{err_pos})
-@var{session}: is a @code{gnutls_session_t}  structure.
+@var{session}: is a @code{gnutls_session_t}  type.
 
 @var{priorities}: is a string describing priorities
 
-@var{err_pos}: In case of an error this will have the position in the string the error occured
+@var{err_pos}: In case of an error this will have the position in the string the error occurred
 
 Sets the priorities to use on the ciphers, key exchange methods,
 macs and compression methods.  This function avoids keeping a

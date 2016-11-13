@@ -1,14 +1,15 @@
 
 
 
-@deftypefun {void} {gnutls_certificate_set_trust_list} (gnutls_certificate_credentials_t @var{res}, gnutls_x509_trust_list_t @var{tlist}, unsigned @var{flags})
-@var{res}: is a @code{gnutls_certificate_credentials_t}  structure.
 
-@var{tlist}: is a @code{gnutls_x509_trust_list_t}  structure
+@deftypefun {void} {gnutls_certificate_set_trust_list} (gnutls_certificate_credentials_t @var{res}, gnutls_x509_trust_list_t @var{tlist}, unsigned @var{flags})
+@var{res}: is a @code{gnutls_certificate_credentials_t}  type.
+
+@var{tlist}: is a @code{gnutls_x509_trust_list_t}  type
 
 @var{flags}: must be zero
 
-This function sets a trust list in the gnutls_certificate_credentials_t structure. 
+This function sets a trust list in the gnutls_certificate_credentials_t type. 
 
 Note that the  @code{tlist} will become part of the credentials 
 structure and must not be deallocated. It will be automatically deallocated 

@@ -63,8 +63,8 @@ extern FILE * option_usage_fp;
 /**
  *  static const strings for tpmtool options
  */
-static char const tpmtool_opt_strs[2105] =
-/*     0 */ "tpmtool 3.3.22\n"
+static char const tpmtool_opt_strs[2179] =
+/*     0 */ "tpmtool 3.4.16\n"
             "Copyright (C) 2000-2016 Free Software Foundation, and others, all rights reserved.\n"
             "This is free software. It is licensed for use, modification and\n"
             "redistribution under the terms of the GNU General Public License,\n"
@@ -103,45 +103,48 @@ static char const tpmtool_opt_strs[2105] =
 /*  1209 */ "Any registered key will be a user key\0"
 /*  1247 */ "USER\0"
 /*  1252 */ "user\0"
-/*  1257 */ "Any registred key will be a system key\0"
-/*  1296 */ "SYSTEM\0"
-/*  1303 */ "system\0"
-/*  1310 */ "Prints the public key of the provided key\0"
-/*  1352 */ "PUBKEY\0"
-/*  1359 */ "pubkey\0"
-/*  1366 */ "Lists all stored keys in the TPM\0"
-/*  1399 */ "LIST\0"
-/*  1404 */ "list\0"
-/*  1409 */ "Delete the key identified by the given URL (UUID).\0"
-/*  1460 */ "DELETE\0"
-/*  1467 */ "delete\0"
-/*  1474 */ "Specify the security level [low, legacy, medium, high, ultra].\0"
-/*  1537 */ "SEC_PARAM\0"
-/*  1547 */ "sec-param\0"
-/*  1557 */ "Specify the number of bits for key generate\0"
-/*  1601 */ "BITS\0"
-/*  1606 */ "bits\0"
-/*  1611 */ "Use the DER format for keys.\0"
-/*  1640 */ "INDER\0"
-/*  1646 */ "no-inder\0"
-/*  1655 */ "no\0"
-/*  1658 */ "Use DER format for output keys\0"
-/*  1689 */ "OUTDER\0"
-/*  1696 */ "no-outder\0"
-/*  1706 */ "display extended usage information and exit\0"
-/*  1750 */ "help\0"
-/*  1755 */ "extended usage information passed thru pager\0"
-/*  1800 */ "more-help\0"
-/*  1810 */ "output version information and exit\0"
-/*  1846 */ "version\0"
-/*  1854 */ "TPMTOOL\0"
-/*  1862 */ "tpmtool - GnuTLS TPM tool\n"
+/*  1257 */ "Any registered key will be a system key\0"
+/*  1297 */ "SYSTEM\0"
+/*  1304 */ "system\0"
+/*  1311 */ "Prints the public key of the provided key\0"
+/*  1353 */ "PUBKEY\0"
+/*  1360 */ "pubkey\0"
+/*  1367 */ "Lists all stored keys in the TPM\0"
+/*  1400 */ "LIST\0"
+/*  1405 */ "list\0"
+/*  1410 */ "Delete the key identified by the given URL (UUID).\0"
+/*  1461 */ "DELETE\0"
+/*  1468 */ "delete\0"
+/*  1475 */ "Tests the signature operation of the provided object\0"
+/*  1528 */ "TEST_SIGN\0"
+/*  1538 */ "test-sign\0"
+/*  1548 */ "Specify the security level [low, legacy, medium, high, ultra].\0"
+/*  1611 */ "SEC_PARAM\0"
+/*  1621 */ "sec-param\0"
+/*  1631 */ "Specify the number of bits for key generate\0"
+/*  1675 */ "BITS\0"
+/*  1680 */ "bits\0"
+/*  1685 */ "Use the DER format for keys.\0"
+/*  1714 */ "INDER\0"
+/*  1720 */ "no-inder\0"
+/*  1729 */ "no\0"
+/*  1732 */ "Use DER format for output keys\0"
+/*  1763 */ "OUTDER\0"
+/*  1770 */ "no-outder\0"
+/*  1780 */ "display extended usage information and exit\0"
+/*  1824 */ "help\0"
+/*  1829 */ "extended usage information passed thru pager\0"
+/*  1874 */ "more-help\0"
+/*  1884 */ "output version information and exit\0"
+/*  1920 */ "version\0"
+/*  1928 */ "TPMTOOL\0"
+/*  1936 */ "tpmtool - GnuTLS TPM tool\n"
             "Usage:  %s [ -<flag> [<val>] | --<name>[{=| }<val>] ]...\n\0"
-/*  1946 */ "bugs@gnutls.org\0"
-/*  1962 */ "\n\0"
-/*  1964 */ "Program that allows handling cryptographic data from the TPM chip.\n\0"
-/*  2032 */ "tpmtool 3.3.22\0"
-/*  2047 */ "tpmtool [options]\n"
+/*  2020 */ "bugs@gnutls.org\0"
+/*  2036 */ "\n\0"
+/*  2038 */ "Program that allows handling cryptographic data from the TPM chip.\n\0"
+/*  2106 */ "tpmtool 3.4.16\0"
+/*  2121 */ "tpmtool [options]\n"
             "tpmtool --help for usage instructions.\n";
 
 /**
@@ -275,9 +278,9 @@ static int const aUserCantList[] = {
 /** Descriptive text for the system option */
 #define SYSTEM_DESC      (tpmtool_opt_strs+1257)
 /** Upper-cased name for the system option */
-#define SYSTEM_NAME      (tpmtool_opt_strs+1296)
+#define SYSTEM_NAME      (tpmtool_opt_strs+1297)
 /** Name string for the system option */
-#define SYSTEM_name      (tpmtool_opt_strs+1303)
+#define SYSTEM_name      (tpmtool_opt_strs+1304)
 /** Other options that are required by the system option */
 static int const aSystemMustList[] = {
     INDEX_OPT_REGISTER, NO_EQUIVALENT };
@@ -291,11 +294,11 @@ static int const aSystemCantList[] = {
  *  pubkey option description:
  */
 /** Descriptive text for the pubkey option */
-#define PUBKEY_DESC      (tpmtool_opt_strs+1310)
+#define PUBKEY_DESC      (tpmtool_opt_strs+1311)
 /** Upper-cased name for the pubkey option */
-#define PUBKEY_NAME      (tpmtool_opt_strs+1352)
+#define PUBKEY_NAME      (tpmtool_opt_strs+1353)
 /** Name string for the pubkey option */
-#define PUBKEY_name      (tpmtool_opt_strs+1359)
+#define PUBKEY_name      (tpmtool_opt_strs+1360)
 /** Compiled in flag settings for the pubkey option */
 #define PUBKEY_FLAGS     (OPTST_DISABLED \
         | OPTST_SET_ARGTYPE(OPARG_TYPE_STRING))
@@ -304,11 +307,11 @@ static int const aSystemCantList[] = {
  *  list option description:
  */
 /** Descriptive text for the list option */
-#define LIST_DESC      (tpmtool_opt_strs+1366)
+#define LIST_DESC      (tpmtool_opt_strs+1367)
 /** Upper-cased name for the list option */
-#define LIST_NAME      (tpmtool_opt_strs+1399)
+#define LIST_NAME      (tpmtool_opt_strs+1400)
 /** Name string for the list option */
-#define LIST_name      (tpmtool_opt_strs+1404)
+#define LIST_name      (tpmtool_opt_strs+1405)
 /** Compiled in flag settings for the list option */
 #define LIST_FLAGS     (OPTST_DISABLED)
 
@@ -316,24 +319,37 @@ static int const aSystemCantList[] = {
  *  delete option description:
  */
 /** Descriptive text for the delete option */
-#define DELETE_DESC      (tpmtool_opt_strs+1409)
+#define DELETE_DESC      (tpmtool_opt_strs+1410)
 /** Upper-cased name for the delete option */
-#define DELETE_NAME      (tpmtool_opt_strs+1460)
+#define DELETE_NAME      (tpmtool_opt_strs+1461)
 /** Name string for the delete option */
-#define DELETE_name      (tpmtool_opt_strs+1467)
+#define DELETE_name      (tpmtool_opt_strs+1468)
 /** Compiled in flag settings for the delete option */
 #define DELETE_FLAGS     (OPTST_DISABLED \
+        | OPTST_SET_ARGTYPE(OPARG_TYPE_STRING))
+
+/**
+ *  test-sign option description:
+ */
+/** Descriptive text for the test-sign option */
+#define TEST_SIGN_DESC      (tpmtool_opt_strs+1475)
+/** Upper-cased name for the test-sign option */
+#define TEST_SIGN_NAME      (tpmtool_opt_strs+1528)
+/** Name string for the test-sign option */
+#define TEST_SIGN_name      (tpmtool_opt_strs+1538)
+/** Compiled in flag settings for the test-sign option */
+#define TEST_SIGN_FLAGS     (OPTST_DISABLED \
         | OPTST_SET_ARGTYPE(OPARG_TYPE_STRING))
 
 /**
  *  sec-param option description:
  */
 /** Descriptive text for the sec-param option */
-#define SEC_PARAM_DESC      (tpmtool_opt_strs+1474)
+#define SEC_PARAM_DESC      (tpmtool_opt_strs+1548)
 /** Upper-cased name for the sec-param option */
-#define SEC_PARAM_NAME      (tpmtool_opt_strs+1537)
+#define SEC_PARAM_NAME      (tpmtool_opt_strs+1611)
 /** Name string for the sec-param option */
-#define SEC_PARAM_name      (tpmtool_opt_strs+1547)
+#define SEC_PARAM_name      (tpmtool_opt_strs+1621)
 /** Compiled in flag settings for the sec-param option */
 #define SEC_PARAM_FLAGS     (OPTST_DISABLED \
         | OPTST_SET_ARGTYPE(OPARG_TYPE_STRING))
@@ -342,11 +358,11 @@ static int const aSystemCantList[] = {
  *  bits option description:
  */
 /** Descriptive text for the bits option */
-#define BITS_DESC      (tpmtool_opt_strs+1557)
+#define BITS_DESC      (tpmtool_opt_strs+1631)
 /** Upper-cased name for the bits option */
-#define BITS_NAME      (tpmtool_opt_strs+1601)
+#define BITS_NAME      (tpmtool_opt_strs+1675)
 /** Name string for the bits option */
-#define BITS_name      (tpmtool_opt_strs+1606)
+#define BITS_name      (tpmtool_opt_strs+1680)
 /** Compiled in flag settings for the bits option */
 #define BITS_FLAGS     (OPTST_DISABLED \
         | OPTST_SET_ARGTYPE(OPARG_TYPE_NUMERIC))
@@ -355,13 +371,13 @@ static int const aSystemCantList[] = {
  *  inder option description:
  */
 /** Descriptive text for the inder option */
-#define INDER_DESC      (tpmtool_opt_strs+1611)
+#define INDER_DESC      (tpmtool_opt_strs+1685)
 /** Upper-cased name for the inder option */
-#define INDER_NAME      (tpmtool_opt_strs+1640)
+#define INDER_NAME      (tpmtool_opt_strs+1714)
 /** disablement name for the inder option */
-#define NOT_INDER_name  (tpmtool_opt_strs+1646)
+#define NOT_INDER_name  (tpmtool_opt_strs+1720)
 /** disablement prefix for the inder option */
-#define NOT_INDER_PFX   (tpmtool_opt_strs+1655)
+#define NOT_INDER_PFX   (tpmtool_opt_strs+1729)
 /** Name string for the inder option */
 #define INDER_name      (NOT_INDER_name + 3)
 /** Compiled in flag settings for the inder option */
@@ -371,13 +387,13 @@ static int const aSystemCantList[] = {
  *  outder option description:
  */
 /** Descriptive text for the outder option */
-#define OUTDER_DESC      (tpmtool_opt_strs+1658)
+#define OUTDER_DESC      (tpmtool_opt_strs+1732)
 /** Upper-cased name for the outder option */
-#define OUTDER_NAME      (tpmtool_opt_strs+1689)
+#define OUTDER_NAME      (tpmtool_opt_strs+1763)
 /** disablement name for the outder option */
-#define NOT_OUTDER_name  (tpmtool_opt_strs+1696)
+#define NOT_OUTDER_name  (tpmtool_opt_strs+1770)
 /** disablement prefix for the outder option */
-#define NOT_OUTDER_PFX   (tpmtool_opt_strs+1655)
+#define NOT_OUTDER_PFX   (tpmtool_opt_strs+1729)
 /** Name string for the outder option */
 #define OUTDER_name      (NOT_OUTDER_name + 3)
 /** Compiled in flag settings for the outder option */
@@ -386,11 +402,11 @@ static int const aSystemCantList[] = {
 /*
  *  Help/More_Help/Version option descriptions:
  */
-#define HELP_DESC       (tpmtool_opt_strs+1706)
-#define HELP_name       (tpmtool_opt_strs+1750)
+#define HELP_DESC       (tpmtool_opt_strs+1780)
+#define HELP_name       (tpmtool_opt_strs+1824)
 #ifdef HAVE_WORKING_FORK
-#define MORE_HELP_DESC  (tpmtool_opt_strs+1755)
-#define MORE_HELP_name  (tpmtool_opt_strs+1800)
+#define MORE_HELP_DESC  (tpmtool_opt_strs+1829)
+#define MORE_HELP_name  (tpmtool_opt_strs+1874)
 #define MORE_HELP_FLAGS (OPTST_IMM | OPTST_NO_INIT)
 #else
 #define MORE_HELP_DESC  HELP_DESC
@@ -403,8 +419,8 @@ static int const aSystemCantList[] = {
 #  define VER_FLAGS     (OPTST_SET_ARGTYPE(OPARG_TYPE_STRING) | \
                          OPTST_ARG_OPTIONAL | OPTST_IMM | OPTST_NO_INIT)
 #endif
-#define VER_DESC        (tpmtool_opt_strs+1810)
-#define VER_name        (tpmtool_opt_strs+1846)
+#define VER_DESC        (tpmtool_opt_strs+1884)
+#define VER_name        (tpmtool_opt_strs+1920)
 /**
  *  Declare option callback procedures
  */
@@ -568,8 +584,20 @@ static tOptDesc optDesc[OPTION_CT] = {
      /* desc, NAME, name */ DELETE_DESC, DELETE_NAME, DELETE_name,
      /* disablement strs */ NULL, NULL },
 
-  {  /* entry idx, value */ 12, VALUE_OPT_SEC_PARAM,
-     /* equiv idx, value */ 12, VALUE_OPT_SEC_PARAM,
+  {  /* entry idx, value */ 12, VALUE_OPT_TEST_SIGN,
+     /* equiv idx, value */ 12, VALUE_OPT_TEST_SIGN,
+     /* equivalenced to  */ NO_EQUIVALENT,
+     /* min, max, act ct */ 0, 1, 0,
+     /* opt state flags  */ TEST_SIGN_FLAGS, 0,
+     /* last opt argumnt */ { NULL }, /* --test-sign */
+     /* arg list/cookie  */ NULL,
+     /* must/cannot opts */ NULL, NULL,
+     /* option proc      */ NULL,
+     /* desc, NAME, name */ TEST_SIGN_DESC, TEST_SIGN_NAME, TEST_SIGN_name,
+     /* disablement strs */ NULL, NULL },
+
+  {  /* entry idx, value */ 13, VALUE_OPT_SEC_PARAM,
+     /* equiv idx, value */ 13, VALUE_OPT_SEC_PARAM,
      /* equivalenced to  */ NO_EQUIVALENT,
      /* min, max, act ct */ 0, 1, 0,
      /* opt state flags  */ SEC_PARAM_FLAGS, 0,
@@ -580,8 +608,8 @@ static tOptDesc optDesc[OPTION_CT] = {
      /* desc, NAME, name */ SEC_PARAM_DESC, SEC_PARAM_NAME, SEC_PARAM_name,
      /* disablement strs */ NULL, NULL },
 
-  {  /* entry idx, value */ 13, VALUE_OPT_BITS,
-     /* equiv idx, value */ 13, VALUE_OPT_BITS,
+  {  /* entry idx, value */ 14, VALUE_OPT_BITS,
+     /* equiv idx, value */ 14, VALUE_OPT_BITS,
      /* equivalenced to  */ NO_EQUIVALENT,
      /* min, max, act ct */ 0, 1, 0,
      /* opt state flags  */ BITS_FLAGS, 0,
@@ -592,8 +620,8 @@ static tOptDesc optDesc[OPTION_CT] = {
      /* desc, NAME, name */ BITS_DESC, BITS_NAME, BITS_name,
      /* disablement strs */ NULL, NULL },
 
-  {  /* entry idx, value */ 14, VALUE_OPT_INDER,
-     /* equiv idx, value */ 14, VALUE_OPT_INDER,
+  {  /* entry idx, value */ 15, VALUE_OPT_INDER,
+     /* equiv idx, value */ 15, VALUE_OPT_INDER,
      /* equivalenced to  */ NO_EQUIVALENT,
      /* min, max, act ct */ 0, 1, 0,
      /* opt state flags  */ INDER_FLAGS, 0,
@@ -604,8 +632,8 @@ static tOptDesc optDesc[OPTION_CT] = {
      /* desc, NAME, name */ INDER_DESC, INDER_NAME, INDER_name,
      /* disablement strs */ NOT_INDER_name, NOT_INDER_PFX },
 
-  {  /* entry idx, value */ 15, VALUE_OPT_OUTDER,
-     /* equiv idx, value */ 15, VALUE_OPT_OUTDER,
+  {  /* entry idx, value */ 16, VALUE_OPT_OUTDER,
+     /* equiv idx, value */ 16, VALUE_OPT_OUTDER,
      /* equivalenced to  */ NO_EQUIVALENT,
      /* min, max, act ct */ 0, 1, 0,
      /* opt state flags  */ OUTDER_FLAGS, 0,
@@ -658,21 +686,21 @@ static tOptDesc optDesc[OPTION_CT] = {
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 /** Reference to the upper cased version of tpmtool. */
-#define zPROGNAME       (tpmtool_opt_strs+1854)
+#define zPROGNAME       (tpmtool_opt_strs+1928)
 /** Reference to the title line for tpmtool usage. */
-#define zUsageTitle     (tpmtool_opt_strs+1862)
+#define zUsageTitle     (tpmtool_opt_strs+1936)
 /** There is no tpmtool configuration file. */
 #define zRcName         NULL
 /** There are no directories to search for tpmtool config files. */
 #define apzHomeList     NULL
 /** The tpmtool program bug email address. */
-#define zBugsAddr       (tpmtool_opt_strs+1946)
+#define zBugsAddr       (tpmtool_opt_strs+2020)
 /** Clarification/explanation of what tpmtool does. */
-#define zExplain        (tpmtool_opt_strs+1962)
+#define zExplain        (tpmtool_opt_strs+2036)
 /** Extra detail explaining what tpmtool does. */
-#define zDetail         (tpmtool_opt_strs+1964)
+#define zDetail         (tpmtool_opt_strs+2038)
 /** The full version string for tpmtool. */
-#define zFullVersion    (tpmtool_opt_strs+2032)
+#define zFullVersion    (tpmtool_opt_strs+2106)
 /* extracted from optcode.tlib near line 364 */
 
 #if defined(ENABLE_NLS)
@@ -684,7 +712,7 @@ static tOptDesc optDesc[OPTION_CT] = {
 #endif /* ENABLE_NLS */
 
 #define tpmtool_full_usage (NULL)
-#define tpmtool_short_usage (tpmtool_opt_strs+2047)
+#define tpmtool_short_usage (tpmtool_opt_strs+2121)
 
 #endif /* not defined __doxygen__ */
 
@@ -833,7 +861,7 @@ tOptions tpmtoolOptions = {
       NO_EQUIVALENT, /* '-#' option index */
       NO_EQUIVALENT /* index of default opt */
     },
-    19 /* full option count */, 16 /* user option count */,
+    20 /* full option count */, 17 /* user option count */,
     tpmtool_full_usage, tpmtool_short_usage,
     NULL, NULL,
     PKGDATADIR, tpmtool_packager_info
@@ -968,7 +996,7 @@ static void bogus_function(void) {
      translate option names.
    */
   /* referenced via tpmtoolOptions.pzCopyright */
-  puts(_("tpmtool 3.3.22\n\
+  puts(_("tpmtool 3.4.16\n\
 Copyright (C) 2000-2016 Free Software Foundation, and others, all rights reserved.\n\
 This is free software. It is licensed for use, modification and\n\
 redistribution under the terms of the GNU General Public License,\n\
@@ -1011,7 +1039,7 @@ with this program.  If not, see <http://www.gnu.org/licenses/>.\n"));
   puts(_("Any registered key will be a user key"));
 
   /* referenced via tpmtoolOptions.pOptDesc->pzText */
-  puts(_("Any registred key will be a system key"));
+  puts(_("Any registered key will be a system key"));
 
   /* referenced via tpmtoolOptions.pOptDesc->pzText */
   puts(_("Prints the public key of the provided key"));
@@ -1021,6 +1049,9 @@ with this program.  If not, see <http://www.gnu.org/licenses/>.\n"));
 
   /* referenced via tpmtoolOptions.pOptDesc->pzText */
   puts(_("Delete the key identified by the given URL (UUID)."));
+
+  /* referenced via tpmtoolOptions.pOptDesc->pzText */
+  puts(_("Tests the signature operation of the provided object"));
 
   /* referenced via tpmtoolOptions.pOptDesc->pzText */
   puts(_("Specify the security level [low, legacy, medium, high, ultra]."));
@@ -1054,7 +1085,7 @@ Usage:  %s [ -<flag> [<val>] | --<name>[{=| }<val>] ]...\n"));
   puts(_("Program that allows handling cryptographic data from the TPM chip.\n"));
 
   /* referenced via tpmtoolOptions.pzFullVersion */
-  puts(_("tpmtool 3.3.22"));
+  puts(_("tpmtool 3.4.16"));
 
   /* referenced via tpmtoolOptions.pzFullUsage */
   puts(_("<<<NOT-FOUND>>>"));
@@ -1085,11 +1116,11 @@ tpmtool --help for usage instructions.\n"));
   puts(_("(AutoOpts bug):  %s.\n"));
 #line 90 "../reset.c"
   puts(_("optionResetOpt() called, but reset-option not configured"));
-#line 292 "../usage.c"
+#line 295 "../usage.c"
   puts(_("could not locate the 'help' option"));
 #line 336 "../autoopts.c"
   puts(_("optionProcess() was called with invalid data"));
-#line 748 "../usage.c"
+#line 751 "../usage.c"
   puts(_("invalid argument type specified"));
 #line 598 "../find.c"
   puts(_("defaulted to option with optional arg"));
@@ -1138,9 +1169,9 @@ tpmtool --help for usage instructions.\n"));
   puts(_("  or an integer from %d through %d\n"));
 #line 170 "../enum.c"
   puts(_("  or an integer from %d through %d\n"));
-#line 747 "../usage.c"
+#line 750 "../usage.c"
   puts(_("%s error:  invalid option descriptor for %s\n"));
-#line 1081 "../usage.c"
+#line 1084 "../usage.c"
   puts(_("%s error:  invalid option descriptor for %s\n"));
 #line 385 "../find.c"
   puts(_("%s: invalid option name: %s\n"));
@@ -1181,7 +1212,7 @@ tpmtool --help for usage instructions.\n"));
   puts(_("%s error:  '%s' is not a recognizable number.\n"));
 #line 201 "../enum.c"
   puts(_("%s error:  %s exceeds %s keyword count\n"));
-#line 330 "../usage.c"
+#line 333 "../usage.c"
   puts(_("Try '%s %s' for more information.\n"));
 #line 45 "../alias.c"
   puts(_("one %s%s option allowed\n"));
@@ -1189,19 +1220,19 @@ tpmtool --help for usage instructions.\n"));
   puts(_("standard output"));
 #line 943 "../makeshell.c"
   puts(_("standard output"));
-#line 274 "../usage.c"
+#line 277 "../usage.c"
   puts(_("standard output"));
-#line 415 "../usage.c"
+#line 418 "../usage.c"
   puts(_("standard output"));
-#line 625 "../usage.c"
+#line 628 "../usage.c"
   puts(_("standard output"));
 #line 175 "../version.c"
   puts(_("standard output"));
-#line 274 "../usage.c"
+#line 277 "../usage.c"
   puts(_("standard error"));
-#line 415 "../usage.c"
+#line 418 "../usage.c"
   puts(_("standard error"));
-#line 625 "../usage.c"
+#line 628 "../usage.c"
   puts(_("standard error"));
 #line 175 "../version.c"
   puts(_("standard error"));
@@ -1209,11 +1240,11 @@ tpmtool --help for usage instructions.\n"));
   puts(_("write"));
 #line 943 "../makeshell.c"
   puts(_("write"));
-#line 273 "../usage.c"
+#line 276 "../usage.c"
   puts(_("write"));
-#line 414 "../usage.c"
+#line 417 "../usage.c"
   puts(_("write"));
-#line 624 "../usage.c"
+#line 627 "../usage.c"
   puts(_("write"));
 #line 174 "../version.c"
   puts(_("write"));
@@ -1234,29 +1265,29 @@ tpmtool --help for usage instructions.\n"));
   /* END-LIBOPTS-MESSAGES */
 
   /* USAGE-TEXT: */
-#line 873 "../usage.c"
+#line 876 "../usage.c"
   puts(_("\t\t\t\t- an alternate for '%s'\n"));
-#line 1148 "../usage.c"
+#line 1151 "../usage.c"
   puts(_("Version, usage and configuration options:"));
-#line 924 "../usage.c"
+#line 927 "../usage.c"
   puts(_("\t\t\t\t- default option for unnamed options\n"));
-#line 837 "../usage.c"
+#line 840 "../usage.c"
   puts(_("\t\t\t\t- disabled as '--%s'\n"));
-#line 1117 "../usage.c"
+#line 1120 "../usage.c"
   puts(_(" --- %-14s %s\n"));
-#line 1115 "../usage.c"
+#line 1118 "../usage.c"
   puts(_("This option has been disabled"));
-#line 864 "../usage.c"
+#line 867 "../usage.c"
   puts(_("\t\t\t\t- enabled by default\n"));
 #line 40 "../alias.c"
   puts(_("%s error:  only "));
-#line 1194 "../usage.c"
+#line 1197 "../usage.c"
   puts(_(" - examining environment variables named %s_*\n"));
 #line 168 "../file.c"
   puts(_("\t\t\t\t- file must not pre-exist\n"));
 #line 172 "../file.c"
   puts(_("\t\t\t\t- file must pre-exist\n"));
-#line 380 "../usage.c"
+#line 383 "../usage.c"
   puts(_("Options are specified by doubled hyphens and their name or by a single\n"
        "hyphen and the flag character.\n"));
 #line 921 "../makeshell.c"
@@ -1266,33 +1297,33 @@ tpmtool --help for usage instructions.\n"));
        "a shell script to parse the options for %s:\n\n"));
 #line 167 "../enum.c"
   puts(_("  or an integer mask with any of the lower %d bits set\n"));
-#line 897 "../usage.c"
+#line 900 "../usage.c"
   puts(_("\t\t\t\t- is a set membership option\n"));
-#line 918 "../usage.c"
+#line 921 "../usage.c"
   puts(_("\t\t\t\t- must appear between %d and %d times\n"));
-#line 382 "../usage.c"
+#line 385 "../usage.c"
   puts(_("Options are specified by single or double hyphens and their name.\n"));
-#line 904 "../usage.c"
+#line 907 "../usage.c"
   puts(_("\t\t\t\t- may appear multiple times\n"));
-#line 891 "../usage.c"
+#line 894 "../usage.c"
   puts(_("\t\t\t\t- may not be preset\n"));
-#line 1309 "../usage.c"
+#line 1312 "../usage.c"
   puts(_("   Arg Option-Name    Description\n"));
-#line 1245 "../usage.c"
+#line 1248 "../usage.c"
   puts(_("  Flg Arg Option-Name    Description\n"));
-#line 1303 "../usage.c"
+#line 1306 "../usage.c"
   puts(_("  Flg Arg Option-Name    Description\n"));
-#line 1304 "../usage.c"
+#line 1307 "../usage.c"
   puts(_(" %3s %s"));
-#line 1310 "../usage.c"
+#line 1313 "../usage.c"
   puts(_(" %3s %s"));
-#line 387 "../usage.c"
+#line 390 "../usage.c"
   puts(_("The '-#<number>' option may omit the hash char\n"));
-#line 383 "../usage.c"
+#line 386 "../usage.c"
   puts(_("All arguments are named options.\n"));
-#line 971 "../usage.c"
+#line 974 "../usage.c"
   puts(_(" - reading file %s"));
-#line 409 "../usage.c"
+#line 412 "../usage.c"
   puts(_("\n"
        "Please send bug reports to:  <%s>\n"));
 #line 100 "../version.c"
@@ -1301,17 +1332,17 @@ tpmtool --help for usage instructions.\n"));
 #line 129 "../version.c"
   puts(_("\n"
        "Please send bug reports to:  <%s>\n"));
-#line 903 "../usage.c"
+#line 906 "../usage.c"
   puts(_("\t\t\t\t- may NOT appear - preset only\n"));
-#line 944 "../usage.c"
+#line 947 "../usage.c"
   puts(_("\n"
        "The following option preset mechanisms are supported:\n"));
-#line 1192 "../usage.c"
+#line 1195 "../usage.c"
   puts(_("\n"
        "The following option preset mechanisms are supported:\n"));
-#line 682 "../usage.c"
+#line 685 "../usage.c"
   puts(_("prohibits these options:\n"));
-#line 677 "../usage.c"
+#line 680 "../usage.c"
   puts(_("prohibits the option '%s'\n"));
 #line 81 "../numeric.c"
   puts(_("%s%ld to %ld"));
@@ -1329,28 +1360,28 @@ tpmtool --help for usage instructions.\n"));
   puts(_("%sis scalable with a suffix: k/K/m/M/g/G/t/T\n"));
 #line 77 "../numeric.c"
   puts(_("%sless than or equal to %ld"));
-#line 390 "../usage.c"
+#line 393 "../usage.c"
   puts(_("Operands and options may be intermixed.  They will be reordered.\n"));
-#line 652 "../usage.c"
-  puts(_("requires the option '%s'\n"));
 #line 655 "../usage.c"
+  puts(_("requires the option '%s'\n"));
+#line 658 "../usage.c"
   puts(_("requires these options:\n"));
-#line 1321 "../usage.c"
+#line 1324 "../usage.c"
   puts(_("   Arg Option-Name   Req?  Description\n"));
-#line 1315 "../usage.c"
+#line 1318 "../usage.c"
   puts(_("  Flg Arg Option-Name   Req?  Description\n"));
 #line 168 "../enum.c"
   puts(_("or you may use a numeric representation.  Preceding these with a '!'\n"
        "will clear the bits, specifying 'none' will clear all bits, and 'all'\n"
        "will set them all.  Multiple entries may be passed as an option\n"
        "argument list.\n"));
-#line 910 "../usage.c"
+#line 913 "../usage.c"
   puts(_("\t\t\t\t- may appear up to %d times\n"));
 #line 77 "../enum.c"
   puts(_("The valid \"%s\" option keywords are:\n"));
-#line 1152 "../usage.c"
+#line 1155 "../usage.c"
   puts(_("The next option supports vendor supported extra options:"));
-#line 773 "../usage.c"
+#line 776 "../usage.c"
   puts(_("These additional options are:"));
   /* END-USAGE-TEXT */
 }

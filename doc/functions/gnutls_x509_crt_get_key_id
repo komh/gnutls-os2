@@ -5,7 +5,7 @@
 @deftypefun {int} {gnutls_x509_crt_get_key_id} (gnutls_x509_crt_t @var{crt}, unsigned int @var{flags}, unsigned char * @var{output_data}, size_t * @var{output_data_size})
 @var{crt}: Holds the certificate
 
-@var{flags}: should be 0 for now
+@var{flags}: should be one of the flags from @code{gnutls_keyid_flags_t} 
 
 @var{output_data}: will contain the key ID
 

@@ -14,6 +14,8 @@ typedef struct {
 
 ssize_t socket_recv(const socket_st * socket, void *buffer,
 		    int buffer_size);
+ssize_t socket_recv_timeout(const socket_st * socket, void *buffer,
+		    int buffer_size, unsigned ms);
 ssize_t socket_send(const socket_st * socket, const void *buffer,
 		    int buffer_size);
 ssize_t socket_send_range(const socket_st * socket, const void *buffer,
@@ -28,5 +30,7 @@ void sockets_init(void);
 
 int service_to_port(const char *service, const char *proto);
 const char *port_to_service(const char *sport, const char *proto);
+int starttls_proto_to_port(const char *app_proto);
+const char *starttls_proto_to_service(const char *app_proto);
 
 #define CONNECT_MSG "Connecting to"

@@ -30,10 +30,10 @@
 #include <nettle/sha.h>
 #include <nettle/hmac.h>
 #include <nettle/macros.h>
+#include <nettle/memxor.h>
 #include <aes-padlock.h>
 #include <sha-padlock.h>
 #include <algorithms.h>
-#include <x86-common.h>
 
 #ifdef HAVE_LIBNETTLE
 
@@ -238,7 +238,7 @@ wrap_padlock_hmac_update(void *_ctx, const void *text, size_t textsize)
 {
 	struct padlock_hmac_ctx *ctx = _ctx;
 
-	_NETTLE_UPDATE(ctx->update, ctx->ctx_ptr, textsize, text);
+	ctx->update(ctx->ctx_ptr, textsize, text);
 
 	return GNUTLS_E_SUCCESS;
 }

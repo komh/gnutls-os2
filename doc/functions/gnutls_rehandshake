@@ -3,7 +3,7 @@
 
 
 @deftypefun {int} {gnutls_rehandshake} (gnutls_session_t @var{session})
-@var{session}: is a @code{gnutls_session_t}  structure.
+@var{session}: is a @code{gnutls_session_t}  type.
 
 This function will renegotiate security parameters with the
 client.  This should only be called in case of a server.
@@ -18,8 +18,8 @@ parameters.
 Since TLS is full duplex some application data might have been
 sent during peer's processing of this message. In that case
 one should call @code{gnutls_record_recv()}  until GNUTLS_E_REHANDSHAKE
-is returned to clear any pending data. Care must be taken if
-rehandshake is mandatory to terminate if it does not start after
+is returned to clear any pending data. Care must be taken, if
+rehandshake is mandatory, to terminate if it does not start after
 some threshold.
 
 If the client does not wish to renegotiate parameters he 

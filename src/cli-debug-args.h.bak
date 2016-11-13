@@ -66,20 +66,21 @@
  *  Enumeration of each option type for gnutls-cli-debug
  */
 typedef enum {
-    INDEX_OPT_DEBUG       =  0,
-    INDEX_OPT_VERBOSE     =  1,
-    INDEX_OPT_PORT        =  2,
-    INDEX_OPT_APP_PROTO   =  3,
-    INDEX_OPT_VERSION     =  4,
-    INDEX_OPT_HELP        =  5,
-    INDEX_OPT_MORE_HELP   =  6
+    INDEX_OPT_DEBUG           =  0,
+    INDEX_OPT_VERBOSE         =  1,
+    INDEX_OPT_PORT            =  2,
+    INDEX_OPT_APP_PROTO       =  3,
+    INDEX_OPT_STARTTLS_PROTO  =  4,
+    INDEX_OPT_VERSION         =  5,
+    INDEX_OPT_HELP            =  6,
+    INDEX_OPT_MORE_HELP       =  7
 } teOptIndex;
 /** count of all options for gnutls-cli-debug */
-#define OPTION_CT    7
+#define OPTION_CT    8
 /** gnutls-cli-debug version */
-#define GNUTLS_CLI_DEBUG_VERSION       "3.3.22"
+#define GNUTLS_CLI_DEBUG_VERSION       "3.4.16"
 /** Full gnutls-cli-debug version text */
-#define GNUTLS_CLI_DEBUG_FULL_VERSION  "gnutls-cli-debug 3.3.22"
+#define GNUTLS_CLI_DEBUG_FULL_VERSION  "gnutls-cli-debug 3.4.16"
 
 /**
  *  Interface defines for all options.  Replace "n" with the UPPER_CASED
@@ -138,6 +139,7 @@ typedef enum {
 
 #define OPT_VALUE_PORT           (DESC(PORT).optArg.argInt)
 #define VALUE_OPT_APP_PROTO      0x1001
+#define VALUE_OPT_STARTTLS_PROTO 0x1002
 /** option flag (value) for help-value option */
 #define VALUE_OPT_HELP          'h'
 /** option flag (value) for more-help-value option */

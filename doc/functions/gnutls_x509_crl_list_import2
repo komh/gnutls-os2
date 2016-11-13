@@ -3,7 +3,7 @@
 
 
 @deftypefun {int} {gnutls_x509_crl_list_import2} (gnutls_x509_crl_t ** @var{crls}, unsigned int * @var{size}, const gnutls_datum_t * @var{data}, gnutls_x509_crt_fmt_t @var{format}, unsigned int @var{flags})
-@var{crls}: The structures to store the parsed crl list. Must not be initialized.
+@var{crls}: Will contain the parsed crl list.
 
 @var{size}: It will contain the size of the list.
 

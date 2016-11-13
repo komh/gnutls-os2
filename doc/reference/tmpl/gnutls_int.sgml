@@ -415,13 +415,6 @@ gnutls_int
 
 
 
-<!-- ##### MACRO TLS_MAX_SESSION_ID_SIZE ##### -->
-<para>
-
-</para>
-
-
-
 <!-- ##### MACRO TLS_RECORD_HEADER_SIZE ##### -->
 <para>
 
@@ -436,6 +429,7 @@ gnutls_int
 
 @CIPHER_STREAM: 
 @CIPHER_BLOCK: 
+@CIPHER_AEAD: 
 
 <!-- ##### ENUM content_type_t ##### -->
 <para>
@@ -465,8 +459,9 @@ gnutls_int
 @GNUTLS_EXTENSION_HEARTBEAT: 
 @GNUTLS_EXTENSION_ALPN: 
 @GNUTLS_EXTENSION_DUMBFW: 
+@GNUTLS_EXTENSION_ETM: 
+@GNUTLS_EXTENSION_EXT_MASTER_SECRET: 
 @GNUTLS_EXTENSION_SESSION_TICKET: 
-@GNUTLS_EXTENSION_NEW_RECORD_PADDING: 
 @GNUTLS_EXTENSION_SAFE_RENEGOTIATION: 
 
 <!-- ##### ENUM gnutls_ext_parse_type_t ##### -->

@@ -3,7 +3,7 @@
 
 
 @deftypefun {void} {gnutls_transport_set_pull_function} (gnutls_session_t @var{session}, gnutls_pull_func @var{pull_func})
-@var{session}: is a @code{gnutls_session_t}  structure.
+@var{session}: is a @code{gnutls_session_t}  type.
 
 @var{pull_func}: a callback function similar to @code{read()} 
 

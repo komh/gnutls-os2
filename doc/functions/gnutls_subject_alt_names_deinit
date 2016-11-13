@@ -3,7 +3,7 @@
 
 
 @deftypefun {void} {gnutls_subject_alt_names_deinit} (gnutls_subject_alt_names_t @var{sans})
-@var{sans}: The alternative names structure
+@var{sans}: The alternative names
 
 This function will deinitialize an alternative names structure.
 

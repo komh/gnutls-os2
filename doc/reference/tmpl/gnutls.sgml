@@ -1412,6 +1412,7 @@ gnutls
 @GNUTLS_A_PROTOCOL_VERSION: 
 @GNUTLS_A_INSUFFICIENT_SECURITY: 
 @GNUTLS_A_INTERNAL_ERROR: 
+@GNUTLS_A_INAPPROPRIATE_FALLBACK: 
 @GNUTLS_A_USER_CANCELED: 
 @GNUTLS_A_NO_RENEGOTIATION: 
 @GNUTLS_A_UNSUPPORTED_EXTENSION: 
@@ -1563,12 +1564,6 @@ gnutls
 @session: 
 @how: 
 @Returns: 
-
-
-<!-- ##### VARIABLE gnutls_calloc ##### -->
-<para>
-
-</para>
 
 
 <!-- ##### USER_FUNCTION gnutls_calloc_function ##### -->
@@ -1981,6 +1976,7 @@ gnutls
 @GNUTLS_CERT_REVOCATION_DATA_ISSUED_IN_FUTURE: 
 @GNUTLS_CERT_SIGNER_CONSTRAINTS_FAILURE: 
 @GNUTLS_CERT_MISMATCH: 
+@GNUTLS_CERT_PURPOSE_MISMATCH: 
 
 <!-- ##### FUNCTION gnutls_certificate_type_get ##### -->
 <para>
@@ -2091,8 +2087,6 @@ gnutls
 @GNUTLS_CIPHER_ARCFOUR_40: 
 @GNUTLS_CIPHER_CAMELLIA_128_CBC: 
 @GNUTLS_CIPHER_CAMELLIA_256_CBC: 
-@GNUTLS_CIPHER_RC2_40_CBC: 
-@GNUTLS_CIPHER_DES_CBC: 
 @GNUTLS_CIPHER_AES_192_CBC: 
 @GNUTLS_CIPHER_AES_128_GCM: 
 @GNUTLS_CIPHER_AES_256_GCM: 
@@ -2101,6 +2095,13 @@ gnutls
 @GNUTLS_CIPHER_ESTREAM_SALSA20_256: 
 @GNUTLS_CIPHER_CAMELLIA_128_GCM: 
 @GNUTLS_CIPHER_CAMELLIA_256_GCM: 
+@GNUTLS_CIPHER_RC2_40_CBC: 
+@GNUTLS_CIPHER_DES_CBC: 
+@GNUTLS_CIPHER_AES_128_CCM: 
+@GNUTLS_CIPHER_AES_256_CCM: 
+@GNUTLS_CIPHER_AES_128_CCM_8: 
+@GNUTLS_CIPHER_AES_256_CCM_8: 
+@GNUTLS_CIPHER_CHACHA20_POLY1305: 
 @GNUTLS_CIPHER_IDEA_PGP_CFB: 
 @GNUTLS_CIPHER_3DES_PGP_CFB: 
 @GNUTLS_CIPHER_CAST5_PGP_CFB: 
@@ -2610,18 +2611,6 @@ gnutls
 @GNUTLS_ECC_CURVE_SECP521R1: 
 @GNUTLS_ECC_CURVE_SECP192R1: 
 
-<!-- ##### STRUCT gnutls_ecdh_params_int ##### -->
-<para>
-
-</para>
-
-
-<!-- ##### TYPEDEF gnutls_ecdh_params_t ##### -->
-<para>
-
-</para>
-
-
 <!-- ##### USER_FUNCTION gnutls_errno_func ##### -->
 <para>
 
@@ -2660,12 +2649,6 @@ gnutls
 @result: 
 @result_size: 
 @Returns: 
-
-
-<!-- ##### VARIABLE gnutls_free ##### -->
-<para>
-
-</para>
 
 
 <!-- ##### USER_FUNCTION gnutls_free_function ##### -->
@@ -3106,12 +3089,6 @@ gnutls
 @Returns: 
 
 
-<!-- ##### VARIABLE gnutls_malloc ##### -->
-<para>
-
-</para>
-
-
 <!-- ##### FUNCTION gnutls_ocsp_status_request_enable_client ##### -->
 <para>
 
@@ -3225,14 +3202,11 @@ gnutls
 @Returns: 
 
 
-<!-- ##### FUNCTION gnutls_pem_base64_decode_alloc ##### -->
+<!-- ##### MACRO gnutls_pem_base64_decode_alloc ##### -->
 <para>
 
 </para>
 
-@header: 
-@b64_data: 
-@result: 
 @Returns: 
 
 
@@ -3248,14 +3222,11 @@ gnutls
 @Returns: 
 
 
-<!-- ##### FUNCTION gnutls_pem_base64_encode_alloc ##### -->
+<!-- ##### MACRO gnutls_pem_base64_encode_alloc ##### -->
 <para>
 
 </para>
 
-@msg: 
-@data: 
-@result: 
 @Returns: 
 
 
@@ -3519,17 +3490,21 @@ gnutls
 @sign_algo: 
 @supported_ecc: 
 @no_extensions: 
+@no_ext_master_secret: 
 @allow_large_records: 
-@max_empty_records: 
 @dumbfw: 
 @sr: 
 @min_record_version: 
 @server_precedence: 
 @allow_wrong_pms: 
+@no_tickets: 
+@no_etm: 
+@have_cbc: 
 @stateless_compression: 
 @additional_verify_flags: 
 @level: 
 @dh_prime_bits: 
+@fallback: 
 
 <!-- ##### TYPEDEF gnutls_priority_t ##### -->
 <para>
@@ -3798,12 +3773,6 @@ gnutls
 
 
 
-<!-- ##### VARIABLE gnutls_realloc ##### -->
-<para>
-
-</para>
-
-
 <!-- ##### USER_FUNCTION gnutls_realloc_function ##### -->
 <para>
 
@@ -3931,16 +3900,17 @@ gnutls
 
 </para>
 
+@GNUTLS_SEC_PARAM_UNKNOWN: 
 @GNUTLS_SEC_PARAM_INSECURE: 
 @GNUTLS_SEC_PARAM_EXPORT: 
 @GNUTLS_SEC_PARAM_VERY_WEAK: 
 @GNUTLS_SEC_PARAM_WEAK: 
-@GNUTLS_SEC_PARAM_UNKNOWN: 
 @GNUTLS_SEC_PARAM_LOW: 
 @GNUTLS_SEC_PARAM_LEGACY: 
 @GNUTLS_SEC_PARAM_MEDIUM: 
 @GNUTLS_SEC_PARAM_HIGH: 
 @GNUTLS_SEC_PARAM_ULTRA: 
+@GNUTLS_SEC_PARAM_FUTURE: 
 
 <!-- ##### FUNCTION gnutls_sec_param_to_pk_bits ##### -->
 <para>
@@ -4279,66 +4249,6 @@ gnutls
 @Returns: 
 
 
-<!-- ##### VARIABLE gnutls_srp_1024_group_generator ##### -->
-<para>
-
-</para>
-
-
-<!-- ##### VARIABLE gnutls_srp_1024_group_prime ##### -->
-<para>
-
-</para>
-
-
-<!-- ##### VARIABLE gnutls_srp_1536_group_generator ##### -->
-<para>
-
-</para>
-
-
-<!-- ##### VARIABLE gnutls_srp_1536_group_prime ##### -->
-<para>
-
-</para>
-
-
-<!-- ##### VARIABLE gnutls_srp_2048_group_generator ##### -->
-<para>
-
-</para>
-
-
-<!-- ##### VARIABLE gnutls_srp_2048_group_prime ##### -->
-<para>
-
-</para>
-
-
-<!-- ##### VARIABLE gnutls_srp_3072_group_generator ##### -->
-<para>
-
-</para>
-
-
-<!-- ##### VARIABLE gnutls_srp_3072_group_prime ##### -->
-<para>
-
-</para>
-
-
-<!-- ##### VARIABLE gnutls_srp_4096_group_generator ##### -->
-<para>
-
-</para>
-
-
-<!-- ##### VARIABLE gnutls_srp_4096_group_prime ##### -->
-<para>
-
-</para>
-
-
 <!-- ##### FUNCTION gnutls_srp_allocate_client_credentials ##### -->
 <para>
 
@@ -4368,13 +4278,11 @@ gnutls
 @Returns: 
 
 
-<!-- ##### FUNCTION gnutls_srp_base64_decode_alloc ##### -->
+<!-- ##### MACRO gnutls_srp_base64_decode_alloc ##### -->
 <para>
 
 </para>
 
-@b64_data: 
-@result: 
 @Returns: 
 
 
@@ -4389,13 +4297,11 @@ gnutls
 @Returns: 
 
 
-<!-- ##### FUNCTION gnutls_srp_base64_encode_alloc ##### -->
+<!-- ##### MACRO gnutls_srp_base64_encode_alloc ##### -->
 <para>
 
 </para>
 
-@data: 
-@result: 
 @Returns: 
 
 
@@ -4614,15 +4520,6 @@ gnutls
 @Returns: 
 
 
-<!-- ##### USER_FUNCTION gnutls_strdup ##### -->
-<para>
-
-</para>
-
-@Param1: 
-@Returns: 
-
-
 <!-- ##### FUNCTION gnutls_strerror ##### -->
 <para>
 
@@ -4646,7 +4543,7 @@ gnutls
 
 </para>
 
-@GNUTLS_SUPPLEMENTAL_USER_MAPPING_DATA: 
+@GNUTLS_SUPPLEMENTAL_UNKNOWN: 
 
 <!-- ##### FUNCTION gnutls_tdb_deinit ##### -->
 <para>
@@ -4943,6 +4840,8 @@ gnutls
 @raw_spki: 
 @der: 
 @pin: 
+@dn: 
+@idn: 
 
 <!-- ##### TYPEDEF gnutls_x509_crt_t ##### -->
 <para>
@@ -4958,6 +4857,7 @@ gnutls
 @params: 
 @pk_algorithm: 
 @key: 
+@pin: 
 
 <!-- ##### TYPEDEF gnutls_x509_privkey_t ##### -->
 <para>

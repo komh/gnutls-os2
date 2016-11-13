@@ -3,14 +3,15 @@
 
 
 @deftypefun {int} {gnutls_priority_init} (gnutls_priority_t * @var{priority_cache}, const char * @var{priorities}, const char ** @var{err_pos})
-@var{priority_cache}: is a @code{gnutls_prioritity_t}  structure.
+@var{priority_cache}: is a @code{gnutls_prioritity_t}  type.
 
 @var{priorities}: is a string describing priorities (may be @code{NULL} )
 
 @var{err_pos}: In case of an error this will have the position in the string the error occurred
 
 Sets priorities for the ciphers, key exchange methods, macs and
-compression methods.
+compression methods. The  @code{priority_cache} should be deinitialized
+using @code{gnutls_priority_deinit()} .
 
 The @code{priorities}  option allows you to specify a colon
 separated list of the cipher priorities to enable.
@@ -48,9 +49,6 @@ of 128.
 "SUITEB192" means all the NSA SuiteB ciphersuites with security level
 of 192.
 
-"EXPORT" means all ciphersuites are enabled, including the
-low-security 40 bit ciphers.
-
 "NONE" means nothing is enabled.  This disables even protocols and
 compression methods.
 
@@ -59,7 +57,7 @@ will be expanded from a configuration-time provided file - default is:
 /etc/gnutls/default-priorities. Any keywords that follow it, will 
 be appended to the expanded string. If there is no system string,
 then the function will fail. The system file should be formatted
-as "KEYWORD=VALUE", e.g., "SYSTEM=NORMAL:-ARCFOUR-128".
+as "KEYWORD=VALUE", e.g., "SYSTEM=NORMAL:+ARCFOUR-128".
 
 Special keywords are "!", "-" and "+".
 "!" or "-" appended with an algorithm will remove this algorithm.
@@ -71,7 +69,7 @@ information.
 @strong{Examples:} 
 "NONE:+VERS-TLS-ALL:+MAC-ALL:+RSA:+AES-128-CBC:+SIGN-ALL:+COMP-NULL"
 
-"NORMAL:-ARCFOUR-128" means normal ciphers except for ARCFOUR-128.
+"NORMAL:+ARCFOUR-128" means normal ciphers plus ARCFOUR-128.
 
 "SECURE128:-VERS-SSL3.0:+COMP-DEFLATE" means that only secure ciphers are
 enabled, SSL3.0 is disabled, and libz compression enabled.

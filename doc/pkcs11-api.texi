@@ -21,6 +21,56 @@ negative error value.
 @strong{Since:} 2.12.0
 @end deftypefun
 
+@subheading gnutls_pkcs11_copy_attached_extension
+@anchor{gnutls_pkcs11_copy_attached_extension}
+@deftypefun {int} {gnutls_pkcs11_copy_attached_extension} (const char * @var{token_url}, gnutls_x509_crt_t @var{crt}, gnutls_datum_t * @var{data}, const char * @var{label}, unsigned int @var{flags})
+@var{token_url}: A PKCS @code{11}  URL specifying a token
+
+@var{crt}: An X.509 certificate object
+
+@var{data}: the attached extension
+
+@var{label}: A name to be used for the attached extension (may be @code{NULL} )
+
+@var{flags}: One of GNUTLS_PKCS11_OBJ_FLAG_*
+
+This function will copy an the attached extension in  @code{data} for
+the certificate provided in  @code{crt} in the PKCS @code{11}  token specified
+by the URL (typically a trust module). The extension must be in
+RFC5280 Extension format.
+
+@strong{Returns:} On success, @code{GNUTLS_E_SUCCESS}  (0) is returned, otherwise a
+negative error value.
+
+@strong{Since:} 3.3.8
+@end deftypefun
+
+@subheading gnutls_pkcs11_copy_pubkey
+@anchor{gnutls_pkcs11_copy_pubkey}
+@deftypefun {int} {gnutls_pkcs11_copy_pubkey} (const char * @var{token_url}, gnutls_pubkey_t @var{pubkey}, const char * @var{label}, const gnutls_datum_t * @var{cid}, unsigned int @var{key_usage}, unsigned int @var{flags})
+@var{token_url}: A PKCS @code{11}  URL specifying a token
+
+@var{pubkey}: The public key to copy
+
+@var{label}: The name to be used for the stored data
+
+@var{cid}: The CKA_ID to set for the object -if NULL, the ID will be derived from the public key
+
+@var{key_usage}: One of GNUTLS_KEY_*
+
+@var{flags}: One of GNUTLS_PKCS11_OBJ_FLAG_*
+
+This function will copy a public key object into a PKCS @code{11}  token specified by
+a URL. Valid flags to mark the key: @code{GNUTLS_PKCS11_OBJ_FLAG_MARK_TRUSTED} ,
+@code{GNUTLS_PKCS11_OBJ_FLAG_MARK_SENSITIVE} , @code{GNUTLS_PKCS11_OBJ_FLAG_MARK_PRIVATE} ,
+@code{GNUTLS_PKCS11_OBJ_FLAG_MARK_CA} , @code{GNUTLS_PKCS11_OBJ_FLAG_MARK_ALWAYS_AUTH} .
+
+@strong{Returns:} On success, @code{GNUTLS_E_SUCCESS}  (0) is returned, otherwise a
+negative error value.
+
+@strong{Since:} 3.4.6
+@end deftypefun
+
 @subheading gnutls_pkcs11_copy_secret_key
 @anchor{gnutls_pkcs11_copy_secret_key}
 @deftypefun {int} {gnutls_pkcs11_copy_secret_key} (const char * @var{token_url}, gnutls_datum_t * @var{key}, const char * @var{label}, unsigned int @var{key_usage}, unsigned int @var{flags})
@@ -63,6 +113,30 @@ negative error value.
 @strong{Since:} 2.12.0
 @end deftypefun
 
+@subheading gnutls_pkcs11_copy_x509_crt2
+@anchor{gnutls_pkcs11_copy_x509_crt2}
+@deftypefun {int} {gnutls_pkcs11_copy_x509_crt2} (const char * @var{token_url}, gnutls_x509_crt_t @var{crt}, const char * @var{label}, const gnutls_datum_t * @var{cid}, unsigned int @var{flags})
+@var{token_url}: A PKCS @code{11}  URL specifying a token
+
+@var{crt}: The certificate to copy
+
+@var{label}: The name to be used for the stored data
+
+@var{cid}: The CKA_ID to set for the object -if NULL, the ID will be derived from the public key
+
+@var{flags}: One of GNUTLS_PKCS11_OBJ_FLAG_*
+
+This function will copy a certificate into a PKCS @code{11}  token specified by
+a URL. Valid flags to mark the certificate: @code{GNUTLS_PKCS11_OBJ_FLAG_MARK_TRUSTED} ,
+@code{GNUTLS_PKCS11_OBJ_FLAG_MARK_SENSITIVE} , @code{GNUTLS_PKCS11_OBJ_FLAG_MARK_PRIVATE} ,
+@code{GNUTLS_PKCS11_OBJ_FLAG_MARK_CA} , @code{GNUTLS_PKCS11_OBJ_FLAG_MARK_ALWAYS_AUTH} .
+
+@strong{Returns:} On success, @code{GNUTLS_E_SUCCESS}  (0) is returned, otherwise a
+negative error value.
+
+@strong{Since:} 3.4.0
+@end deftypefun
+
 @subheading gnutls_pkcs11_copy_x509_privkey
 @anchor{gnutls_pkcs11_copy_x509_privkey}
 @deftypefun {int} {gnutls_pkcs11_copy_x509_privkey} (const char * @var{token_url}, gnutls_x509_privkey_t @var{key}, const char * @var{label}, unsigned int @var{key_usage}, unsigned int @var{flags})
@@ -84,6 +158,31 @@ unless there is a strong reason not to.
 negative error value.
 
 @strong{Since:} 2.12.0
+@end deftypefun
+
+@subheading gnutls_pkcs11_copy_x509_privkey2
+@anchor{gnutls_pkcs11_copy_x509_privkey2}
+@deftypefun {int} {gnutls_pkcs11_copy_x509_privkey2} (const char * @var{token_url}, gnutls_x509_privkey_t @var{key}, const char * @var{label}, const gnutls_datum_t * @var{cid}, unsigned int @var{key_usage}, unsigned int @var{flags})
+@var{token_url}: A PKCS @code{11}  URL specifying a token
+
+@var{key}: A private key
+
+@var{label}: A name to be used for the stored data
+
+@var{cid}: The CKA_ID to set for the object -if NULL, the ID will be derived from the public key
+
+@var{key_usage}: One of GNUTLS_KEY_*
+
+@var{flags}: One of GNUTLS_PKCS11_OBJ_* flags
+
+This function will copy a private key into a PKCS @code{11}  token specified by
+a URL. It is highly recommended flags to contain @code{GNUTLS_PKCS11_OBJ_FLAG_MARK_SENSITIVE} 
+unless there is a strong reason not to.
+
+@strong{Returns:} On success, @code{GNUTLS_E_SUCCESS}  (0) is returned, otherwise a
+negative error value.
+
+@strong{Since:} 3.4.0
 @end deftypefun
 
 @subheading gnutls_pkcs11_crt_is_known
@@ -178,6 +277,62 @@ negative error value.
 @strong{Since:} 3.2.7
 @end deftypefun
 
+@subheading gnutls_pkcs11_get_raw_issuer_by_dn
+@anchor{gnutls_pkcs11_get_raw_issuer_by_dn}
+@deftypefun {int} {gnutls_pkcs11_get_raw_issuer_by_dn} (const char * @var{url}, const gnutls_datum_t * @var{dn}, gnutls_datum_t * @var{issuer}, gnutls_x509_crt_fmt_t @var{fmt}, unsigned int @var{flags})
+@var{url}: A PKCS 11 url identifying a token
+
+@var{dn}: is the DN to search for
+
+@var{issuer}: Will hold the issuer if any in an allocated buffer.
+
+@var{fmt}: The format of the exported issuer.
+
+@var{flags}: Use zero or flags from @code{GNUTLS_PKCS11_OBJ_FLAG} .
+
+This function will return the certificate with the given DN, if it
+is stored in the token. By default only marked as trusted issuers
+are retuned. If any issuer should be returned specify
+@code{GNUTLS_PKCS11_OBJ_FLAG_RETRIEVE_ANY}  in  @code{flags} .
+
+The name of the function includes issuer because it can
+be used to discover issuers of certificates.
+
+@strong{Returns:} On success, @code{GNUTLS_E_SUCCESS}  (0) is returned, otherwise a
+negative error value.
+
+@strong{Since:} 3.4.0
+@end deftypefun
+
+@subheading gnutls_pkcs11_get_raw_issuer_by_subject_key_id
+@anchor{gnutls_pkcs11_get_raw_issuer_by_subject_key_id}
+@deftypefun {int} {gnutls_pkcs11_get_raw_issuer_by_subject_key_id} (const char * @var{url}, const gnutls_datum_t * @var{dn}, const gnutls_datum_t * @var{spki}, gnutls_datum_t * @var{issuer}, gnutls_x509_crt_fmt_t @var{fmt}, unsigned int @var{flags})
+@var{url}: A PKCS 11 url identifying a token
+
+@var{dn}: is the DN to search for (may be @code{NULL} )
+
+@var{spki}: is the subject key ID to search for
+
+@var{issuer}: Will hold the issuer if any in an allocated buffer.
+
+@var{fmt}: The format of the exported issuer.
+
+@var{flags}: Use zero or flags from @code{GNUTLS_PKCS11_OBJ_FLAG} .
+
+This function will return the certificate with the given DN and  @code{spki} , if it
+is stored in the token. By default only marked as trusted issuers
+are retuned. If any issuer should be returned specify
+@code{GNUTLS_PKCS11_OBJ_FLAG_RETRIEVE_ANY}  in  @code{flags} .
+
+The name of the function includes issuer because it can
+be used to discover issuers of certificates.
+
+@strong{Returns:} On success, @code{GNUTLS_E_SUCCESS}  (0) is returned, otherwise a
+negative error value.
+
+@strong{Since:} 3.4.2
+@end deftypefun
+
 @subheading gnutls_pkcs11_init
 @anchor{gnutls_pkcs11_init}
 @deftypefun {int} {gnutls_pkcs11_init} (unsigned int @var{flags}, const char * @var{deprecated_config_file})
@@ -191,8 +346,8 @@ read configuration files if @code{GNUTLS_PKCS11_FLAG_AUTO}  is used or allow
 you to independently load PKCS 11 modules using @code{gnutls_pkcs11_add_provider()} 
 if @code{GNUTLS_PKCS11_FLAG_MANUAL}  is specified.
 
-Normally you don't need to call this function since it is being called
-when the first PKCS 11 operation is requested using the @code{GNUTLS_PKCS11_FLAG_AUTO} 
+You don't need to call this function since GnuTLS 3.3.0 because it is being called
+during the first request PKCS 11 operation. That call will assume the @code{GNUTLS_PKCS11_FLAG_AUTO} 
 flag. If another flags are required then it must be called independently
 prior to any PKCS 11 operation.
 
@@ -205,7 +360,7 @@ negative error value.
 @subheading gnutls_pkcs11_obj_deinit
 @anchor{gnutls_pkcs11_obj_deinit}
 @deftypefun {void} {gnutls_pkcs11_obj_deinit} (gnutls_pkcs11_obj_t @var{obj})
-@var{obj}: The structure to be initialized
+@var{obj}: The type to be deinitialized
 
 This function will deinitialize a certificate structure.
 
@@ -310,7 +465,7 @@ needs to be deallocated using @code{gnutls_free()} .
 @subheading gnutls_pkcs11_obj_get_exts
 @anchor{gnutls_pkcs11_obj_get_exts}
 @deftypefun {int} {gnutls_pkcs11_obj_get_exts} (gnutls_pkcs11_obj_t @var{obj}, gnutls_x509_ext_st ** @var{exts}, unsigned int * @var{exts_size}, unsigned int @var{flags})
-@var{obj}: should contain a @code{gnutls_pkcs11_obj_t}  structure
+@var{obj}: should contain a @code{gnutls_pkcs11_obj_t}  type
 
 @var{exts}: an allocated list of pointers to @code{gnutls_x509_ext_st} 
 
@@ -330,13 +485,13 @@ The extensions are the attached p11-kit trust module extensions.
 @subheading gnutls_pkcs11_obj_get_flags
 @anchor{gnutls_pkcs11_obj_get_flags}
 @deftypefun {int} {gnutls_pkcs11_obj_get_flags} (gnutls_pkcs11_obj_t @var{obj}, unsigned int * @var{oflags})
-@var{obj}: The structure that holds the object
+@var{obj}: The pkcs11 object
 
 @var{oflags}: Will hold the output flags
 
-This function will return the flags of the object being
-stored in the structure. The  @code{oflags} are the @code{GNUTLS_PKCS11_OBJ_FLAG_MARK} 
-flags.
+This function will return the flags of the object.
+The  @code{oflags} will be flags from @code{gnutls_pkcs11_obj_flags} . That is,
+the @code{GNUTLS_PKCS11_OBJ_FLAG_MARK_} * flags.
 
 @strong{Returns:} On success, @code{GNUTLS_E_SUCCESS}  (0) is returned, otherwise a
 negative error value.
@@ -347,7 +502,7 @@ negative error value.
 @subheading gnutls_pkcs11_obj_get_info
 @anchor{gnutls_pkcs11_obj_get_info}
 @deftypefun {int} {gnutls_pkcs11_obj_get_info} (gnutls_pkcs11_obj_t @var{obj}, gnutls_pkcs11_obj_info_t @var{itype}, void * @var{output}, size_t * @var{output_size})
-@var{obj}: should contain a @code{gnutls_pkcs11_obj_t}  structure
+@var{obj}: should contain a @code{gnutls_pkcs11_obj_t}  type
 
 @var{itype}: Denotes the type of information requested
 
@@ -388,7 +543,7 @@ stored in the structure.
 @var{flags}: Or sequence of GNUTLS_PKCS11_OBJ_* flags
 
 This function will "import" a PKCS 11 URL identifying an object (e.g. certificate)
-to the @code{gnutls_pkcs11_obj_t}  structure. This does not involve any
+to the @code{gnutls_pkcs11_obj_t}  type. This does not involve any
 parsing (such as X.509 or OpenPGP) since the @code{gnutls_pkcs11_obj_t}  is
 format agnostic. Only data are transferred.
 
@@ -401,7 +556,7 @@ negative error value.
 @subheading gnutls_pkcs11_obj_init
 @anchor{gnutls_pkcs11_obj_init}
 @deftypefun {int} {gnutls_pkcs11_obj_init} (gnutls_pkcs11_obj_t * @var{obj})
-@var{obj}: The structure to be initialized
+@var{obj}: A pointer to the type to be initialized
 
 This function will initialize a pkcs11 certificate structure.
 
@@ -411,38 +566,40 @@ negative error value.
 @strong{Since:} 2.12.0
 @end deftypefun
 
-@subheading gnutls_pkcs11_obj_list_import_url
-@anchor{gnutls_pkcs11_obj_list_import_url}
-@deftypefun {int} {gnutls_pkcs11_obj_list_import_url} (gnutls_pkcs11_obj_t * @var{p_list}, unsigned int * @var{n_list}, const char * @var{url}, gnutls_pkcs11_obj_attr_t @var{attrs}, unsigned int @var{flags})
+@subheading gnutls_pkcs11_obj_list_import_url3
+@anchor{gnutls_pkcs11_obj_list_import_url3}
+@deftypefun {int} {gnutls_pkcs11_obj_list_import_url3} (gnutls_pkcs11_obj_t * @var{p_list}, unsigned int * @var{n_list}, const char * @var{url}, unsigned int @var{flags})
 @var{p_list}: An uninitialized object list (may be NULL)
 
 @var{n_list}: initially should hold the maximum size of the list. Will contain the actual size.
 
 @var{url}: A PKCS 11 url identifying a set of objects
 
-@var{attrs}: Attributes of type @code{gnutls_pkcs11_obj_attr_t}  that can be used to limit output
-
 @var{flags}: Or sequence of GNUTLS_PKCS11_OBJ_* flags
 
 This function will initialize and set values to an object list
 by using all objects identified by a PKCS 11 URL.
 
+The supported in this function  @code{flags} are @code{GNUTLS_PKCS11_OBJ_FLAG_LOGIN} ,
+@code{GNUTLS_PKCS11_OBJ_FLAG_LOGIN_SO} , @code{GNUTLS_PKCS11_OBJ_FLAG_PRESENT_IN_TRUSTED_MODULE} ,
+@code{GNUTLS_PKCS11_OBJ_FLAG_CRT} , @code{GNUTLS_PKCS11_OBJ_FLAG_PUBKEY} , @code{GNUTLS_PKCS11_OBJ_FLAG_PRIVKEY} ,
+@code{GNUTLS_PKCS11_OBJ_FLAG_WITH_PRIVKEY} , @code{GNUTLS_PKCS11_OBJ_FLAG_MARK_CA} ,
+@code{GNUTLS_PKCS11_OBJ_FLAG_MARK_TRUSTED} .
+
 @strong{Returns:} On success, @code{GNUTLS_E_SUCCESS}  (0) is returned, otherwise a
 negative error value.
 
-@strong{Since:} 2.12.0
+@strong{Since:} 3.4.0
 @end deftypefun
 
-@subheading gnutls_pkcs11_obj_list_import_url2
-@anchor{gnutls_pkcs11_obj_list_import_url2}
-@deftypefun {int} {gnutls_pkcs11_obj_list_import_url2} (gnutls_pkcs11_obj_t ** @var{p_list}, unsigned int * @var{n_list}, const char * @var{url}, gnutls_pkcs11_obj_attr_t @var{attrs}, unsigned int @var{flags})
+@subheading gnutls_pkcs11_obj_list_import_url4
+@anchor{gnutls_pkcs11_obj_list_import_url4}
+@deftypefun {int} {gnutls_pkcs11_obj_list_import_url4} (gnutls_pkcs11_obj_t ** @var{p_list}, unsigned int * @var{n_list}, const char * @var{url}, unsigned int @var{flags})
 @var{p_list}: An uninitialized object list (may be NULL)
 
 @var{n_list}: It will contain the size of the list.
 
 @var{url}: A PKCS 11 url identifying a set of objects
-
-@var{attrs}: Attributes of type @code{gnutls_pkcs11_obj_attr_t}  that can be used to limit output
 
 @var{flags}: Or sequence of GNUTLS_PKCS11_OBJ_* flags
 
@@ -453,10 +610,38 @@ is stored in  @code{p_list} , which will be initialized.
 All returned objects must be deinitialized using @code{gnutls_pkcs11_obj_deinit()} ,
 and  @code{p_list} must be free'd using @code{gnutls_free()} .
 
+The supported in this function  @code{flags} are @code{GNUTLS_PKCS11_OBJ_FLAG_LOGIN} ,
+@code{GNUTLS_PKCS11_OBJ_FLAG_LOGIN_SO} , @code{GNUTLS_PKCS11_OBJ_FLAG_PRESENT_IN_TRUSTED_MODULE} ,
+@code{GNUTLS_PKCS11_OBJ_FLAG_CRT} , @code{GNUTLS_PKCS11_OBJ_FLAG_PUBKEY} , @code{GNUTLS_PKCS11_OBJ_FLAG_PRIVKEY} ,
+@code{GNUTLS_PKCS11_OBJ_FLAG_WITH_PRIVKEY} , @code{GNUTLS_PKCS11_OBJ_FLAG_MARK_CA} ,
+@code{GNUTLS_PKCS11_OBJ_FLAG_MARK_TRUSTED} .
+
 @strong{Returns:} On success, @code{GNUTLS_E_SUCCESS}  (0) is returned, otherwise a
 negative error value.
 
-@strong{Since:} 3.1.0
+@strong{Since:} 3.4.0
+@end deftypefun
+
+@subheading gnutls_pkcs11_obj_set_info
+@anchor{gnutls_pkcs11_obj_set_info}
+@deftypefun {int} {gnutls_pkcs11_obj_set_info} (gnutls_pkcs11_obj_t @var{obj}, gnutls_pkcs11_obj_info_t @var{itype}, const void * @var{data}, size_t @var{data_size}, unsigned @var{flags})
+@var{obj}: should contain a @code{gnutls_pkcs11_obj_t}  type
+
+@var{itype}: Denotes the type of information to be set
+
+@var{data}: the data to set
+
+@var{data_size}: the size of data
+
+@var{flags}: Or sequence of GNUTLS_PKCS11_OBJ_* flags
+
+This function will set attributes on the provided object.
+Available options for  @code{itype} are @code{GNUTLS_PKCS11_OBJ_LABEL} ,
+@code{GNUTLS_PKCS11_OBJ_ID_HEX} , and @code{GNUTLS_PKCS11_OBJ_ID} .
+
+@strong{Returns:} @code{GNUTLS_E_SUCCESS}  (0) on success or a negative error code on error.
+
+@strong{Since:} 3.4.0
 @end deftypefun
 
 @subheading gnutls_pkcs11_obj_set_pin_function
@@ -475,10 +660,26 @@ set using @code{gnutls_pkcs11_set_pin_function()} .
 @strong{Since:} 3.1.0
 @end deftypefun
 
+@subheading gnutls_pkcs11_privkey_cpy
+@anchor{gnutls_pkcs11_privkey_cpy}
+@deftypefun {int} {gnutls_pkcs11_privkey_cpy} (gnutls_pkcs11_privkey_t @var{dst}, gnutls_pkcs11_privkey_t @var{src})
+@var{dst}: The destination key, which should be initialized.
+
+@var{src}: The source key
+
+This function will copy a private key from source to destination
+key. Destination has to be initialized.
+
+@strong{Returns:} On success, @code{GNUTLS_E_SUCCESS}  (0) is returned, otherwise a
+negative error value.
+
+@strong{Since:} 3.4.0
+@end deftypefun
+
 @subheading gnutls_pkcs11_privkey_deinit
 @anchor{gnutls_pkcs11_privkey_deinit}
 @deftypefun {void} {gnutls_pkcs11_privkey_deinit} (gnutls_pkcs11_privkey_t @var{key})
-@var{key}: The structure to be initialized
+@var{key}: the key to be deinitialized
 
 This function will deinitialize a private key structure.
 @end deftypefun
@@ -554,7 +755,7 @@ negative error value.
 
 @var{label}: a label
 
-@var{fmt}: the format of output params. PEM or DER.
+@var{fmt}: the format of output params. PEM or DER
 
 @var{pubkey}: will hold the public key (may be @code{NULL} )
 
@@ -576,10 +777,47 @@ negative error value.
 @strong{Since:} 3.1.5
 @end deftypefun
 
+@subheading gnutls_pkcs11_privkey_generate3
+@anchor{gnutls_pkcs11_privkey_generate3}
+@deftypefun {int} {gnutls_pkcs11_privkey_generate3} (const char * @var{url}, gnutls_pk_algorithm_t @var{pk}, unsigned int @var{bits}, const char * @var{label}, const gnutls_datum_t * @var{cid}, gnutls_x509_crt_fmt_t @var{fmt}, gnutls_datum_t * @var{pubkey}, unsigned int @var{key_usage}, unsigned int @var{flags})
+@var{url}: a token URL
+
+@var{pk}: the public key algorithm
+
+@var{bits}: the security bits
+
+@var{label}: a label
+
+@var{cid}: The CKA_ID to use for the new object
+
+@var{fmt}: the format of output params. PEM or DER
+
+@var{pubkey}: will hold the public key (may be @code{NULL} )
+
+@var{key_usage}: One of GNUTLS_KEY_*
+
+@var{flags}: zero or an OR'ed sequence of @code{GNUTLS_PKCS11_OBJ_FLAGs} 
+
+This function will generate a private key in the specified
+by the  @code{url} token. The private key will be generate within
+the token and will not be exportable. This function will
+store the DER-encoded public key in the SubjectPublicKeyInfo format 
+in  @code{pubkey} . The  @code{pubkey} should be deinitialized using @code{gnutls_free()} .
+
+Note that when generating an elliptic curve key, the curve
+can be substituted in the place of the bits parameter using the
+@code{GNUTLS_CURVE_TO_BITS()}  macro.
+
+@strong{Returns:} On success, @code{GNUTLS_E_SUCCESS}  (0) is returned, otherwise a
+negative error value.
+
+@strong{Since:} 3.4.0
+@end deftypefun
+
 @subheading gnutls_pkcs11_privkey_get_info
 @anchor{gnutls_pkcs11_privkey_get_info}
 @deftypefun {int} {gnutls_pkcs11_privkey_get_info} (gnutls_pkcs11_privkey_t @var{pkey}, gnutls_pkcs11_obj_info_t @var{itype}, void * @var{output}, size_t * @var{output_size})
-@var{pkey}: should contain a @code{gnutls_pkcs11_privkey_t}  structure
+@var{pkey}: should contain a @code{gnutls_pkcs11_privkey_t}  type
 
 @var{itype}: Denotes the type of information requested
 
@@ -598,7 +836,7 @@ the size of the actual data only.
 @subheading gnutls_pkcs11_privkey_get_pk_algorithm
 @anchor{gnutls_pkcs11_privkey_get_pk_algorithm}
 @deftypefun {int} {gnutls_pkcs11_privkey_get_pk_algorithm} (gnutls_pkcs11_privkey_t @var{key}, unsigned int * @var{bits})
-@var{key}: should contain a @code{gnutls_pkcs11_privkey_t}  structure
+@var{key}: should contain a @code{gnutls_pkcs11_privkey_t}  type
 
 @var{bits}: if bits is non null it will hold the size of the parameters' in bits
 
@@ -612,14 +850,14 @@ success, or a negative error code on error.
 @subheading gnutls_pkcs11_privkey_import_url
 @anchor{gnutls_pkcs11_privkey_import_url}
 @deftypefun {int} {gnutls_pkcs11_privkey_import_url} (gnutls_pkcs11_privkey_t @var{pkey}, const char * @var{url}, unsigned int @var{flags})
-@var{pkey}: The structure to store the parsed key
+@var{pkey}: The private key
 
 @var{url}: a PKCS 11 url identifying the key
 
 @var{flags}: Or sequence of GNUTLS_PKCS11_OBJ_* flags
 
 This function will "import" a PKCS 11 URL identifying a private
-key to the @code{gnutls_pkcs11_privkey_t}  structure. In reality since
+key to the @code{gnutls_pkcs11_privkey_t}  type. In reality since
 in most cases keys cannot be exported, the private key structure
 is being associated with the available operations on the token.
 
@@ -630,7 +868,7 @@ negative error value.
 @subheading gnutls_pkcs11_privkey_init
 @anchor{gnutls_pkcs11_privkey_init}
 @deftypefun {int} {gnutls_pkcs11_privkey_init} (gnutls_pkcs11_privkey_t * @var{key})
-@var{key}: The structure to be initialized
+@var{key}: A pointer to the type to be initialized
 
 This function will initialize an private key structure.
 
@@ -868,25 +1106,6 @@ negative error value.
 @strong{Since:} 2.12.0
 @end deftypefun
 
-@subheading gnutls_x509_crt_import_pkcs11_url
-@anchor{gnutls_x509_crt_import_pkcs11_url}
-@deftypefun {int} {gnutls_x509_crt_import_pkcs11_url} (gnutls_x509_crt_t @var{crt}, const char * @var{url}, unsigned int @var{flags})
-@var{crt}: A certificate of type @code{gnutls_x509_crt_t} 
-
-@var{url}: A PKCS 11 url
-
-@var{flags}: One of GNUTLS_PKCS11_OBJ_* flags
-
-This function will import a PKCS 11 certificate directly from a token
-without involving the @code{gnutls_pkcs11_obj_t}  structure. This function will
-fail if the certificate stored is not of X.509 type.
-
-@strong{Returns:} On success, @code{GNUTLS_E_SUCCESS}  (0) is returned, otherwise a
-negative error value.
-
-@strong{Since:} 2.12.0
-@end deftypefun
-
 @subheading gnutls_x509_crt_list_import_pkcs11
 @anchor{gnutls_x509_crt_list_import_pkcs11}
 @deftypefun {int} {gnutls_x509_crt_list_import_pkcs11} (gnutls_x509_crt_t * @var{certs}, unsigned int @var{cert_max}, gnutls_pkcs11_obj_t * const @var{objs}, unsigned int @var{flags})
@@ -899,7 +1118,7 @@ negative error value.
 @var{flags}: 0 for now
 
 This function will import a PKCS 11 certificate list to a list of 
-@code{gnutls_x509_crt_t}  structure. These must not be initialized.
+@code{gnutls_x509_crt_t}  type. These must not be initialized.
 
 @strong{Returns:} On success, @code{GNUTLS_E_SUCCESS}  (0) is returned, otherwise a
 negative error value.

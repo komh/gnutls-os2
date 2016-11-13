@@ -5,7 +5,7 @@
 @deftypefun {int} {gnutls_x509_ext_import_aia} (const gnutls_datum_t * @var{ext}, gnutls_x509_aia_t @var{aia}, unsigned int @var{flags})
 @var{ext}: The DER-encoded extension data
 
-@var{aia}: The authority info access structure
+@var{aia}: The authority info access
 
 @var{flags}: should be zero
 

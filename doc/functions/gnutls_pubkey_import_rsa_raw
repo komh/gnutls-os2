@@ -3,7 +3,7 @@
 
 
 @deftypefun {int} {gnutls_pubkey_import_rsa_raw} (gnutls_pubkey_t @var{key}, const gnutls_datum_t * @var{m}, const gnutls_datum_t * @var{e})
-@var{key}: Is a structure will hold the parameters
+@var{key}: The key
 
 @var{m}: holds the modulus
 

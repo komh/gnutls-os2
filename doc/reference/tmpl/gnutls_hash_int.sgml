@@ -32,14 +32,6 @@ gnutls_hash_int
 </para>
 
 
-<!-- ##### USER_FUNCTION deinit_func ##### -->
-<para>
-
-</para>
-
-@handle: 
-
-
 <!-- ##### USER_FUNCTION hash_func ##### -->
 <para>
 

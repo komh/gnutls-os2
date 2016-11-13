@@ -3,7 +3,7 @@
 
 
 @deftypefun {int} {gnutls_x509_crt_get_basic_constraints} (gnutls_x509_crt_t @var{cert}, unsigned int * @var{critical}, unsigned int * @var{ca}, int * @var{pathlen})
-@var{cert}: should contain a @code{gnutls_x509_crt_t}  structure
+@var{cert}: should contain a @code{gnutls_x509_crt_t}  type
 
 @var{critical}: will be non-zero if the extension is marked as critical
 

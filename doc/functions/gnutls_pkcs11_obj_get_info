@@ -3,7 +3,7 @@
 
 
 @deftypefun {int} {gnutls_pkcs11_obj_get_info} (gnutls_pkcs11_obj_t @var{obj}, gnutls_pkcs11_obj_info_t @var{itype}, void * @var{output}, size_t * @var{output_size})
-@var{obj}: should contain a @code{gnutls_pkcs11_obj_t}  structure
+@var{obj}: should contain a @code{gnutls_pkcs11_obj_t}  type
 
 @var{itype}: Denotes the type of information requested
 

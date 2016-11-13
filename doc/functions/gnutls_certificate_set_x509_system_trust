@@ -3,7 +3,7 @@
 
 
 @deftypefun {int} {gnutls_certificate_set_x509_system_trust} (gnutls_certificate_credentials_t       @var{cred})
-@var{cred}: is a @code{gnutls_certificate_credentials_t}  structure.
+@var{cred}: is a @code{gnutls_certificate_credentials_t}  type.
 
 This function adds the system's default trusted CAs in order to
 verify client or server certificates.

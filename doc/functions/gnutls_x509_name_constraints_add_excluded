@@ -3,7 +3,7 @@
 
 
 @deftypefun {int} {gnutls_x509_name_constraints_add_excluded} (gnutls_x509_name_constraints_t @var{nc}, gnutls_x509_subject_alt_name_t @var{type}, const gnutls_datum_t * @var{name})
-@var{nc}: The nameconstraints structure
+@var{nc}: The nameconstraints
 
 @var{type}: The type of the constraints
 

@@ -3,7 +3,7 @@
 
 
 @deftypefun {void} {gnutls_db_set_retrieve_function} (gnutls_session_t @var{session}, gnutls_db_retr_func @var{retr_func})
-@var{session}: is a @code{gnutls_session_t}  structure.
+@var{session}: is a @code{gnutls_session_t}  type.
 
 @var{retr_func}: is the function.
 

@@ -3,7 +3,7 @@
 
 
 @deftypefun {int} {gnutls_session_set_id} (gnutls_session_t @var{session}, const gnutls_datum_t * @var{sid})
-@var{session}: is a @code{gnutls_session_t}  structure.
+@var{session}: is a @code{gnutls_session_t}  type.
 
 @var{sid}: the session identifier
 

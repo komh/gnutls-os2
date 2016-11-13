@@ -3,7 +3,7 @@
 
 
 @deftypefun {int} {gnutls_x509_privkey_export_ecc_raw} (gnutls_x509_privkey_t @var{key}, gnutls_ecc_curve_t * @var{curve}, gnutls_datum_t * @var{x}, gnutls_datum_t * @var{y}, gnutls_datum_t * @var{k})
-@var{key}: a structure that holds the rsa parameters
+@var{key}: a key
 
 @var{curve}: will hold the curve
 

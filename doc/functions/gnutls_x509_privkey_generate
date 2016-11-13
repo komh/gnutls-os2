@@ -3,7 +3,7 @@
 
 
 @deftypefun {int} {gnutls_x509_privkey_generate} (gnutls_x509_privkey_t @var{key}, gnutls_pk_algorithm_t @var{algo}, unsigned int @var{bits}, unsigned int @var{flags})
-@var{key}: should contain a @code{gnutls_x509_privkey_t}  structure
+@var{key}: a key
 
 @var{algo}: is one of the algorithms in @code{gnutls_pk_algorithm_t} .
 

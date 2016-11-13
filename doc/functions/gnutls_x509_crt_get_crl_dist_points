@@ -3,7 +3,7 @@
 
 
 @deftypefun {int} {gnutls_x509_crt_get_crl_dist_points} (gnutls_x509_crt_t @var{cert}, unsigned int @var{seq}, void * @var{san}, size_t * @var{san_size}, unsigned int * @var{reason_flags}, unsigned int * @var{critical})
-@var{cert}: should contain a @code{gnutls_x509_crt_t}  structure
+@var{cert}: should contain a @code{gnutls_x509_crt_t}  type
 
 @var{seq}: specifies the sequence number of the distribution point (0 for the first one, 1 for the second etc.)
 

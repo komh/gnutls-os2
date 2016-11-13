@@ -3,7 +3,7 @@
 
 
 @deftypefun {int} {gnutls_x509_crl_set_crt_serial} (gnutls_x509_crl_t @var{crl}, const void * @var{serial}, size_t @var{serial_size}, time_t @var{revocation_time})
-@var{crl}: should contain a gnutls_x509_crl_t structure
+@var{crl}: should contain a gnutls_x509_crl_t type
 
 @var{serial}: The revoked certificate's serial number
 

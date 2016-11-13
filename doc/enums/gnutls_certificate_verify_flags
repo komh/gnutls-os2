@@ -45,4 +45,7 @@ certificate chain.
 @item GNUTLS_@-VERIFY_@-DO_@-NOT_@-ALLOW_@-WILDCARDS
 When including a hostname
 check in the verification, do not consider any wildcards.
+@item GNUTLS_@-VERIFY_@-USE_@-TLS1_@-RSA
+This indicates that a (raw) RSA signature is provided
+as in the TLS 1.0 protocol. Not all functions accept this flag.
 @end table

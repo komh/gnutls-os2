@@ -14,7 +14,7 @@
 @var{flags}: One of the GNUTLS_PRIVKEY_* flags
 
 This function will import the given private key to the abstract
-@code{gnutls_privkey_t}  structure.
+@code{gnutls_privkey_t}  type.
 
 Note that unless @code{GNUTLS_PRIVKEY_DISABLE_CALLBACKS} 
 is specified, if incorrect (or NULL) passwords are given

@@ -63,8 +63,8 @@ extern FILE * option_usage_fp;
 /**
  *  static const strings for gnutls-cli-debug options
  */
-static char const gnutls_cli_debug_opt_strs[1936] =
-/*     0 */ "gnutls-cli-debug 3.3.22\n"
+static char const gnutls_cli_debug_opt_strs[2009] =
+/*     0 */ "gnutls-cli-debug 3.4.16\n"
             "Copyright (C) 2000-2016 Free Software Foundation, and others, all rights reserved.\n"
             "This is free software. It is licensed for use, modification and\n"
             "redistribution under the terms of the GNU General Public License,\n"
@@ -88,29 +88,31 @@ static char const gnutls_cli_debug_opt_strs[1936] =
 /*   978 */ "The port to connect to\0"
 /*  1001 */ "PORT\0"
 /*  1006 */ "port\0"
-/*  1011 */ "The application protocol to be used to obtain the server's certificate\n"
-            "(https, ftp, smtp, imap)\0"
-/*  1107 */ "APP_PROTO\0"
-/*  1117 */ "app-proto\0"
-/*  1127 */ "display extended usage information and exit\0"
-/*  1171 */ "help\0"
-/*  1176 */ "extended usage information passed thru pager\0"
-/*  1221 */ "more-help\0"
-/*  1231 */ "output version information and exit\0"
-/*  1267 */ "version\0"
-/*  1275 */ "GNUTLS_CLI_DEBUG\0"
-/*  1292 */ "gnutls-cli-debug - GnuTLS debug client\n"
+/*  1011 */ "an alias for the 'starttls-proto' option\0"
+/*  1052 */ "app-proto\0"
+/*  1062 */ "The application protocol to be used to obtain the server's certificate\n"
+            "(https, ftp, smtp, imap, ldap, xmpp)\0"
+/*  1170 */ "STARTTLS_PROTO\0"
+/*  1185 */ "starttls-proto\0"
+/*  1200 */ "display extended usage information and exit\0"
+/*  1244 */ "help\0"
+/*  1249 */ "extended usage information passed thru pager\0"
+/*  1294 */ "more-help\0"
+/*  1304 */ "output version information and exit\0"
+/*  1340 */ "version\0"
+/*  1348 */ "GNUTLS_CLI_DEBUG\0"
+/*  1365 */ "gnutls-cli-debug - GnuTLS debug client\n"
             "Usage:  %s [ -<flag> [<val>] | --<name>[{=| }<val>] ]... \n\0"
-/*  1390 */ "bugs@gnutls.org\0"
-/*  1406 */ "\n\0"
-/*  1408 */ "TLS debug client.  It sets up multiple TLS connections to a server and\n"
+/*  1463 */ "bugs@gnutls.org\0"
+/*  1479 */ "\n\0"
+/*  1481 */ "TLS debug client.  It sets up multiple TLS connections to a server and\n"
             "queries its capabilities.  It was created to assist in debugging GnuTLS,\n"
             "but it might be useful to extract a TLS server's capabilities.  It connects\n"
             "to a TLS server, performs tests and print the server's capabilities.  If\n"
             "called with the `-v' parameter more checks will be performed.  Can be used\n"
             "to check for servers with special needs or bugs.\n\0"
-/*  1826 */ "gnutls-cli-debug 3.3.22\0"
-/*  1850 */ "Usage: gnutls-cli-debug [options] hostname\n"
+/*  1899 */ "gnutls-cli-debug 3.4.16\0"
+/*  1923 */ "Usage: gnutls-cli-debug [options] hostname\n"
             "gnutls-cli --help for usage instructions.\n";
 
 /**
@@ -155,23 +157,34 @@ static char const gnutls_cli_debug_opt_strs[1936] =
  *  app-proto option description:
  */
 /** Descriptive text for the app-proto option */
-#define APP_PROTO_DESC      (gnutls_cli_debug_opt_strs+1011)
-/** Upper-cased name for the app-proto option */
-#define APP_PROTO_NAME      (gnutls_cli_debug_opt_strs+1107)
-/** Name string for the app-proto option */
-#define APP_PROTO_name      (gnutls_cli_debug_opt_strs+1117)
+#define APP_PROTO_DESC    (gnutls_cli_debug_opt_strs+1011)
+#define APP_PROTO_NAME    NULL
+/** Unmodified name string for the app-proto option */
+#define APP_PROTO_name    (gnutls_cli_debug_opt_strs+1052)
 /** Compiled in flag settings for the app-proto option */
-#define APP_PROTO_FLAGS     (OPTST_DISABLED \
+#define APP_PROTO_FLAGS     (STARTTLS_PROTO_FLAGS | OPTST_ALIAS)
+
+/**
+ *  starttls-proto option description:
+ */
+/** Descriptive text for the starttls-proto option */
+#define STARTTLS_PROTO_DESC      (gnutls_cli_debug_opt_strs+1062)
+/** Upper-cased name for the starttls-proto option */
+#define STARTTLS_PROTO_NAME      (gnutls_cli_debug_opt_strs+1170)
+/** Name string for the starttls-proto option */
+#define STARTTLS_PROTO_name      (gnutls_cli_debug_opt_strs+1185)
+/** Compiled in flag settings for the starttls-proto option */
+#define STARTTLS_PROTO_FLAGS     (OPTST_DISABLED \
         | OPTST_SET_ARGTYPE(OPARG_TYPE_STRING))
 
 /*
  *  Help/More_Help/Version option descriptions:
  */
-#define HELP_DESC       (gnutls_cli_debug_opt_strs+1127)
-#define HELP_name       (gnutls_cli_debug_opt_strs+1171)
+#define HELP_DESC       (gnutls_cli_debug_opt_strs+1200)
+#define HELP_name       (gnutls_cli_debug_opt_strs+1244)
 #ifdef HAVE_WORKING_FORK
-#define MORE_HELP_DESC  (gnutls_cli_debug_opt_strs+1176)
-#define MORE_HELP_name  (gnutls_cli_debug_opt_strs+1221)
+#define MORE_HELP_DESC  (gnutls_cli_debug_opt_strs+1249)
+#define MORE_HELP_name  (gnutls_cli_debug_opt_strs+1294)
 #define MORE_HELP_FLAGS (OPTST_IMM | OPTST_NO_INIT)
 #else
 #define MORE_HELP_DESC  HELP_DESC
@@ -184,8 +197,8 @@ static char const gnutls_cli_debug_opt_strs[1936] =
 #  define VER_FLAGS     (OPTST_SET_ARGTYPE(OPARG_TYPE_STRING) | \
                          OPTST_ARG_OPTIONAL | OPTST_IMM | OPTST_NO_INIT)
 #endif
-#define VER_DESC        (gnutls_cli_debug_opt_strs+1231)
-#define VER_name        (gnutls_cli_debug_opt_strs+1267)
+#define VER_DESC        (gnutls_cli_debug_opt_strs+1304)
+#define VER_name        (gnutls_cli_debug_opt_strs+1340)
 /**
  *  Declare option callback procedures
  */
@@ -195,7 +208,7 @@ extern tOptProc
     optionStackArg,     optionTimeDate,     optionTimeVal,
     optionUnstackArg,   optionVendorOption;
 static tOptProc
-    doOptDebug, doOptPort, doUsageOpt;
+    doOptApp_Proto, doOptDebug, doOptPort, doUsageOpt;
 #define VER_PROC        optionPrintVersion
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -249,8 +262,20 @@ static tOptDesc optDesc[OPTION_CT] = {
      /* last opt argumnt */ { NULL }, /* --app-proto */
      /* arg list/cookie  */ NULL,
      /* must/cannot opts */ NULL, NULL,
-     /* option proc      */ NULL,
+     /* option proc      */ doOptApp_Proto,
      /* desc, NAME, name */ APP_PROTO_DESC, APP_PROTO_NAME, APP_PROTO_name,
+     /* disablement strs */ 0, 0 },
+
+  {  /* entry idx, value */ 4, VALUE_OPT_STARTTLS_PROTO,
+     /* equiv idx, value */ 4, VALUE_OPT_STARTTLS_PROTO,
+     /* equivalenced to  */ NO_EQUIVALENT,
+     /* min, max, act ct */ 0, 1, 0,
+     /* opt state flags  */ STARTTLS_PROTO_FLAGS, 0,
+     /* last opt argumnt */ { NULL }, /* --starttls-proto */
+     /* arg list/cookie  */ NULL,
+     /* must/cannot opts */ NULL, NULL,
+     /* option proc      */ NULL,
+     /* desc, NAME, name */ STARTTLS_PROTO_DESC, STARTTLS_PROTO_NAME, STARTTLS_PROTO_name,
      /* disablement strs */ NULL, NULL },
 
   {  /* entry idx, value */ INDEX_OPT_VERSION, VALUE_OPT_VERSION,
@@ -295,21 +320,21 @@ static tOptDesc optDesc[OPTION_CT] = {
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 /** Reference to the upper cased version of gnutls-cli-debug. */
-#define zPROGNAME       (gnutls_cli_debug_opt_strs+1275)
+#define zPROGNAME       (gnutls_cli_debug_opt_strs+1348)
 /** Reference to the title line for gnutls-cli-debug usage. */
-#define zUsageTitle     (gnutls_cli_debug_opt_strs+1292)
+#define zUsageTitle     (gnutls_cli_debug_opt_strs+1365)
 /** There is no gnutls-cli-debug configuration file. */
 #define zRcName         NULL
 /** There are no directories to search for gnutls-cli-debug config files. */
 #define apzHomeList     NULL
 /** The gnutls-cli-debug program bug email address. */
-#define zBugsAddr       (gnutls_cli_debug_opt_strs+1390)
+#define zBugsAddr       (gnutls_cli_debug_opt_strs+1463)
 /** Clarification/explanation of what gnutls-cli-debug does. */
-#define zExplain        (gnutls_cli_debug_opt_strs+1406)
+#define zExplain        (gnutls_cli_debug_opt_strs+1479)
 /** Extra detail explaining what gnutls-cli-debug does. */
-#define zDetail         (gnutls_cli_debug_opt_strs+1408)
+#define zDetail         (gnutls_cli_debug_opt_strs+1481)
 /** The full version string for gnutls-cli-debug. */
-#define zFullVersion    (gnutls_cli_debug_opt_strs+1826)
+#define zFullVersion    (gnutls_cli_debug_opt_strs+1899)
 /* extracted from optcode.tlib near line 364 */
 
 #if defined(ENABLE_NLS)
@@ -321,7 +346,7 @@ static tOptDesc optDesc[OPTION_CT] = {
 #endif /* ENABLE_NLS */
 
 #define gnutls_cli_debug_full_usage (NULL)
-#define gnutls_cli_debug_short_usage (gnutls_cli_debug_opt_strs+1850)
+#define gnutls_cli_debug_short_usage (gnutls_cli_debug_opt_strs+1923)
 
 #endif /* not defined __doxygen__ */
 
@@ -416,6 +441,22 @@ doOptPort(tOptions* pOptions, tOptDesc* pOptDesc)
  emit_ranges:
 optionShowRange(pOptions, pOptDesc, VOIDP(rng), 1);
 }
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+/**
+ * Code to handle the app-proto option.
+ *
+ * @param[in] pOptions the gnutls-cli-debug options data structure
+ * @param[in,out] pOptDesc the option descriptor for this option.
+ */
+static void
+doOptApp_Proto(tOptions* pOptions, tOptDesc* pOptDesc)
+{
+    int res = optionAlias(pOptions, pOptDesc, INDEX_OPT_STARTTLS_PROTO);
+    if ((res != 0) && ((pOptions->fOptSet & OPTPROC_ERRSTOP) != 0))
+        USAGE(GNUTLS_CLI_DEBUG_EXIT_USAGE_ERROR);
+
+}
 /* extracted from optmain.tlib near line 1250 */
 
 /**
@@ -481,7 +522,7 @@ tOptions gnutls_cli_debugOptions = {
       NO_EQUIVALENT, /* '-#' option index */
       NO_EQUIVALENT /* index of default opt */
     },
-    7 /* full option count */, 4 /* user option count */,
+    8 /* full option count */, 5 /* user option count */,
     gnutls_cli_debug_full_usage, gnutls_cli_debug_short_usage,
     NULL, NULL,
     PKGDATADIR, gnutls_cli_debug_packager_info
@@ -616,7 +657,7 @@ static void bogus_function(void) {
      translate option names.
    */
   /* referenced via gnutls_cli_debugOptions.pzCopyright */
-  puts(_("gnutls-cli-debug 3.3.22\n\
+  puts(_("gnutls-cli-debug 3.4.16\n\
 Copyright (C) 2000-2016 Free Software Foundation, and others, all rights reserved.\n\
 This is free software. It is licensed for use, modification and\n\
 redistribution under the terms of the GNU General Public License,\n\
@@ -644,8 +685,11 @@ with this program.  If not, see <http://www.gnu.org/licenses/>.\n"));
   puts(_("The port to connect to"));
 
   /* referenced via gnutls_cli_debugOptions.pOptDesc->pzText */
+  puts(_("an alias for the 'starttls-proto' option"));
+
+  /* referenced via gnutls_cli_debugOptions.pOptDesc->pzText */
   puts(_("The application protocol to be used to obtain the server's certificate\n\
-(https, ftp, smtp, imap)"));
+(https, ftp, smtp, imap, ldap, xmpp)"));
 
   /* referenced via gnutls_cli_debugOptions.pOptDesc->pzText */
   puts(_("display extended usage information and exit"));
@@ -672,7 +716,7 @@ called with the `-v' parameter more checks will be performed.  Can be used\n\
 to check for servers with special needs or bugs.\n"));
 
   /* referenced via gnutls_cli_debugOptions.pzFullVersion */
-  puts(_("gnutls-cli-debug 3.3.22"));
+  puts(_("gnutls-cli-debug 3.4.16"));
 
   /* referenced via gnutls_cli_debugOptions.pzFullUsage */
   puts(_("<<<NOT-FOUND>>>"));
@@ -703,11 +747,11 @@ gnutls-cli --help for usage instructions.\n"));
   puts(_("(AutoOpts bug):  %s.\n"));
 #line 90 "../reset.c"
   puts(_("optionResetOpt() called, but reset-option not configured"));
-#line 292 "../usage.c"
+#line 295 "../usage.c"
   puts(_("could not locate the 'help' option"));
 #line 336 "../autoopts.c"
   puts(_("optionProcess() was called with invalid data"));
-#line 748 "../usage.c"
+#line 751 "../usage.c"
   puts(_("invalid argument type specified"));
 #line 598 "../find.c"
   puts(_("defaulted to option with optional arg"));
@@ -756,9 +800,9 @@ gnutls-cli --help for usage instructions.\n"));
   puts(_("  or an integer from %d through %d\n"));
 #line 170 "../enum.c"
   puts(_("  or an integer from %d through %d\n"));
-#line 747 "../usage.c"
+#line 750 "../usage.c"
   puts(_("%s error:  invalid option descriptor for %s\n"));
-#line 1081 "../usage.c"
+#line 1084 "../usage.c"
   puts(_("%s error:  invalid option descriptor for %s\n"));
 #line 385 "../find.c"
   puts(_("%s: invalid option name: %s\n"));
@@ -799,7 +843,7 @@ gnutls-cli --help for usage instructions.\n"));
   puts(_("%s error:  '%s' is not a recognizable number.\n"));
 #line 201 "../enum.c"
   puts(_("%s error:  %s exceeds %s keyword count\n"));
-#line 330 "../usage.c"
+#line 333 "../usage.c"
   puts(_("Try '%s %s' for more information.\n"));
 #line 45 "../alias.c"
   puts(_("one %s%s option allowed\n"));
@@ -807,19 +851,19 @@ gnutls-cli --help for usage instructions.\n"));
   puts(_("standard output"));
 #line 943 "../makeshell.c"
   puts(_("standard output"));
-#line 274 "../usage.c"
+#line 277 "../usage.c"
   puts(_("standard output"));
-#line 415 "../usage.c"
+#line 418 "../usage.c"
   puts(_("standard output"));
-#line 625 "../usage.c"
+#line 628 "../usage.c"
   puts(_("standard output"));
 #line 175 "../version.c"
   puts(_("standard output"));
-#line 274 "../usage.c"
+#line 277 "../usage.c"
   puts(_("standard error"));
-#line 415 "../usage.c"
+#line 418 "../usage.c"
   puts(_("standard error"));
-#line 625 "../usage.c"
+#line 628 "../usage.c"
   puts(_("standard error"));
 #line 175 "../version.c"
   puts(_("standard error"));
@@ -827,11 +871,11 @@ gnutls-cli --help for usage instructions.\n"));
   puts(_("write"));
 #line 943 "../makeshell.c"
   puts(_("write"));
-#line 273 "../usage.c"
+#line 276 "../usage.c"
   puts(_("write"));
-#line 414 "../usage.c"
+#line 417 "../usage.c"
   puts(_("write"));
-#line 624 "../usage.c"
+#line 627 "../usage.c"
   puts(_("write"));
 #line 174 "../version.c"
   puts(_("write"));
@@ -852,29 +896,29 @@ gnutls-cli --help for usage instructions.\n"));
   /* END-LIBOPTS-MESSAGES */
 
   /* USAGE-TEXT: */
-#line 873 "../usage.c"
+#line 876 "../usage.c"
   puts(_("\t\t\t\t- an alternate for '%s'\n"));
-#line 1148 "../usage.c"
+#line 1151 "../usage.c"
   puts(_("Version, usage and configuration options:"));
-#line 924 "../usage.c"
+#line 927 "../usage.c"
   puts(_("\t\t\t\t- default option for unnamed options\n"));
-#line 837 "../usage.c"
+#line 840 "../usage.c"
   puts(_("\t\t\t\t- disabled as '--%s'\n"));
-#line 1117 "../usage.c"
+#line 1120 "../usage.c"
   puts(_(" --- %-14s %s\n"));
-#line 1115 "../usage.c"
+#line 1118 "../usage.c"
   puts(_("This option has been disabled"));
-#line 864 "../usage.c"
+#line 867 "../usage.c"
   puts(_("\t\t\t\t- enabled by default\n"));
 #line 40 "../alias.c"
   puts(_("%s error:  only "));
-#line 1194 "../usage.c"
+#line 1197 "../usage.c"
   puts(_(" - examining environment variables named %s_*\n"));
 #line 168 "../file.c"
   puts(_("\t\t\t\t- file must not pre-exist\n"));
 #line 172 "../file.c"
   puts(_("\t\t\t\t- file must pre-exist\n"));
-#line 380 "../usage.c"
+#line 383 "../usage.c"
   puts(_("Options are specified by doubled hyphens and their name or by a single\n"
        "hyphen and the flag character.\n"));
 #line 921 "../makeshell.c"
@@ -884,33 +928,33 @@ gnutls-cli --help for usage instructions.\n"));
        "a shell script to parse the options for %s:\n\n"));
 #line 167 "../enum.c"
   puts(_("  or an integer mask with any of the lower %d bits set\n"));
-#line 897 "../usage.c"
+#line 900 "../usage.c"
   puts(_("\t\t\t\t- is a set membership option\n"));
-#line 918 "../usage.c"
+#line 921 "../usage.c"
   puts(_("\t\t\t\t- must appear between %d and %d times\n"));
-#line 382 "../usage.c"
+#line 385 "../usage.c"
   puts(_("Options are specified by single or double hyphens and their name.\n"));
-#line 904 "../usage.c"
+#line 907 "../usage.c"
   puts(_("\t\t\t\t- may appear multiple times\n"));
-#line 891 "../usage.c"
+#line 894 "../usage.c"
   puts(_("\t\t\t\t- may not be preset\n"));
-#line 1309 "../usage.c"
+#line 1312 "../usage.c"
   puts(_("   Arg Option-Name    Description\n"));
-#line 1245 "../usage.c"
+#line 1248 "../usage.c"
   puts(_("  Flg Arg Option-Name    Description\n"));
-#line 1303 "../usage.c"
+#line 1306 "../usage.c"
   puts(_("  Flg Arg Option-Name    Description\n"));
-#line 1304 "../usage.c"
+#line 1307 "../usage.c"
   puts(_(" %3s %s"));
-#line 1310 "../usage.c"
+#line 1313 "../usage.c"
   puts(_(" %3s %s"));
-#line 387 "../usage.c"
+#line 390 "../usage.c"
   puts(_("The '-#<number>' option may omit the hash char\n"));
-#line 383 "../usage.c"
+#line 386 "../usage.c"
   puts(_("All arguments are named options.\n"));
-#line 971 "../usage.c"
+#line 974 "../usage.c"
   puts(_(" - reading file %s"));
-#line 409 "../usage.c"
+#line 412 "../usage.c"
   puts(_("\n"
        "Please send bug reports to:  <%s>\n"));
 #line 100 "../version.c"
@@ -919,17 +963,17 @@ gnutls-cli --help for usage instructions.\n"));
 #line 129 "../version.c"
   puts(_("\n"
        "Please send bug reports to:  <%s>\n"));
-#line 903 "../usage.c"
+#line 906 "../usage.c"
   puts(_("\t\t\t\t- may NOT appear - preset only\n"));
-#line 944 "../usage.c"
+#line 947 "../usage.c"
   puts(_("\n"
        "The following option preset mechanisms are supported:\n"));
-#line 1192 "../usage.c"
+#line 1195 "../usage.c"
   puts(_("\n"
        "The following option preset mechanisms are supported:\n"));
-#line 682 "../usage.c"
+#line 685 "../usage.c"
   puts(_("prohibits these options:\n"));
-#line 677 "../usage.c"
+#line 680 "../usage.c"
   puts(_("prohibits the option '%s'\n"));
 #line 81 "../numeric.c"
   puts(_("%s%ld to %ld"));
@@ -947,28 +991,28 @@ gnutls-cli --help for usage instructions.\n"));
   puts(_("%sis scalable with a suffix: k/K/m/M/g/G/t/T\n"));
 #line 77 "../numeric.c"
   puts(_("%sless than or equal to %ld"));
-#line 390 "../usage.c"
+#line 393 "../usage.c"
   puts(_("Operands and options may be intermixed.  They will be reordered.\n"));
-#line 652 "../usage.c"
-  puts(_("requires the option '%s'\n"));
 #line 655 "../usage.c"
+  puts(_("requires the option '%s'\n"));
+#line 658 "../usage.c"
   puts(_("requires these options:\n"));
-#line 1321 "../usage.c"
+#line 1324 "../usage.c"
   puts(_("   Arg Option-Name   Req?  Description\n"));
-#line 1315 "../usage.c"
+#line 1318 "../usage.c"
   puts(_("  Flg Arg Option-Name   Req?  Description\n"));
 #line 168 "../enum.c"
   puts(_("or you may use a numeric representation.  Preceding these with a '!'\n"
        "will clear the bits, specifying 'none' will clear all bits, and 'all'\n"
        "will set them all.  Multiple entries may be passed as an option\n"
        "argument list.\n"));
-#line 910 "../usage.c"
+#line 913 "../usage.c"
   puts(_("\t\t\t\t- may appear up to %d times\n"));
 #line 77 "../enum.c"
   puts(_("The valid \"%s\" option keywords are:\n"));
-#line 1152 "../usage.c"
+#line 1155 "../usage.c"
   puts(_("The next option supports vendor supported extra options:"));
-#line 773 "../usage.c"
+#line 776 "../usage.c"
   puts(_("These additional options are:"));
   /* END-USAGE-TEXT */
 }

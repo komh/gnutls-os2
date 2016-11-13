@@ -3,7 +3,7 @@
 
 
 @deftypefun {void} {gnutls_privkey_deinit} (gnutls_privkey_t @var{key})
-@var{key}: The structure to be deinitialized
+@var{key}: The key to be deinitialized
 
 This function will deinitialize a private key structure.
 

@@ -3,7 +3,7 @@
 
 
 @deftypefun {int} {gnutls_pkcs7_set_crt_raw} (gnutls_pkcs7_t @var{pkcs7}, const gnutls_datum_t * @var{crt})
-@var{pkcs7}: should contain a @code{gnutls_pkcs7_t}  structure
+@var{pkcs7}: The pkcs7 type
 
 @var{crt}: the DER encoded certificate to be added
 

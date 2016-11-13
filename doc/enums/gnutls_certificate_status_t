@@ -37,4 +37,6 @@ The certificate's signer constraints were
 violated.
 @item GNUTLS_@-CERT_@-MISMATCH
 The certificate presented isn't the expected one (TOFU)
+@item GNUTLS_@-CERT_@-PURPOSE_@-MISMATCH
+The certificate or an intermediate does not match the intended purpose (extended key usage).
 @end table

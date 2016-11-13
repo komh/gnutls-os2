@@ -3,7 +3,7 @@
 
 
 @deftypefun {int} {gnutls_x509_trust_list_get_issuer} (gnutls_x509_trust_list_t @var{list}, gnutls_x509_crt_t @var{cert}, gnutls_x509_crt_t * @var{issuer}, unsigned int @var{flags})
-@var{list}: The structure of the list
+@var{list}: The list
 
 @var{cert}: is the certificate to find issuer for
 

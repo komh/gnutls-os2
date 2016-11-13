@@ -3,12 +3,13 @@
 
 
 @deftypefun {void} {gnutls_certificate_set_retrieve_function} (gnutls_certificate_credentials_t @var{cred}, gnutls_certificate_retrieve_function * @var{func})
-@var{cred}: is a @code{gnutls_certificate_credentials_t}  structure.
+@var{cred}: is a @code{gnutls_certificate_credentials_t}  type.
 
 @var{func}: is the callback function
 
 This function sets a callback to be called in order to retrieve the
-certificate to be used in the handshake. You are advised
+certificate to be used in the handshake. The callback will take control
+only if a certificate is requested by the peer. You are advised
 to use @code{gnutls_certificate_set_retrieve_function2()}  because it
 is much more efficient in the processing it requires from gnutls.
 
@@ -18,8 +19,8 @@ const gnutls_pk_algorithm_t* pk_algos, int pk_algos_length, gnutls_retr2_st* st)
 
  @code{req_ca_dn} is only used in X.509 certificates.
 Contains a list with the CA names that the server considers trusted.
-Normally we should send a certificate that is signed
-by one of these CAs. These names are DER encoded. To get a more
+This is a hint and typically the client should send a certificate that is signed
+by one of these CAs. These names, when available, are DER encoded. To get a more
 meaningful value use the function @code{gnutls_x509_rdn_get()} .
 
  @code{pk_algos} contains a list with server's acceptable signature algorithms.
@@ -35,7 +36,9 @@ In server side pk_algos and req_ca_dn are NULL.
 The callback function should set the certificate list to be sent,
 and return 0 on success. If no certificate was selected then the
 number of certificates should be set to zero. The value (-1)
-indicates error and the handshake will be terminated.
+indicates error and the handshake will be terminated. If both certificates
+are set in the credentials and a callback is available, the callback
+takes predence.
 
 @strong{Since:} 3.0
 @end deftypefun

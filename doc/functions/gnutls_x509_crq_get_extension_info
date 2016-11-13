@@ -3,11 +3,11 @@
 
 
 @deftypefun {int} {gnutls_x509_crq_get_extension_info} (gnutls_x509_crq_t @var{crq}, int @var{indx}, void * @var{oid}, size_t * @var{sizeof_oid}, unsigned int * @var{critical})
-@var{crq}: should contain a @code{gnutls_x509_crq_t}  structure
+@var{crq}: should contain a @code{gnutls_x509_crq_t}  type
 
 @var{indx}: Specifies which extension number to get. Use (0) to get the first one.
 
-@var{oid}: a pointer to a structure to hold the OID
+@var{oid}: a pointer to store the OID
 
 @var{sizeof_oid}: initially holds the maximum size of  @code{oid} , on return
 holds actual size of  @code{oid} .

@@ -3,7 +3,7 @@
 
 
 @deftypefun {int} {gnutls_x509_crl_get_signature} (gnutls_x509_crl_t @var{crl}, char * @var{sig}, size_t * @var{sizeof_sig})
-@var{crl}: should contain a gnutls_x509_crl_t structure
+@var{crl}: should contain a gnutls_x509_crl_t type
 
 @var{sig}: a pointer where the signature part will be copied (may be null).
 

@@ -3,7 +3,7 @@
 
 
 @deftypefun {int} {gnutls_x509_crt_set_name_constraints} (gnutls_x509_crt_t @var{crt}, gnutls_x509_name_constraints_t @var{nc}, unsigned int @var{critical})
-@var{crt}: The certificate structure
+@var{crt}: The certificate
 
 @var{nc}: The nameconstraints structure
 

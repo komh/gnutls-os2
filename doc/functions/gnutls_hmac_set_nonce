@@ -3,11 +3,11 @@
 
 
 @deftypefun {void} {gnutls_hmac_set_nonce} (gnutls_hmac_hd_t @var{handle}, const void * @var{nonce}, size_t @var{nonce_len})
-@var{handle}: is a @code{gnutls_cipher_hd_t}  structure.
+@var{handle}: is a @code{gnutls_hmac_hd_t}  type
 
 @var{nonce}: the data to set as nonce
 
-@var{nonce_len}: The length of data
+@var{nonce_len}: the length of data
 
 This function will set the nonce in the MAC algorithm.
 

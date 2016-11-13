@@ -3,7 +3,7 @@
 
 
 @deftypefun {int} {gnutls_certificate_set_x509_crl_file} (gnutls_certificate_credentials_t @var{res}, const char * @var{crlfile}, gnutls_x509_crt_fmt_t @var{type})
-@var{res}: is a @code{gnutls_certificate_credentials_t}  structure.
+@var{res}: is a @code{gnutls_certificate_credentials_t}  type.
 
 @var{crlfile}: is a file containing the list of verified CRLs (DER or PEM list)
 

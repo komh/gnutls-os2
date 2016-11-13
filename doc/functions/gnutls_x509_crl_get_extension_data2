@@ -3,7 +3,7 @@
 
 
 @deftypefun {int} {gnutls_x509_crl_get_extension_data2} (gnutls_x509_crl_t @var{crl}, unsigned @var{indx}, gnutls_datum_t * @var{data})
-@var{crl}: should contain a @code{gnutls_x509_crl_t}  structure
+@var{crl}: should contain a @code{gnutls_x509_crl_t}  type
 
 @var{indx}: Specifies which extension OID to read. Use (0) to get the first one.
 

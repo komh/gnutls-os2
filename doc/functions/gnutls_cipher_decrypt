@@ -2,12 +2,12 @@
 
 
 
-@deftypefun {int} {gnutls_cipher_decrypt} (gnutls_cipher_hd_t @var{handle}, void * @var{ciphertext}, size_t @var{ciphertextlen})
-@var{handle}: is a @code{gnutls_cipher_hd_t}  structure.
+@deftypefun {int} {gnutls_cipher_decrypt} (gnutls_cipher_hd_t @var{handle}, void * @var{ctext}, size_t @var{ctext_len})
+@var{handle}: is a @code{gnutls_cipher_hd_t}  type
 
-@var{ciphertext}: the data to encrypt
+@var{ctext}: the data to decrypt
 
-@var{ciphertextlen}: The length of data to encrypt
+@var{ctext_len}: the length of data to decrypt
 
 This function will decrypt the given data using the algorithm
 specified by the context.

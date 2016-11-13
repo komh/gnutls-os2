@@ -3,7 +3,7 @@
 
 
 @deftypefun {int} {gnutls_priority_get_cipher_suite_index} (gnutls_priority_t @var{pcache}, unsigned int @var{idx}, unsigned int * @var{sidx})
-@var{pcache}: is a @code{gnutls_prioritity_t}  structure.
+@var{pcache}: is a @code{gnutls_prioritity_t}  type.
 
 @var{idx}: is an index number.
 
@@ -18,4 +18,6 @@ Once the last available index is crossed then
 @code{GNUTLS_E_REQUESTED_DATA_NOT_AVAILABLE}  will be returned.
 
 @strong{Returns:} On success it returns @code{GNUTLS_E_SUCCESS}  (0), or a negative error value otherwise.
+
+@strong{Since:} 3.0.9
 @end deftypefun

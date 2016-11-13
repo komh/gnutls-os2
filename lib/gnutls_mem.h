@@ -23,6 +23,8 @@
 #ifndef GNUTLS_MEM_H
 #define GNUTLS_MEM_H
 
+#include <config.h>
+
 /* this realloc function will return ptr if size==0, and
  * will free the ptr if the new allocation failed.
  */
@@ -30,7 +32,6 @@ void *gnutls_realloc_fast(void *ptr, size_t size);
 
 void *_gnutls_calloc(size_t nmemb, size_t size);
 char *_gnutls_strdup(const char *);
-void gnutls_memset(void *data, int c, size_t size);
 
 /* To avoid undefined behavior when s1 or s2 are null and n = 0 */
 inline static

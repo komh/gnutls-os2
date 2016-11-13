@@ -2,7 +2,7 @@
 
 
 @deftypefun {int} {gnutls_certificate_set_key} (gnutls_certificate_credentials_t @var{res}, const char ** @var{names}, int @var{names_size}, gnutls_pcert_st * @var{pcert_list}, int @var{pcert_list_size}, gnutls_privkey_t @var{key})
-@var{res}: is a @code{gnutls_certificate_credentials_t}  structure.
+@var{res}: is a @code{gnutls_certificate_credentials_t}  type.
 
 @var{names}: is an array of DNS name of the certificate (NULL if none)
 
@@ -15,7 +15,7 @@
 @var{key}: is a @code{gnutls_privkey_t}  key
 
 This function sets a certificate/private key pair in the
-gnutls_certificate_credentials_t structure.  This function may be
+gnutls_certificate_credentials_t type.  This function may be
 called more than once, in case multiple keys/certificates exist for
 the server.  For clients that wants to send more than its own end
 entity certificate (e.g., also an intermediate CA cert) then put
@@ -23,7 +23,7 @@ the certificate chain in  @code{pcert_list} .
 
 Note that the  @code{pcert_list} and  @code{key} will become part of the credentials 
 structure and must not be deallocated. They will be automatically deallocated 
-when the  @code{res} structure is deinitialized.
+when the  @code{res} type is deinitialized.
 
 If that function fails to load the  @code{res} structure is at an undefined state, it must
 not be reused to load other keys or certificates.

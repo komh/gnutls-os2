@@ -16,10 +16,10 @@
 @var{flags}: Flags for the import
 
 This function will associate the given callbacks with the
-@code{gnutls_privkey_t}  structure. At least one of the two callbacks
+@code{gnutls_privkey_t}  type. At least one of the two callbacks
 must be non-null.
 
-See also @code{gnutls_privkey_import_ext2()} .
+See also @code{gnutls_privkey_import_ext3()} .
 
 @strong{Returns:} On success, @code{GNUTLS_E_SUCCESS}  (0) is returned, otherwise a
 negative error value.

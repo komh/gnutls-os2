@@ -1,9 +1,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- This manual is last updated 23 March 2015 for version
-3.3.22 of GnuTLS.
+<!-- This manual is last updated 9 October 2016 for version
+3.4.16 of GnuTLS.
 
-Copyright (C) 2001-2012, 2014 Free Software Foundation, Inc.
+Copyright (C) 2001-2012, 2014, 2016 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -11,12 +11,12 @@ any later version published by the Free Software Foundation; with no
 Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts.  A
 copy of the license is included in the section entitled "GNU Free
 Documentation License". -->
-<!-- Created by GNU Texinfo 6.0, http://www.gnu.org/software/texinfo/ -->
+<!-- Created by GNU Texinfo 6.1, http://www.gnu.org/software/texinfo/ -->
 <head>
-<title>GnuTLS-Guile 3.3.22</title>
+<title>GnuTLS-Guile 3.4.16</title>
 
-<meta name="description" content="GnuTLS-Guile 3.3.22">
-<meta name="keywords" content="GnuTLS-Guile 3.3.22">
+<meta name="description" content="GnuTLS-Guile 3.4.16">
+<meta name="keywords" content="GnuTLS-Guile 3.4.16">
 <meta name="resource-type" content="document">
 <meta name="distribution" content="global">
 <meta name="Generator" content="makeinfo">
@@ -46,9 +46,8 @@ pre.smalldisplay {font-family: inherit; font-size: smaller}
 pre.smallexample {font-size: smaller}
 pre.smallformat {font-family: inherit; font-size: smaller}
 pre.smalllisp {font-size: smaller}
-span.nocodebreak {white-space: nowrap}
 span.nolinebreak {white-space: nowrap}
-span.roman {font-family: serif; font-weight: normal}
+span.roman {font-family: initial; font-weight: normal}
 span.sansserif {font-family: sans-serif; font-weight: normal}
 ul.no-bullet {list-style: none}
 body { 
@@ -153,7 +152,7 @@ dl {
 </head>
 
 <body lang="en">
-<h1 class="settitle" align="center">GnuTLS-Guile 3.3.22</h1>
+<h1 class="settitle" align="center">GnuTLS-Guile 3.4.16</h1>
 
 
 
@@ -199,10 +198,10 @@ Next: <a href="#Preface" accesskey="n" rel="next">Preface</a>, Up: <a href="dir.
 <a name="GnuTLS_002dGuile"></a>
 <h1 class="top">GnuTLS-Guile</h1>
 
-<p>This manual is last updated 23 March 2015 for version
-3.3.22 of GnuTLS.
+<p>This manual is last updated 9 October 2016 for version
+3.4.16 of GnuTLS.
 </p>
-<p>Copyright &copy; 2001-2012, 2014 Free Software Foundation, Inc.
+<p>Copyright &copy; 2001-2012, 2014, 2016 Free Software Foundation, Inc.
 </p>
 <blockquote>
 <p>Permission is granted to copy, distribute and/or modify this document
@@ -226,6 +225,7 @@ Documentation License&rdquo;.
 <tr><td align="left" valign="top">&bull; <a href="#Guile-Reference" accesskey="5">Guile Reference</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">The Scheme GnuTLS programming interface.
 </td></tr>
 <tr><th colspan="3" align="left" valign="top"><pre class="menu-comment">
+
 </pre></th></tr><tr><td align="left" valign="top">&bull; <a href="#Copying-Information" accesskey="6">Copying Information</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">You can copy and modify this manual.
 </td></tr>
 <tr><td align="left" valign="top">&bull; <a href="#Procedure-Index" accesskey="7">Procedure Index</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
@@ -243,7 +243,8 @@ Next: <a href="#Guile-Preparations" accesskey="n" rel="next">Guile Preparations<
 <a name="Preface-1"></a>
 <h2 class="chapter">1 Preface</h2>
 
-<p>This manual describes the <a href="http://www.gnu.org/software/guile/">GNU Guile</a> Scheme programming interface to GnuTLS.  The reader is
+<p>This manual describes the <a href="http://www.gnu.org/software/guile/">GNU Guile</a> Scheme programming interface to GnuTLS, which is distributed
+as part of <a href="http://gnutls.org">GnuTLS</a>.  The reader is
 assumed to have basic knowledge of the protocol and library.  Details
 missing from this chapter may be found in Function reference,
 of the C API reference.
@@ -260,8 +261,8 @@ Next: <a href="#Guile-API-Conventions" accesskey="n" rel="next">Guile API Conven
 <a name="Guile-Preparations-1"></a>
 <h2 class="chapter">2 Guile Preparations</h2>
 
-<p>The GnuTLS Guile bindings are available for both the 1.8 and 2.0 stable
-series of Guile.
+<p>The GnuTLS Guile bindings are available for Guile&rsquo;s 2.0 stable series,
+as well as the forthcoming 2.2 series and the legacy 1.8 series.
 </p>
 <p>By default they are installed under the GnuTLS installation directory,
 typically <samp>/usr/local/share/guile/site/</samp>).  Normally Guile
@@ -341,7 +342,7 @@ print the version number of the loaded library as follows:
 <pre class="example">$ guile
 guile&gt; (use-modules (gnutls))
 guile&gt; (gnutls-version)
-&quot;3.3.22&quot;
+&quot;3.4.16&quot;
 guile&gt; 
 </pre></div>
 
@@ -489,9 +490,7 @@ Next: <a href="#Input-and-Output" accesskey="n" rel="next">Input and Output</a>,
 <h3 class="section">3.3 Representation of Binary Data</h3>
 
 <p>Many procedures operate on binary data.  For instance,
-<code>pkcs3-import-dh-parameters</code> expects binary data as input and,
-similarly, procedures like <code>pkcs1-export-rsa-parameters</code> return
-binary data.
+<code>pkcs3-import-dh-parameters</code> expects binary data as input.
 </p>
 <a name="index-SRFI_002d4"></a>
 <a name="index-homogeneous-vector"></a>
@@ -501,19 +500,20 @@ vectors (see <a href="http://www.gnu.org/software/guile/manual/guile.html#SRFI_0
 Although any type of homogeneous vector may be used, <code>u8vector</code>s
 (i.e., vectors of bytes) are highly recommended.
 </p>
-<p>As an example, generating and then exporting RSA parameters in the PEM
-format can be done as follows:
+<p>As an example, generating and then exporting Diffie-Hellman parameters
+in the PEM format can be done as follows:
 </p>
-<a name="index-make_002drsa_002dparameters"></a>
-<a name="index-pkcs1_002dexport_002drsa_002dparameters"></a>
+<a name="index-make_002ddh_002dparameters"></a>
+<a name="index-pkcs3_002dexport_002ddh_002dparameters"></a>
 <a name="index-x509_002dcertificate_002dformat_002fpem"></a>
 
 <div class="example">
-<pre class="example">(let* ((rsa-params (make-rsa-parameters 1024))
-       (raw-data
-        (pkcs1-export-rsa-parameters rsa-params
-                                     x509-certificate-format/pem)))
-  (uniform-vector-write raw-data (open-output-file &quot;some-file.pem&quot;)))
+<pre class="example">(let* ((dh  (make-dh-parameters 1024))
+       (pem (pkcs3-export-dh-parameters dh 
+                                        x509-certificate-format/pem)))
+  (call-with-output-file &quot;some-file.pem&quot;
+    (lambda (port)
+      (uniform-vector-write pem port))))
 </pre></div>
 
 <p>For an example of OpenPGP key import from a file, see <a href="#Importing-OpenPGP-Keys-Guile-Example">Importing OpenPGP Keys Guile Example</a>.
@@ -811,7 +811,6 @@ secret key, respectively, client-side code would look like this:
 (define %certs (list certificate-type/openpgp))
 
 (let ((server (make-session connection-end/server))
-      (rsa    (make-rsa-parameters 1024))
       (dh     (make-dh-parameters 1024)))
   (set-session-default-priority! server)
 
@@ -819,9 +818,8 @@ secret key, respectively, client-side code would look like this:
   (set-session-certificate-type-priority! server %certs)
 
   (let ((cred (make-certificate-credentials)))
-    ;; Prepare credentials with RSA and Diffie-Hellman parameters.
+    ;; Prepare credentials with Diffie-Hellman parameters.
     (set-certificate-credentials-dh-parameters! cred dh)
-    (set-certificate-credentials-rsa-export-parameters! cred rsa)
     (set-certificate-credentials-openpgp-keys! cred pub sec)
     (set-session-credentials! server cred))
 
@@ -834,10 +832,7 @@ secret key, respectively, client-side code would look like this:
     (bye server close-request/rdwr)))
 </pre></div>
 
-<p>In practice, generating RSA parameters (and Diffie-Hellman parameters)
-can time a long time.  Thus, you may want to generate them once and
-store them in a file for future re-use (see <a href="#Guile-Reference"><code>pkcs1-export-rsa-parameters</code> and <code>pkcs1-import-rsa-parameters</code></a>).
-</p>
+
 <hr>
 <a name="Importing-OpenPGP-Keys-Guile-Example"></a>
 <div class="header">
@@ -1137,11 +1132,6 @@ GNU Guile Reference Manual</cite>).
 </p></dd></dl>
 
 <dl>
-<dt><a name="index-set_002dcertificate_002dcredentials_002drsa_002dexport_002dparameters_0021"></a>Scheme Procedure: <strong>set-certificate-credentials-rsa-export-parameters!</strong> <em>cred rsa-params</em></dt>
-<dd><p>Use RSA parameters <var>rsa_params</var> for certificate credentials <var>cred</var>.
-</p></dd></dl>
-
-<dl>
 <dt><a name="index-set_002dcertificate_002dcredentials_002ddh_002dparameters_0021"></a>Scheme Procedure: <strong>set-certificate-credentials-dh-parameters!</strong> <em>cred dh-params</em></dt>
 <dd><p>Use Diffie-Hellman parameters <var>dh_params</var> for certificate credentials <var>cred</var>.
 </p></dd></dl>
@@ -1149,21 +1139,6 @@ GNU Guile Reference Manual</cite>).
 <dl>
 <dt><a name="index-make_002dcertificate_002dcredentials"></a>Scheme Procedure: <strong>make-certificate-credentials</strong></dt>
 <dd><p>Return new certificate credentials (i.e., for use with either X.509 or OpenPGP certificates.
-</p></dd></dl>
-
-<dl>
-<dt><a name="index-pkcs1_002dexport_002drsa_002dparameters-1"></a>Scheme Procedure: <strong>pkcs1-export-rsa-parameters</strong> <em>rsa-params format</em></dt>
-<dd><p>Export Diffie-Hellman parameters <var>rsa_params</var> in PKCS1 format according for <var>format</var> (an <code>x509-certificate-format</code> value).  Return a <code>u8vector</code> containing the result.
-</p></dd></dl>
-
-<dl>
-<dt><a name="index-pkcs1_002dimport_002drsa_002dparameters"></a>Scheme Procedure: <strong>pkcs1-import-rsa-parameters</strong> <em>array format</em></dt>
-<dd><p>Import Diffie-Hellman parameters in PKCS1 format (further specified by <var>format</var>, an <code>x509-certificate-format</code> value) from <var>array</var> (a homogeneous array) and return a new <code>rsa-params</code> object.
-</p></dd></dl>
-
-<dl>
-<dt><a name="index-make_002drsa_002dparameters-1"></a>Scheme Procedure: <strong>make-rsa-parameters</strong> <em>bits</em></dt>
-<dd><p>Return new RSA parameters.
 </p></dd></dl>
 
 <dl>
@@ -1187,7 +1162,7 @@ GNU Guile Reference Manual</cite>).
 </p></dd></dl>
 
 <dl>
-<dt><a name="index-pkcs3_002dexport_002ddh_002dparameters"></a>Scheme Procedure: <strong>pkcs3-export-dh-parameters</strong> <em>dh-params format</em></dt>
+<dt><a name="index-pkcs3_002dexport_002ddh_002dparameters-1"></a>Scheme Procedure: <strong>pkcs3-export-dh-parameters</strong> <em>dh-params format</em></dt>
 <dd><p>Export Diffie-Hellman parameters <var>dh_params</var> in PKCS3 format according for <var>format</var> (an <code>x509-certificate-format</code> value).  Return a <code>u8vector</code> containing the result.
 </p></dd></dl>
 
@@ -1197,7 +1172,7 @@ GNU Guile Reference Manual</cite>).
 </p></dd></dl>
 
 <dl>
-<dt><a name="index-make_002ddh_002dparameters"></a>Scheme Procedure: <strong>make-dh-parameters</strong> <em>bits</em></dt>
+<dt><a name="index-make_002ddh_002dparameters-1"></a>Scheme Procedure: <strong>make-dh-parameters</strong> <em>bits</em></dt>
 <dd><p>Return new Diffie-Hellman parameters.
 </p></dd></dl>
 
@@ -1395,11 +1370,6 @@ GNU Guile Reference Manual</cite>).
 <dl>
 <dt><a name="index-certificate_002dcredentials_003f"></a>Scheme Procedure: <strong>certificate-credentials?</strong> <em>obj</em></dt>
 <dd><p>Return true if <var>obj</var> is of type <code>certificate-credentials</code>.
-</p></dd></dl>
-
-<dl>
-<dt><a name="index-rsa_002dparameters_003f"></a>Scheme Procedure: <strong>rsa-parameters?</strong> <em>obj</em></dt>
-<dd><p>Return true if <var>obj</var> is of type <code>rsa-parameters</code>.
 </p></dd></dl>
 
 <dl>
@@ -2135,11 +2105,10 @@ Next: <a href="#Concept-Index" accesskey="n" rel="next">Concept Index</a>, Previ
 <tr><td></td><td valign="top"><a href="#index-make_002danonymous_002dclient_002dcredentials"><code>make-anonymous-client-credentials</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Guile-Reference">Guile Reference</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-make_002danonymous_002dserver_002dcredentials"><code>make-anonymous-server-credentials</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Guile-Reference">Guile Reference</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-make_002dcertificate_002dcredentials"><code>make-certificate-credentials</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Guile-Reference">Guile Reference</a></td></tr>
-<tr><td></td><td valign="top"><a href="#index-make_002ddh_002dparameters"><code>make-dh-parameters</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Guile-Reference">Guile Reference</a></td></tr>
+<tr><td></td><td valign="top"><a href="#index-make_002ddh_002dparameters"><code>make-dh-parameters</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Representation-of-Binary-Data">Representation of Binary Data</a></td></tr>
+<tr><td></td><td valign="top"><a href="#index-make_002ddh_002dparameters-1"><code>make-dh-parameters</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Guile-Reference">Guile Reference</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-make_002dpsk_002dclient_002dcredentials"><code>make-psk-client-credentials</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Guile-Reference">Guile Reference</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-make_002dpsk_002dserver_002dcredentials"><code>make-psk-server-credentials</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Guile-Reference">Guile Reference</a></td></tr>
-<tr><td></td><td valign="top"><a href="#index-make_002drsa_002dparameters"><code>make-rsa-parameters</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Representation-of-Binary-Data">Representation of Binary Data</a></td></tr>
-<tr><td></td><td valign="top"><a href="#index-make_002drsa_002dparameters-1"><code>make-rsa-parameters</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Guile-Reference">Guile Reference</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-make_002dsession"><code>make-session</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Guile-Reference">Guile Reference</a></td></tr>
 <tr><td colspan="4"> <hr></td></tr>
 <tr><th><a name="Procedure-Index_fn_letter-O">O</a></th><td></td><td></td></tr>
@@ -2162,10 +2131,8 @@ Next: <a href="#Concept-Index" accesskey="n" rel="next">Concept Index</a>, Previ
 <tr><td></td><td valign="top"><a href="#index-params_002d_003estring"><code>params-&gt;string</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Guile-Reference">Guile Reference</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-peer_002dcertificate_002dstatus"><code>peer-certificate-status</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Guile-Reference">Guile Reference</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-pk_002dalgorithm_002d_003estring"><code>pk-algorithm-&gt;string</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Guile-Reference">Guile Reference</a></td></tr>
-<tr><td></td><td valign="top"><a href="#index-pkcs1_002dexport_002drsa_002dparameters"><code>pkcs1-export-rsa-parameters</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Representation-of-Binary-Data">Representation of Binary Data</a></td></tr>
-<tr><td></td><td valign="top"><a href="#index-pkcs1_002dexport_002drsa_002dparameters-1"><code>pkcs1-export-rsa-parameters</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Guile-Reference">Guile Reference</a></td></tr>
-<tr><td></td><td valign="top"><a href="#index-pkcs1_002dimport_002drsa_002dparameters"><code>pkcs1-import-rsa-parameters</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Guile-Reference">Guile Reference</a></td></tr>
-<tr><td></td><td valign="top"><a href="#index-pkcs3_002dexport_002ddh_002dparameters"><code>pkcs3-export-dh-parameters</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Guile-Reference">Guile Reference</a></td></tr>
+<tr><td></td><td valign="top"><a href="#index-pkcs3_002dexport_002ddh_002dparameters"><code>pkcs3-export-dh-parameters</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Representation-of-Binary-Data">Representation of Binary Data</a></td></tr>
+<tr><td></td><td valign="top"><a href="#index-pkcs3_002dexport_002ddh_002dparameters-1"><code>pkcs3-export-dh-parameters</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Guile-Reference">Guile Reference</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-pkcs3_002dimport_002ddh_002dparameters"><code>pkcs3-import-dh-parameters</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Guile-Reference">Guile Reference</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-pkcs8_002dimport_002dx509_002dprivate_002dkey"><code>pkcs8-import-x509-private-key</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Guile-Reference">Guile Reference</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-protocol_002d_003estring"><code>protocol-&gt;string</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Guile-Reference">Guile Reference</a></td></tr>
@@ -2179,7 +2146,6 @@ Next: <a href="#Concept-Index" accesskey="n" rel="next">Concept Index</a>, Previ
 <tr><td></td><td valign="top"><a href="#index-record_002dsend"><code>record-send</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Input-and-Output">Input and Output</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-record_002dsend-1"><code>record-send</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Guile-Reference">Guile Reference</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-rehandshake"><code>rehandshake</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Guile-Reference">Guile Reference</a></td></tr>
-<tr><td></td><td valign="top"><a href="#index-rsa_002dparameters_003f"><code>rsa-parameters?</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Guile-Reference">Guile Reference</a></td></tr>
 <tr><td colspan="4"> <hr></td></tr>
 <tr><th><a name="Procedure-Index_fn_letter-S">S</a></th><td></td><td></td></tr>
 <tr><td></td><td valign="top"><a href="#index-server_002dname_002dtype_002d_003estring"><code>server-name-type-&gt;string</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Guile-Reference">Guile Reference</a></td></tr>
@@ -2202,7 +2168,6 @@ Next: <a href="#Concept-Index" accesskey="n" rel="next">Concept Index</a>, Previ
 <tr><td></td><td valign="top"><a href="#index-set_002danonymous_002dserver_002ddh_002dparameters_0021"><code>set-anonymous-server-dh-parameters!</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Guile-Reference">Guile Reference</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-set_002dcertificate_002dcredentials_002ddh_002dparameters_0021"><code>set-certificate-credentials-dh-parameters!</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Guile-Reference">Guile Reference</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-set_002dcertificate_002dcredentials_002dopenpgp_002dkeys_0021"><code>set-certificate-credentials-openpgp-keys!</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Guile-Reference">Guile Reference</a></td></tr>
-<tr><td></td><td valign="top"><a href="#index-set_002dcertificate_002dcredentials_002drsa_002dexport_002dparameters_0021"><code>set-certificate-credentials-rsa-export-parameters!</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Guile-Reference">Guile Reference</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-set_002dcertificate_002dcredentials_002dverify_002dflags_0021"><code>set-certificate-credentials-verify-flags!</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Guile-Reference">Guile Reference</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-set_002dcertificate_002dcredentials_002dverify_002dlimits_0021"><code>set-certificate-credentials-verify-limits!</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Guile-Reference">Guile Reference</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-set_002dcertificate_002dcredentials_002dx509_002dcrl_002ddata_0021"><code>set-certificate-credentials-x509-crl-data!</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Guile-Reference">Guile Reference</a></td></tr>

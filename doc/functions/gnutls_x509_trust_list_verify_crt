@@ -3,7 +3,7 @@
 
 
 @deftypefun {int} {gnutls_x509_trust_list_verify_crt} (gnutls_x509_trust_list_t @var{list}, gnutls_x509_crt_t * @var{cert_list}, unsigned int @var{cert_list_size}, unsigned int @var{flags}, unsigned int * @var{voutput}, gnutls_verify_output_function @var{func})
-@var{list}: The structure of the list
+@var{list}: The list
 
 @var{cert_list}: is the certificate list to be verified
 
@@ -16,13 +16,10 @@
 @var{func}: If non-null will be called on each chain element verification with the output.
 
 This function will try to verify the given certificate and return
-its status. The  @code{verify} parameter will hold an OR'ed sequence of
+its status. The  @code{voutput} parameter will hold an OR'ed sequence of
 @code{gnutls_certificate_status_t}  flags.
 
-Additionally a certificate verification profile can be specified
-from the ones in @code{gnutls_certificate_verification_profiles_t}  by
-ORing the result of @code{GNUTLS_PROFILE_TO_VFLAGS()}  to the verification
-flags.
+The details of the verification are the same as in @code{gnutls_x509_trust_list_verify_crt2()} .
 
 @strong{Returns:} On success, @code{GNUTLS_E_SUCCESS}  (0) is returned, otherwise a
 negative error value.

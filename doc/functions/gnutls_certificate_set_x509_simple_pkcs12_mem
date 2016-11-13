@@ -3,7 +3,7 @@
 
 
 @deftypefun {int} {gnutls_certificate_set_x509_simple_pkcs12_mem} (gnutls_certificate_credentials_t @var{res}, const gnutls_datum_t * @var{p12blob}, gnutls_x509_crt_fmt_t @var{type}, const char * @var{password})
-@var{res}: is a @code{gnutls_certificate_credentials_t}  structure.
+@var{res}: is a @code{gnutls_certificate_credentials_t}  type.
 
 @var{p12blob}: the PKCS@code{12}  blob.
 
@@ -12,7 +12,7 @@
 @var{password}: optional password used to decrypt PKCS@code{12}  file, bags and keys.
 
 This function sets a certificate/private key pair and/or a CRL in
-the gnutls_certificate_credentials_t structure.  This function may
+the gnutls_certificate_credentials_t type.  This function may
 be called more than once (in case multiple keys/certificates exist
 for the server).
 

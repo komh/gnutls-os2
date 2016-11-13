@@ -3,7 +3,7 @@
 
 
 @deftypefun {int} {gnutls_ocsp_resp_import} (gnutls_ocsp_resp_t @var{resp}, const gnutls_datum_t * @var{data})
-@var{resp}: The structure to store the parsed response.
+@var{resp}: The data to store the parsed response.
 
 @var{data}: DER encoded OCSP response.
 

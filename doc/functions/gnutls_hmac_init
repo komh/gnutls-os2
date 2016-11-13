@@ -3,13 +3,13 @@
 
 
 @deftypefun {int} {gnutls_hmac_init} (gnutls_hmac_hd_t * @var{dig}, gnutls_mac_algorithm_t @var{algorithm}, const void * @var{key}, size_t @var{keylen})
-@var{dig}: is a @code{gnutls_hmac_hd_t}  structure.
+@var{dig}: is a @code{gnutls_hmac_hd_t}  type
 
 @var{algorithm}: the HMAC algorithm to use
 
-@var{key}: The key to be used for encryption
+@var{key}: the key to be used for encryption
 
-@var{keylen}: The length of the key
+@var{keylen}: the length of the key
 
 This function will initialize an context that can be used to
 produce a Message Authentication Code (MAC) of data.  This will

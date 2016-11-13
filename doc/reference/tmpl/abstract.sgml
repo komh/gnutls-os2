@@ -514,17 +514,6 @@ abstract
 @Returns: 
 
 
-<!-- ##### FUNCTION gnutls_pubkey_get_verify_algorithm ##### -->
-<para>
-
-</para>
-
-@key: 
-@signature: 
-@hash: 
-@Returns: 
-
-
 <!-- ##### FUNCTION gnutls_pubkey_import ##### -->
 <para>
 
@@ -607,7 +596,7 @@ abstract
 @Returns: 
 
 
-<!-- ##### FUNCTION gnutls_pubkey_import_pkcs11_url ##### -->
+<!-- ##### MACRO gnutls_pubkey_import_pkcs11_url ##### -->
 <para>
 
 </para>
@@ -759,18 +748,6 @@ abstract
 <para>
 
 </para>
-
-
-<!-- ##### FUNCTION gnutls_pubkey_verify_data ##### -->
-<para>
-
-</para>
-
-@pubkey: 
-@flags: 
-@data: 
-@signature: 
-@Returns: 
 
 
 <!-- ##### FUNCTION gnutls_pubkey_verify_data2 ##### -->

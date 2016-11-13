@@ -1,14 +1,29 @@
 
+@subheading gnutls_certificate_get_trust_list
+@anchor{gnutls_certificate_get_trust_list}
+@deftypefun {void} {gnutls_certificate_get_trust_list} (gnutls_certificate_credentials_t @var{res}, gnutls_x509_trust_list_t * @var{tlist})
+@var{res}: is a @code{gnutls_certificate_credentials_t}  type.
+
+@var{tlist}: Location where to store the trust list.
+
+Obtains the list of trusted certificates stored in  @code{res} and writes a
+pointer to it to the location  @code{tlist} . The pointer will point to memory
+internal to  @code{res} , and must not be deinitialized. It will be automatically
+deallocated when the  @code{res} structure is deinitialized.
+
+@strong{Since:} 3.4.0
+@end deftypefun
+
 @subheading gnutls_certificate_set_trust_list
 @anchor{gnutls_certificate_set_trust_list}
 @deftypefun {void} {gnutls_certificate_set_trust_list} (gnutls_certificate_credentials_t @var{res}, gnutls_x509_trust_list_t @var{tlist}, unsigned @var{flags})
-@var{res}: is a @code{gnutls_certificate_credentials_t}  structure.
+@var{res}: is a @code{gnutls_certificate_credentials_t}  type.
 
-@var{tlist}: is a @code{gnutls_x509_trust_list_t}  structure
+@var{tlist}: is a @code{gnutls_x509_trust_list_t}  type
 
 @var{flags}: must be zero
 
-This function sets a trust list in the gnutls_certificate_credentials_t structure. 
+This function sets a trust list in the gnutls_certificate_credentials_t type. 
 
 Note that the  @code{tlist} will become part of the credentials 
 structure and must not be deallocated. It will be automatically deallocated 
@@ -19,249 +34,67 @@ when the  @code{res} structure is deinitialized.
 @strong{Since:} 3.2.2
 @end deftypefun
 
-@subheading gnutls_pkcs7_deinit
-@anchor{gnutls_pkcs7_deinit}
-@deftypefun {void} {gnutls_pkcs7_deinit} (gnutls_pkcs7_t @var{pkcs7})
-@var{pkcs7}: The structure to be initialized
+@subheading gnutls_pkcs8_info
+@anchor{gnutls_pkcs8_info}
+@deftypefun {int} {gnutls_pkcs8_info} (const gnutls_datum_t * @var{data}, gnutls_x509_crt_fmt_t @var{format}, unsigned int * @var{schema}, unsigned int * @var{cipher}, void * @var{salt}, unsigned int * @var{salt_size}, unsigned int * @var{iter_count}, char ** @var{oid})
+@var{data}: Holds the PKCS @code{8}  data
 
-This function will deinitialize a PKCS7 structure.
+@var{format}: the format of the PKCS @code{8}  data
+
+@var{schema}: indicate the schema as one of @code{gnutls_pkcs_encrypt_flags_t} 
+
+@var{cipher}: the cipher used as @code{gnutls_cipher_algorithm_t} 
+
+@var{salt}: PBKDF2 salt (if non-NULL then  @code{salt_size} initially holds its size)
+
+@var{salt_size}: PBKDF2 salt size
+
+@var{iter_count}: PBKDF2 iteration count
+
+@var{oid}: if non-NULL it will contain an allocated null-terminated variable with the OID
+
+This function will provide information on the algorithms used
+in a particular PKCS @code{8}  structure. If the structure algorithms
+are unknown the code @code{GNUTLS_E_UNKNOWN_CIPHER_TYPE}  will be returned,
+and only  @code{oid} , will be set. That is,  @code{oid} will be set on encrypted PKCS @code{8} 
+structures whether supported or not. It must be deinitialized using @code{gnutls_free()} .
+The other variables are only set on supported structures.
+
+@strong{Returns:} @code{GNUTLS_E_INVALID_REQUEST}  if the provided structure isn't encrypted,
+@code{GNUTLS_E_UNKNOWN_CIPHER_TYPE}  if the structure's encryption isn't supported, or
+another negative error code in case of a failure. Zero on success.
 @end deftypefun
 
-@subheading gnutls_pkcs7_delete_crl
-@anchor{gnutls_pkcs7_delete_crl}
-@deftypefun {int} {gnutls_pkcs7_delete_crl} (gnutls_pkcs7_t @var{pkcs7}, int @var{indx})
-@var{pkcs7}: should contain a @code{gnutls_pkcs7_t}  structure
+@subheading gnutls_pkcs_schema_get_name
+@anchor{gnutls_pkcs_schema_get_name}
+@deftypefun {const char *} {gnutls_pkcs_schema_get_name} (unsigned int @var{schema})
+@var{schema}: Holds the PKCS @code{12}  or PBES2 schema (@code{gnutls_pkcs_encrypt_flags_t} )
 
-@var{indx}: the index of the crl to delete
+This function will return a human readable description of the
+PKCS12 or PBES2 schema.
 
-This function will delete a crl from a PKCS7 or RFC2630 crl set.
-Index starts from 0. Returns 0 on success.
+@strong{Returns:} a constrant string or @code{NULL}  on error.
 
-@strong{Returns:} On success, @code{GNUTLS_E_SUCCESS}  (0) is returned, otherwise a
-negative error value.
+@strong{Since:} 3.4.0
 @end deftypefun
 
-@subheading gnutls_pkcs7_delete_crt
-@anchor{gnutls_pkcs7_delete_crt}
-@deftypefun {int} {gnutls_pkcs7_delete_crt} (gnutls_pkcs7_t @var{pkcs7}, int @var{indx})
-@var{pkcs7}: should contain a gnutls_pkcs7_t structure
+@subheading gnutls_pkcs_schema_get_oid
+@anchor{gnutls_pkcs_schema_get_oid}
+@deftypefun {const char *} {gnutls_pkcs_schema_get_oid} (unsigned int @var{schema})
+@var{schema}: Holds the PKCS @code{12}  or PBES2 schema (@code{gnutls_pkcs_encrypt_flags_t} )
 
-@var{indx}: the index of the certificate to delete
+This function will return the object identifier of the
+PKCS12 or PBES2 schema.
 
-This function will delete a certificate from a PKCS7 or RFC2630
-certificate set.  Index starts from 0. Returns 0 on success.
+@strong{Returns:} a constrant string or @code{NULL}  on error.
 
-@strong{Returns:} On success, @code{GNUTLS_E_SUCCESS}  (0) is returned, otherwise a
-negative error value.
-@end deftypefun
-
-@subheading gnutls_pkcs7_export
-@anchor{gnutls_pkcs7_export}
-@deftypefun {int} {gnutls_pkcs7_export} (gnutls_pkcs7_t @var{pkcs7}, gnutls_x509_crt_fmt_t @var{format}, void * @var{output_data}, size_t * @var{output_data_size})
-@var{pkcs7}: Holds the pkcs7 structure
-
-@var{format}: the format of output params. One of PEM or DER.
-
-@var{output_data}: will contain a structure PEM or DER encoded
-
-@var{output_data_size}: holds the size of output_data (and will be
-replaced by the actual size of parameters)
-
-This function will export the pkcs7 structure to DER or PEM format.
-
-If the buffer provided is not long enough to hold the output, then
-* @code{output_data_size} is updated and @code{GNUTLS_E_SHORT_MEMORY_BUFFER} 
-will be returned.
-
-If the structure is PEM encoded, it will have a header
-of "BEGIN PKCS7".
-
-@strong{Returns:} On success, @code{GNUTLS_E_SUCCESS}  (0) is returned, otherwise a
-negative error value.
-@end deftypefun
-
-@subheading gnutls_pkcs7_export2
-@anchor{gnutls_pkcs7_export2}
-@deftypefun {int} {gnutls_pkcs7_export2} (gnutls_pkcs7_t @var{pkcs7}, gnutls_x509_crt_fmt_t @var{format}, gnutls_datum_t * @var{out})
-@var{pkcs7}: Holds the pkcs7 structure
-
-@var{format}: the format of output params. One of PEM or DER.
-
-@var{out}: will contain a structure PEM or DER encoded
-
-This function will export the pkcs7 structure to DER or PEM format.
-
-The output buffer is allocated using @code{gnutls_malloc()} .
-
-If the structure is PEM encoded, it will have a header
-of "BEGIN PKCS7".
-
-@strong{Returns:} On success, @code{GNUTLS_E_SUCCESS}  (0) is returned, otherwise a
-negative error value.
-
-@strong{Since:} 3.1.3
-@end deftypefun
-
-@subheading gnutls_pkcs7_get_crl_count
-@anchor{gnutls_pkcs7_get_crl_count}
-@deftypefun {int} {gnutls_pkcs7_get_crl_count} (gnutls_pkcs7_t @var{pkcs7})
-@var{pkcs7}: should contain a gnutls_pkcs7_t structure
-
-This function will return the number of certifcates in the PKCS7
-or RFC2630 crl set.
-
-@strong{Returns:} On success, @code{GNUTLS_E_SUCCESS}  (0) is returned, otherwise a
-negative error value.
-@end deftypefun
-
-@subheading gnutls_pkcs7_get_crl_raw
-@anchor{gnutls_pkcs7_get_crl_raw}
-@deftypefun {int} {gnutls_pkcs7_get_crl_raw} (gnutls_pkcs7_t @var{pkcs7}, int @var{indx}, void * @var{crl}, size_t * @var{crl_size})
-@var{pkcs7}: should contain a @code{gnutls_pkcs7_t}  structure
-
-@var{indx}: contains the index of the crl to extract
-
-@var{crl}: the contents of the crl will be copied there (may be null)
-
-@var{crl_size}: should hold the size of the crl
-
-This function will return a crl of the PKCS7 or RFC2630 crl set.
-
-@strong{Returns:} On success, @code{GNUTLS_E_SUCCESS}  (0) is returned, otherwise a
-negative error value.  If the provided buffer is not long enough,
-then  @code{crl_size} is updated and @code{GNUTLS_E_SHORT_MEMORY_BUFFER}  is
-returned.  After the last crl has been read
-@code{GNUTLS_E_REQUESTED_DATA_NOT_AVAILABLE}  will be returned.
-@end deftypefun
-
-@subheading gnutls_pkcs7_get_crt_count
-@anchor{gnutls_pkcs7_get_crt_count}
-@deftypefun {int} {gnutls_pkcs7_get_crt_count} (gnutls_pkcs7_t @var{pkcs7})
-@var{pkcs7}: should contain a @code{gnutls_pkcs7_t}  structure
-
-This function will return the number of certifcates in the PKCS7
-or RFC2630 certificate set.
-
-@strong{Returns:} On success, @code{GNUTLS_E_SUCCESS}  (0) is returned, otherwise a
-negative error value.
-@end deftypefun
-
-@subheading gnutls_pkcs7_get_crt_raw
-@anchor{gnutls_pkcs7_get_crt_raw}
-@deftypefun {int} {gnutls_pkcs7_get_crt_raw} (gnutls_pkcs7_t @var{pkcs7}, int @var{indx}, void * @var{certificate}, size_t * @var{certificate_size})
-@var{pkcs7}: should contain a gnutls_pkcs7_t structure
-
-@var{indx}: contains the index of the certificate to extract
-
-@var{certificate}: the contents of the certificate will be copied
-there (may be null)
-
-@var{certificate_size}: should hold the size of the certificate
-
-This function will return a certificate of the PKCS7 or RFC2630
-certificate set.
-
-After the last certificate has been read
-@code{GNUTLS_E_REQUESTED_DATA_NOT_AVAILABLE}  will be returned.
-
-@strong{Returns:} On success, @code{GNUTLS_E_SUCCESS}  (0) is returned, otherwise a
-negative error value.  If the provided buffer is not long enough,
-then  @code{certificate_size} is updated and
-@code{GNUTLS_E_SHORT_MEMORY_BUFFER}  is returned.
-@end deftypefun
-
-@subheading gnutls_pkcs7_import
-@anchor{gnutls_pkcs7_import}
-@deftypefun {int} {gnutls_pkcs7_import} (gnutls_pkcs7_t @var{pkcs7}, const gnutls_datum_t * @var{data}, gnutls_x509_crt_fmt_t @var{format})
-@var{pkcs7}: The structure to store the parsed PKCS7.
-
-@var{data}: The DER or PEM encoded PKCS7.
-
-@var{format}: One of DER or PEM
-
-This function will convert the given DER or PEM encoded PKCS7 to
-the native @code{gnutls_pkcs7_t}  format.  The output will be stored in
- @code{pkcs7} .
-
-If the PKCS7 is PEM encoded it should have a header of "PKCS7".
-
-@strong{Returns:} On success, @code{GNUTLS_E_SUCCESS}  (0) is returned, otherwise a
-negative error value.
-@end deftypefun
-
-@subheading gnutls_pkcs7_init
-@anchor{gnutls_pkcs7_init}
-@deftypefun {int} {gnutls_pkcs7_init} (gnutls_pkcs7_t * @var{pkcs7})
-@var{pkcs7}: The structure to be initialized
-
-This function will initialize a PKCS7 structure. PKCS7 structures
-usually contain lists of X.509 Certificates and X.509 Certificate
-revocation lists.
-
-@strong{Returns:} On success, @code{GNUTLS_E_SUCCESS}  (0) is returned, otherwise a
-negative error value.
-@end deftypefun
-
-@subheading gnutls_pkcs7_set_crl
-@anchor{gnutls_pkcs7_set_crl}
-@deftypefun {int} {gnutls_pkcs7_set_crl} (gnutls_pkcs7_t @var{pkcs7}, gnutls_x509_crl_t @var{crl})
-@var{pkcs7}: should contain a @code{gnutls_pkcs7_t}  structure
-
-@var{crl}: the DER encoded crl to be added
-
-This function will add a parsed CRL to the PKCS7 or RFC2630 crl
-set.
-
-@strong{Returns:} On success, @code{GNUTLS_E_SUCCESS}  (0) is returned, otherwise a
-negative error value.
-@end deftypefun
-
-@subheading gnutls_pkcs7_set_crl_raw
-@anchor{gnutls_pkcs7_set_crl_raw}
-@deftypefun {int} {gnutls_pkcs7_set_crl_raw} (gnutls_pkcs7_t @var{pkcs7}, const gnutls_datum_t * @var{crl})
-@var{pkcs7}: should contain a @code{gnutls_pkcs7_t}  structure
-
-@var{crl}: the DER encoded crl to be added
-
-This function will add a crl to the PKCS7 or RFC2630 crl set.
-
-@strong{Returns:} On success, @code{GNUTLS_E_SUCCESS}  (0) is returned, otherwise a
-negative error value.
-@end deftypefun
-
-@subheading gnutls_pkcs7_set_crt
-@anchor{gnutls_pkcs7_set_crt}
-@deftypefun {int} {gnutls_pkcs7_set_crt} (gnutls_pkcs7_t @var{pkcs7}, gnutls_x509_crt_t @var{crt})
-@var{pkcs7}: should contain a @code{gnutls_pkcs7_t}  structure
-
-@var{crt}: the certificate to be copied.
-
-This function will add a parsed certificate to the PKCS7 or
-RFC2630 certificate set.  This is a wrapper function over
-@code{gnutls_pkcs7_set_crt_raw()}  .
-
-@strong{Returns:} On success, @code{GNUTLS_E_SUCCESS}  (0) is returned, otherwise a
-negative error value.
-@end deftypefun
-
-@subheading gnutls_pkcs7_set_crt_raw
-@anchor{gnutls_pkcs7_set_crt_raw}
-@deftypefun {int} {gnutls_pkcs7_set_crt_raw} (gnutls_pkcs7_t @var{pkcs7}, const gnutls_datum_t * @var{crt})
-@var{pkcs7}: should contain a @code{gnutls_pkcs7_t}  structure
-
-@var{crt}: the DER encoded certificate to be added
-
-This function will add a certificate to the PKCS7 or RFC2630
-certificate set.
-
-@strong{Returns:} On success, @code{GNUTLS_E_SUCCESS}  (0) is returned, otherwise a
-negative error value.
+@strong{Since:} 3.4.0
 @end deftypefun
 
 @subheading gnutls_subject_alt_names_deinit
 @anchor{gnutls_subject_alt_names_deinit}
 @deftypefun {void} {gnutls_subject_alt_names_deinit} (gnutls_subject_alt_names_t @var{sans})
-@var{sans}: The alternative names structure
+@var{sans}: The alternative names
 
 This function will deinitialize an alternative names structure.
 
@@ -271,7 +104,7 @@ This function will deinitialize an alternative names structure.
 @subheading gnutls_subject_alt_names_get
 @anchor{gnutls_subject_alt_names_get}
 @deftypefun {int} {gnutls_subject_alt_names_get} (gnutls_subject_alt_names_t @var{sans}, unsigned int @var{seq}, unsigned int * @var{san_type}, gnutls_datum_t * @var{san}, gnutls_datum_t * @var{othername_oid})
-@var{sans}: The alternative names structure
+@var{sans}: The alternative names
 
 @var{seq}: The index of the name to get
 
@@ -282,7 +115,7 @@ This function will deinitialize an alternative names structure.
 @var{othername_oid}: The object identifier if  @code{san_type} is @code{GNUTLS_SAN_OTHERNAME}  (should be treated as constant)
 
 This function will return a specific alternative name as stored in
-the  @code{sans} structure. The returned values should be treated as constant
+the  @code{sans} type. The returned values should be treated as constant
 and valid for the lifetime of  @code{sans} .
 
 @strong{Returns:} On success, @code{GNUTLS_E_SUCCESS}  (0) is returned, @code{GNUTLS_E_REQUESTED_DATA_NOT_AVAILABLE} 
@@ -294,7 +127,7 @@ if the index is out of bounds, otherwise a negative error value.
 @subheading gnutls_subject_alt_names_init
 @anchor{gnutls_subject_alt_names_init}
 @deftypefun {int} {gnutls_subject_alt_names_init} (gnutls_subject_alt_names_t * @var{sans})
-@var{sans}: The alternative names structure
+@var{sans}: The alternative names
 
 This function will initialize an alternative names structure.
 
@@ -306,7 +139,7 @@ This function will initialize an alternative names structure.
 @subheading gnutls_subject_alt_names_set
 @anchor{gnutls_subject_alt_names_set}
 @deftypefun {int} {gnutls_subject_alt_names_set} (gnutls_subject_alt_names_t @var{sans}, unsigned int @var{san_type}, const gnutls_datum_t * @var{san}, const char * @var{othername_oid})
-@var{sans}: The alternative names structure
+@var{sans}: The alternative names
 
 @var{san_type}: The type of the name (of @code{gnutls_subject_alt_names_t} )
 
@@ -315,7 +148,7 @@ This function will initialize an alternative names structure.
 @var{othername_oid}: The object identifier if  @code{san_type} is @code{GNUTLS_SAN_OTHERNAME} 
 
 This function will store the specified alternative name in
-the  @code{sans} structure.
+the  @code{sans} .
 
 @strong{Returns:} On success, @code{GNUTLS_E_SUCCESS}  (0), otherwise a negative error value.
 
@@ -325,9 +158,9 @@ the  @code{sans} structure.
 @subheading gnutls_x509_aia_deinit
 @anchor{gnutls_x509_aia_deinit}
 @deftypefun {void} {gnutls_x509_aia_deinit} (gnutls_x509_aia_t @var{aia})
-@var{aia}: The authority info access structure
+@var{aia}: The authority info access
 
-This function will deinitialize a CRL distribution points structure.
+This function will deinitialize an authority info access type.
 
 @strong{Since:} 3.3.0
 @end deftypefun
@@ -335,7 +168,7 @@ This function will deinitialize a CRL distribution points structure.
 @subheading gnutls_x509_aia_get
 @anchor{gnutls_x509_aia_get}
 @deftypefun {int} {gnutls_x509_aia_get} (gnutls_x509_aia_t @var{aia}, unsigned int @var{seq}, gnutls_datum_t * @var{oid}, unsigned * @var{san_type}, gnutls_datum_t * @var{san})
-@var{aia}: The authority info access structure
+@var{aia}: The authority info access
 
 @var{seq}: specifies the sequence number of the access descriptor (0 for the first one, 1 for the second etc.)
 
@@ -345,7 +178,7 @@ This function will deinitialize a CRL distribution points structure.
 
 @var{san}: the access location name; to be treated as constant (may be null).
 
-This function reads from the Authority Information Access structure.
+This function reads from the Authority Information Access type.
 
 The  @code{seq} input parameter is used to indicate which member of the
 sequence the caller is interested in.  The first member is 0, the
@@ -362,9 +195,9 @@ Typically  @code{oid} is @code{GNUTLS_OID_AD_CAISSUERS}  or @code{GNUTLS_OID_AD_
 @subheading gnutls_x509_aia_init
 @anchor{gnutls_x509_aia_init}
 @deftypefun {int} {gnutls_x509_aia_init} (gnutls_x509_aia_t * @var{aia})
-@var{aia}: The authority info access structure
+@var{aia}: The authority info access
 
-This function will initialize a CRL distribution points structure.
+This function will initialize an authority info access type.
 
 @strong{Returns:} On success, @code{GNUTLS_E_SUCCESS}  (0) is returned, otherwise a negative error value.
 
@@ -374,7 +207,7 @@ This function will initialize a CRL distribution points structure.
 @subheading gnutls_x509_aia_set
 @anchor{gnutls_x509_aia_set}
 @deftypefun {int} {gnutls_x509_aia_set} (gnutls_x509_aia_t @var{aia}, const char * @var{oid}, unsigned @var{san_type}, const gnutls_datum_t * @var{san})
-@var{aia}: The authority info access structure
+@var{aia}: The authority info access
 
 @var{oid}: the type of data.
 
@@ -383,7 +216,7 @@ This function will initialize a CRL distribution points structure.
 @var{san}: The alternative name data
 
 This function will store the specified alternative name in
-the  @code{aia} structure. 
+the  @code{aia} type. 
 
 Typically the value for  @code{oid} should be @code{GNUTLS_OID_AD_OCSP} , or
 @code{GNUTLS_OID_AD_CAISSUERS} .
@@ -396,9 +229,9 @@ Typically the value for  @code{oid} should be @code{GNUTLS_OID_AD_OCSP} , or
 @subheading gnutls_x509_aki_deinit
 @anchor{gnutls_x509_aki_deinit}
 @deftypefun {void} {gnutls_x509_aki_deinit} (gnutls_x509_aki_t @var{aki})
-@var{aki}: The authority key identifier structure
+@var{aki}: The authority key identifier type
 
-This function will deinitialize an authority key identifier structure.
+This function will deinitialize an authority key identifier.
 
 @strong{Since:} 3.3.0
 @end deftypefun
@@ -406,7 +239,7 @@ This function will deinitialize an authority key identifier structure.
 @subheading gnutls_x509_aki_get_cert_issuer
 @anchor{gnutls_x509_aki_get_cert_issuer}
 @deftypefun {int} {gnutls_x509_aki_get_cert_issuer} (gnutls_x509_aki_t @var{aki}, unsigned int @var{seq}, unsigned int * @var{san_type}, gnutls_datum_t * @var{san}, gnutls_datum_t * @var{othername_oid}, gnutls_datum_t * @var{serial})
-@var{aki}: The authority key ID structure
+@var{aki}: The authority key ID
 
 @var{seq}: The index of the name to get
 
@@ -419,7 +252,7 @@ This function will deinitialize an authority key identifier structure.
 @var{serial}: The authorityCertSerialNumber number
 
 This function will return a specific authorityCertIssuer name as stored in
-the  @code{aki} structure, as well as the authorityCertSerialNumber. All the returned
+the  @code{aki} type, as well as the authorityCertSerialNumber. All the returned
 values should be treated as constant, and may be set to @code{NULL}  when are not required.
 
 @strong{Returns:} On success, @code{GNUTLS_E_SUCCESS}  (0) is returned, @code{GNUTLS_E_REQUESTED_DATA_NOT_AVAILABLE} 
@@ -431,12 +264,12 @@ if the index is out of bounds, otherwise a negative error value.
 @subheading gnutls_x509_aki_get_id
 @anchor{gnutls_x509_aki_get_id}
 @deftypefun {int} {gnutls_x509_aki_get_id} (gnutls_x509_aki_t @var{aki}, gnutls_datum_t * @var{id})
-@var{aki}: The authority key ID structure
+@var{aki}: The authority key ID
 
 @var{id}: Will hold the identifier
 
 This function will return the key identifier as stored in
-the  @code{aki} structure. The identifier should be treated as constant.
+the  @code{aki} type. The identifier should be treated as constant.
 
 @strong{Returns:} On success, @code{GNUTLS_E_SUCCESS}  (0) is returned, @code{GNUTLS_E_REQUESTED_DATA_NOT_AVAILABLE} 
 if the index is out of bounds, otherwise a negative error value.
@@ -447,9 +280,9 @@ if the index is out of bounds, otherwise a negative error value.
 @subheading gnutls_x509_aki_init
 @anchor{gnutls_x509_aki_init}
 @deftypefun {int} {gnutls_x509_aki_init} (gnutls_x509_aki_t * @var{aki})
-@var{aki}: The authority key ID structure
+@var{aki}: The authority key ID type
 
-This function will initialize an authority key ID structure.
+This function will initialize an authority key ID.
 
 @strong{Returns:} On success, @code{GNUTLS_E_SUCCESS}  (0) is returned, otherwise a negative error value.
 
@@ -459,7 +292,7 @@ This function will initialize an authority key ID structure.
 @subheading gnutls_x509_aki_set_cert_issuer
 @anchor{gnutls_x509_aki_set_cert_issuer}
 @deftypefun {int} {gnutls_x509_aki_set_cert_issuer} (gnutls_x509_aki_t @var{aki}, unsigned int @var{san_type}, const gnutls_datum_t * @var{san}, const char * @var{othername_oid}, const gnutls_datum_t * @var{serial})
-@var{aki}: The authority key ID structure
+@var{aki}: The authority key ID
 
 @var{san_type}: the type of the name (of @code{gnutls_subject_alt_names_t} ), may be null
 
@@ -470,7 +303,7 @@ This function will initialize an authority key ID structure.
 @var{serial}: The authorityCertSerialNumber number (may be null)
 
 This function will set the authorityCertIssuer name and the authorityCertSerialNumber 
-to be stored in the  @code{aki} structure. When storing multiple names, the serial
+to be stored in the  @code{aki} type. When storing multiple names, the serial
 should be set on the first call, and subsequent calls should use a @code{NULL}  serial.
 
 @strong{Returns:} On success, @code{GNUTLS_E_SUCCESS}  (0) is returned, otherwise a negative error value.
@@ -481,11 +314,11 @@ should be set on the first call, and subsequent calls should use a @code{NULL}  
 @subheading gnutls_x509_aki_set_id
 @anchor{gnutls_x509_aki_set_id}
 @deftypefun {int} {gnutls_x509_aki_set_id} (gnutls_x509_aki_t @var{aki}, const gnutls_datum_t * @var{id})
-@var{aki}: The authority key ID structure
+@var{aki}: The authority key ID
 
 @var{id}: the key identifier
 
-This function will set the keyIdentifier to be stored in the  @code{aki} structure.
+This function will set the keyIdentifier to be stored in the  @code{aki} type.
 
 @strong{Returns:} On success, @code{GNUTLS_E_SUCCESS}  (0) is returned, otherwise a negative error value.
 
@@ -509,7 +342,7 @@ and false (0) if not.
 @subheading gnutls_x509_crl_deinit
 @anchor{gnutls_x509_crl_deinit}
 @deftypefun {void} {gnutls_x509_crl_deinit} (gnutls_x509_crl_t @var{crl})
-@var{crl}: The structure to be deinitialized
+@var{crl}: The data to be deinitialized
 
 This function will deinitialize a CRL structure.
 @end deftypefun
@@ -517,9 +350,9 @@ This function will deinitialize a CRL structure.
 @subheading gnutls_x509_crl_dist_points_deinit
 @anchor{gnutls_x509_crl_dist_points_deinit}
 @deftypefun {void} {gnutls_x509_crl_dist_points_deinit} (gnutls_x509_crl_dist_points_t @var{cdp})
-@var{cdp}: The CRL distribution points structure
+@var{cdp}: The CRL distribution points
 
-This function will deinitialize a CRL distribution points structure.
+This function will deinitialize a CRL distribution points type.
 
 @strong{Since:} 3.3.0
 @end deftypefun
@@ -527,7 +360,7 @@ This function will deinitialize a CRL distribution points structure.
 @subheading gnutls_x509_crl_dist_points_get
 @anchor{gnutls_x509_crl_dist_points_get}
 @deftypefun {int} {gnutls_x509_crl_dist_points_get} (gnutls_x509_crl_dist_points_t @var{cdp}, unsigned int @var{seq}, unsigned int * @var{type}, gnutls_datum_t * @var{san}, unsigned int * @var{reasons})
-@var{cdp}: The CRL distribution points structure
+@var{cdp}: The CRL distribution points
 
 @var{seq}: specifies the sequence number of the distribution point (0 for the first one, 1 for the second etc.)
 
@@ -538,7 +371,7 @@ This function will deinitialize a CRL distribution points structure.
 @var{reasons}: Revocation reasons. An ORed sequence of flags from @code{gnutls_x509_crl_reason_flags_t} .
 
 This function retrieves the individual CRL distribution points (2.5.29.31),
-contained in provided structure. 
+contained in provided type. 
 
 @strong{Returns:} On success, @code{GNUTLS_E_SUCCESS}  (0) is returned, @code{GNUTLS_E_REQUESTED_DATA_NOT_AVAILABLE} 
 if the index is out of bounds, otherwise a negative error value.
@@ -547,9 +380,9 @@ if the index is out of bounds, otherwise a negative error value.
 @subheading gnutls_x509_crl_dist_points_init
 @anchor{gnutls_x509_crl_dist_points_init}
 @deftypefun {int} {gnutls_x509_crl_dist_points_init} (gnutls_x509_crl_dist_points_t * @var{cdp})
-@var{cdp}: The CRL distribution points structure
+@var{cdp}: The CRL distribution points
 
-This function will initialize a CRL distribution points structure.
+This function will initialize a CRL distribution points type.
 
 @strong{Returns:} On success, @code{GNUTLS_E_SUCCESS}  (0) is returned, otherwise a negative error value.
 
@@ -559,7 +392,7 @@ This function will initialize a CRL distribution points structure.
 @subheading gnutls_x509_crl_dist_points_set
 @anchor{gnutls_x509_crl_dist_points_set}
 @deftypefun {int} {gnutls_x509_crl_dist_points_set} (gnutls_x509_crl_dist_points_t @var{cdp}, gnutls_x509_subject_alt_name_t @var{type}, const gnutls_datum_t * @var{san}, unsigned int @var{reasons})
-@var{cdp}: The CRL distribution points structure
+@var{cdp}: The CRL distribution points
 
 @var{type}: The type of the name (of @code{gnutls_subject_alt_names_t} )
 
@@ -567,8 +400,8 @@ This function will initialize a CRL distribution points structure.
 
 @var{reasons}: Revocation reasons. An ORed sequence of flags from @code{gnutls_x509_crl_reason_flags_t} .
 
-This function will store the specified CRL distibution point value
-the  @code{cdp} structure.
+This function will store the specified CRL distribution point value
+the  @code{cdp} type.
 
 @strong{Returns:} On success, @code{GNUTLS_E_SUCCESS}  (0), otherwise a negative error value.
 
@@ -624,7 +457,7 @@ Since 3.1.3
 @subheading gnutls_x509_crl_get_authority_key_gn_serial
 @anchor{gnutls_x509_crl_get_authority_key_gn_serial}
 @deftypefun {int} {gnutls_x509_crl_get_authority_key_gn_serial} (gnutls_x509_crl_t @var{crl}, unsigned int @var{seq}, void * @var{alt}, size_t * @var{alt_size}, unsigned int * @var{alt_type}, void * @var{serial}, size_t * @var{serial_size}, unsigned int * @var{critical})
-@var{crl}: should contain a @code{gnutls_x509_crl_t}  structure
+@var{crl}: should contain a @code{gnutls_x509_crl_t}  type
 
 @var{seq}: specifies the sequence number of the alt name (0 for the first one, 1 for the second etc.)
 
@@ -656,7 +489,7 @@ Because more than one general names might be stored
 @subheading gnutls_x509_crl_get_authority_key_id
 @anchor{gnutls_x509_crl_get_authority_key_id}
 @deftypefun {int} {gnutls_x509_crl_get_authority_key_id} (gnutls_x509_crl_t @var{crl}, void * @var{id}, size_t * @var{id_size}, unsigned int * @var{critical})
-@var{crl}: should contain a @code{gnutls_x509_crl_t}  structure
+@var{crl}: should contain a @code{gnutls_x509_crl_t}  type
 
 @var{id}: The place where the identifier will be copied
 
@@ -682,7 +515,7 @@ negative error code in case of an error.
 @subheading gnutls_x509_crl_get_crt_count
 @anchor{gnutls_x509_crl_get_crt_count}
 @deftypefun {int} {gnutls_x509_crl_get_crt_count} (gnutls_x509_crl_t @var{crl})
-@var{crl}: should contain a @code{gnutls_x509_crl_t}  structure
+@var{crl}: should contain a @code{gnutls_x509_crl_t}  type
 
 This function will return the number of revoked certificates in the
 given CRL.
@@ -693,7 +526,7 @@ given CRL.
 @subheading gnutls_x509_crl_get_crt_serial
 @anchor{gnutls_x509_crl_get_crt_serial}
 @deftypefun {int} {gnutls_x509_crl_get_crt_serial} (gnutls_x509_crl_t @var{crl}, int @var{indx}, unsigned char * @var{serial}, size_t * @var{serial_size}, time_t * @var{t})
-@var{crl}: should contain a @code{gnutls_x509_crl_t}  structure
+@var{crl}: should contain a @code{gnutls_x509_crl_t}  type
 
 @var{indx}: the index of the certificate to extract (starting from 0)
 
@@ -716,11 +549,11 @@ negative error value.
 @subheading gnutls_x509_crl_get_dn_oid
 @anchor{gnutls_x509_crl_get_dn_oid}
 @deftypefun {int} {gnutls_x509_crl_get_dn_oid} (gnutls_x509_crl_t @var{crl}, int @var{indx}, void * @var{oid}, size_t * @var{sizeof_oid})
-@var{crl}: should contain a gnutls_x509_crl_t structure
+@var{crl}: should contain a gnutls_x509_crl_t type
 
 @var{indx}: Specifies which DN OID to send. Use (0) to get the first one.
 
-@var{oid}: a pointer to a structure to hold the name (may be null)
+@var{oid}: a pointer to store the OID (may be null)
 
 @var{sizeof_oid}: initially holds the size of 'oid'
 
@@ -737,7 +570,7 @@ with the required size.  On success 0 is returned.
 @subheading gnutls_x509_crl_get_extension_data
 @anchor{gnutls_x509_crl_get_extension_data}
 @deftypefun {int} {gnutls_x509_crl_get_extension_data} (gnutls_x509_crl_t @var{crl}, int @var{indx}, void * @var{data}, size_t * @var{sizeof_data})
-@var{crl}: should contain a @code{gnutls_x509_crl_t}  structure
+@var{crl}: should contain a @code{gnutls_x509_crl_t}  type
 
 @var{indx}: Specifies which extension OID to send. Use (0) to get the first one.
 
@@ -765,7 +598,7 @@ will be returned.
 @subheading gnutls_x509_crl_get_extension_data2
 @anchor{gnutls_x509_crl_get_extension_data2}
 @deftypefun {int} {gnutls_x509_crl_get_extension_data2} (gnutls_x509_crl_t @var{crl}, unsigned @var{indx}, gnutls_datum_t * @var{data})
-@var{crl}: should contain a @code{gnutls_x509_crl_t}  structure
+@var{crl}: should contain a @code{gnutls_x509_crl_t}  type
 
 @var{indx}: Specifies which extension OID to read. Use (0) to get the first one.
 
@@ -786,11 +619,11 @@ will be returned.
 @subheading gnutls_x509_crl_get_extension_info
 @anchor{gnutls_x509_crl_get_extension_info}
 @deftypefun {int} {gnutls_x509_crl_get_extension_info} (gnutls_x509_crl_t @var{crl}, int @var{indx}, void * @var{oid}, size_t * @var{sizeof_oid}, unsigned int * @var{critical})
-@var{crl}: should contain a @code{gnutls_x509_crl_t}  structure
+@var{crl}: should contain a @code{gnutls_x509_crl_t}  type
 
 @var{indx}: Specifies which extension OID to send, use (0) to get the first one.
 
-@var{oid}: a pointer to a structure to hold the OID
+@var{oid}: a pointer to store the OID
 
 @var{sizeof_oid}: initially holds the maximum size of  @code{oid} , on return
 holds actual size of  @code{oid} .
@@ -817,11 +650,11 @@ will be returned.
 @subheading gnutls_x509_crl_get_extension_oid
 @anchor{gnutls_x509_crl_get_extension_oid}
 @deftypefun {int} {gnutls_x509_crl_get_extension_oid} (gnutls_x509_crl_t @var{crl}, int @var{indx}, void * @var{oid}, size_t * @var{sizeof_oid})
-@var{crl}: should contain a @code{gnutls_x509_crl_t}  structure
+@var{crl}: should contain a @code{gnutls_x509_crl_t}  type
 
 @var{indx}: Specifies which extension OID to send, use (0) to get the first one.
 
-@var{oid}: a pointer to a structure to hold the OID (may be null)
+@var{oid}: a pointer to store the OID (may be null)
 
 @var{sizeof_oid}: initially holds the size of  @code{oid} 
 
@@ -840,7 +673,7 @@ will be returned.
 @subheading gnutls_x509_crl_get_issuer_dn
 @anchor{gnutls_x509_crl_get_issuer_dn}
 @deftypefun {int} {gnutls_x509_crl_get_issuer_dn} (const gnutls_x509_crl_t @var{crl}, char * @var{buf}, size_t * @var{sizeof_buf})
-@var{crl}: should contain a gnutls_x509_crl_t structure
+@var{crl}: should contain a gnutls_x509_crl_t type
 
 @var{buf}: a pointer to a structure to hold the peer's name (may be null)
 
@@ -861,7 +694,7 @@ with the required size, and 0 on success.
 @subheading gnutls_x509_crl_get_issuer_dn2
 @anchor{gnutls_x509_crl_get_issuer_dn2}
 @deftypefun {int} {gnutls_x509_crl_get_issuer_dn2} (gnutls_x509_crl_t @var{crl}, gnutls_datum_t * @var{dn})
-@var{crl}: should contain a @code{gnutls_x509_crl_t}  structure
+@var{crl}: should contain a @code{gnutls_x509_crl_t}  type
 
 @var{dn}: a pointer to a structure to hold the name
 
@@ -879,7 +712,7 @@ negative error value.
 @subheading gnutls_x509_crl_get_issuer_dn_by_oid
 @anchor{gnutls_x509_crl_get_issuer_dn_by_oid}
 @deftypefun {int} {gnutls_x509_crl_get_issuer_dn_by_oid} (gnutls_x509_crl_t @var{crl}, const char * @var{oid}, int @var{indx}, unsigned int @var{raw_flag}, void * @var{buf}, size_t * @var{sizeof_buf})
-@var{crl}: should contain a gnutls_x509_crl_t structure
+@var{crl}: should contain a gnutls_x509_crl_t type
 
 @var{oid}: holds an Object Identified in null terminated string
 
@@ -912,7 +745,7 @@ with the required size, and 0 on success.
 @subheading gnutls_x509_crl_get_next_update
 @anchor{gnutls_x509_crl_get_next_update}
 @deftypefun {time_t} {gnutls_x509_crl_get_next_update} (gnutls_x509_crl_t @var{crl})
-@var{crl}: should contain a @code{gnutls_x509_crl_t}  structure
+@var{crl}: should contain a @code{gnutls_x509_crl_t}  type
 
 This function will return the time the next CRL will be issued.
 This field is optional in a CRL so it might be normal to get an
@@ -924,7 +757,7 @@ error instead.
 @subheading gnutls_x509_crl_get_number
 @anchor{gnutls_x509_crl_get_number}
 @deftypefun {int} {gnutls_x509_crl_get_number} (gnutls_x509_crl_t @var{crl}, void * @var{ret}, size_t * @var{ret_size}, unsigned int * @var{critical})
-@var{crl}: should contain a @code{gnutls_x509_crl_t}  structure
+@var{crl}: should contain a @code{gnutls_x509_crl_t}  type
 
 @var{ret}: The place where the number will be copied
 
@@ -945,7 +778,7 @@ negative error code in case of an error.
 @subheading gnutls_x509_crl_get_raw_issuer_dn
 @anchor{gnutls_x509_crl_get_raw_issuer_dn}
 @deftypefun {int} {gnutls_x509_crl_get_raw_issuer_dn} (gnutls_x509_crl_t @var{crl}, gnutls_datum_t * @var{dn})
-@var{crl}: should contain a gnutls_x509_crl_t structure
+@var{crl}: should contain a gnutls_x509_crl_t type
 
 @var{dn}: will hold the starting point of the DN
 
@@ -960,7 +793,7 @@ and the length.
 @subheading gnutls_x509_crl_get_signature
 @anchor{gnutls_x509_crl_get_signature}
 @deftypefun {int} {gnutls_x509_crl_get_signature} (gnutls_x509_crl_t @var{crl}, char * @var{sig}, size_t * @var{sizeof_sig})
-@var{crl}: should contain a gnutls_x509_crl_t structure
+@var{crl}: should contain a gnutls_x509_crl_t type
 
 @var{sig}: a pointer where the signature part will be copied (may be null).
 
@@ -975,7 +808,7 @@ negative error value.
 @subheading gnutls_x509_crl_get_signature_algorithm
 @anchor{gnutls_x509_crl_get_signature_algorithm}
 @deftypefun {int} {gnutls_x509_crl_get_signature_algorithm} (gnutls_x509_crl_t @var{crl})
-@var{crl}: should contain a @code{gnutls_x509_crl_t}  structure
+@var{crl}: should contain a @code{gnutls_x509_crl_t}  type
 
 This function will return a value of the @code{gnutls_sign_algorithm_t} 
 enumeration that is the signature algorithm.
@@ -987,7 +820,7 @@ negative error value.
 @subheading gnutls_x509_crl_get_this_update
 @anchor{gnutls_x509_crl_get_this_update}
 @deftypefun {time_t} {gnutls_x509_crl_get_this_update} (gnutls_x509_crl_t @var{crl})
-@var{crl}: should contain a @code{gnutls_x509_crl_t}  structure
+@var{crl}: should contain a @code{gnutls_x509_crl_t}  type
 
 This function will return the time this CRL was issued.
 
@@ -997,7 +830,7 @@ This function will return the time this CRL was issued.
 @subheading gnutls_x509_crl_get_version
 @anchor{gnutls_x509_crl_get_version}
 @deftypefun {int} {gnutls_x509_crl_get_version} (gnutls_x509_crl_t @var{crl})
-@var{crl}: should contain a @code{gnutls_x509_crl_t}  structure
+@var{crl}: should contain a @code{gnutls_x509_crl_t}  type
 
 This function will return the version of the specified CRL.
 
@@ -1007,7 +840,7 @@ This function will return the version of the specified CRL.
 @subheading gnutls_x509_crl_import
 @anchor{gnutls_x509_crl_import}
 @deftypefun {int} {gnutls_x509_crl_import} (gnutls_x509_crl_t @var{crl}, const gnutls_datum_t * @var{data}, gnutls_x509_crt_fmt_t @var{format})
-@var{crl}: The structure to store the parsed CRL.
+@var{crl}: The data to store the parsed CRL.
 
 @var{data}: The DER or PEM encoded CRL.
 
@@ -1025,7 +858,7 @@ negative error value.
 @subheading gnutls_x509_crl_init
 @anchor{gnutls_x509_crl_init}
 @deftypefun {int} {gnutls_x509_crl_init} (gnutls_x509_crl_t * @var{crl})
-@var{crl}: The structure to be initialized
+@var{crl}: A pointer to the type to be initialized
 
 This function will initialize a CRL structure. CRL stands for
 Certificate Revocation List. A revocation list usually contains
@@ -1040,7 +873,7 @@ negative error value.
 @subheading gnutls_x509_crl_iter_crt_serial
 @anchor{gnutls_x509_crl_iter_crt_serial}
 @deftypefun {int} {gnutls_x509_crl_iter_crt_serial} (gnutls_x509_crl_t @var{crl}, gnutls_x509_crl_iter_t * @var{iter}, unsigned char * @var{serial}, size_t * @var{serial_size}, time_t * @var{t})
-@var{crl}: should contain a @code{gnutls_x509_crl_t}  structure
+@var{crl}: should contain a @code{gnutls_x509_crl_t}  type
 
 @var{iter}: A pointer to an iterator (initially the iterator should be @code{NULL} )
 
@@ -1067,15 +900,15 @@ negative error value.
 @subheading gnutls_x509_crl_iter_deinit
 @anchor{gnutls_x509_crl_iter_deinit}
 @deftypefun {void} {gnutls_x509_crl_iter_deinit} (gnutls_x509_crl_iter_t @var{iter})
-@var{iter}: The iterator structure to be deinitialized
+@var{iter}: The iterator to be deinitialized
 
-This function will deinitialize an iterator structure.
+This function will deinitialize an iterator type.
 @end deftypefun
 
 @subheading gnutls_x509_crl_list_import
 @anchor{gnutls_x509_crl_list_import}
 @deftypefun {int} {gnutls_x509_crl_list_import} (gnutls_x509_crl_t * @var{crls}, unsigned int * @var{crl_max}, const gnutls_datum_t * @var{data}, gnutls_x509_crt_fmt_t @var{format}, unsigned int @var{flags})
-@var{crls}: The structures to store the parsed CRLs. Must not be initialized.
+@var{crls}: Indicates where the parsed CRLs will be copied to. Must not be initialized.
 
 @var{crl_max}: Initially must hold the maximum number of crls. It will be updated with the number of crls available.
 
@@ -1099,7 +932,7 @@ If the Certificate is PEM encoded it should have a header of "X509 CRL".
 @subheading gnutls_x509_crl_list_import2
 @anchor{gnutls_x509_crl_list_import2}
 @deftypefun {int} {gnutls_x509_crl_list_import2} (gnutls_x509_crl_t ** @var{crls}, unsigned int * @var{size}, const gnutls_datum_t * @var{data}, gnutls_x509_crt_fmt_t @var{format}, unsigned int @var{flags})
-@var{crls}: The structures to store the parsed crl list. Must not be initialized.
+@var{crls}: Will contain the parsed crl list.
 
 @var{size}: It will contain the size of the list.
 
@@ -1124,7 +957,7 @@ CRL".
 @subheading gnutls_x509_crl_print
 @anchor{gnutls_x509_crl_print}
 @deftypefun {int} {gnutls_x509_crl_print} (gnutls_x509_crl_t @var{crl}, gnutls_certificate_print_formats_t @var{format}, gnutls_datum_t * @var{out})
-@var{crl}: The structure to be printed
+@var{crl}: The data to be printed
 
 @var{format}: Indicate the format to use
 
@@ -1162,7 +995,7 @@ negative error value.
 @subheading gnutls_x509_crl_set_crt
 @anchor{gnutls_x509_crl_set_crt}
 @deftypefun {int} {gnutls_x509_crl_set_crt} (gnutls_x509_crl_t @var{crl}, gnutls_x509_crt_t @var{crt}, time_t @var{revocation_time})
-@var{crl}: should contain a gnutls_x509_crl_t structure
+@var{crl}: should contain a gnutls_x509_crl_t type
 
 @var{crt}: a certificate of type @code{gnutls_x509_crt_t}  with the revoked certificate
 
@@ -1177,7 +1010,7 @@ negative error value.
 @subheading gnutls_x509_crl_set_crt_serial
 @anchor{gnutls_x509_crl_set_crt_serial}
 @deftypefun {int} {gnutls_x509_crl_set_crt_serial} (gnutls_x509_crl_t @var{crl}, const void * @var{serial}, size_t @var{serial_size}, time_t @var{revocation_time})
-@var{crl}: should contain a gnutls_x509_crl_t structure
+@var{crl}: should contain a gnutls_x509_crl_t type
 
 @var{serial}: The revoked certificate's serial number
 
@@ -1194,7 +1027,7 @@ negative error value.
 @subheading gnutls_x509_crl_set_next_update
 @anchor{gnutls_x509_crl_set_next_update}
 @deftypefun {int} {gnutls_x509_crl_set_next_update} (gnutls_x509_crl_t @var{crl}, time_t @var{exp_time})
-@var{crl}: should contain a gnutls_x509_crl_t structure
+@var{crl}: should contain a gnutls_x509_crl_t type
 
 @var{exp_time}: The actual time
 
@@ -1226,7 +1059,7 @@ negative error value.
 @subheading gnutls_x509_crl_set_this_update
 @anchor{gnutls_x509_crl_set_this_update}
 @deftypefun {int} {gnutls_x509_crl_set_this_update} (gnutls_x509_crl_t @var{crl}, time_t @var{act_time})
-@var{crl}: should contain a gnutls_x509_crl_t structure
+@var{crl}: should contain a gnutls_x509_crl_t type
 
 @var{act_time}: The actual time
 
@@ -1239,7 +1072,7 @@ negative error value.
 @subheading gnutls_x509_crl_set_version
 @anchor{gnutls_x509_crl_set_version}
 @deftypefun {int} {gnutls_x509_crl_set_version} (gnutls_x509_crl_t @var{crl}, unsigned int @var{version})
-@var{crl}: should contain a gnutls_x509_crl_t structure
+@var{crl}: should contain a gnutls_x509_crl_t type
 
 @var{version}: holds the version number. For CRLv1 crls must be 1.
 
@@ -1254,7 +1087,7 @@ negative error value.
 @subheading gnutls_x509_crl_sign2
 @anchor{gnutls_x509_crl_sign2}
 @deftypefun {int} {gnutls_x509_crl_sign2} (gnutls_x509_crl_t @var{crl}, gnutls_x509_crt_t @var{issuer}, gnutls_x509_privkey_t @var{issuer_key}, gnutls_digest_algorithm_t @var{dig}, unsigned int @var{flags})
-@var{crl}: should contain a gnutls_x509_crl_t structure
+@var{crl}: should contain a gnutls_x509_crl_t type
 
 @var{issuer}: is the certificate of the certificate issuer
 
@@ -1303,7 +1136,7 @@ negative error value.
 @subheading gnutls_x509_crq_deinit
 @anchor{gnutls_x509_crq_deinit}
 @deftypefun {void} {gnutls_x509_crq_deinit} (gnutls_x509_crq_t @var{crq})
-@var{crq}: The structure to be initialized
+@var{crq}: the type to be deinitialized
 
 This function will deinitialize a PKCS@code{10}  certificate request
 structure.
@@ -1312,7 +1145,7 @@ structure.
 @subheading gnutls_x509_crq_export
 @anchor{gnutls_x509_crq_export}
 @deftypefun {int} {gnutls_x509_crq_export} (gnutls_x509_crq_t @var{crq}, gnutls_x509_crt_fmt_t @var{format}, void * @var{output_data}, size_t * @var{output_data_size})
-@var{crq}: should contain a @code{gnutls_x509_crq_t}  structure
+@var{crq}: should contain a @code{gnutls_x509_crq_t}  type
 
 @var{format}: the format of output params. One of PEM or DER.
 
@@ -1338,7 +1171,7 @@ negative error value.
 @subheading gnutls_x509_crq_export2
 @anchor{gnutls_x509_crq_export2}
 @deftypefun {int} {gnutls_x509_crq_export2} (gnutls_x509_crq_t @var{crq}, gnutls_x509_crt_fmt_t @var{format}, gnutls_datum_t * @var{out})
-@var{crq}: should contain a @code{gnutls_x509_crq_t}  structure
+@var{crq}: should contain a @code{gnutls_x509_crq_t}  type
 
 @var{format}: the format of output params. One of PEM or DER.
 
@@ -1361,7 +1194,7 @@ Since 3.1.3
 @subheading gnutls_x509_crq_get_attribute_by_oid
 @anchor{gnutls_x509_crq_get_attribute_by_oid}
 @deftypefun {int} {gnutls_x509_crq_get_attribute_by_oid} (gnutls_x509_crq_t @var{crq}, const char * @var{oid}, int @var{indx}, void * @var{buf}, size_t * @var{buf_size})
-@var{crq}: should contain a @code{gnutls_x509_crq_t}  structure
+@var{crq}: should contain a @code{gnutls_x509_crq_t}  type
 
 @var{oid}: holds an Object Identifier in null-terminated string
 
@@ -1386,7 +1219,7 @@ negative error value.
 @subheading gnutls_x509_crq_get_attribute_data
 @anchor{gnutls_x509_crq_get_attribute_data}
 @deftypefun {int} {gnutls_x509_crq_get_attribute_data} (gnutls_x509_crq_t @var{crq}, int @var{indx}, void * @var{data}, size_t * @var{sizeof_data})
-@var{crq}: should contain a @code{gnutls_x509_crq_t}  structure
+@var{crq}: should contain a @code{gnutls_x509_crq_t}  type
 
 @var{indx}: Specifies which attribute number to get. Use (0) to get the first one.
 
@@ -1414,7 +1247,7 @@ will be returned.
 @subheading gnutls_x509_crq_get_attribute_info
 @anchor{gnutls_x509_crq_get_attribute_info}
 @deftypefun {int} {gnutls_x509_crq_get_attribute_info} (gnutls_x509_crq_t @var{crq}, int @var{indx}, void * @var{oid}, size_t * @var{sizeof_oid})
-@var{crq}: should contain a @code{gnutls_x509_crq_t}  structure
+@var{crq}: should contain a @code{gnutls_x509_crq_t}  type
 
 @var{indx}: Specifies which attribute number to get. Use (0) to get the first one.
 
@@ -1443,7 +1276,7 @@ will be returned.
 @subheading gnutls_x509_crq_get_basic_constraints
 @anchor{gnutls_x509_crq_get_basic_constraints}
 @deftypefun {int} {gnutls_x509_crq_get_basic_constraints} (gnutls_x509_crq_t @var{crq}, unsigned int * @var{critical}, unsigned int * @var{ca}, int * @var{pathlen})
-@var{crq}: should contain a @code{gnutls_x509_crq_t}  structure
+@var{crq}: should contain a @code{gnutls_x509_crq_t}  type
 
 @var{critical}: will be non-zero if the extension is marked as critical
 
@@ -1470,7 +1303,7 @@ certificate does not contain the basicConstraints extension
 @subheading gnutls_x509_crq_get_challenge_password
 @anchor{gnutls_x509_crq_get_challenge_password}
 @deftypefun {int} {gnutls_x509_crq_get_challenge_password} (gnutls_x509_crq_t @var{crq}, char * @var{pass}, size_t * @var{pass_size})
-@var{crq}: should contain a @code{gnutls_x509_crq_t}  structure
+@var{crq}: should contain a @code{gnutls_x509_crq_t}  type
 
 @var{pass}: will hold a (0)-terminated password string
 
@@ -1487,7 +1320,7 @@ negative error value.
 @subheading gnutls_x509_crq_get_dn
 @anchor{gnutls_x509_crq_get_dn}
 @deftypefun {int} {gnutls_x509_crq_get_dn} (gnutls_x509_crq_t @var{crq}, char * @var{buf}, size_t * @var{buf_size})
-@var{crq}: should contain a @code{gnutls_x509_crq_t}  structure
+@var{crq}: should contain a @code{gnutls_x509_crq_t}  type
 
 @var{buf}: a pointer to a structure to hold the name (may be @code{NULL} )
 
@@ -1507,7 +1340,7 @@ the required size.  On success 0 is returned.
 @subheading gnutls_x509_crq_get_dn2
 @anchor{gnutls_x509_crq_get_dn2}
 @deftypefun {int} {gnutls_x509_crq_get_dn2} (gnutls_x509_crq_t @var{crq}, gnutls_datum_t * @var{dn})
-@var{crq}: should contain a @code{gnutls_x509_crq_t}  structure
+@var{crq}: should contain a @code{gnutls_x509_crq_t}  type
 
 @var{dn}: a pointer to a structure to hold the name
 
@@ -1525,7 +1358,7 @@ negative error value. and a negative error code on error.
 @subheading gnutls_x509_crq_get_dn_by_oid
 @anchor{gnutls_x509_crq_get_dn_by_oid}
 @deftypefun {int} {gnutls_x509_crq_get_dn_by_oid} (gnutls_x509_crq_t @var{crq}, const char * @var{oid}, int @var{indx}, unsigned int @var{raw_flag}, void * @var{buf}, size_t * @var{buf_size})
-@var{crq}: should contain a gnutls_x509_crq_t structure
+@var{crq}: should contain a gnutls_x509_crq_t type
 
 @var{oid}: holds an Object Identifier in a null terminated string
 
@@ -1557,7 +1390,7 @@ updated with the required size.  On success 0 is returned.
 @subheading gnutls_x509_crq_get_dn_oid
 @anchor{gnutls_x509_crq_get_dn_oid}
 @deftypefun {int} {gnutls_x509_crq_get_dn_oid} (gnutls_x509_crq_t @var{crq}, int @var{indx}, void * @var{oid}, size_t * @var{sizeof_oid})
-@var{crq}: should contain a gnutls_x509_crq_t structure
+@var{crq}: should contain a gnutls_x509_crq_t type
 
 @var{indx}: Specifies which DN OID to get. Use (0) to get the first one.
 
@@ -1576,7 +1409,7 @@ updated with the required size.  On success 0 is returned.
 @subheading gnutls_x509_crq_get_extension_by_oid
 @anchor{gnutls_x509_crq_get_extension_by_oid}
 @deftypefun {int} {gnutls_x509_crq_get_extension_by_oid} (gnutls_x509_crq_t @var{crq}, const char * @var{oid}, int @var{indx}, void * @var{buf}, size_t * @var{buf_size}, unsigned int * @var{critical})
-@var{crq}: should contain a @code{gnutls_x509_crq_t}  structure
+@var{crq}: should contain a @code{gnutls_x509_crq_t}  type
 
 @var{oid}: holds an Object Identifier in a null terminated string
 
@@ -1604,7 +1437,7 @@ contain the specified extension
 @subheading gnutls_x509_crq_get_extension_by_oid2
 @anchor{gnutls_x509_crq_get_extension_by_oid2}
 @deftypefun {int} {gnutls_x509_crq_get_extension_by_oid2} (gnutls_x509_crq_t @var{crq}, const char * @var{oid}, int @var{indx}, gnutls_datum_t * @var{output}, unsigned int * @var{critical})
-@var{crq}: should contain a @code{gnutls_x509_crq_t}  structure
+@var{crq}: should contain a @code{gnutls_x509_crq_t}  type
 
 @var{oid}: holds an Object Identifier in a null terminated string
 
@@ -1630,7 +1463,7 @@ contain the specified extension
 @subheading gnutls_x509_crq_get_extension_data
 @anchor{gnutls_x509_crq_get_extension_data}
 @deftypefun {int} {gnutls_x509_crq_get_extension_data} (gnutls_x509_crq_t @var{crq}, int @var{indx}, void * @var{data}, size_t * @var{sizeof_data})
-@var{crq}: should contain a @code{gnutls_x509_crq_t}  structure
+@var{crq}: should contain a @code{gnutls_x509_crq_t}  type
 
 @var{indx}: Specifies which extension number to get. Use (0) to get the first one.
 
@@ -1658,7 +1491,7 @@ will be returned.
 @subheading gnutls_x509_crq_get_extension_data2
 @anchor{gnutls_x509_crq_get_extension_data2}
 @deftypefun {int} {gnutls_x509_crq_get_extension_data2} (gnutls_x509_crq_t @var{crq}, unsigned @var{indx}, gnutls_datum_t * @var{data})
-@var{crq}: should contain a @code{gnutls_x509_crq_t}  structure
+@var{crq}: should contain a @code{gnutls_x509_crq_t}  type
 
 @var{indx}: Specifies which extension OID to read. Use (0) to get the first one.
 
@@ -1681,11 +1514,11 @@ will be returned.
 @subheading gnutls_x509_crq_get_extension_info
 @anchor{gnutls_x509_crq_get_extension_info}
 @deftypefun {int} {gnutls_x509_crq_get_extension_info} (gnutls_x509_crq_t @var{crq}, int @var{indx}, void * @var{oid}, size_t * @var{sizeof_oid}, unsigned int * @var{critical})
-@var{crq}: should contain a @code{gnutls_x509_crq_t}  structure
+@var{crq}: should contain a @code{gnutls_x509_crq_t}  type
 
 @var{indx}: Specifies which extension number to get. Use (0) to get the first one.
 
-@var{oid}: a pointer to a structure to hold the OID
+@var{oid}: a pointer to store the OID
 
 @var{sizeof_oid}: initially holds the maximum size of  @code{oid} , on return
 holds actual size of  @code{oid} .
@@ -1714,7 +1547,7 @@ will be returned.
 @deftypefun {int} {gnutls_x509_crq_get_key_id} (gnutls_x509_crq_t @var{crq}, unsigned int @var{flags}, unsigned char * @var{output_data}, size_t * @var{output_data_size})
 @var{crq}: a certificate of type @code{gnutls_x509_crq_t} 
 
-@var{flags}: should be 0 for now
+@var{flags}: should be one of the flags from @code{gnutls_keyid_flags_t} 
 
 @var{output_data}: will contain the key ID
 
@@ -1739,11 +1572,11 @@ returned, and 0 on success.
 @subheading gnutls_x509_crq_get_key_purpose_oid
 @anchor{gnutls_x509_crq_get_key_purpose_oid}
 @deftypefun {int} {gnutls_x509_crq_get_key_purpose_oid} (gnutls_x509_crq_t @var{crq}, int @var{indx}, void * @var{oid}, size_t * @var{sizeof_oid}, unsigned int * @var{critical})
-@var{crq}: should contain a @code{gnutls_x509_crq_t}  structure
+@var{crq}: should contain a @code{gnutls_x509_crq_t}  type
 
 @var{indx}: This specifies which OID to return, use (0) to get the first one
 
-@var{oid}: a pointer to a buffer to hold the OID (may be @code{NULL} )
+@var{oid}: a pointer to store the OID (may be @code{NULL} )
 
 @var{sizeof_oid}: initially holds the size of  @code{oid} 
 
@@ -1783,7 +1616,7 @@ negative error value.
 @subheading gnutls_x509_crq_get_key_usage
 @anchor{gnutls_x509_crq_get_key_usage}
 @deftypefun {int} {gnutls_x509_crq_get_key_usage} (gnutls_x509_crq_t @var{crq}, unsigned int * @var{key_usage}, unsigned int * @var{critical})
-@var{crq}: should contain a @code{gnutls_x509_crq_t}  structure
+@var{crq}: should contain a @code{gnutls_x509_crq_t}  type
 
 @var{key_usage}: where the key usage bits will be stored
 
@@ -1808,7 +1641,7 @@ returned.
 @subheading gnutls_x509_crq_get_pk_algorithm
 @anchor{gnutls_x509_crq_get_pk_algorithm}
 @deftypefun {int} {gnutls_x509_crq_get_pk_algorithm} (gnutls_x509_crq_t @var{crq}, unsigned int * @var{bits})
-@var{crq}: should contain a @code{gnutls_x509_crq_t}  structure
+@var{crq}: should contain a @code{gnutls_x509_crq_t}  type
 
 @var{bits}: if bits is non-@code{NULL}  it will hold the size of the parameters' in bits
 
@@ -1826,7 +1659,7 @@ success, or a negative error code on error.
 @subheading gnutls_x509_crq_get_private_key_usage_period
 @anchor{gnutls_x509_crq_get_private_key_usage_period}
 @deftypefun {int} {gnutls_x509_crq_get_private_key_usage_period} (gnutls_x509_crq_t @var{crq}, time_t * @var{activation}, time_t * @var{expiration}, unsigned int * @var{critical})
-@var{crq}: should contain a @code{gnutls_x509_crq_t}  structure
+@var{crq}: should contain a @code{gnutls_x509_crq_t}  type
 
 @var{activation}: The activation time
 
@@ -1841,10 +1674,25 @@ times of the private key of the certificate.
 if the extension is not present, otherwise a negative error value.
 @end deftypefun
 
+@subheading gnutls_x509_crq_get_signature_algorithm
+@anchor{gnutls_x509_crq_get_signature_algorithm}
+@deftypefun {int} {gnutls_x509_crq_get_signature_algorithm} (gnutls_x509_crq_t @var{crq})
+@var{crq}: should contain a @code{gnutls_x509_cr_t}  type
+
+This function will return a value of the @code{gnutls_sign_algorithm_t} 
+enumeration that is the signature algorithm that has been used to
+sign this certificate request.
+
+@strong{Returns:} a @code{gnutls_sign_algorithm_t}  value, or a negative error code on
+error.
+
+@strong{Since:} 3.4.0
+@end deftypefun
+
 @subheading gnutls_x509_crq_get_subject_alt_name
 @anchor{gnutls_x509_crq_get_subject_alt_name}
 @deftypefun {int} {gnutls_x509_crq_get_subject_alt_name} (gnutls_x509_crq_t @var{crq}, unsigned int @var{seq}, void * @var{ret}, size_t * @var{ret_size}, unsigned int * @var{ret_type}, unsigned int * @var{critical})
-@var{crq}: should contain a @code{gnutls_x509_crq_t}  structure
+@var{crq}: should contain a @code{gnutls_x509_crq_t}  type
 
 @var{seq}: specifies the sequence number of the alt name, 0 for the
 first one, 1 for the second etc.
@@ -1879,7 +1727,7 @@ Alternative name with the specified sequence number then
 @subheading gnutls_x509_crq_get_subject_alt_othername_oid
 @anchor{gnutls_x509_crq_get_subject_alt_othername_oid}
 @deftypefun {int} {gnutls_x509_crq_get_subject_alt_othername_oid} (gnutls_x509_crq_t @var{crq}, unsigned int @var{seq}, void * @var{ret}, size_t * @var{ret_size})
-@var{crq}: should contain a @code{gnutls_x509_crq_t}  structure
+@var{crq}: should contain a @code{gnutls_x509_crq_t}  type
 
 @var{seq}: specifies the sequence number of the alt name (0 for the first one, 1 for the second etc.)
 
@@ -1912,7 +1760,7 @@ sequence number and with the otherName type then
 @subheading gnutls_x509_crq_get_version
 @anchor{gnutls_x509_crq_get_version}
 @deftypefun {int} {gnutls_x509_crq_get_version} (gnutls_x509_crq_t @var{crq})
-@var{crq}: should contain a @code{gnutls_x509_crq_t}  structure
+@var{crq}: should contain a @code{gnutls_x509_crq_t}  type
 
 This function will return the version of the specified Certificate
 request.
@@ -1924,14 +1772,14 @@ error.
 @subheading gnutls_x509_crq_import
 @anchor{gnutls_x509_crq_import}
 @deftypefun {int} {gnutls_x509_crq_import} (gnutls_x509_crq_t @var{crq}, const gnutls_datum_t * @var{data}, gnutls_x509_crt_fmt_t @var{format})
-@var{crq}: The structure to store the parsed certificate request.
+@var{crq}: The data to store the parsed certificate request.
 
 @var{data}: The DER or PEM encoded certificate.
 
 @var{format}: One of DER or PEM
 
 This function will convert the given DER or PEM encoded certificate
-request to a @code{gnutls_x509_crq_t}  structure.  The output will be
+request to a @code{gnutls_x509_crq_t}  type.  The output will be
 stored in  @code{crq} .
 
 If the Certificate is PEM encoded it should have a header of "NEW
@@ -1944,7 +1792,7 @@ negative error value.
 @subheading gnutls_x509_crq_init
 @anchor{gnutls_x509_crq_init}
 @deftypefun {int} {gnutls_x509_crq_init} (gnutls_x509_crq_t * @var{crq})
-@var{crq}: The structure to be initialized
+@var{crq}: A pointer to the type to be initialized
 
 This function will initialize a PKCS@code{10}  certificate request
 structure.
@@ -1956,7 +1804,7 @@ negative error value.
 @subheading gnutls_x509_crq_print
 @anchor{gnutls_x509_crq_print}
 @deftypefun {int} {gnutls_x509_crq_print} (gnutls_x509_crq_t @var{crq}, gnutls_certificate_print_formats_t @var{format}, gnutls_datum_t * @var{out})
-@var{crq}: The structure to be printed
+@var{crq}: The data to be printed
 
 @var{format}: Indicate the format to use
 
@@ -1976,7 +1824,7 @@ negative error value.
 @subheading gnutls_x509_crq_set_attribute_by_oid
 @anchor{gnutls_x509_crq_set_attribute_by_oid}
 @deftypefun {int} {gnutls_x509_crq_set_attribute_by_oid} (gnutls_x509_crq_t @var{crq}, const char * @var{oid}, void * @var{buf}, size_t @var{buf_size})
-@var{crq}: should contain a @code{gnutls_x509_crq_t}  structure
+@var{crq}: should contain a @code{gnutls_x509_crq_t}  type
 
 @var{oid}: holds an Object Identifier in a null-terminated string
 
@@ -2017,7 +1865,7 @@ negative error value.
 @subheading gnutls_x509_crq_set_challenge_password
 @anchor{gnutls_x509_crq_set_challenge_password}
 @deftypefun {int} {gnutls_x509_crq_set_challenge_password} (gnutls_x509_crq_t @var{crq}, const char * @var{pass})
-@var{crq}: should contain a @code{gnutls_x509_crq_t}  structure
+@var{crq}: should contain a @code{gnutls_x509_crq_t}  type
 
 @var{pass}: holds a (0)-terminated password
 
@@ -2047,7 +1895,7 @@ negative error value.
 @subheading gnutls_x509_crq_set_dn_by_oid
 @anchor{gnutls_x509_crq_set_dn_by_oid}
 @deftypefun {int} {gnutls_x509_crq_set_dn_by_oid} (gnutls_x509_crq_t @var{crq}, const char * @var{oid}, unsigned int @var{raw_flag}, const void * @var{data}, unsigned int @var{sizeof_data})
-@var{crq}: should contain a @code{gnutls_x509_crq_t}  structure
+@var{crq}: should contain a @code{gnutls_x509_crq_t}  type
 
 @var{oid}: holds an Object Identifier in a (0)-terminated string
 
@@ -2074,7 +1922,7 @@ negative error value.
 @subheading gnutls_x509_crq_set_key
 @anchor{gnutls_x509_crq_set_key}
 @deftypefun {int} {gnutls_x509_crq_set_key} (gnutls_x509_crq_t @var{crq}, gnutls_x509_privkey_t @var{key})
-@var{crq}: should contain a @code{gnutls_x509_crq_t}  structure
+@var{crq}: should contain a @code{gnutls_x509_crq_t}  type
 
 @var{key}: holds a private key
 
@@ -2090,7 +1938,7 @@ negative error value.
 @deftypefun {int} {gnutls_x509_crq_set_key_purpose_oid} (gnutls_x509_crq_t @var{crq}, const void * @var{oid}, unsigned int @var{critical})
 @var{crq}: a certificate of type @code{gnutls_x509_crq_t} 
 
-@var{oid}: a pointer to a (0)-terminated string that holds the OID
+@var{oid}: a pointer to a null-terminated string that holds the OID
 
 @var{critical}: Whether this extension will be critical or not
 
@@ -2109,7 +1957,7 @@ negative error value.
 @subheading gnutls_x509_crq_set_key_rsa_raw
 @anchor{gnutls_x509_crq_set_key_rsa_raw}
 @deftypefun {int} {gnutls_x509_crq_set_key_rsa_raw} (gnutls_x509_crq_t @var{crq}, const gnutls_datum_t * @var{m}, const gnutls_datum_t * @var{e})
-@var{crq}: should contain a @code{gnutls_x509_crq_t}  structure
+@var{crq}: should contain a @code{gnutls_x509_crq_t}  type
 
 @var{m}: holds the modulus
 
@@ -2180,7 +2028,7 @@ negative error value.
 @subheading gnutls_x509_crq_set_version
 @anchor{gnutls_x509_crq_set_version}
 @deftypefun {int} {gnutls_x509_crq_set_version} (gnutls_x509_crq_t @var{crq}, unsigned int @var{version})
-@var{crq}: should contain a @code{gnutls_x509_crq_t}  structure
+@var{crq}: should contain a @code{gnutls_x509_crq_t}  type
 
 @var{version}: holds the version number, for v1 Requests must be 1
 
@@ -2194,7 +2042,7 @@ negative error value.
 @subheading gnutls_x509_crq_sign2
 @anchor{gnutls_x509_crq_sign2}
 @deftypefun {int} {gnutls_x509_crq_sign2} (gnutls_x509_crq_t @var{crq}, gnutls_x509_privkey_t @var{key}, gnutls_digest_algorithm_t @var{dig}, unsigned int @var{flags})
-@var{crq}: should contain a @code{gnutls_x509_crq_t}  structure
+@var{crq}: should contain a @code{gnutls_x509_crq_t}  type
 
 @var{key}: holds a private key
 
@@ -2232,10 +2080,25 @@ is returned, and zero or positive code on success.
 Since 2.12.0
 @end deftypefun
 
+@subheading gnutls_x509_crt_check_email
+@anchor{gnutls_x509_crt_check_email}
+@deftypefun {int} {gnutls_x509_crt_check_email} (gnutls_x509_crt_t @var{cert}, const char * @var{email}, unsigned int @var{flags})
+@var{cert}: should contain an gnutls_x509_crt_t type
+
+@var{email}: A null terminated string that contains an email address (RFC822)
+
+@var{flags}: should be zero
+
+This function will check if the given certificate's subject matches
+the given email address.
+
+@strong{Returns:} non-zero for a successful match, and zero on failure.
+@end deftypefun
+
 @subheading gnutls_x509_crt_check_hostname
 @anchor{gnutls_x509_crt_check_hostname}
 @deftypefun {int} {gnutls_x509_crt_check_hostname} (gnutls_x509_crt_t @var{cert}, const char * @var{hostname})
-@var{cert}: should contain an gnutls_x509_crt_t structure
+@var{cert}: should contain an gnutls_x509_crt_t type
 
 @var{hostname}: A null terminated string that contains a DNS name
 
@@ -2252,7 +2115,7 @@ For details see also @code{gnutls_x509_crt_check_hostname2()} .
 @subheading gnutls_x509_crt_check_hostname2
 @anchor{gnutls_x509_crt_check_hostname2}
 @deftypefun {int} {gnutls_x509_crt_check_hostname2} (gnutls_x509_crt_t @var{cert}, const char * @var{hostname}, unsigned int @var{flags})
-@var{cert}: should contain an gnutls_x509_crt_t structure
+@var{cert}: should contain an gnutls_x509_crt_t type
 
 @var{hostname}: A null terminated string that contains a DNS name
 
@@ -2269,9 +2132,6 @@ x:x:x:x:x:x:x:x format. For them the IPAddress subject alternative
 name extension is consulted, as well as the DNSNames in case of a non-match.
 The latter fallback exists due to misconfiguration of many servers
 which place an IPAddress inside the DNSName extension.
-
-The comparison of dns names may have false-negatives as it is done byte 
-by byte in non-ascii names.
 
 When the flag @code{GNUTLS_VERIFY_DO_NOT_ALLOW_WILDCARDS}  is specified no
 wildcards are considered. Otherwise they are only considered if the
@@ -2302,9 +2162,9 @@ by the given issuer, and false (0) if not.
 @subheading gnutls_x509_crt_check_revocation
 @anchor{gnutls_x509_crt_check_revocation}
 @deftypefun {int} {gnutls_x509_crt_check_revocation} (gnutls_x509_crt_t @var{cert}, const gnutls_x509_crl_t * @var{crl_list}, int @var{crl_list_length})
-@var{cert}: should contain a @code{gnutls_x509_crt_t}  structure
+@var{cert}: should contain a @code{gnutls_x509_crt_t}  type
 
-@var{crl_list}: should contain a list of gnutls_x509_crl_t structures
+@var{crl_list}: should contain a list of gnutls_x509_crl_t types
 
 @var{crl_list_length}: the length of the crl_list
 
@@ -2333,7 +2193,7 @@ negative error value.
 @subheading gnutls_x509_crt_deinit
 @anchor{gnutls_x509_crt_deinit}
 @deftypefun {void} {gnutls_x509_crt_deinit} (gnutls_x509_crt_t @var{cert})
-@var{cert}: The structure to be deinitialized
+@var{cert}: The data to be deinitialized
 
 This function will deinitialize a certificate structure.
 @end deftypefun
@@ -2387,7 +2247,7 @@ returned, and 0 on success.
 @subheading gnutls_x509_crt_get_activation_time
 @anchor{gnutls_x509_crt_get_activation_time}
 @deftypefun {time_t} {gnutls_x509_crt_get_activation_time} (gnutls_x509_crt_t @var{cert})
-@var{cert}: should contain a @code{gnutls_x509_crt_t}  structure
+@var{cert}: should contain a @code{gnutls_x509_crt_t}  type
 
 This function will return the time this Certificate was or will be
 activated.
@@ -2470,7 +2330,7 @@ negative error code.
 @subheading gnutls_x509_crt_get_authority_key_gn_serial
 @anchor{gnutls_x509_crt_get_authority_key_gn_serial}
 @deftypefun {int} {gnutls_x509_crt_get_authority_key_gn_serial} (gnutls_x509_crt_t @var{cert}, unsigned int @var{seq}, void * @var{alt}, size_t * @var{alt_size}, unsigned int * @var{alt_type}, void * @var{serial}, size_t * @var{serial_size}, unsigned int * @var{critical})
-@var{cert}: should contain a @code{gnutls_x509_crt_t}  structure
+@var{cert}: should contain a @code{gnutls_x509_crt_t}  type
 
 @var{seq}: specifies the sequence number of the alt name (0 for the first one, 1 for the second etc.)
 
@@ -2503,7 +2363,7 @@ if the extension is not present, otherwise a negative error value.
 @subheading gnutls_x509_crt_get_authority_key_id
 @anchor{gnutls_x509_crt_get_authority_key_id}
 @deftypefun {int} {gnutls_x509_crt_get_authority_key_id} (gnutls_x509_crt_t @var{cert}, void * @var{id}, size_t * @var{id_size}, unsigned int * @var{critical})
-@var{cert}: should contain a @code{gnutls_x509_crt_t}  structure
+@var{cert}: should contain a @code{gnutls_x509_crt_t}  type
 
 @var{id}: The place where the identifier will be copied
 
@@ -2526,7 +2386,7 @@ if the extension is not present, otherwise a negative error value.
 @subheading gnutls_x509_crt_get_basic_constraints
 @anchor{gnutls_x509_crt_get_basic_constraints}
 @deftypefun {int} {gnutls_x509_crt_get_basic_constraints} (gnutls_x509_crt_t @var{cert}, unsigned int * @var{critical}, unsigned int * @var{ca}, int * @var{pathlen})
-@var{cert}: should contain a @code{gnutls_x509_crt_t}  structure
+@var{cert}: should contain a @code{gnutls_x509_crt_t}  type
 
 @var{critical}: will be non-zero if the extension is marked as critical
 
@@ -2551,7 +2411,7 @@ GNUTLS_E_REQUESTED_DATA_NOT_AVAILABLE will be returned.
 @subheading gnutls_x509_crt_get_ca_status
 @anchor{gnutls_x509_crt_get_ca_status}
 @deftypefun {int} {gnutls_x509_crt_get_ca_status} (gnutls_x509_crt_t @var{cert}, unsigned int * @var{critical})
-@var{cert}: should contain a @code{gnutls_x509_crt_t}  structure
+@var{cert}: should contain a @code{gnutls_x509_crt_t}  type
 
 @var{critical}: will be non-zero if the extension is marked as critical
 
@@ -2573,7 +2433,7 @@ GNUTLS_E_REQUESTED_DATA_NOT_AVAILABLE will be returned.
 @subheading gnutls_x509_crt_get_crl_dist_points
 @anchor{gnutls_x509_crt_get_crl_dist_points}
 @deftypefun {int} {gnutls_x509_crt_get_crl_dist_points} (gnutls_x509_crt_t @var{cert}, unsigned int @var{seq}, void * @var{san}, size_t * @var{san_size}, unsigned int * @var{reason_flags}, unsigned int * @var{critical})
-@var{cert}: should contain a @code{gnutls_x509_crt_t}  structure
+@var{cert}: should contain a @code{gnutls_x509_crt_t}  type
 
 @var{seq}: specifies the sequence number of the distribution point (0 for the first one, 1 for the second etc.)
 
@@ -2601,7 +2461,7 @@ returned.
 @subheading gnutls_x509_crt_get_dn
 @anchor{gnutls_x509_crt_get_dn}
 @deftypefun {int} {gnutls_x509_crt_get_dn} (gnutls_x509_crt_t @var{cert}, char * @var{buf}, size_t * @var{buf_size})
-@var{cert}: should contain a @code{gnutls_x509_crt_t}  structure
+@var{cert}: should contain a @code{gnutls_x509_crt_t}  type
 
 @var{buf}: a pointer to a structure to hold the name (may be null)
 
@@ -2622,7 +2482,7 @@ with the required size.  On success 0 is returned.
 @subheading gnutls_x509_crt_get_dn2
 @anchor{gnutls_x509_crt_get_dn2}
 @deftypefun {int} {gnutls_x509_crt_get_dn2} (gnutls_x509_crt_t @var{cert}, gnutls_datum_t * @var{dn})
-@var{cert}: should contain a @code{gnutls_x509_crt_t}  structure
+@var{cert}: should contain a @code{gnutls_x509_crt_t}  type
 
 @var{dn}: a pointer to a structure to hold the name
 
@@ -2632,7 +2492,7 @@ described in RFC4514. The output string will be ASCII or UTF-8
 encoded, depending on the certificate data.
 
 @strong{Returns:} On success, @code{GNUTLS_E_SUCCESS}  (0) is returned, otherwise a
-negative error value. and a negative error code on error.
+negative error value.
 
 @strong{Since:} 3.1.10
 @end deftypefun
@@ -2640,7 +2500,7 @@ negative error value. and a negative error code on error.
 @subheading gnutls_x509_crt_get_dn_by_oid
 @anchor{gnutls_x509_crt_get_dn_by_oid}
 @deftypefun {int} {gnutls_x509_crt_get_dn_by_oid} (gnutls_x509_crt_t @var{cert}, const char * @var{oid}, int @var{indx}, unsigned int @var{raw_flag}, void * @var{buf}, size_t * @var{buf_size})
-@var{cert}: should contain a @code{gnutls_x509_crt_t}  structure
+@var{cert}: should contain a @code{gnutls_x509_crt_t}  type
 
 @var{oid}: holds an Object Identified in null terminated string
 
@@ -2675,7 +2535,7 @@ are no data in the current index. On success 0 is returned.
 @subheading gnutls_x509_crt_get_dn_oid
 @anchor{gnutls_x509_crt_get_dn_oid}
 @deftypefun {int} {gnutls_x509_crt_get_dn_oid} (gnutls_x509_crt_t @var{cert}, int @var{indx}, void * @var{oid}, size_t * @var{oid_size})
-@var{cert}: should contain a @code{gnutls_x509_crt_t}  structure
+@var{cert}: should contain a @code{gnutls_x509_crt_t}  type
 
 @var{indx}: This specifies which OID to return. Use (0) to get the first one.
 
@@ -2698,7 +2558,7 @@ are no data in the current index. On success 0 is returned.
 @subheading gnutls_x509_crt_get_expiration_time
 @anchor{gnutls_x509_crt_get_expiration_time}
 @deftypefun {time_t} {gnutls_x509_crt_get_expiration_time} (gnutls_x509_crt_t @var{cert})
-@var{cert}: should contain a @code{gnutls_x509_crt_t}  structure
+@var{cert}: should contain a @code{gnutls_x509_crt_t}  type
 
 This function will return the time this Certificate was or will be
 expired.
@@ -2712,7 +2572,7 @@ The no well defined expiration time can be checked against with the
 @subheading gnutls_x509_crt_get_extension_by_oid
 @anchor{gnutls_x509_crt_get_extension_by_oid}
 @deftypefun {int} {gnutls_x509_crt_get_extension_by_oid} (gnutls_x509_crt_t @var{cert}, const char * @var{oid}, int @var{indx}, void * @var{buf}, size_t * @var{buf_size}, unsigned int * @var{critical})
-@var{cert}: should contain a @code{gnutls_x509_crt_t}  structure
+@var{cert}: should contain a @code{gnutls_x509_crt_t}  type
 
 @var{oid}: holds an Object Identified in null terminated string
 
@@ -2737,7 +2597,7 @@ GNUTLS_E_REQUESTED_DATA_NOT_AVAILABLE will be returned.
 @subheading gnutls_x509_crt_get_extension_by_oid2
 @anchor{gnutls_x509_crt_get_extension_by_oid2}
 @deftypefun {int} {gnutls_x509_crt_get_extension_by_oid2} (gnutls_x509_crt_t @var{cert}, const char * @var{oid}, int @var{indx}, gnutls_datum_t * @var{output}, unsigned int * @var{critical})
-@var{cert}: should contain a @code{gnutls_x509_crt_t}  structure
+@var{cert}: should contain a @code{gnutls_x509_crt_t}  type
 
 @var{oid}: holds an Object Identified in null terminated string
 
@@ -2762,7 +2622,7 @@ GNUTLS_E_REQUESTED_DATA_NOT_AVAILABLE will be returned.
 @subheading gnutls_x509_crt_get_extension_data
 @anchor{gnutls_x509_crt_get_extension_data}
 @deftypefun {int} {gnutls_x509_crt_get_extension_data} (gnutls_x509_crt_t @var{cert}, int @var{indx}, void * @var{data}, size_t * @var{sizeof_data})
-@var{cert}: should contain a @code{gnutls_x509_crt_t}  structure
+@var{cert}: should contain a @code{gnutls_x509_crt_t}  type
 
 @var{indx}: Specifies which extension OID to send. Use (0) to get the first one.
 
@@ -2788,7 +2648,7 @@ will be returned.
 @subheading gnutls_x509_crt_get_extension_data2
 @anchor{gnutls_x509_crt_get_extension_data2}
 @deftypefun {int} {gnutls_x509_crt_get_extension_data2} (gnutls_x509_crt_t @var{cert}, unsigned @var{indx}, gnutls_datum_t * @var{data})
-@var{cert}: should contain a @code{gnutls_x509_crt_t}  structure
+@var{cert}: should contain a @code{gnutls_x509_crt_t}  type
 
 @var{indx}: Specifies which extension OID to read. Use (0) to get the first one.
 
@@ -2809,7 +2669,7 @@ will be returned.
 @subheading gnutls_x509_crt_get_extension_info
 @anchor{gnutls_x509_crt_get_extension_info}
 @deftypefun {int} {gnutls_x509_crt_get_extension_info} (gnutls_x509_crt_t @var{cert}, int @var{indx}, void * @var{oid}, size_t * @var{oid_size}, unsigned int * @var{critical})
-@var{cert}: should contain a @code{gnutls_x509_crt_t}  structure
+@var{cert}: should contain a @code{gnutls_x509_crt_t}  type
 
 @var{indx}: Specifies which extension OID to send. Use (0) to get the first one.
 
@@ -2839,7 +2699,7 @@ will be returned.
 @subheading gnutls_x509_crt_get_extension_oid
 @anchor{gnutls_x509_crt_get_extension_oid}
 @deftypefun {int} {gnutls_x509_crt_get_extension_oid} (gnutls_x509_crt_t @var{cert}, int @var{indx}, void * @var{oid}, size_t * @var{oid_size})
-@var{cert}: should contain a @code{gnutls_x509_crt_t}  structure
+@var{cert}: should contain a @code{gnutls_x509_crt_t}  type
 
 @var{indx}: Specifies which extension OID to send. Use (0) to get the first one.
 
@@ -2862,7 +2722,7 @@ will be returned.
 @subheading gnutls_x509_crt_get_fingerprint
 @anchor{gnutls_x509_crt_get_fingerprint}
 @deftypefun {int} {gnutls_x509_crt_get_fingerprint} (gnutls_x509_crt_t @var{cert}, gnutls_digest_algorithm_t @var{algo}, void * @var{buf}, size_t * @var{buf_size})
-@var{cert}: should contain a @code{gnutls_x509_crt_t}  structure
+@var{cert}: should contain a @code{gnutls_x509_crt_t}  type
 
 @var{algo}: is a digest algorithm
 
@@ -2884,7 +2744,7 @@ with the required size.  On success 0 is returned.
 @subheading gnutls_x509_crt_get_issuer
 @anchor{gnutls_x509_crt_get_issuer}
 @deftypefun {int} {gnutls_x509_crt_get_issuer} (gnutls_x509_crt_t @var{cert}, gnutls_x509_dn_t * @var{dn})
-@var{cert}: should contain a @code{gnutls_x509_crt_t}  structure
+@var{cert}: should contain a @code{gnutls_x509_crt_t}  type
 
 @var{dn}: output variable with pointer to uint8_t DN
 
@@ -2901,7 +2761,7 @@ deallocated.
 @subheading gnutls_x509_crt_get_issuer_alt_name
 @anchor{gnutls_x509_crt_get_issuer_alt_name}
 @deftypefun {int} {gnutls_x509_crt_get_issuer_alt_name} (gnutls_x509_crt_t @var{cert}, unsigned int @var{seq}, void * @var{ian}, size_t * @var{ian_size}, unsigned int * @var{critical})
-@var{cert}: should contain a @code{gnutls_x509_crt_t}  structure
+@var{cert}: should contain a @code{gnutls_x509_crt_t}  type
 
 @var{seq}: specifies the sequence number of the alt name (0 for the first one, 1 for the second etc.)
 
@@ -2940,7 +2800,7 @@ Alternative name with the specified sequence number then
 @subheading gnutls_x509_crt_get_issuer_alt_name2
 @anchor{gnutls_x509_crt_get_issuer_alt_name2}
 @deftypefun {int} {gnutls_x509_crt_get_issuer_alt_name2} (gnutls_x509_crt_t @var{cert}, unsigned int @var{seq}, void * @var{ian}, size_t * @var{ian_size}, unsigned int * @var{ian_type}, unsigned int * @var{critical})
-@var{cert}: should contain a @code{gnutls_x509_crt_t}  structure
+@var{cert}: should contain a @code{gnutls_x509_crt_t}  type
 
 @var{seq}: specifies the sequence number of the alt name (0 for the first one, 1 for the second etc.)
 
@@ -2973,7 +2833,7 @@ Alternative name with the specified sequence number then
 @subheading gnutls_x509_crt_get_issuer_alt_othername_oid
 @anchor{gnutls_x509_crt_get_issuer_alt_othername_oid}
 @deftypefun {int} {gnutls_x509_crt_get_issuer_alt_othername_oid} (gnutls_x509_crt_t @var{cert}, unsigned int @var{seq}, void * @var{ret}, size_t * @var{ret_size})
-@var{cert}: should contain a @code{gnutls_x509_crt_t}  structure
+@var{cert}: should contain a @code{gnutls_x509_crt_t}  type
 
 @var{seq}: specifies the sequence number of the alt name (0 for the first one, 1 for the second etc.)
 
@@ -3009,7 +2869,7 @@ sequence number and with the otherName type then
 @subheading gnutls_x509_crt_get_issuer_dn
 @anchor{gnutls_x509_crt_get_issuer_dn}
 @deftypefun {int} {gnutls_x509_crt_get_issuer_dn} (gnutls_x509_crt_t @var{cert}, char * @var{buf}, size_t * @var{buf_size})
-@var{cert}: should contain a @code{gnutls_x509_crt_t}  structure
+@var{cert}: should contain a @code{gnutls_x509_crt_t}  type
 
 @var{buf}: a pointer to a structure to hold the name (may be null)
 
@@ -3030,7 +2890,7 @@ the required size.  On success 0 is returned.
 @subheading gnutls_x509_crt_get_issuer_dn2
 @anchor{gnutls_x509_crt_get_issuer_dn2}
 @deftypefun {int} {gnutls_x509_crt_get_issuer_dn2} (gnutls_x509_crt_t @var{cert}, gnutls_datum_t * @var{dn})
-@var{cert}: should contain a @code{gnutls_x509_crt_t}  structure
+@var{cert}: should contain a @code{gnutls_x509_crt_t}  type
 
 @var{dn}: a pointer to a structure to hold the name
 
@@ -3040,7 +2900,7 @@ described in RFC4514. The output string will be ASCII or UTF-8
 encoded, depending on the certificate data.
 
 @strong{Returns:} On success, @code{GNUTLS_E_SUCCESS}  (0) is returned, otherwise a
-negative error value. and a negative error code on error.
+negative error value.
 
 @strong{Since:} 3.1.10
 @end deftypefun
@@ -3048,7 +2908,7 @@ negative error value. and a negative error code on error.
 @subheading gnutls_x509_crt_get_issuer_dn_by_oid
 @anchor{gnutls_x509_crt_get_issuer_dn_by_oid}
 @deftypefun {int} {gnutls_x509_crt_get_issuer_dn_by_oid} (gnutls_x509_crt_t @var{cert}, const char * @var{oid}, int @var{indx}, unsigned int @var{raw_flag}, void * @var{buf}, size_t * @var{buf_size})
-@var{cert}: should contain a @code{gnutls_x509_crt_t}  structure
+@var{cert}: should contain a @code{gnutls_x509_crt_t}  type
 
 @var{oid}: holds an Object Identified in null terminated string
 
@@ -3083,7 +2943,7 @@ are no data in the current index. On success 0 is returned.
 @subheading gnutls_x509_crt_get_issuer_dn_oid
 @anchor{gnutls_x509_crt_get_issuer_dn_oid}
 @deftypefun {int} {gnutls_x509_crt_get_issuer_dn_oid} (gnutls_x509_crt_t @var{cert}, int @var{indx}, void * @var{oid}, size_t * @var{oid_size})
-@var{cert}: should contain a @code{gnutls_x509_crt_t}  structure
+@var{cert}: should contain a @code{gnutls_x509_crt_t}  type
 
 @var{indx}: This specifies which OID to return. Use (0) to get the first one.
 
@@ -3120,6 +2980,11 @@ If the user allocated memory buffer is not large enough to hold the
 full subjectUniqueID, then a GNUTLS_E_SHORT_MEMORY_BUFFER error will be
 returned, and buf_size will be set to the actual length.
 
+This function had a bug prior to 3.4.8 that prevented the setting
+of @code{NULL}   @code{buf} to discover the  @code{buf_size} . To use this function safely
+with the older versions the  @code{buf} must be a valid buffer that can hold
+at least a single byte if  @code{buf_size} is zero.
+
 @strong{Returns:} @code{GNUTLS_E_SUCCESS}  on success, otherwise a negative error code.
 
 @strong{Since:} 2.12.0
@@ -3130,7 +2995,7 @@ returned, and buf_size will be set to the actual length.
 @deftypefun {int} {gnutls_x509_crt_get_key_id} (gnutls_x509_crt_t @var{crt}, unsigned int @var{flags}, unsigned char * @var{output_data}, size_t * @var{output_data_size})
 @var{crt}: Holds the certificate
 
-@var{flags}: should be 0 for now
+@var{flags}: should be one of the flags from @code{gnutls_keyid_flags_t} 
 
 @var{output_data}: will contain the key ID
 
@@ -3153,7 +3018,7 @@ returned, and 0 on success.
 @subheading gnutls_x509_crt_get_key_purpose_oid
 @anchor{gnutls_x509_crt_get_key_purpose_oid}
 @deftypefun {int} {gnutls_x509_crt_get_key_purpose_oid} (gnutls_x509_crt_t @var{cert}, int @var{indx}, void * @var{oid}, size_t * @var{oid_size}, unsigned int * @var{critical})
-@var{cert}: should contain a @code{gnutls_x509_crt_t}  structure
+@var{cert}: should contain a @code{gnutls_x509_crt_t}  type
 
 @var{indx}: This specifies which OID to return. Use (0) to get the first one.
 
@@ -3179,7 +3044,7 @@ with the required size.  On success 0 is returned.
 @subheading gnutls_x509_crt_get_key_usage
 @anchor{gnutls_x509_crt_get_key_usage}
 @deftypefun {int} {gnutls_x509_crt_get_key_usage} (gnutls_x509_crt_t @var{cert}, unsigned int * @var{key_usage}, unsigned int * @var{critical})
-@var{cert}: should contain a @code{gnutls_x509_crt_t}  structure
+@var{cert}: should contain a @code{gnutls_x509_crt_t}  type
 
 @var{key_usage}: where the key usage bits will be stored
 
@@ -3202,15 +3067,15 @@ returned.
 @subheading gnutls_x509_crt_get_name_constraints
 @anchor{gnutls_x509_crt_get_name_constraints}
 @deftypefun {int} {gnutls_x509_crt_get_name_constraints} (gnutls_x509_crt_t @var{crt}, gnutls_x509_name_constraints_t @var{nc}, unsigned int @var{flags}, unsigned int * @var{critical})
-@var{crt}: should contain a @code{gnutls_x509_crt_t}  structure
+@var{crt}: should contain a @code{gnutls_x509_crt_t}  type
 
-@var{nc}: The nameconstraints intermediate structure
+@var{nc}: The nameconstraints intermediate type
 
 @var{flags}: zero or @code{GNUTLS_NAME_CONSTRAINTS_FLAG_APPEND} 
 
 @var{critical}: the extension status
 
-This function will return an intermediate structure containing
+This function will return an intermediate type containing
 the name constraints of the provided CA certificate. That
 structure can be used in combination with @code{gnutls_x509_name_constraints_check()} 
 to verify whether a server's name is in accordance with the constraints.
@@ -3232,7 +3097,7 @@ if the extension is not present, otherwise a negative error value.
 @subheading gnutls_x509_crt_get_pk_algorithm
 @anchor{gnutls_x509_crt_get_pk_algorithm}
 @deftypefun {int} {gnutls_x509_crt_get_pk_algorithm} (gnutls_x509_crt_t @var{cert}, unsigned int * @var{bits})
-@var{cert}: should contain a @code{gnutls_x509_crt_t}  structure
+@var{cert}: should contain a @code{gnutls_x509_crt_t}  type
 
 @var{bits}: if bits is non null it will hold the size of the parameters' in bits
 
@@ -3268,6 +3133,26 @@ the given certificate.  The new parameters will be allocated using
 @strong{Returns:} @code{GNUTLS_E_SUCCESS}  on success, otherwise a negative error code.
 @end deftypefun
 
+@subheading gnutls_x509_crt_get_pk_ecc_raw
+@anchor{gnutls_x509_crt_get_pk_ecc_raw}
+@deftypefun {int} {gnutls_x509_crt_get_pk_ecc_raw} (gnutls_x509_crt_t @var{crt}, gnutls_ecc_curve_t * @var{curve}, gnutls_datum_t * @var{x}, gnutls_datum_t * @var{y})
+@var{crt}: Holds the certificate
+
+@var{curve}: will hold the curve
+
+@var{x}: will hold x
+
+@var{y}: will hold y
+
+This function will export the ECC public key's parameters found in
+the given certificate.  The new parameters will be allocated using
+@code{gnutls_malloc()}  and will be stored in the appropriate datum.
+
+@strong{Returns:} @code{GNUTLS_E_SUCCESS}  on success, otherwise a negative error code.
+
+@strong{Since:} 3.4.1
+@end deftypefun
+
 @subheading gnutls_x509_crt_get_pk_rsa_raw
 @anchor{gnutls_x509_crt_get_pk_rsa_raw}
 @deftypefun {int} {gnutls_x509_crt_get_pk_rsa_raw} (gnutls_x509_crt_t @var{crt}, gnutls_datum_t * @var{m}, gnutls_datum_t * @var{e})
@@ -3287,7 +3172,7 @@ the given structure.  The new parameters will be allocated using
 @subheading gnutls_x509_crt_get_policy
 @anchor{gnutls_x509_crt_get_policy}
 @deftypefun {int} {gnutls_x509_crt_get_policy} (gnutls_x509_crt_t @var{crt}, int @var{indx}, struct gnutls_x509_policy_st * @var{policy}, unsigned int * @var{critical})
-@var{crt}: should contain a @code{gnutls_x509_crt_t}  structure
+@var{crt}: should contain a @code{gnutls_x509_crt_t}  type
 
 @var{indx}: This specifies which policy to return. Use (0) to get the first one.
 
@@ -3310,7 +3195,7 @@ if the extension is not present, otherwise a negative error value.
 @subheading gnutls_x509_crt_get_private_key_usage_period
 @anchor{gnutls_x509_crt_get_private_key_usage_period}
 @deftypefun {int} {gnutls_x509_crt_get_private_key_usage_period} (gnutls_x509_crt_t @var{cert}, time_t * @var{activation}, time_t * @var{expiration}, unsigned int * @var{critical})
-@var{cert}: should contain a @code{gnutls_x509_crt_t}  structure
+@var{cert}: should contain a @code{gnutls_x509_crt_t}  type
 
 @var{activation}: The activation time
 
@@ -3329,7 +3214,7 @@ if the extension is not present, otherwise a negative error value.
 @subheading gnutls_x509_crt_get_proxy
 @anchor{gnutls_x509_crt_get_proxy}
 @deftypefun {int} {gnutls_x509_crt_get_proxy} (gnutls_x509_crt_t @var{cert}, unsigned int * @var{critical}, int * @var{pathlen}, char ** @var{policyLanguage}, char ** @var{policy}, size_t * @var{sizeof_policy})
-@var{cert}: should contain a @code{gnutls_x509_crt_t}  structure
+@var{cert}: should contain a @code{gnutls_x509_crt_t}  type
 
 @var{critical}: will be non-zero if the extension is marked as critical
 
@@ -3353,7 +3238,7 @@ otherwise a negative error code is returned.
 @subheading gnutls_x509_crt_get_raw_dn
 @anchor{gnutls_x509_crt_get_raw_dn}
 @deftypefun {int} {gnutls_x509_crt_get_raw_dn} (gnutls_x509_crt_t @var{cert}, gnutls_datum_t * @var{dn})
-@var{cert}: should contain a @code{gnutls_x509_crt_t}  structure
+@var{cert}: should contain a @code{gnutls_x509_crt_t}  type
 
 @var{dn}: will hold the starting point of the DN
 
@@ -3367,7 +3252,7 @@ negative error value. or a negative error code on error.
 @subheading gnutls_x509_crt_get_raw_issuer_dn
 @anchor{gnutls_x509_crt_get_raw_issuer_dn}
 @deftypefun {int} {gnutls_x509_crt_get_raw_issuer_dn} (gnutls_x509_crt_t @var{cert}, gnutls_datum_t * @var{dn})
-@var{cert}: should contain a @code{gnutls_x509_crt_t}  structure
+@var{cert}: should contain a @code{gnutls_x509_crt_t}  type
 
 @var{dn}: will hold the starting point of the DN
 
@@ -3381,7 +3266,7 @@ negative error value.or a negative error code on error.
 @subheading gnutls_x509_crt_get_serial
 @anchor{gnutls_x509_crt_get_serial}
 @deftypefun {int} {gnutls_x509_crt_get_serial} (gnutls_x509_crt_t @var{cert}, void * @var{result}, size_t * @var{result_size})
-@var{cert}: should contain a @code{gnutls_x509_crt_t}  structure
+@var{cert}: should contain a @code{gnutls_x509_crt_t}  type
 
 @var{result}: The place where the serial number will be copied
 
@@ -3399,7 +3284,7 @@ negative error value.
 @subheading gnutls_x509_crt_get_signature
 @anchor{gnutls_x509_crt_get_signature}
 @deftypefun {int} {gnutls_x509_crt_get_signature} (gnutls_x509_crt_t @var{cert}, char * @var{sig}, size_t * @var{sig_size})
-@var{cert}: should contain a @code{gnutls_x509_crt_t}  structure
+@var{cert}: should contain a @code{gnutls_x509_crt_t}  type
 
 @var{sig}: a pointer where the signature part will be copied (may be null).
 
@@ -3408,13 +3293,13 @@ negative error value.
 This function will extract the signature field of a certificate.
 
 @strong{Returns:} On success, @code{GNUTLS_E_SUCCESS}  (0) is returned, otherwise a
-negative error value. and a negative error code on error.
+negative error value.
 @end deftypefun
 
 @subheading gnutls_x509_crt_get_signature_algorithm
 @anchor{gnutls_x509_crt_get_signature_algorithm}
 @deftypefun {int} {gnutls_x509_crt_get_signature_algorithm} (gnutls_x509_crt_t @var{cert})
-@var{cert}: should contain a @code{gnutls_x509_crt_t}  structure
+@var{cert}: should contain a @code{gnutls_x509_crt_t}  type
 
 This function will return a value of the @code{gnutls_sign_algorithm_t} 
 enumeration that is the signature algorithm that has been used to
@@ -3427,7 +3312,7 @@ error.
 @subheading gnutls_x509_crt_get_subject
 @anchor{gnutls_x509_crt_get_subject}
 @deftypefun {int} {gnutls_x509_crt_get_subject} (gnutls_x509_crt_t @var{cert}, gnutls_x509_dn_t * @var{dn})
-@var{cert}: should contain a @code{gnutls_x509_crt_t}  structure
+@var{cert}: should contain a @code{gnutls_x509_crt_t}  type
 
 @var{dn}: output variable with pointer to uint8_t DN.
 
@@ -3444,7 +3329,7 @@ deallocated.
 @subheading gnutls_x509_crt_get_subject_alt_name
 @anchor{gnutls_x509_crt_get_subject_alt_name}
 @deftypefun {int} {gnutls_x509_crt_get_subject_alt_name} (gnutls_x509_crt_t @var{cert}, unsigned int @var{seq}, void * @var{san}, size_t * @var{san_size}, unsigned int * @var{critical})
-@var{cert}: should contain a @code{gnutls_x509_crt_t}  structure
+@var{cert}: should contain a @code{gnutls_x509_crt_t}  type
 
 @var{seq}: specifies the sequence number of the alt name (0 for the first one, 1 for the second etc.)
 
@@ -3480,7 +3365,7 @@ name with the specified sequence number then
 @subheading gnutls_x509_crt_get_subject_alt_name2
 @anchor{gnutls_x509_crt_get_subject_alt_name2}
 @deftypefun {int} {gnutls_x509_crt_get_subject_alt_name2} (gnutls_x509_crt_t @var{cert}, unsigned int @var{seq}, void * @var{san}, size_t * @var{san_size}, unsigned int * @var{san_type}, unsigned int * @var{critical})
-@var{cert}: should contain a @code{gnutls_x509_crt_t}  structure
+@var{cert}: should contain a @code{gnutls_x509_crt_t}  type
 
 @var{seq}: specifies the sequence number of the alt name (0 for the first one, 1 for the second etc.)
 
@@ -3511,7 +3396,7 @@ Alternative name with the specified sequence number then
 @subheading gnutls_x509_crt_get_subject_alt_othername_oid
 @anchor{gnutls_x509_crt_get_subject_alt_othername_oid}
 @deftypefun {int} {gnutls_x509_crt_get_subject_alt_othername_oid} (gnutls_x509_crt_t @var{cert}, unsigned int @var{seq}, void * @var{oid}, size_t * @var{oid_size})
-@var{cert}: should contain a @code{gnutls_x509_crt_t}  structure
+@var{cert}: should contain a @code{gnutls_x509_crt_t}  type
 
 @var{seq}: specifies the sequence number of the alt name (0 for the first one, 1 for the second etc.)
 
@@ -3545,7 +3430,7 @@ sequence number and with the otherName type then
 @subheading gnutls_x509_crt_get_subject_key_id
 @anchor{gnutls_x509_crt_get_subject_key_id}
 @deftypefun {int} {gnutls_x509_crt_get_subject_key_id} (gnutls_x509_crt_t @var{cert}, void * @var{ret}, size_t * @var{ret_size}, unsigned int * @var{critical})
-@var{cert}: should contain a @code{gnutls_x509_crt_t}  structure
+@var{cert}: should contain a @code{gnutls_x509_crt_t}  type
 
 @var{ret}: The place where the identifier will be copied
 
@@ -3578,13 +3463,18 @@ If the user allocated memory buffer is not large enough to hold the
 full subjectUniqueID, then a GNUTLS_E_SHORT_MEMORY_BUFFER error will be
 returned, and buf_size will be set to the actual length.
 
+This function had a bug prior to 3.4.8 that prevented the setting
+of @code{NULL}   @code{buf} to discover the  @code{buf_size} . To use this function safely
+with the older versions the  @code{buf} must be a valid buffer that can hold
+at least a single byte if  @code{buf_size} is zero.
+
 @strong{Returns:} @code{GNUTLS_E_SUCCESS}  on success, otherwise a negative error code.
 @end deftypefun
 
 @subheading gnutls_x509_crt_get_version
 @anchor{gnutls_x509_crt_get_version}
 @deftypefun {int} {gnutls_x509_crt_get_version} (gnutls_x509_crt_t @var{cert})
-@var{cert}: should contain a @code{gnutls_x509_crt_t}  structure
+@var{cert}: should contain a @code{gnutls_x509_crt_t}  type
 
 This function will return the version of the specified Certificate.
 
@@ -3594,7 +3484,7 @@ This function will return the version of the specified Certificate.
 @subheading gnutls_x509_crt_import
 @anchor{gnutls_x509_crt_import}
 @deftypefun {int} {gnutls_x509_crt_import} (gnutls_x509_crt_t @var{cert}, const gnutls_datum_t * @var{data}, gnutls_x509_crt_fmt_t @var{format})
-@var{cert}: The structure to store the parsed certificate.
+@var{cert}: The data to store the parsed certificate.
 
 @var{data}: The DER or PEM encoded certificate.
 
@@ -3611,10 +3501,34 @@ CERTIFICATE", or "CERTIFICATE".
 negative error value.
 @end deftypefun
 
+@subheading gnutls_x509_crt_import_url
+@anchor{gnutls_x509_crt_import_url}
+@deftypefun {int} {gnutls_x509_crt_import_url} (gnutls_x509_crt_t @var{crt}, const char * @var{url}, unsigned int @var{flags})
+@var{crt}: A certificate of type @code{gnutls_x509_crt_t} 
+
+@var{url}: A PKCS 11 url
+
+@var{flags}: One of GNUTLS_PKCS11_OBJ_* flags
+
+This function will import a PKCS 11 certificate directly from a token
+without involving the @code{gnutls_pkcs11_obj_t}  type. This function will
+fail if the certificate stored is not of X.509 type.
+
+Despite its name this function will attempt to import any kind of 
+URL to certificate. In previous versions of gnutls this function
+was named gnutls_x509_crt_import_pkcs11_url, and the old name is
+an alias to this one.
+
+@strong{Returns:} On success, @code{GNUTLS_E_SUCCESS}  (0) is returned, otherwise a
+negative error value.
+
+@strong{Since:} 3.4.0
+@end deftypefun
+
 @subheading gnutls_x509_crt_init
 @anchor{gnutls_x509_crt_init}
 @deftypefun {int} {gnutls_x509_crt_init} (gnutls_x509_crt_t * @var{cert})
-@var{cert}: The structure to be initialized
+@var{cert}: A pointer to the type to be initialized
 
 This function will initialize an X.509 certificate structure.
 
@@ -3625,7 +3539,7 @@ negative error value.
 @subheading gnutls_x509_crt_list_import
 @anchor{gnutls_x509_crt_list_import}
 @deftypefun {int} {gnutls_x509_crt_list_import} (gnutls_x509_crt_t * @var{certs}, unsigned int * @var{cert_max}, const gnutls_datum_t * @var{data}, gnutls_x509_crt_fmt_t @var{format}, unsigned int @var{flags})
-@var{certs}: The structures to store the parsed certificate. Must not be initialized.
+@var{certs}: Indicates where the parsed list will be copied to. Must not be initialized.
 
 @var{cert_max}: Initially must hold the maximum number of certs. It will be updated with the number of certs available.
 
@@ -3654,7 +3568,7 @@ CERTIFICATE", or "CERTIFICATE".
 @subheading gnutls_x509_crt_list_import2
 @anchor{gnutls_x509_crt_list_import2}
 @deftypefun {int} {gnutls_x509_crt_list_import2} (gnutls_x509_crt_t ** @var{certs}, unsigned int * @var{size}, const gnutls_datum_t * @var{data}, gnutls_x509_crt_fmt_t @var{format}, unsigned int @var{flags})
-@var{certs}: The structures to store the parsed certificate. Must not be initialized.
+@var{certs}: Will hold the parsed certificate list.
 
 @var{size}: It will contain the size of the list.
 
@@ -3698,13 +3612,12 @@ independently, and use @code{gnutls_free()}  at
 
 @var{verify}: will hold the certificate verification output.
 
-This function will try to verify the given certificate list and
-return its status.  If no flags are specified (0), this function
-will use the basicConstraints (2.5.29.19) PKIX extension. This
-means that only a certificate authority is allowed to sign a
-certificate.
 
-You must also check the peer's name in order to check if the verified
+This function will try to verify the given certificate list and
+return its status. The details of the verification are the same
+as in @code{gnutls_x509_trust_list_verify_crt2()} .
+
+You must check the peer's name in order to check if the verified
 certificate belongs to the actual peer.
 
 The certificate verification output will be put in  @code{verify} and will
@@ -3719,7 +3632,7 @@ negative error value.
 @subheading gnutls_x509_crt_print
 @anchor{gnutls_x509_crt_print}
 @deftypefun {int} {gnutls_x509_crt_print} (gnutls_x509_crt_t @var{cert}, gnutls_certificate_print_formats_t @var{format}, gnutls_datum_t * @var{out})
-@var{cert}: The structure to be printed
+@var{cert}: The data to be printed
 
 @var{format}: Indicate the format to use
 
@@ -4046,6 +3959,23 @@ certificate.
 negative error value.
 @end deftypefun
 
+@subheading gnutls_x509_crt_set_issuer_unique_id
+@anchor{gnutls_x509_crt_set_issuer_unique_id}
+@deftypefun {int} {gnutls_x509_crt_set_issuer_unique_id} (gnutls_x509_crt_t @var{cert}, const void * @var{id}, size_t @var{id_size})
+@var{cert}: a certificate of type @code{gnutls_x509_crt_t} 
+
+@var{id}: The unique ID
+
+@var{id_size}: Holds the size of the unique ID.
+
+This function will set the X.509 certificate's issuer unique ID field.
+
+@strong{Returns:} On success, @code{GNUTLS_E_SUCCESS}  (0) is returned, otherwise a
+negative error value.
+
+@strong{Since:} 3.4.7
+@end deftypefun
+
 @subheading gnutls_x509_crt_set_key
 @anchor{gnutls_x509_crt_set_key}
 @deftypefun {int} {gnutls_x509_crt_set_key} (gnutls_x509_crt_t @var{crt}, gnutls_x509_privkey_t @var{key})
@@ -4054,8 +3984,10 @@ negative error value.
 @var{key}: holds a private key
 
 This function will set the public parameters from the given
-private key to the certificate. Only RSA keys are currently
-supported.
+private key to the certificate.
+
+To export the public key (i.e., the SubjectPublicKeyInfo part), check
+@code{gnutls_pubkey_import_x509()} .
 
 @strong{Returns:} On success, @code{GNUTLS_E_SUCCESS}  (0) is returned, otherwise a
 negative error value.
@@ -4096,7 +4028,7 @@ negative error value.
 @subheading gnutls_x509_crt_set_name_constraints
 @anchor{gnutls_x509_crt_set_name_constraints}
 @deftypefun {int} {gnutls_x509_crt_set_name_constraints} (gnutls_x509_crt_t @var{crt}, gnutls_x509_name_constraints_t @var{nc}, unsigned int @var{critical})
-@var{crt}: The certificate structure
+@var{crt}: The certificate
 
 @var{nc}: The nameconstraints structure
 
@@ -4125,7 +4057,7 @@ it is required to access a protected object. This function overrides
 the global function set using @code{gnutls_pkcs11_set_pin_function()} .
 
 Note that this callback is currently used only during the import
-of a PKCS @code{11}  certificate with @code{gnutls_x509_crt_import_pkcs11_url()} .
+of a PKCS @code{11}  certificate with @code{gnutls_x509_crt_import_url()} .
 
 @strong{Since:} 3.1.0
 @end deftypefun
@@ -4133,9 +4065,9 @@ of a PKCS @code{11}  certificate with @code{gnutls_x509_crt_import_pkcs11_url()}
 @subheading gnutls_x509_crt_set_policy
 @anchor{gnutls_x509_crt_set_policy}
 @deftypefun {int} {gnutls_x509_crt_set_policy} (gnutls_x509_crt_t @var{crt}, const struct gnutls_x509_policy_st * @var{policy}, unsigned int @var{critical})
-@var{crt}: should contain a @code{gnutls_x509_crt_t}  structure
+@var{crt}: should contain a @code{gnutls_x509_crt_t}  type
 
-@var{policy}: A pointer to a policy structure.
+@var{policy}: A pointer to a policy
 
 @var{critical}: use non-zero if the extension is marked as critical
 
@@ -4191,7 +4123,7 @@ negative error value.
 @subheading gnutls_x509_crt_set_proxy_dn
 @anchor{gnutls_x509_crt_set_proxy_dn}
 @deftypefun {int} {gnutls_x509_crt_set_proxy_dn} (gnutls_x509_crt_t @var{crt}, gnutls_x509_crt_t @var{eecrt}, unsigned int @var{raw_flag}, const void * @var{name}, unsigned int @var{sizeof_name})
-@var{crt}: a gnutls_x509_crt_t structure with the new proxy cert
+@var{crt}: a gnutls_x509_crt_t type with the new proxy cert
 
 @var{eecrt}: the end entity certificate that will be issuing the proxy
 
@@ -4288,6 +4220,23 @@ extension.
 negative error value.
 @end deftypefun
 
+@subheading gnutls_x509_crt_set_subject_unique_id
+@anchor{gnutls_x509_crt_set_subject_unique_id}
+@deftypefun {int} {gnutls_x509_crt_set_subject_unique_id} (gnutls_x509_crt_t @var{cert}, const void * @var{id}, size_t @var{id_size})
+@var{cert}: a certificate of type @code{gnutls_x509_crt_t} 
+
+@var{id}: The unique ID
+
+@var{id_size}: Holds the size of the unique ID.
+
+This function will set the X.509 certificate's subject unique ID field.
+
+@strong{Returns:} On success, @code{GNUTLS_E_SUCCESS}  (0) is returned, otherwise a
+negative error value.
+
+@strong{Since:} 3.4.7
+@end deftypefun
+
 @subheading gnutls_x509_crt_set_version
 @anchor{gnutls_x509_crt_set_version}
 @deftypefun {int} {gnutls_x509_crt_set_version} (gnutls_x509_crt_t @var{crt}, unsigned int @var{version})
@@ -4364,8 +4313,33 @@ This function will try to verify the given certificate and return
 its status. Note that a verification error does not imply a negative
 return status. In that case the  @code{verify} status is set.
 
+The details of the verification are the same
+as in @code{gnutls_x509_trust_list_verify_crt2()} .
+
 @strong{Returns:} On success, @code{GNUTLS_E_SUCCESS}  (0) is returned, otherwise a
 negative error value.
+@end deftypefun
+
+@subheading gnutls_x509_crt_verify_data2
+@anchor{gnutls_x509_crt_verify_data2}
+@deftypefun {int} {gnutls_x509_crt_verify_data2} (gnutls_x509_crt_t @var{crt}, gnutls_sign_algorithm_t @var{algo}, unsigned int @var{flags}, const gnutls_datum_t * @var{data}, const gnutls_datum_t * @var{signature})
+@var{crt}: Holds the certificate to verify with
+
+@var{algo}: The signature algorithm used
+
+@var{flags}: Zero or an OR list of @code{gnutls_certificate_verify_flags} 
+
+@var{data}: holds the signed data
+
+@var{signature}: contains the signature
+
+This function will verify the given signed data, using the
+parameters from the certificate.
+
+@strong{Returns:} In case of a verification failure @code{GNUTLS_E_PK_SIG_VERIFY_FAILED}  
+is returned, and zero or positive code on success.
+
+@strong{Since:} 3.4.0
 @end deftypefun
 
 @subheading gnutls_x509_dn_deinit
@@ -4459,6 +4433,24 @@ value conversions when necessary (e.g. from UCS-2).
 @strong{Returns:} Returns 0 on success, or an error code.
 @end deftypefun
 
+@subheading gnutls_x509_dn_get_str
+@anchor{gnutls_x509_dn_get_str}
+@deftypefun {int} {gnutls_x509_dn_get_str} (gnutls_x509_dn_t @var{dn}, gnutls_datum_t * @var{str})
+@var{dn}: a pointer to DN
+
+@var{str}: a datum that will hold the name
+
+This function will allocate buffer and copy the name in the provided DN.
+The name will be in the form "C=xxxx,O=yyyy,CN=zzzz" as
+described in RFC4514. The output string will be ASCII or UTF-8
+encoded, depending on the certificate data.
+
+@strong{Returns:} On success, @code{GNUTLS_E_SUCCESS}  (0) is returned, otherwise a
+negative error value.
+
+@strong{Since:} 3.4.2
+@end deftypefun
+
 @subheading gnutls_x509_dn_import
 @anchor{gnutls_x509_dn_import}
 @deftypefun {int} {gnutls_x509_dn_import} (gnutls_x509_dn_t @var{dn}, const gnutls_datum_t * @var{data})
@@ -4467,7 +4459,7 @@ value conversions when necessary (e.g. from UCS-2).
 @var{data}: should contain a DER encoded RDN sequence
 
 This function parses an RDN sequence and stores the result to a
-@code{gnutls_x509_dn_t}  structure. The structure must have been initialized
+@code{gnutls_x509_dn_t}  type. The data must have been initialized
 with @code{gnutls_x509_dn_init()} . You may use @code{gnutls_x509_dn_get_rdn_ava()}  to
 decode the DN.
 
@@ -4482,7 +4474,7 @@ negative error value.
 @deftypefun {int} {gnutls_x509_dn_init} (gnutls_x509_dn_t * @var{dn})
 @var{dn}: the object to be initialized
 
-This function initializes a @code{gnutls_x509_dn_t}  structure.
+This function initializes a @code{gnutls_x509_dn_t}  type.
 
 The object returned must be deallocated using
 @code{gnutls_x509_dn_deinit()} .
@@ -4539,7 +4531,7 @@ This function will deinitialize an extensions structure.
 @subheading gnutls_x509_ext_export_aia
 @anchor{gnutls_x509_ext_export_aia}
 @deftypefun {int} {gnutls_x509_ext_export_aia} (gnutls_x509_aia_t @var{aia}, gnutls_datum_t * @var{ext})
-@var{aia}: The authority info access structure
+@var{aia}: The authority info access
 
 @var{ext}: The DER-encoded extension data; must be freed using @code{gnutls_free()} .
 
@@ -4556,7 +4548,7 @@ negative error value.
 @subheading gnutls_x509_ext_export_authority_key_id
 @anchor{gnutls_x509_ext_export_authority_key_id}
 @deftypefun {int} {gnutls_x509_ext_export_authority_key_id} (gnutls_x509_aki_t @var{aki}, gnutls_datum_t * @var{ext})
-@var{aki}: An initialized authority key identifier structure
+@var{aki}: An initialized authority key identifier
 
 @var{ext}: The DER-encoded extension data; must be freed using @code{gnutls_free()} .
 
@@ -4593,7 +4585,7 @@ negative error value.
 @subheading gnutls_x509_ext_export_crl_dist_points
 @anchor{gnutls_x509_ext_export_crl_dist_points}
 @deftypefun {int} {gnutls_x509_ext_export_crl_dist_points} (gnutls_x509_crl_dist_points_t @var{cdp}, gnutls_datum_t * @var{ext})
-@var{cdp}: A pointer to an initialized CRL distribution points structure.
+@var{cdp}: A pointer to an initialized CRL distribution points.
 
 @var{ext}: The DER-encoded extension data; must be freed using @code{gnutls_free()} .
 
@@ -4610,11 +4602,11 @@ The  @code{ext} data will be allocated using @code{gnutls_malloc()} .
 @subheading gnutls_x509_ext_export_key_purposes
 @anchor{gnutls_x509_ext_export_key_purposes}
 @deftypefun {int} {gnutls_x509_ext_export_key_purposes} (gnutls_x509_key_purposes_t @var{p}, gnutls_datum_t * @var{ext})
-@var{p}: The key purposes structure
+@var{p}: The key purposes
 
 @var{ext}: The DER-encoded extension data; must be freed using @code{gnutls_free()} .
 
-This function will convert the key purposes structure to a
+This function will convert the key purposes type to a
 DER-encoded PKIX ExtKeyUsageSyntax (2.5.29.37) extension. The output data in 
  @code{ext} will be allocated usin @code{gnutls_malloc()} .
 
@@ -4643,11 +4635,11 @@ negative error value.
 @subheading gnutls_x509_ext_export_name_constraints
 @anchor{gnutls_x509_ext_export_name_constraints}
 @deftypefun {int} {gnutls_x509_ext_export_name_constraints} (gnutls_x509_name_constraints_t @var{nc}, gnutls_datum_t * @var{ext})
-@var{nc}: The nameconstraints structure
+@var{nc}: The nameconstraints
 
 @var{ext}: The DER-encoded extension data; must be freed using @code{gnutls_free()} .
 
-This function will convert the provided name constraints structure to a
+This function will convert the provided name constraints type to a
 DER-encoded PKIX NameConstraints (2.5.29.30) extension. The output data in 
  @code{ext} will be allocated usin @code{gnutls_malloc()} .
 
@@ -4659,7 +4651,7 @@ DER-encoded PKIX NameConstraints (2.5.29.30) extension. The output data in
 @subheading gnutls_x509_ext_export_policies
 @anchor{gnutls_x509_ext_export_policies}
 @deftypefun {int} {gnutls_x509_ext_export_policies} (gnutls_x509_policies_t @var{policies}, gnutls_datum_t * @var{ext})
-@var{policies}: A pointer to an initialized policies structure.
+@var{policies}: A pointer to an initialized policies.
 
 @var{ext}: The DER-encoded extension data; must be freed using @code{gnutls_free()} .
 
@@ -4722,7 +4714,7 @@ negative error value.
 @subheading gnutls_x509_ext_export_subject_alt_names
 @anchor{gnutls_x509_ext_export_subject_alt_names}
 @deftypefun {int} {gnutls_x509_ext_export_subject_alt_names} (gnutls_subject_alt_names_t @var{sans}, gnutls_datum_t * @var{ext})
-@var{sans}: The alternative names structure
+@var{sans}: The alternative names
 
 @var{ext}: The DER-encoded extension data; must be freed using @code{gnutls_free()} .
 
@@ -4757,7 +4749,7 @@ The output data in  @code{ext} will be allocated using
 @deftypefun {int} {gnutls_x509_ext_import_aia} (const gnutls_datum_t * @var{ext}, gnutls_x509_aia_t @var{aia}, unsigned int @var{flags})
 @var{ext}: The DER-encoded extension data
 
-@var{aia}: The authority info access structure
+@var{aia}: The authority info access
 
 @var{flags}: should be zero
 
@@ -4776,7 +4768,7 @@ AIA extension holds a sequence of AccessDescription (AD) data.
 @deftypefun {int} {gnutls_x509_ext_import_authority_key_id} (const gnutls_datum_t * @var{ext}, gnutls_x509_aki_t @var{aki}, unsigned int @var{flags})
 @var{ext}: a DER encoded extension
 
-@var{aki}: An initialized authority key identifier structure
+@var{aki}: An initialized authority key identifier type
 
 @var{flags}: should be zero
 
@@ -4812,12 +4804,12 @@ negative error value.
 @deftypefun {int} {gnutls_x509_ext_import_crl_dist_points} (const gnutls_datum_t * @var{ext}, gnutls_x509_crl_dist_points_t @var{cdp}, unsigned int @var{flags})
 @var{ext}: the DER encoded extension data
 
-@var{cdp}: A pointer to an initialized CRL distribution points structure.
+@var{cdp}: A pointer to an initialized CRL distribution points.
 
 @var{flags}: should be zero
 
 This function will extract the CRL distribution points extension (2.5.29.31) 
-and store it into the provided structure.
+and store it into the provided type.
 
 @strong{Returns:} On success, @code{GNUTLS_E_SUCCESS}  (0) is returned, otherwise a negative error value.
 
@@ -4829,13 +4821,13 @@ and store it into the provided structure.
 @deftypefun {int} {gnutls_x509_ext_import_key_purposes} (const gnutls_datum_t * @var{ext}, gnutls_x509_key_purposes_t @var{p}, unsigned int @var{flags})
 @var{ext}: The DER-encoded extension data
 
-@var{p}: The key purposes structure
+@var{p}: The key purposes
 
 @var{flags}: should be zero
 
 This function will extract the key purposes in the provided DER-encoded
-ExtKeyUsageSyntax PKIX extension, to a @code{gnutls_x509_key_purposes_t}  structure. 
-The structure must be initialized.
+ExtKeyUsageSyntax PKIX extension, to a @code{gnutls_x509_key_purposes_t}  type. 
+The data must be initialized.
 
 @strong{Returns:} On success, @code{GNUTLS_E_SUCCESS}  (0) is returned, otherwise a negative error value.
 
@@ -4870,19 +4862,18 @@ returned.
 @deftypefun {int} {gnutls_x509_ext_import_name_constraints} (const gnutls_datum_t * @var{ext}, gnutls_x509_name_constraints_t @var{nc}, unsigned int @var{flags})
 @var{ext}: a DER encoded extension
 
-@var{nc}: The nameconstraints intermediate structure
+@var{nc}: The nameconstraints
 
 @var{flags}: zero or @code{GNUTLS_NAME_CONSTRAINTS_FLAG_APPEND} 
 
-This function will return an intermediate structure containing
+This function will return an intermediate type containing
 the name constraints of the provided NameConstraints extension. That
-structure can be used in combination with @code{gnutls_x509_name_constraints_check()} 
+can be used in combination with @code{gnutls_x509_name_constraints_check()} 
 to verify whether a server's name is in accordance with the constraints.
 
 When the  @code{flags} is set to @code{GNUTLS_NAME_CONSTRAINTS_FLAG_APPEND} , then if 
-the  @code{nc} structure is empty
-this function will behave identically as if the flag was not set.
-Otherwise if there are elements in the  @code{nc} structure then only the
+the  @code{nc} type is empty this function will behave identically as if the flag was not set.
+Otherwise if there are elements in the  @code{nc} type then only the
 excluded constraints will be appended to the constraints.
 
 Note that  @code{nc} must be initialized prior to calling this function.
@@ -4898,12 +4889,12 @@ if the extension is not present, otherwise a negative error value.
 @deftypefun {int} {gnutls_x509_ext_import_policies} (const gnutls_datum_t * @var{ext}, gnutls_x509_policies_t @var{policies}, unsigned int @var{flags})
 @var{ext}: the DER encoded extension data
 
-@var{policies}: A pointer to an initialized policies structures.
+@var{policies}: A pointer to an initialized policies.
 
 @var{flags}: should be zero
 
 This function will extract the certificate policy extension (2.5.29.32) 
-and store it the provided structure.
+and store it the provided policies.
 
 @strong{Returns:} On success, @code{GNUTLS_E_SUCCESS}  (0) is returned, otherwise a negative error value.
 
@@ -4959,13 +4950,12 @@ negative error value.
 @deftypefun {int} {gnutls_x509_ext_import_subject_alt_names} (const gnutls_datum_t * @var{ext}, gnutls_subject_alt_names_t @var{sans}, unsigned int @var{flags})
 @var{ext}: The DER-encoded extension data
 
-@var{sans}: The alternative names structure
+@var{sans}: The alternative names
 
 @var{flags}: should be zero
 
 This function will export the alternative names in the provided DER-encoded
-SubjectAltName PKIX extension, to a @code{gnutls_subject_alt_names_t}  structure. The structure
-must have been initialized.
+SubjectAltName PKIX extension, to a @code{gnutls_subject_alt_names_t}  type.  @code{sans} must be initialized.
 
 This function will succeed even if there no subject alternative names
 in the structure.
@@ -4995,7 +4985,7 @@ if the extension is not present, otherwise a negative error value.
 @subheading gnutls_x509_ext_print
 @anchor{gnutls_x509_ext_print}
 @deftypefun {int} {gnutls_x509_ext_print} (gnutls_x509_ext_st * @var{exts}, unsigned int @var{exts_size}, gnutls_certificate_print_formats_t @var{format}, gnutls_datum_t * @var{out})
-@var{exts}: The structures to be printed
+@var{exts}: The data to be printed
 
 @var{exts_size}: the number of available structures
 
@@ -5015,9 +5005,9 @@ negative error value.
 @subheading gnutls_x509_key_purpose_deinit
 @anchor{gnutls_x509_key_purpose_deinit}
 @deftypefun {void} {gnutls_x509_key_purpose_deinit} (gnutls_x509_key_purposes_t @var{p})
-@var{p}: The key purposes structure
+@var{p}: The key purposes
 
-This function will deinitialize an alternative names structure.
+This function will deinitialize a key purposes type.
 
 @strong{Since:} 3.3.0
 @end deftypefun
@@ -5025,14 +5015,14 @@ This function will deinitialize an alternative names structure.
 @subheading gnutls_x509_key_purpose_get
 @anchor{gnutls_x509_key_purpose_get}
 @deftypefun {int} {gnutls_x509_key_purpose_get} (gnutls_x509_key_purposes_t @var{p}, unsigned @var{idx}, gnutls_datum_t * @var{oid})
-@var{p}: The key purposes structure
+@var{p}: The key purposes
 
 @var{idx}: The index of the key purpose to retrieve
 
 @var{oid}: Will hold the object identifier of the key purpose (to be treated as constant)
 
 This function will retrieve the specified by the index key purpose in the
-purposes structure. The object identifier will be a null terminated string.
+purposes type. The object identifier will be a null terminated string.
 
 @strong{Returns:} On success, @code{GNUTLS_E_SUCCESS}  (0) is returned, @code{GNUTLS_E_REQUESTED_DATA_NOT_AVAILABLE} 
 if the index is out of bounds, otherwise a negative error value.
@@ -5043,9 +5033,9 @@ if the index is out of bounds, otherwise a negative error value.
 @subheading gnutls_x509_key_purpose_init
 @anchor{gnutls_x509_key_purpose_init}
 @deftypefun {int} {gnutls_x509_key_purpose_init} (gnutls_x509_key_purposes_t * @var{p})
-@var{p}: The key purposes structure
+@var{p}: The key purposes
 
-This function will initialize an alternative names structure.
+This function will initialize an alternative names type.
 
 @strong{Returns:} On success, @code{GNUTLS_E_SUCCESS}  (0) is returned, otherwise a negative error value.
 
@@ -5055,12 +5045,12 @@ This function will initialize an alternative names structure.
 @subheading gnutls_x509_key_purpose_set
 @anchor{gnutls_x509_key_purpose_set}
 @deftypefun {int} {gnutls_x509_key_purpose_set} (gnutls_x509_key_purposes_t @var{p}, const char * @var{oid})
-@var{p}: The key purposes structure
+@var{p}: The key purposes
 
 @var{oid}: The object identifier of the key purpose
 
 This function will store the specified key purpose in the
-purposes structure.
+purposes.
 
 @strong{Returns:} On success, @code{GNUTLS_E_SUCCESS}  (0), otherwise a negative error value.
 
@@ -5070,7 +5060,7 @@ purposes structure.
 @subheading gnutls_x509_name_constraints_add_excluded
 @anchor{gnutls_x509_name_constraints_add_excluded}
 @deftypefun {int} {gnutls_x509_name_constraints_add_excluded} (gnutls_x509_name_constraints_t @var{nc}, gnutls_x509_subject_alt_name_t @var{type}, const gnutls_datum_t * @var{name})
-@var{nc}: The nameconstraints structure
+@var{nc}: The nameconstraints
 
 @var{type}: The type of the constraints
 
@@ -5087,7 +5077,7 @@ constraints.
 @subheading gnutls_x509_name_constraints_add_permitted
 @anchor{gnutls_x509_name_constraints_add_permitted}
 @deftypefun {int} {gnutls_x509_name_constraints_add_permitted} (gnutls_x509_name_constraints_t @var{nc}, gnutls_x509_subject_alt_name_t @var{type}, const gnutls_datum_t * @var{name})
-@var{nc}: The nameconstraints structure
+@var{nc}: The nameconstraints
 
 @var{type}: The type of the constraints
 
@@ -5104,7 +5094,7 @@ constraints.
 @subheading gnutls_x509_name_constraints_check
 @anchor{gnutls_x509_name_constraints_check}
 @deftypefun {unsigned} {gnutls_x509_name_constraints_check} (gnutls_x509_name_constraints_t @var{nc}, gnutls_x509_subject_alt_name_t @var{type}, const gnutls_datum_t * @var{name})
-@var{nc}: the extracted name constraints structure
+@var{nc}: the extracted name constraints
 
 @var{type}: the type of the constraint to check (of type gnutls_x509_subject_alt_name_t)
 
@@ -5122,7 +5112,7 @@ names and emails (of type @code{GNUTLS_SAN_DNSNAME}  and @code{GNUTLS_SAN_RFC822
 @subheading gnutls_x509_name_constraints_check_crt
 @anchor{gnutls_x509_name_constraints_check_crt}
 @deftypefun {unsigned} {gnutls_x509_name_constraints_check_crt} (gnutls_x509_name_constraints_t @var{nc}, gnutls_x509_subject_alt_name_t @var{type}, gnutls_x509_crt_t @var{cert})
-@var{nc}: the extracted name constraints structure
+@var{nc}: the extracted name constraints
 
 @var{type}: the type of the constraint to check (of type gnutls_x509_subject_alt_name_t)
 
@@ -5143,9 +5133,9 @@ names and emails (of type @code{GNUTLS_SAN_DNSNAME}  and @code{GNUTLS_SAN_RFC822
 @subheading gnutls_x509_name_constraints_deinit
 @anchor{gnutls_x509_name_constraints_deinit}
 @deftypefun {void} {gnutls_x509_name_constraints_deinit} (gnutls_x509_name_constraints_t @var{nc})
-@var{nc}: The nameconstraints structure
+@var{nc}: The nameconstraints
 
-This function will deinitialize a name constraints structure.
+This function will deinitialize a name constraints type.
 
 @strong{Since:} 3.3.0
 @end deftypefun
@@ -5153,7 +5143,7 @@ This function will deinitialize a name constraints structure.
 @subheading gnutls_x509_name_constraints_get_excluded
 @anchor{gnutls_x509_name_constraints_get_excluded}
 @deftypefun {int} {gnutls_x509_name_constraints_get_excluded} (gnutls_x509_name_constraints_t @var{nc}, unsigned @var{idx}, unsigned * @var{type}, gnutls_datum_t * @var{name})
-@var{nc}: the extracted name constraints structure
+@var{nc}: the extracted name constraints
 
 @var{idx}: the index of the constraint
 
@@ -5161,7 +5151,7 @@ This function will deinitialize a name constraints structure.
 
 @var{name}: the name in the constraint (of the specific type)
 
-This function will return an intermediate structure containing
+This function will return an intermediate type containing
 the name constraints of the provided CA certificate. That
 structure can be used in combination with @code{gnutls_x509_name_constraints_check()} 
 to verify whether a server's name is in accordance with the constraints.
@@ -5177,7 +5167,7 @@ if the extension is not present, otherwise a negative error value.
 @subheading gnutls_x509_name_constraints_get_permitted
 @anchor{gnutls_x509_name_constraints_get_permitted}
 @deftypefun {int} {gnutls_x509_name_constraints_get_permitted} (gnutls_x509_name_constraints_t @var{nc}, unsigned @var{idx}, unsigned * @var{type}, gnutls_datum_t * @var{name})
-@var{nc}: the extracted name constraints structure
+@var{nc}: the extracted name constraints
 
 @var{idx}: the index of the constraint
 
@@ -5185,7 +5175,7 @@ if the extension is not present, otherwise a negative error value.
 
 @var{name}: the name in the constraint (of the specific type)
 
-This function will return an intermediate structure containing
+This function will return an intermediate type containing
 the name constraints of the provided CA certificate. That
 structure can be used in combination with @code{gnutls_x509_name_constraints_check()} 
 to verify whether a server's name is in accordance with the constraints.
@@ -5201,9 +5191,9 @@ if the extension is not present, otherwise a negative error value.
 @subheading gnutls_x509_name_constraints_init
 @anchor{gnutls_x509_name_constraints_init}
 @deftypefun {int} {gnutls_x509_name_constraints_init} (gnutls_x509_name_constraints_t * @var{nc})
-@var{nc}: The nameconstraints structure
+@var{nc}: The nameconstraints
 
-This function will initialize a name constraints structure.
+This function will initialize a name constraints type.
 
 @strong{Returns:} On success, @code{GNUTLS_E_SUCCESS}  (0) is returned, otherwise a negative error value.
 
@@ -5215,7 +5205,7 @@ This function will initialize a name constraints structure.
 @deftypefun {int} {gnutls_x509_othername_to_virtual} (const char * @var{oid}, const gnutls_datum_t * @var{othername}, unsigned int * @var{virt_type}, gnutls_datum_t * @var{virt})
 @var{oid}: The othername object identifier
 
-@var{othername}: -- undescribed --
+@var{othername}: The othername data
 
 @var{virt_type}: GNUTLS_SAN_OTHERNAME_XXX
 
@@ -5232,9 +5222,9 @@ type supported by gnutls.
 @subheading gnutls_x509_policies_deinit
 @anchor{gnutls_x509_policies_deinit}
 @deftypefun {void} {gnutls_x509_policies_deinit} (gnutls_x509_policies_t @var{policies})
-@var{policies}: The authority key identifier structure
+@var{policies}: The authority key identifier
 
-This function will deinitialize an authority key identifier structure.
+This function will deinitialize an authority key identifier type.
 
 @strong{Since:} 3.3.0
 @end deftypefun
@@ -5242,14 +5232,14 @@ This function will deinitialize an authority key identifier structure.
 @subheading gnutls_x509_policies_get
 @anchor{gnutls_x509_policies_get}
 @deftypefun {int} {gnutls_x509_policies_get} (gnutls_x509_policies_t @var{policies}, unsigned int @var{seq}, struct gnutls_x509_policy_st * @var{policy})
-@var{policies}: The policies structure
+@var{policies}: The policies
 
 @var{seq}: The index of the name to get
 
 @var{policy}: Will hold the policy
 
 This function will return a specific policy as stored in
-the  @code{policies} structure. The returned values should be treated as constant
+the  @code{policies} type. The returned values should be treated as constant
 and valid for the lifetime of  @code{policies} .
 
 @strong{Returns:} On success, @code{GNUTLS_E_SUCCESS}  (0) is returned, @code{GNUTLS_E_REQUESTED_DATA_NOT_AVAILABLE} 
@@ -5261,9 +5251,9 @@ if the index is out of bounds, otherwise a negative error value.
 @subheading gnutls_x509_policies_init
 @anchor{gnutls_x509_policies_init}
 @deftypefun {int} {gnutls_x509_policies_init} (gnutls_x509_policies_t * @var{policies})
-@var{policies}: The authority key ID structure
+@var{policies}: The authority key ID
 
-This function will initialize an authority key ID structure.
+This function will initialize an authority key ID type.
 
 @strong{Returns:} On success, @code{GNUTLS_E_SUCCESS}  (0) is returned, otherwise a negative error value.
 
@@ -5273,12 +5263,12 @@ This function will initialize an authority key ID structure.
 @subheading gnutls_x509_policies_set
 @anchor{gnutls_x509_policies_set}
 @deftypefun {int} {gnutls_x509_policies_set} (gnutls_x509_policies_t @var{policies}, const struct gnutls_x509_policy_st * @var{policy})
-@var{policies}: An initialized policies structure
+@var{policies}: An initialized policies
 
 @var{policy}: Contains the policy to set
 
 This function will store the specified policy in
-the provided  @code{policies} structure.
+the provided  @code{policies} .
 
 @strong{Returns:} On success, @code{GNUTLS_E_SUCCESS}  (0), otherwise a negative error value.
 
@@ -5313,7 +5303,7 @@ negative error value.
 @subheading gnutls_x509_privkey_deinit
 @anchor{gnutls_x509_privkey_deinit}
 @deftypefun {void} {gnutls_x509_privkey_deinit} (gnutls_x509_privkey_t @var{key})
-@var{key}: The structure to be deinitialized
+@var{key}: The key to be deinitialized
 
 This function will deinitialize a private key structure.
 @end deftypefun
@@ -5405,7 +5395,7 @@ Since 3.1.3
 @subheading gnutls_x509_privkey_export_dsa_raw
 @anchor{gnutls_x509_privkey_export_dsa_raw}
 @deftypefun {int} {gnutls_x509_privkey_export_dsa_raw} (gnutls_x509_privkey_t @var{key}, gnutls_datum_t * @var{p}, gnutls_datum_t * @var{q}, gnutls_datum_t * @var{g}, gnutls_datum_t * @var{y}, gnutls_datum_t * @var{x})
-@var{key}: a structure that holds the DSA parameters
+@var{key}: a key
 
 @var{p}: will hold the p
 
@@ -5428,7 +5418,7 @@ negative error value.
 @subheading gnutls_x509_privkey_export_ecc_raw
 @anchor{gnutls_x509_privkey_export_ecc_raw}
 @deftypefun {int} {gnutls_x509_privkey_export_ecc_raw} (gnutls_x509_privkey_t @var{key}, gnutls_ecc_curve_t * @var{curve}, gnutls_datum_t * @var{x}, gnutls_datum_t * @var{y}, gnutls_datum_t * @var{k})
-@var{key}: a structure that holds the rsa parameters
+@var{key}: a key
 
 @var{curve}: will hold the curve
 
@@ -5487,7 +5477,7 @@ returned, and 0 on success.
 @subheading gnutls_x509_privkey_export_rsa_raw
 @anchor{gnutls_x509_privkey_export_rsa_raw}
 @deftypefun {int} {gnutls_x509_privkey_export_rsa_raw} (gnutls_x509_privkey_t @var{key}, gnutls_datum_t * @var{m}, gnutls_datum_t * @var{e}, gnutls_datum_t * @var{d}, gnutls_datum_t * @var{p}, gnutls_datum_t * @var{q}, gnutls_datum_t * @var{u})
-@var{key}: a structure that holds the rsa parameters
+@var{key}: a key
 
 @var{m}: will hold the modulus
 
@@ -5512,7 +5502,7 @@ negative error value.
 @subheading gnutls_x509_privkey_export_rsa_raw2
 @anchor{gnutls_x509_privkey_export_rsa_raw2}
 @deftypefun {int} {gnutls_x509_privkey_export_rsa_raw2} (gnutls_x509_privkey_t @var{key}, gnutls_datum_t * @var{m}, gnutls_datum_t * @var{e}, gnutls_datum_t * @var{d}, gnutls_datum_t * @var{p}, gnutls_datum_t * @var{q}, gnutls_datum_t * @var{u}, gnutls_datum_t * @var{e1}, gnutls_datum_t * @var{e2})
-@var{key}: a structure that holds the rsa parameters
+@var{key}: a key
 
 @var{m}: will hold the modulus
 
@@ -5543,7 +5533,7 @@ negative error value.
 @subheading gnutls_x509_privkey_fix
 @anchor{gnutls_x509_privkey_fix}
 @deftypefun {int} {gnutls_x509_privkey_fix} (gnutls_x509_privkey_t @var{key})
-@var{key}: Holds the key
+@var{key}: a key
 
 This function will recalculate the secondary parameters in a key.
 In RSA keys, this can be the coefficient and exponent1,2.
@@ -5555,7 +5545,7 @@ negative error value.
 @subheading gnutls_x509_privkey_generate
 @anchor{gnutls_x509_privkey_generate}
 @deftypefun {int} {gnutls_x509_privkey_generate} (gnutls_x509_privkey_t @var{key}, gnutls_pk_algorithm_t @var{algo}, unsigned int @var{bits}, unsigned int @var{flags})
-@var{key}: should contain a @code{gnutls_x509_privkey_t}  structure
+@var{key}: a key
 
 @var{algo}: is one of the algorithms in @code{gnutls_pk_algorithm_t} .
 
@@ -5582,9 +5572,9 @@ negative error value.
 @subheading gnutls_x509_privkey_get_key_id
 @anchor{gnutls_x509_privkey_get_key_id}
 @deftypefun {int} {gnutls_x509_privkey_get_key_id} (gnutls_x509_privkey_t @var{key}, unsigned int @var{flags}, unsigned char * @var{output_data}, size_t * @var{output_data_size})
-@var{key}: Holds the key
+@var{key}: a key
 
-@var{flags}: should be 0 for now
+@var{flags}: should be one of the flags from @code{gnutls_keyid_flags_t} 
 
 @var{output_data}: will contain the key ID
 
@@ -5607,7 +5597,7 @@ negative error value.
 @subheading gnutls_x509_privkey_get_pk_algorithm
 @anchor{gnutls_x509_privkey_get_pk_algorithm}
 @deftypefun {int} {gnutls_x509_privkey_get_pk_algorithm} (gnutls_x509_privkey_t @var{key})
-@var{key}: should contain a @code{gnutls_x509_privkey_t}  structure
+@var{key}: should contain a @code{gnutls_x509_privkey_t}  type
 
 This function will return the public key algorithm of a private
 key.
@@ -5619,7 +5609,7 @@ success, or a negative error code on error.
 @subheading gnutls_x509_privkey_get_pk_algorithm2
 @anchor{gnutls_x509_privkey_get_pk_algorithm2}
 @deftypefun {int} {gnutls_x509_privkey_get_pk_algorithm2} (gnutls_x509_privkey_t @var{key}, unsigned int * @var{bits})
-@var{key}: should contain a @code{gnutls_x509_privkey_t}  structure
+@var{key}: should contain a @code{gnutls_x509_privkey_t}  type
 
 @var{bits}: The number of bits in the public key algorithm
 
@@ -5633,7 +5623,7 @@ success, or a negative error code on error.
 @subheading gnutls_x509_privkey_import
 @anchor{gnutls_x509_privkey_import}
 @deftypefun {int} {gnutls_x509_privkey_import} (gnutls_x509_privkey_t @var{key}, const gnutls_datum_t * @var{data}, gnutls_x509_crt_fmt_t @var{format})
-@var{key}: The structure to store the parsed key
+@var{key}: The data to store the parsed key
 
 @var{data}: The DER or PEM encoded certificate.
 
@@ -5654,7 +5644,7 @@ negative error value.
 @subheading gnutls_x509_privkey_import2
 @anchor{gnutls_x509_privkey_import2}
 @deftypefun {int} {gnutls_x509_privkey_import2} (gnutls_x509_privkey_t @var{key}, const gnutls_datum_t * @var{data}, gnutls_x509_crt_fmt_t @var{format}, const char * @var{password}, unsigned int @var{flags})
-@var{key}: The structure to store the parsed key
+@var{key}: The data to store the parsed key
 
 @var{data}: The DER or PEM encoded key.
 
@@ -5672,7 +5662,8 @@ The supported formats are basic unencrypted key, PKCS8, PKCS12,
 and the openssl format.
 
 If the provided key is encrypted but no password was given, then
-@code{GNUTLS_E_DECRYPTION_FAILED}  is returned.
+@code{GNUTLS_E_DECRYPTION_FAILED}  is returned. Since GnuTLS 3.4.0 this
+function will utilize the PIN callbacks if any.
 
 @strong{Returns:} On success, @code{GNUTLS_E_SUCCESS}  (0) is returned, otherwise a
 negative error value.
@@ -5681,7 +5672,7 @@ negative error value.
 @subheading gnutls_x509_privkey_import_dsa_raw
 @anchor{gnutls_x509_privkey_import_dsa_raw}
 @deftypefun {int} {gnutls_x509_privkey_import_dsa_raw} (gnutls_x509_privkey_t @var{key}, const gnutls_datum_t * @var{p}, const gnutls_datum_t * @var{q}, const gnutls_datum_t * @var{g}, const gnutls_datum_t * @var{y}, const gnutls_datum_t * @var{x})
-@var{key}: The structure to store the parsed key
+@var{key}: The data to store the parsed key
 
 @var{p}: holds the p
 
@@ -5704,7 +5695,7 @@ negative error value.
 @subheading gnutls_x509_privkey_import_ecc_raw
 @anchor{gnutls_x509_privkey_import_ecc_raw}
 @deftypefun {int} {gnutls_x509_privkey_import_ecc_raw} (gnutls_x509_privkey_t @var{key}, gnutls_ecc_curve_t @var{curve}, const gnutls_datum_t * @var{x}, const gnutls_datum_t * @var{y}, const gnutls_datum_t * @var{k})
-@var{key}: The structure to store the parsed key
+@var{key}: The data to store the parsed key
 
 @var{curve}: holds the curve
 
@@ -5727,7 +5718,7 @@ negative error value.
 @subheading gnutls_x509_privkey_import_openssl
 @anchor{gnutls_x509_privkey_import_openssl}
 @deftypefun {int} {gnutls_x509_privkey_import_openssl} (gnutls_x509_privkey_t @var{key}, const gnutls_datum_t * @var{data}, const char * @var{password})
-@var{key}: The structure to store the parsed key
+@var{key}: The data to store the parsed key
 
 @var{data}: The DER or PEM encoded key.
 
@@ -5750,7 +5741,7 @@ negative error value.
 @subheading gnutls_x509_privkey_import_pkcs8
 @anchor{gnutls_x509_privkey_import_pkcs8}
 @deftypefun {int} {gnutls_x509_privkey_import_pkcs8} (gnutls_x509_privkey_t @var{key}, const gnutls_datum_t * @var{data}, gnutls_x509_crt_fmt_t @var{format}, const char * @var{password}, unsigned int @var{flags})
-@var{key}: The structure to store the parsed key
+@var{key}: The data to store the parsed key
 
 @var{data}: The DER or PEM encoded key.
 
@@ -5784,7 +5775,7 @@ negative error value.
 @subheading gnutls_x509_privkey_import_rsa_raw
 @anchor{gnutls_x509_privkey_import_rsa_raw}
 @deftypefun {int} {gnutls_x509_privkey_import_rsa_raw} (gnutls_x509_privkey_t @var{key}, const gnutls_datum_t * @var{m}, const gnutls_datum_t * @var{e}, const gnutls_datum_t * @var{d}, const gnutls_datum_t * @var{p}, const gnutls_datum_t * @var{q}, const gnutls_datum_t * @var{u})
-@var{key}: The structure to store the parsed key
+@var{key}: The data to store the parsed key
 
 @var{m}: holds the modulus
 
@@ -5809,7 +5800,7 @@ negative error value.
 @subheading gnutls_x509_privkey_import_rsa_raw2
 @anchor{gnutls_x509_privkey_import_rsa_raw2}
 @deftypefun {int} {gnutls_x509_privkey_import_rsa_raw2} (gnutls_x509_privkey_t @var{key}, const gnutls_datum_t * @var{m}, const gnutls_datum_t * @var{e}, const gnutls_datum_t * @var{d}, const gnutls_datum_t * @var{p}, const gnutls_datum_t * @var{q}, const gnutls_datum_t * @var{u}, const gnutls_datum_t * @var{e1}, const gnutls_datum_t * @var{e2})
-@var{key}: The structure to store the parsed key
+@var{key}: The data to store the parsed key
 
 @var{m}: holds the modulus
 
@@ -5838,9 +5829,9 @@ negative error value.
 @subheading gnutls_x509_privkey_init
 @anchor{gnutls_x509_privkey_init}
 @deftypefun {int} {gnutls_x509_privkey_init} (gnutls_x509_privkey_t * @var{key})
-@var{key}: The structure to be initialized
+@var{key}: A pointer to the type to be initialized
 
-This function will initialize an private key structure.
+This function will initialize a private key type.
 
 @strong{Returns:} On success, @code{GNUTLS_E_SUCCESS}  (0) is returned, otherwise a
 negative error value.
@@ -5849,7 +5840,7 @@ negative error value.
 @subheading gnutls_x509_privkey_sec_param
 @anchor{gnutls_x509_privkey_sec_param}
 @deftypefun {gnutls_sec_param_t} {gnutls_x509_privkey_sec_param} (gnutls_x509_privkey_t @var{key})
-@var{key}: a key structure
+@var{key}: a key
 
 This function will return the security parameter appropriate with
 this private key.
@@ -5860,10 +5851,60 @@ this private key.
 @strong{Since:} 2.12.0
 @end deftypefun
 
+@subheading gnutls_x509_privkey_set_pin_function
+@anchor{gnutls_x509_privkey_set_pin_function}
+@deftypefun {void} {gnutls_x509_privkey_set_pin_function} (gnutls_x509_privkey_t @var{privkey}, gnutls_pin_callback_t @var{fn}, void * @var{userdata})
+@var{privkey}: The certificate structure
+
+@var{fn}: the callback
+
+@var{userdata}: data associated with the callback
+
+This function will set a callback function to be used when
+it is required to access a protected object. This function overrides 
+the global function set using @code{gnutls_pkcs11_set_pin_function()} .
+
+Note that this callback is used when decrypting a key.
+
+@strong{Since:} 3.4.0
+@end deftypefun
+
+@subheading gnutls_x509_privkey_sign_data
+@anchor{gnutls_x509_privkey_sign_data}
+@deftypefun {int} {gnutls_x509_privkey_sign_data} (gnutls_x509_privkey_t @var{key}, gnutls_digest_algorithm_t @var{digest}, unsigned int @var{flags}, const gnutls_datum_t * @var{data}, void * @var{signature}, size_t * @var{signature_size})
+@var{key}: a key
+
+@var{digest}: should be MD5 or SHA1
+
+@var{flags}: should be 0 for now
+
+@var{data}: holds the data to be signed
+
+@var{signature}: will contain the signature
+
+@var{signature_size}: holds the size of signature (and will be replaced
+by the new size)
+
+This function will sign the given data using a signature algorithm
+supported by the private key. Signature algorithms are always used
+together with a hash functions.  Different hash functions may be
+used for the RSA algorithm, but only SHA-1 for the DSA keys.
+
+If the buffer provided is not long enough to hold the output, then
+* @code{signature_size} is updated and @code{GNUTLS_E_SHORT_MEMORY_BUFFER}  will
+be returned.
+
+Use @code{gnutls_x509_crt_get_preferred_hash_algorithm()}  to determine
+the hash algorithm.
+
+@strong{Returns:} On success, @code{GNUTLS_E_SUCCESS}  (0) is returned, otherwise a
+negative error value.
+@end deftypefun
+
 @subheading gnutls_x509_privkey_verify_params
 @anchor{gnutls_x509_privkey_verify_params}
 @deftypefun {int} {gnutls_x509_privkey_verify_params} (gnutls_x509_privkey_t @var{key})
-@var{key}: should contain a @code{gnutls_x509_privkey_t}  structure
+@var{key}: a key
 
 This function will verify the private key parameters.
 
@@ -5941,7 +5982,7 @@ negative error value.
 @subheading gnutls_x509_trust_list_add_cas
 @anchor{gnutls_x509_trust_list_add_cas}
 @deftypefun {int} {gnutls_x509_trust_list_add_cas} (gnutls_x509_trust_list_t @var{list}, const gnutls_x509_crt_t * @var{clist}, unsigned @var{clist_size}, unsigned int @var{flags})
-@var{list}: The structure of the list
+@var{list}: The list
 
 @var{clist}: A list of CAs
 
@@ -5965,7 +6006,7 @@ added to the list and will be deinitialized.
 @subheading gnutls_x509_trust_list_add_crls
 @anchor{gnutls_x509_trust_list_add_crls}
 @deftypefun {int} {gnutls_x509_trust_list_add_crls} (gnutls_x509_trust_list_t @var{list}, const gnutls_x509_crl_t * @var{crl_list}, int @var{crl_size}, unsigned int @var{flags}, unsigned int @var{verification_flags})
-@var{list}: The structure of the list
+@var{list}: The list
 
 @var{crl_list}: A list of CRLs
 
@@ -5993,7 +6034,7 @@ will be called with all=1).
 @subheading gnutls_x509_trust_list_add_named_crt
 @anchor{gnutls_x509_trust_list_add_named_crt}
 @deftypefun {int} {gnutls_x509_trust_list_add_named_crt} (gnutls_x509_trust_list_t @var{list}, gnutls_x509_crt_t @var{cert}, const void * @var{name}, size_t @var{name_size}, unsigned int @var{flags})
-@var{list}: The structure of the list
+@var{list}: The list
 
 @var{cert}: A certificate
 
@@ -6006,7 +6047,9 @@ will be called with all=1).
 This function will add the given certificate to the trusted
 list and associate it with a name. The certificate will not be
 be used for verification with @code{gnutls_x509_trust_list_verify_crt()} 
-but only with @code{gnutls_x509_trust_list_verify_named_crt()} .
+but with @code{gnutls_x509_trust_list_verify_named_crt()}  or
+@code{gnutls_x509_trust_list_verify_crt2()}  - the latter only since
+GnuTLS 3.4.0 and if a hostname is provided.
 
 In principle this function can be used to set individual "server"
 certificates that are trusted by the user for that specific server
@@ -6044,7 +6087,7 @@ This function implies the flag @code{GNUTLS_TL_NO_DUPLICATES} .
 @subheading gnutls_x509_trust_list_add_trust_dir
 @anchor{gnutls_x509_trust_list_add_trust_dir}
 @deftypefun {int} {gnutls_x509_trust_list_add_trust_dir} (gnutls_x509_trust_list_t @var{list}, const char * @var{ca_dir}, const char * @var{crl_dir}, gnutls_x509_crt_fmt_t @var{type}, unsigned int @var{tl_flags}, unsigned int @var{tl_vflags})
-@var{list}: The structure of the list
+@var{list}: The list
 
 @var{ca_dir}: A directory containing the CAs (optional)
 
@@ -6068,7 +6111,7 @@ this function.
 @subheading gnutls_x509_trust_list_add_trust_file
 @anchor{gnutls_x509_trust_list_add_trust_file}
 @deftypefun {int} {gnutls_x509_trust_list_add_trust_file} (gnutls_x509_trust_list_t @var{list}, const char * @var{ca_file}, const char * @var{crl_file}, gnutls_x509_crt_fmt_t @var{type}, unsigned int @var{tl_flags}, unsigned int @var{tl_vflags})
-@var{list}: The structure of the list
+@var{list}: The list
 
 @var{ca_file}: A file containing a list of CAs (optional)
 
@@ -6095,7 +6138,7 @@ trust databases can be set; they cannot be stacked with multiple calls.
 @subheading gnutls_x509_trust_list_add_trust_mem
 @anchor{gnutls_x509_trust_list_add_trust_mem}
 @deftypefun {int} {gnutls_x509_trust_list_add_trust_mem} (gnutls_x509_trust_list_t @var{list}, const gnutls_datum_t * @var{cas}, const gnutls_datum_t * @var{crls}, gnutls_x509_crt_fmt_t @var{type}, unsigned int @var{tl_flags}, unsigned int @var{tl_vflags})
-@var{list}: The structure of the list
+@var{list}: The list
 
 @var{cas}: A buffer containing a list of CAs (optional)
 
@@ -6118,7 +6161,7 @@ to the trusted list.
 @subheading gnutls_x509_trust_list_deinit
 @anchor{gnutls_x509_trust_list_deinit}
 @deftypefun {void} {gnutls_x509_trust_list_deinit} (gnutls_x509_trust_list_t @var{list}, unsigned int @var{all})
-@var{list}: The structure to be deinitialized
+@var{list}: The list to be deinitialized
 
 @var{all}: if non-zero it will deinitialize all the certificates and CRLs contained in the structure.
 
@@ -6133,7 +6176,7 @@ want to prevent them from being deinitialized by this function.
 @subheading gnutls_x509_trust_list_get_issuer
 @anchor{gnutls_x509_trust_list_get_issuer}
 @deftypefun {int} {gnutls_x509_trust_list_get_issuer} (gnutls_x509_trust_list_t @var{list}, gnutls_x509_crt_t @var{cert}, gnutls_x509_crt_t * @var{issuer}, unsigned int @var{flags})
-@var{list}: The structure of the list
+@var{list}: The list
 
 @var{cert}: is the certificate to find issuer for
 
@@ -6153,10 +6196,52 @@ negative error value.
 @strong{Since:} 3.0
 @end deftypefun
 
+@subheading gnutls_x509_trust_list_get_issuer_by_dn
+@anchor{gnutls_x509_trust_list_get_issuer_by_dn}
+@deftypefun {int} {gnutls_x509_trust_list_get_issuer_by_dn} (gnutls_x509_trust_list_t @var{list}, const gnutls_datum_t * @var{dn}, gnutls_x509_crt_t * @var{issuer}, unsigned int @var{flags})
+@var{list}: The list
+
+@var{dn}: is the issuer's DN
+
+@var{issuer}: Will hold the issuer if any. Should be deallocated after use.
+
+@var{flags}: Use zero
+
+This function will find the issuer with the given name, and
+return a copy of the issuer, which must be freed using @code{gnutls_x509_crt_deinit()} .
+
+@strong{Returns:} On success, @code{GNUTLS_E_SUCCESS}  (0) is returned, otherwise a
+negative error value.
+
+@strong{Since:} 3.4.0
+@end deftypefun
+
+@subheading gnutls_x509_trust_list_get_issuer_by_subject_key_id
+@anchor{gnutls_x509_trust_list_get_issuer_by_subject_key_id}
+@deftypefun {int} {gnutls_x509_trust_list_get_issuer_by_subject_key_id} (gnutls_x509_trust_list_t @var{list}, const gnutls_datum_t * @var{dn}, const gnutls_datum_t * @var{spki}, gnutls_x509_crt_t * @var{issuer}, unsigned int @var{flags})
+@var{list}: The list
+
+@var{dn}: is the issuer's DN (may be @code{NULL} )
+
+@var{spki}: is the subject key ID
+
+@var{issuer}: Will hold the issuer if any. Should be deallocated after use.
+
+@var{flags}: Use zero
+
+This function will find the issuer with the given name and subject key ID, and
+return a copy of the issuer, which must be freed using @code{gnutls_x509_crt_deinit()} .
+
+@strong{Returns:} On success, @code{GNUTLS_E_SUCCESS}  (0) is returned, otherwise a
+negative error value.
+
+@strong{Since:} 3.4.2
+@end deftypefun
+
 @subheading gnutls_x509_trust_list_init
 @anchor{gnutls_x509_trust_list_init}
 @deftypefun {int} {gnutls_x509_trust_list_init} (gnutls_x509_trust_list_t * @var{list}, unsigned int @var{size})
-@var{list}: The structure to be initialized
+@var{list}: A pointer to the type to be initialized
 
 @var{size}: The size of the internal hash table. Use (0) for default size.
 
@@ -6168,10 +6253,45 @@ negative error value.
 @strong{Since:} 3.0.0
 @end deftypefun
 
+@subheading gnutls_x509_trust_list_iter_deinit
+@anchor{gnutls_x509_trust_list_iter_deinit}
+@deftypefun {void} {gnutls_x509_trust_list_iter_deinit} (gnutls_x509_trust_list_iter_t @var{iter})
+@var{iter}: The iterator structure to be deinitialized
+
+This function will deinitialize an iterator structure.
+
+@strong{Since:} 3.4.0
+@end deftypefun
+
+@subheading gnutls_x509_trust_list_iter_get_ca
+@anchor{gnutls_x509_trust_list_iter_get_ca}
+@deftypefun {int} {gnutls_x509_trust_list_iter_get_ca} (gnutls_x509_trust_list_t @var{list}, gnutls_x509_trust_list_iter_t * @var{iter}, gnutls_x509_crt_t * @var{crt})
+@var{list}: The list
+
+@var{iter}: A pointer to an iterator (initially the iterator should be @code{NULL} )
+
+@var{crt}: where the certificate will be copied
+
+This function obtains a certificate in the trust list and advances the
+iterator to the next certificate. The certificate returned in  @code{crt} must be
+deallocated with @code{gnutls_x509_crt_deinit()} .
+
+When past the last element is accessed @code{GNUTLS_E_REQUESTED_DATA_NOT_AVAILABLE} 
+is returned and the iterator is reset.
+
+After use, the iterator must be deinitialized usin
+@code{gnutls_x509_trust_list_iter_deinit()} .
+
+@strong{Returns:} On success, @code{GNUTLS_E_SUCCESS}  (0) is returned, otherwise a
+negative error value.
+
+@strong{Since:} 3.4.0
+@end deftypefun
+
 @subheading gnutls_x509_trust_list_remove_cas
 @anchor{gnutls_x509_trust_list_remove_cas}
 @deftypefun {int} {gnutls_x509_trust_list_remove_cas} (gnutls_x509_trust_list_t @var{list}, const gnutls_x509_crt_t * @var{clist}, int @var{clist_size})
-@var{list}: The structure of the list
+@var{list}: The list
 
 @var{clist}: A list of CAs
 
@@ -6194,7 +6314,7 @@ restriction for  certificate list provided in this function.
 @subheading gnutls_x509_trust_list_remove_trust_file
 @anchor{gnutls_x509_trust_list_remove_trust_file}
 @deftypefun {int} {gnutls_x509_trust_list_remove_trust_file} (gnutls_x509_trust_list_t @var{list}, const char * @var{ca_file}, gnutls_x509_crt_fmt_t @var{type})
-@var{list}: The structure of the list
+@var{list}: The list
 
 @var{ca_file}: A file containing a list of CAs
 
@@ -6215,7 +6335,7 @@ See also @code{gnutls_x509_trust_list_remove_cas()} .
 @subheading gnutls_x509_trust_list_remove_trust_mem
 @anchor{gnutls_x509_trust_list_remove_trust_mem}
 @deftypefun {int} {gnutls_x509_trust_list_remove_trust_mem} (gnutls_x509_trust_list_t @var{list}, const gnutls_datum_t * @var{cas}, gnutls_x509_crt_fmt_t @var{type})
-@var{list}: The structure of the list
+@var{list}: The list
 
 @var{cas}: A buffer containing a list of CAs (optional)
 
@@ -6234,7 +6354,7 @@ See also @code{gnutls_x509_trust_list_remove_cas()} .
 @subheading gnutls_x509_trust_list_verify_crt
 @anchor{gnutls_x509_trust_list_verify_crt}
 @deftypefun {int} {gnutls_x509_trust_list_verify_crt} (gnutls_x509_trust_list_t @var{list}, gnutls_x509_crt_t * @var{cert_list}, unsigned int @var{cert_list_size}, unsigned int @var{flags}, unsigned int * @var{voutput}, gnutls_verify_output_function @var{func})
-@var{list}: The structure of the list
+@var{list}: The list
 
 @var{cert_list}: is the certificate list to be verified
 
@@ -6247,13 +6367,10 @@ See also @code{gnutls_x509_trust_list_remove_cas()} .
 @var{func}: If non-null will be called on each chain element verification with the output.
 
 This function will try to verify the given certificate and return
-its status. The  @code{verify} parameter will hold an OR'ed sequence of
+its status. The  @code{voutput} parameter will hold an OR'ed sequence of
 @code{gnutls_certificate_status_t}  flags.
 
-Additionally a certificate verification profile can be specified
-from the ones in @code{gnutls_certificate_verification_profiles_t}  by
-ORing the result of @code{GNUTLS_PROFILE_TO_VFLAGS()}  to the verification
-flags.
+The details of the verification are the same as in @code{gnutls_x509_trust_list_verify_crt2()} .
 
 @strong{Returns:} On success, @code{GNUTLS_E_SUCCESS}  (0) is returned, otherwise a
 negative error value.
@@ -6264,7 +6381,7 @@ negative error value.
 @subheading gnutls_x509_trust_list_verify_crt2
 @anchor{gnutls_x509_trust_list_verify_crt2}
 @deftypefun {int} {gnutls_x509_trust_list_verify_crt2} (gnutls_x509_trust_list_t @var{list}, gnutls_x509_crt_t * @var{cert_list}, unsigned int @var{cert_list_size}, gnutls_typed_vdata_st * @var{data}, unsigned int @var{elements}, unsigned int @var{flags}, unsigned int * @var{voutput}, gnutls_verify_output_function @var{func})
-@var{list}: The structure of the list
+@var{list}: The list
 
 @var{cert_list}: is the certificate list to be verified
 
@@ -6280,9 +6397,13 @@ negative error value.
 
 @var{func}: If non-null will be called on each chain element verification with the output.
 
-This function will try to verify the given certificate and return
-its status. The  @code{verify} parameter will hold an OR'ed sequence of
-@code{gnutls_certificate_status_t}  flags.
+This function will attempt to verify the given certificate and return
+its status. The  @code{voutput} parameter will hold an OR'ed sequence of
+@code{gnutls_certificate_status_t}  flags. When a chain of  @code{cert_list_size} with 
+more than one certificates is provided, the verification status will apply
+to the first certificate in the chain that failed verification. The
+verification process starts from the end of the chain (from CA to end
+certificate).
 
 Additionally a certificate verification profile can be specified
 from the ones in @code{gnutls_certificate_verification_profiles_t}  by
@@ -6294,10 +6415,13 @@ The former accepts as data a null-terminated hostname, and the latter a null-ter
 object identifier (e.g., @code{GNUTLS_KP_TLS_WWW_SERVER} ).
 If a DNS hostname is provided then this function will compare
 the hostname in the certificate against the given. If names do not match the 
-@code{GNUTLS_CERT_UNEXPECTED_OWNER}  status flag will be set.
+@code{GNUTLS_CERT_UNEXPECTED_OWNER}  status flag will be set. In addition it
+will consider certificates provided with @code{gnutls_x509_trust_list_add_named_crt()} .
+
 If a key purpose OID is provided and the end-certificate contains the extended key
-usage PKIX extension, it will be required to be have the provided key purpose 
-or be marked for any purpose, otherwise verification will fail with @code{GNUTLS_CERT_SIGNER_CONSTRAINTS_FAILURE}  status.
+usage PKIX extension, it will be required to match the provided OID
+or be marked for any purpose, otherwise verification will fail with 
+@code{GNUTLS_CERT_PURPOSE_MISMATCH}  status.
 
 @strong{Returns:} On success, @code{GNUTLS_E_SUCCESS}  (0) is returned, otherwise a
 negative error value. Note that verification failure will not result to an
@@ -6309,7 +6433,7 @@ error code, only  @code{voutput} will be updated.
 @subheading gnutls_x509_trust_list_verify_named_crt
 @anchor{gnutls_x509_trust_list_verify_named_crt}
 @deftypefun {int} {gnutls_x509_trust_list_verify_named_crt} (gnutls_x509_trust_list_t @var{list}, gnutls_x509_crt_t @var{cert}, const void * @var{name}, size_t @var{name_size}, unsigned int @var{flags}, unsigned int * @var{voutput}, gnutls_verify_output_function @var{func})
-@var{list}: The structure of the list
+@var{list}: The list
 
 @var{cert}: is the certificate to be verified
 
@@ -6324,9 +6448,10 @@ error code, only  @code{voutput} will be updated.
 @var{func}: If non-null will be called on each chain element verification with the output.
 
 This function will try to find a certificate that is associated with the provided
-name --see @code{gnutls_x509_trust_list_add_named_crt()} . If a match is found the certificate is considered valid. 
-In addition to that this function will also check CRLs. 
-The  @code{voutput} parameter will hold an OR'ed sequence of @code{gnutls_certificate_status_t}  flags.
+name --see @code{gnutls_x509_trust_list_add_named_crt()} . If a match is found the
+certificate is considered valid. In addition to that this function will also 
+check CRLs. The  @code{voutput} parameter will hold an OR'ed sequence of 
+@code{gnutls_certificate_status_t}  flags.
 
 Additionally a certificate verification profile can be specified
 from the ones in @code{gnutls_certificate_verification_profiles_t}  by

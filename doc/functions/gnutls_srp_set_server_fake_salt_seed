@@ -3,7 +3,7 @@
 
 
 @deftypefun {void} {gnutls_srp_set_server_fake_salt_seed} (gnutls_srp_server_credentials_t @var{cred}, const gnutls_datum_t * @var{seed}, unsigned int @var{salt_length})
-@var{cred}: is a @code{gnutls_srp_server_credentials_t}  structure
+@var{cred}: is a @code{gnutls_srp_server_credentials_t}  type
 
 @var{seed}: is the seed data, only needs to be valid until the function
 returns; size of the seed must be greater than zero

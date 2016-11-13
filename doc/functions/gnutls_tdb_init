@@ -3,7 +3,7 @@
 
 
 @deftypefun {int} {gnutls_tdb_init} (gnutls_tdb_t * @var{tdb})
-@var{tdb}: The structure to be initialized
+@var{tdb}: A pointer to the type to be initialized
 
 This function will initialize a public key trust storage structure.
 

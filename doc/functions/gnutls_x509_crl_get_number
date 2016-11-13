@@ -3,7 +3,7 @@
 
 
 @deftypefun {int} {gnutls_x509_crl_get_number} (gnutls_x509_crl_t @var{crl}, void * @var{ret}, size_t * @var{ret_size}, unsigned int * @var{critical})
-@var{crl}: should contain a @code{gnutls_x509_crl_t}  structure
+@var{crl}: should contain a @code{gnutls_x509_crl_t}  type
 
 @var{ret}: The place where the number will be copied
 

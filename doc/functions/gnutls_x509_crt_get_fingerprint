@@ -3,7 +3,7 @@
 
 
 @deftypefun {int} {gnutls_x509_crt_get_fingerprint} (gnutls_x509_crt_t @var{cert}, gnutls_digest_algorithm_t @var{algo}, void * @var{buf}, size_t * @var{buf_size})
-@var{cert}: should contain a @code{gnutls_x509_crt_t}  structure
+@var{cert}: should contain a @code{gnutls_x509_crt_t}  type
 
 @var{algo}: is a digest algorithm
 

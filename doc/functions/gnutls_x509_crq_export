@@ -3,7 +3,7 @@
 
 
 @deftypefun {int} {gnutls_x509_crq_export} (gnutls_x509_crq_t @var{crq}, gnutls_x509_crt_fmt_t @var{format}, void * @var{output_data}, size_t * @var{output_data_size})
-@var{crq}: should contain a @code{gnutls_x509_crq_t}  structure
+@var{crq}: should contain a @code{gnutls_x509_crq_t}  type
 
 @var{format}: the format of output params. One of PEM or DER.
 

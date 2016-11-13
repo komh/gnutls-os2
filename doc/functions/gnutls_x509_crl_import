@@ -3,7 +3,7 @@
 
 
 @deftypefun {int} {gnutls_x509_crl_import} (gnutls_x509_crl_t @var{crl}, const gnutls_datum_t * @var{data}, gnutls_x509_crt_fmt_t @var{format})
-@var{crl}: The structure to store the parsed CRL.
+@var{crl}: The data to store the parsed CRL.
 
 @var{data}: The DER or PEM encoded CRL.
 

@@ -17,6 +17,9 @@ This function will try to verify the given certificate and return
 its status. Note that a verification error does not imply a negative
 return status. In that case the  @code{verify} status is set.
 
+The details of the verification are the same
+as in @code{gnutls_x509_trust_list_verify_crt2()} .
+
 @strong{Returns:} On success, @code{GNUTLS_E_SUCCESS}  (0) is returned, otherwise a
 negative error value.
 @end deftypefun

@@ -1,5 +1,5 @@
 # DO NOT EDIT! GENERATED AUTOMATICALLY!
-# Copyright (C) 2002-2015 Free Software Foundation, Inc.
+# Copyright (C) 2002-2016 Free Software Foundation, Inc.
 #
 # This file is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -37,7 +37,11 @@ AC_DEFUN([gl_EARLY],
   m4_pattern_allow([^gl_ES$])dnl a valid locale name
   m4_pattern_allow([^gl_LIBOBJS$])dnl a variable
   m4_pattern_allow([^gl_LTLIBOBJS$])dnl a variable
+
+  # Pre-early section.
+  AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
   AC_REQUIRE([gl_PROG_AR_RANLIB])
+
   # Code from module absolute-header:
   # Code from module alloca:
   # Code from module alloca-opt:
@@ -50,10 +54,11 @@ AC_DEFUN([gl_EARLY],
   # Code from module byteswap-tests:
   # Code from module c-ctype:
   # Code from module c-ctype-tests:
+  # Code from module ctype:
+  # Code from module ctype-tests:
   # Code from module errno:
   # Code from module errno-tests:
   # Code from module extensions:
-  AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
   # Code from module extern-inline:
   # Code from module fcntl-h:
   # Code from module fcntl-h-tests:
@@ -83,7 +88,6 @@ AC_DEFUN([gl_EARLY],
   # Code from module getline:
   # Code from module getline-tests:
   # Code from module getpagesize:
-  # Code from module gettext:
   # Code from module gettext-h:
   # Code from module gettimeofday:
   # Code from module gettimeofday-tests:
@@ -121,6 +125,7 @@ AC_DEFUN([gl_EARLY],
   # Code from module read-file:
   # Code from module read-file-tests:
   # Code from module realloc-posix:
+  # Code from module secure_getenv:
   # Code from module size_max:
   # Code from module snippet/_Noreturn:
   # Code from module snippet/arg-nonnull:
@@ -168,8 +173,6 @@ AC_DEFUN([gl_EARLY],
   # Code from module time:
   # Code from module time-tests:
   # Code from module time_r:
-  # Code from module u64:
-  # Code from module u64-tests:
   # Code from module unistd:
   # Code from module unistd-tests:
   # Code from module useless-if-before-free:
@@ -250,8 +253,6 @@ AC_SUBST([LTALLOCA])
     gl_PREREQ_GETLINE
   fi
   gl_STDIO_MODULE_INDICATOR([getline])
-  dnl you must add AM_GNU_GETTEXT([external]) or similar to configure.ac.
-  AM_GNU_GETTEXT_VERSION([0.18.1])
   AC_SUBST([LIBINTL])
   AC_SUBST([LTLIBINTL])
   gl_FUNC_GETTIMEOFDAY
@@ -301,11 +302,11 @@ AC_SUBST([LTALLOCA])
   fi
   gl_STRING_MODULE_INDICATOR([memmem])
   gl_MINMAX
-  gl_MSVC_INVAL
+  AC_REQUIRE([gl_MSVC_INVAL])
   if test $HAVE_MSVC_INVALID_PARAMETER_HANDLER = 1; then
     AC_LIBOBJ([msvc-inval])
   fi
-  gl_MSVC_NOTHROW
+  AC_REQUIRE([gl_MSVC_NOTHROW])
   if test $HAVE_MSVC_INVALID_PARAMETER_HANDLER = 1; then
     AC_LIBOBJ([msvc-nothrow])
   fi
@@ -320,6 +321,12 @@ AC_SUBST([LTALLOCA])
     AC_LIBOBJ([realloc])
   fi
   gl_STDLIB_MODULE_INDICATOR([realloc-posix])
+  gl_FUNC_SECURE_GETENV
+  if test $HAVE_SECURE_GETENV = 0; then
+    AC_LIBOBJ([secure_getenv])
+    gl_PREREQ_SECURE_GETENV
+  fi
+  gl_STDLIB_MODULE_INDICATOR([secure_getenv])
   gl_SIZE_MAX
   gl_FUNC_SNPRINTF
   gl_STDIO_MODULE_INDICATOR([snprintf])
@@ -441,6 +448,7 @@ changequote([, ])dnl
   AC_SUBST([gltests_WITNESS])
   gl_module_indicator_condition=$gltests_WITNESS
   m4_pushdef([gl_MODULE_INDICATOR_CONDITION], [$gl_module_indicator_condition])
+  gl_CTYPE_H
   gl_FCNTL_H
   gl_FUNC_FDOPEN
   if test $REPLACE_FDOPEN = 1; then
@@ -618,6 +626,7 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/read-file.c
   lib/read-file.h
   lib/realloc.c
+  lib/secure_getenv.c
   lib/size_max.h
   lib/snprintf.c
   lib/stdalign.in.h
@@ -644,8 +653,6 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/sys_uio.in.h
   lib/time.in.h
   lib/time_r.c
-  lib/u64.c
-  lib/u64.h
   lib/unistd.c
   lib/unistd.in.h
   lib/vasnprintf.c
@@ -661,7 +668,7 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/alloca.m4
   m4/base64.m4
   m4/byteswap.m4
-  m4/codeset.m4
+  m4/ctype.m4
   m4/errno_h.m4
   m4/exponentd.m4
   m4/extensions.m4
@@ -679,30 +686,20 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/getdelim.m4
   m4/getline.m4
   m4/getpagesize.m4
-  m4/gettext.m4
   m4/gettimeofday.m4
-  m4/glibc2.m4
-  m4/glibc21.m4
   m4/gnulib-common.m4
   m4/iconv.m4
   m4/include_next.m4
-  m4/intdiv0.m4
-  m4/intl.m4
-  m4/intldir.m4
-  m4/intlmacosx.m4
-  m4/intmax.m4
   m4/intmax_t.m4
   m4/inttypes-pri.m4
   m4/inttypes.m4
   m4/inttypes_h.m4
   m4/largefile.m4
-  m4/lcmessage.m4
   m4/ld-output-def.m4
   m4/ld-version-script.m4
   m4/lib-ld.m4
   m4/lib-link.m4
   m4/lib-prefix.m4
-  m4/lock.m4
   m4/longlong.m4
   m4/lseek.m4
   m4/malloc.m4
@@ -717,14 +714,11 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/multiarch.m4
   m4/netdb_h.m4
   m4/netinet_in_h.m4
-  m4/nls.m4
   m4/off_t.m4
-  m4/po.m4
-  m4/printf-posix.m4
   m4/printf.m4
-  m4/progtest.m4
   m4/read-file.m4
   m4/realloc.m4
+  m4/secure_getenv.m4
   m4/size_max.m4
   m4/snprintf.m4
   m4/socklen.m4
@@ -749,16 +743,13 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/sys_time_h.m4
   m4/sys_types_h.m4
   m4/sys_uio_h.m4
-  m4/threadlib.m4
   m4/time_h.m4
   m4/time_r.m4
-  m4/uintmax_t.m4
   m4/ungetc.m4
   m4/unistd_h.m4
   m4/valgrind-tests.m4
   m4/vasnprintf.m4
   m4/vasprintf.m4
-  m4/visibility.m4
   m4/vsnprintf.m4
   m4/warn-on-use.m4
   m4/warnings.m4
@@ -775,6 +766,7 @@ AC_DEFUN([gl_FILE_LIST], [
   tests/test-binary-io.sh
   tests/test-byteswap.c
   tests/test-c-ctype.c
+  tests/test-ctype.c
   tests/test-errno.c
   tests/test-fcntl-h.c
   tests/test-fdopen.c
@@ -824,7 +816,6 @@ AC_DEFUN([gl_FILE_LIST], [
   tests/test-sys_uio.c
   tests/test-sys_wait.h
   tests/test-time.c
-  tests/test-u64.c
   tests/test-unistd.c
   tests/test-vasnprintf.c
   tests/test-vasprintf.c
@@ -837,6 +828,7 @@ AC_DEFUN([gl_FILE_LIST], [
   tests/zerosize-ptr.h
   tests=lib/binary-io.c
   tests=lib/binary-io.h
+  tests=lib/ctype.in.h
   tests=lib/fcntl.in.h
   tests=lib/fdopen.c
   tests=lib/fpucw.h

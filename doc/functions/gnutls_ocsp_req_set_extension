@@ -3,7 +3,7 @@
 
 
 @deftypefun {int} {gnutls_ocsp_req_set_extension} (gnutls_ocsp_req_t @var{req}, const char * @var{oid}, unsigned int @var{critical}, const gnutls_datum_t * @var{data})
-@var{req}: should contain a @code{gnutls_ocsp_req_t}  structure
+@var{req}: should contain a @code{gnutls_ocsp_req_t}  type
 
 @var{oid}: buffer with OID of extension as a string.
 

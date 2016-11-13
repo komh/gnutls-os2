@@ -3,7 +3,7 @@
 
 
 @deftypefun {int} {gnutls_server_name_get} (gnutls_session_t @var{session}, void * @var{data}, size_t * @var{data_length}, unsigned int * @var{type}, unsigned int @var{indx})
-@var{session}: is a @code{gnutls_session_t}  structure.
+@var{session}: is a @code{gnutls_session_t}  type.
 
 @var{data}: will hold the data
 
@@ -19,7 +19,7 @@ gnutls_server_name_type_t.
 
 If  @code{type} is GNUTLS_NAME_DNS, then this function is to be used by
 servers that support virtual hosting, and the data will be a null
-terminated UTF-8 string.
+terminated IDNA ACE string (prior to GnuTLS 3.4.0 it was a UTF-8 string).
 
 If  @code{data} has not enough size to hold the server name
 GNUTLS_E_SHORT_MEMORY_BUFFER is returned, and  @code{data_length} will

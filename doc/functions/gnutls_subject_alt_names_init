@@ -3,7 +3,7 @@
 
 
 @deftypefun {int} {gnutls_subject_alt_names_init} (gnutls_subject_alt_names_t * @var{sans})
-@var{sans}: The alternative names structure
+@var{sans}: The alternative names
 
 This function will initialize an alternative names structure.
 

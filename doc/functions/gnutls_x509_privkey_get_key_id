@@ -3,9 +3,9 @@
 
 
 @deftypefun {int} {gnutls_x509_privkey_get_key_id} (gnutls_x509_privkey_t @var{key}, unsigned int @var{flags}, unsigned char * @var{output_data}, size_t * @var{output_data_size})
-@var{key}: Holds the key
+@var{key}: a key
 
-@var{flags}: should be 0 for now
+@var{flags}: should be one of the flags from @code{gnutls_keyid_flags_t} 
 
 @var{output_data}: will contain the key ID
 

@@ -12,7 +12,7 @@
 @var{flags}: 0 for now
 
 This function will import a PKCS 11 certificate list to a list of 
-@code{gnutls_x509_crt_t}  structure. These must not be initialized.
+@code{gnutls_x509_crt_t}  type. These must not be initialized.
 
 @strong{Returns:} On success, @code{GNUTLS_E_SUCCESS}  (0) is returned, otherwise a
 negative error value.

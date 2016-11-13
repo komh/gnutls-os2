@@ -1,5 +1,5 @@
 dnl Process this file with autoconf to produce a configure script.
-# Copyright (C) 2000-2012 Free Software Foundation, Inc.
+# Copyright (C) 2000-2012, 2016 Free Software Foundation, Inc.
 #
 # Author: Nikos Mavrogiannopoulos, Simon Josefsson
 #
@@ -21,7 +21,7 @@ dnl Process this file with autoconf to produce a configure script.
 # USA
 
 AC_PREREQ(2.61)
-AC_INIT([GnuTLS], [3.3.22], [bugs@gnutls.org])
+AC_INIT([GnuTLS], [3.4.16], [bugs@gnutls.org])
 AC_CONFIG_AUX_DIR([build-aux])
 AC_CONFIG_MACRO_DIR([m4])
 AC_CANONICAL_HOST
@@ -45,14 +45,29 @@ AC_PROG_CXX
 AM_PROG_CC_C_O
 AC_PROG_YACC
 AC_PROG_SED
-AC_CHECK_PROG([AUTOGEN], [autogen], [autogen], [/bin/true])
 
-if test x"$AUTOGEN" = "x/bin/true"; then
-  AC_MSG_WARN([[
+AC_USE_SYSTEM_EXTENSIONS
+
+AC_ARG_ENABLE(doc,
+  AS_HELP_STRING([--disable-doc], [don't generate any documentation]),
+    enable_doc=$enableval, enable_doc=yes)
+AM_CONDITIONAL(ENABLE_DOC, test "$enable_doc" != "no")
+
+AC_ARG_ENABLE(tools,
+  AS_HELP_STRING([--disable-tools], [don't compile any tools]),
+    enable_tools=$enableval, enable_tools=yes)
+AM_CONDITIONAL(ENABLE_TOOLS, test "$enable_tools" != "no")
+
+if test "$enable_tools" != "no" || test "$enable_doc" != "no"; then
+  AC_CHECK_PROG([AUTOGEN], [autogen], [autogen], [/bin/true])
+
+  if test x"$AUTOGEN" = "x/bin/true"; then
+    AC_MSG_WARN([[
 ***
 *** autogen not found. Will not link against libopts.
 *** ]])
-enable_local_libopts=yes
+    included_libopts=yes
+  fi
 fi
 
 # For includes/gnutls/gnutls.h.in.
@@ -76,11 +91,14 @@ if test "$use_cxx" != "no"; then
   AC_LANG_POP(C++)
 fi
 AM_CONDITIONAL(ENABLE_CXX, test "$use_cxx" != "no")
-AM_CONDITIONAL(WANT_TEST_SUITE, [test -f tests/suite/mini-eagain2.c])
 
 dnl Detect windows build
 use_accel=yes
 case "$host" in
+  *android*)
+    have_android=yes
+    have_elf=yes
+  ;;
   *mingw32* | *mingw64*)
     have_win=yes
   ;;
@@ -100,6 +118,7 @@ case "$host" in
   ;;
 esac
 
+AM_CONDITIONAL(ANDROID, test "$have_android" = yes)
 AM_CONDITIONAL(WINDOWS, test "$have_win" = yes)
 AM_CONDITIONAL(MACOSX, test "$have_macosx" = yes)
 AM_CONDITIONAL(ELF, test "$have_elf" = yes)
@@ -111,6 +130,7 @@ AC_ARG_ENABLE(hardware-acceleration,
 hw_accel=none
 
 
+use_padlock=no
 if test "$use_accel" != "no"; then
 case $host_cpu in
   i?86 | x86_64 | amd64)
@@ -120,6 +140,7 @@ case $host_cpu in
       else
         hw_accel="x86"
       fi
+      use_padlock=yes
   ;;
   *)
   ;;
@@ -129,7 +150,7 @@ fi
 
 AC_ARG_ENABLE(padlock,
   AS_HELP_STRING([--disable-padlock], [unconditionally disable padlock acceleration]),
-    use_padlock=$enableval, use_padlock=yes)
+    use_padlock=$enableval)
 
 if test "$use_padlock" != "no"; then
     AC_DEFINE([ENABLE_PADLOCK], 1, [Enable padlock acceleration])
@@ -142,24 +163,43 @@ AM_CONDITIONAL(ASM_X86, test x"$hw_accel" = x"x86" || test x"$hw_accel" = x"x86-
 AM_CONDITIONAL(HAVE_GCC_GNU89_INLINE_OPTION, test "$gnu89_inline" = "yes"])
 AM_CONDITIONAL(HAVE_GCC, test "$GCC" = "yes")
 
+dnl check for getrandom()
+enable_getrandom=no
+AC_MSG_CHECKING([for getrandom])
+AC_LINK_IFELSE([AC_LANG_PROGRAM([
+	   #include <linux/random.h>],[
+		   getrandom(0, 0, 0);
+		  ])],
+		  [AC_MSG_RESULT(yes)
+		   AC_DEFINE([HAVE_LINUX_GETRANDOM], 1, [Enable the Linux getrandom function])
+		   enable_getrandom=getrandom],
+		  [AC_MSG_RESULT(no)])
+
+AC_MSG_CHECKING([for getentropy])
+AC_LINK_IFELSE([AC_LANG_PROGRAM([
+	   #include <unistd.h>],[
+		   getentropy(0, 0);
+		  ])],
+		  [AC_MSG_RESULT(yes)
+		   AC_DEFINE([HAVE_GETENTROPY], 1, [Enable the OpenBSD getentropy function])
+		   enable_getrandom=getentropy],
+		  [AC_MSG_RESULT(no)])
 
 dnl Try the hooks.m4
 LIBGNUTLS_HOOKS
 LIBGNUTLS_EXTRA_HOOKS
 
-AC_ARG_ENABLE(doc,
-  AS_HELP_STRING([--disable-doc], [don't generate any documentation]),
-    enable_doc=$enableval, enable_doc=yes)
-AM_CONDITIONAL(ENABLE_DOC, test "$enable_doc" != "no")
-
 AC_ARG_ENABLE(tests,
   AS_HELP_STRING([--disable-tests], [don't compile or run any tests]),
-    enable_tests=$enableval, enable_tests=yes)
+    enable_tests=$enableval, enable_tests=$enable_tools)
+if test "$enable_tests" = "yes" && test "$enable_tools" = "no"; then
+  true #AC_MSG_ERROR([Cannot enable tests while disabling tools])
+fi
 AM_CONDITIONAL(ENABLE_TESTS, test "$enable_tests" != "no")
 
 GTK_DOC_CHECK(1.1)
 AM_GNU_GETTEXT([external])
-AM_GNU_GETTEXT_VERSION([0.18])
+AM_GNU_GETTEXT_VERSION([0.19])
 
 AC_C_BIGENDIAN
 
@@ -190,6 +230,8 @@ if test "$ac_cv_func_vasprintf" != "yes";then
 fi
 
 AM_CONDITIONAL(HAVE_FORK, test "$ac_cv_func_fork" != "no")
+
+AC_CHECK_FUNCS([__register_atfork secure_getenv],,)
 
 AC_LIB_HAVE_LINKFLAGS(rt,, [#include <time.h>
 #include <signal.h>
@@ -232,6 +274,13 @@ if test "$ac_have_unicode" != "yes";then
   fi
 fi
 
+SUITE_FILE="${srcdir}/tests/suite/mini-eagain2.c"
+if test -f "$SUITE_FILE";then
+	can_do_valgrind_tests=yes
+else
+	can_do_valgrind_tests=no
+fi
+
 dnl Note that g*l_INIT are run after we check for library capabilities,
 dnl to prevent issues from caching lib dependencies. See discussion
 dnl in https://bugs.gentoo.org/show_bug.cgi?id=494940 and
@@ -239,43 +288,42 @@ dnl http://gnu-autoconf.7623.n7.nabble.com/Correct-way-to-check-for-clock-gettim
 gl_INIT
 ggl_INIT
 
+if test "$can_do_valgrind_tests" != "yes";then
+	VALGRIND=""
+	AC_SUBST(VALGRIND, [])
+	opt_valgrind_tests=no
+fi
+
+AM_CONDITIONAL(WANT_TEST_SUITE, [test -f "$SUITE_FILE"])
+
 dnl GCC warnings to enable
 
 AC_ARG_ENABLE([gcc-warnings],
-  [AS_HELP_STRING([--enable-gcc-warnings],
-		  [turn on lots of GCC warnings (for developers)])],
+  [AS_HELP_STRING([--disable-gcc-warnings],
+		  [turn off lots of GCC warnings (for developers)])],
   [case $enableval in
      yes|no) ;;
      *)      AC_MSG_ERROR([bad value $enableval for gcc-warnings option]) ;;
    esac
    gl_gcc_warnings=$enableval],
-  [gl_gcc_warnings=no]
+  [gl_gcc_warnings=yes]
 )
 
 if test "$gl_gcc_warnings" = yes; then
-  gl_WARN_ADD([-Wframe-larger-than=1024], [WSTACK_CFLAGS])
+  gl_WARN_ADD([-Wframe-larger-than=2048], [WSTACK_CFLAGS])
 
   nw="$nw -Wsystem-headers"         # Don't let system headers trigger warnings
   nw="$nw -Wc++-compat"             # We don't care about C++ compilers
   nw="$nw -Wundef"                  # Warns on '#if GNULIB_FOO' etc in gnulib
   nw="$nw -Wtraditional"            # Warns on #elif which we use often
-  nw="$nw -Wlogical-op"             # Too many false positives
-  nw="$nw -Wold-style-definition"   # 
   nw="$nw -Wpadded"                 # Our structs are not padded
-  nw="$nw -Wunreachable-code"       # Too many false positives
   nw="$nw -Wtraditional-conversion" # Too many warnings for now
-  nw="$nw -Wcast-qual"              # Too many warnings for now
-  nw="$nw -Waggregate-return"       # Too many warnings for now
-  nw="$nw -Wshadow"                 # Too many warnings for now
   nw="$nw -Wswitch-default"         # Too many warnings for now
-  nw="$nw -Wswitch-enum"            # Too many warnings for now
-  nw="$nw -Wconversion"             # Too many warnings for now
-  nw="$nw -Wsign-conversion"        # Too many warnings for now
   nw="$nw -Wformat-y2k"             # Too many warnings for now
   nw="$nw -Woverlength-strings"     # We use some in tests/
   nw="$nw -Wvla"                    # There is no point to avoid C99 variable length arrays
   nw="$nw -Wformat-nonliteral"      # Incompatible with gettext _()
-  nw="$nw -Wunsafe-loop-optimizations"
+  nw="$nw -Wformat-signedness"      # Too many to handle
   nw="$nw -Wstrict-overflow"
   nw="$nw -Wmissing-noreturn"
   nw="$nw -Winline"                 # Too compiler dependent
@@ -337,6 +385,38 @@ if [ test "$enable_fips" = "yes" ];then
   fi
 fi
 
+AC_ARG_WITH(idn, AS_HELP_STRING([--without-idn],
+                                 [disable support for libidn]),
+            try_libidn="$withval", 
+            try_libidn=yes)
+
+if test "$try_libidn" = yes;then
+PKG_CHECK_MODULES(LIBIDN, libidn >= 0.5.6, [with_libidn=yes], [with_libidn=no])
+if test "$with_libidn" != "no";then
+        if ! $PKG_CONFIG --atleast-version=1.31 libidn; then
+	    with_buggy_libidn=yes
+        fi
+
+	AC_DEFINE([HAVE_LIBIDN], 1, [Build IDNA support])
+	if test "x$GNUTLS_REQUIRES_PRIVATE" = "x"; then
+		GNUTLS_REQUIRES_PRIVATE="Requires.private: libidn"
+	else
+		GNUTLS_REQUIRES_PRIVATE="${GNUTLS_REQUIRES_PRIVATE}, libidn"
+	fi
+else
+        with_libidn=no
+        AC_MSG_WARN([[
+*** 
+*** libidn was not found. IDNA support will be disabled.
+*** ]])
+fi
+else
+	with_libidn=no
+fi
+
+AM_CONDITIONAL(HAVE_LIBIDN, test "$with_libidn" != "no")
+AM_CONDITIONAL(HAVE_BUGGY_LIBIDN, test "$with_buggy_libidn" = "yes")
+
 AC_ARG_ENABLE(non-suiteb-curves,
   AS_HELP_STRING([--disable-non-suiteb-curves], [disable curves not in SuiteB]),
     enable_non_suiteb=$enableval, enable_non_suiteb=yes)
@@ -349,22 +429,6 @@ AM_CONDITIONAL(ENABLE_SELF_CHECKS, test "$enable_self_checks" = "yes")
 if [ test "$enable_self_checks" = "yes" ];then
    AC_DEFINE([ENABLE_SELF_CHECKS], 1, [Self checks are included in the library])
 fi
-
-AC_ARG_WITH(arcfour128,
-  AS_HELP_STRING([--with-arcfour128], [include ARCFOUR128 in priority strings]),
-    enable_arcfour=$withval, enable_arcfour=no)
-if [ test "$enable_arcfour" = "yes" ];then
-  AC_DEFINE([ENABLE_ARCFOUR128], 1, [Enable ARCFOUR128])
-fi
-AM_CONDITIONAL(ENABLE_ARCFOUR128, test "$enable_arcfour" = "yes")
-
-AC_ARG_WITH(ssl3,
-  AS_HELP_STRING([--with-ssl3], [include SSL3.0 in priority strings]),
-    enable_ssl3=$withval, enable_ssl3=no)
-if [ test "$enable_ssl3" = "yes" ];then
-  AC_DEFINE([ENABLE_SSL3], 1, [Enable SSL3.0])
-fi
-AM_CONDITIONAL(ENABLE_SSL3, test "$enable_ssl3" = "yes")
 
 AC_MSG_CHECKING([whether to build libdane])
 AC_ARG_ENABLE(libdane,
@@ -428,7 +492,7 @@ AC_DEFINE_UNQUOTED([SYSTEM_PRIORITY_FILE],
 
 
 dnl Check for p11-kit
-P11_KIT_MINIMUM=0.20.7
+P11_KIT_MINIMUM=0.23.1
 AC_ARG_WITH(p11-kit,
 	AS_HELP_STRING([--without-p11-kit],
 		[Build without p11-kit and PKCS#11 support]))
@@ -443,10 +507,11 @@ if test "$with_p11_kit" != "no"; then
 		fi
 	else
 	        with_p11_kit=no
-	        AC_MSG_WARN([[
+	        AC_MSG_ERROR([[
 *** 
-*** p11-kit >= $P11_KIT_MINIMUM was not found. PKCS #11 support will be disabled.
-*** You may get it from http://p11-glue.freedesktop.org/p11-kit.html
+*** p11-kit >= $P11_KIT_MINIMUM was not found. To disable PKCS #11 support 
+*** use --without-p11-kit, otherwise you may get p11-kit from
+*** http://p11-glue.freedesktop.org/p11-kit.html
 *** ]])
 	fi
 fi
@@ -481,26 +546,47 @@ fi
 
 AM_CONDITIONAL(ENABLE_TROUSERS, test "$with_tpm" != "no")
 
-LIBOPTS_CHECK([src/libopts])
-if test "$NEED_LIBOPTS_DIR" = "true";then
-	dnl replace libopts-generated files with distributed backups, if present
-	missing_baks=
-	for i in ${srcdir}/src/*-args.c.bak ${srcdir}/src/*-args.h.bak; do
-		nam=`echo $i|sed 's/.bak//g'`
-		if test -f $i;then
-			cp -f $i $nam
-		else
-			missing_baks=true
-		fi
-	done
-	if test -z "$missing_baks"; then
-		AC_SUBST([AUTOGEN], [/bin/true])
-	fi
-	enable_local_libopts=yes
+if test -f "/usr/lib64/libtspi.so.1";then
+default_trousers_lib="/usr/lib64/libtspi.so.1"
 else
-	enable_local_libopts=no
+default_trousers_lib="/usr/lib/libtspi.so.1"
 fi
-AM_CONDITIONAL(NEED_LIBOPTS, test "$enable_local_libopts" = "yes")
+
+AC_ARG_WITH(trousers-lib, AS_HELP_STRING([--with-trousers-lib=LIB],
+                                 [set the location of the trousers library]),
+            ac_trousers_lib=$withval, ac_trousers_lib=$default_trousers_lib)
+
+AC_DEFINE_UNQUOTED(TROUSERS_LIB, ["$ac_trousers_lib"], [the location of the trousers library])
+AC_SUBST(TROUSERS_LIB)
+
+included_libopts=no
+if test "$enable_tools" != "no" || test "$enable_doc" != "no"; then
+	LIBOPTS_CHECK([src/libopts])
+	if test "$NEED_LIBOPTS_DIR" = "true";then
+		dnl replace libopts-generated files with distributed backups, if present
+		missing_baks=
+		for i in ${srcdir}/src/*-args.c.bak ${srcdir}/src/*-args.h.bak; do
+			nam=`echo $i|sed 's/.bak//g'`
+			if test -f $i;then
+				cp -f $i $nam
+			else
+				missing_baks=true
+			fi
+		done
+		if test -z "$missing_baks"; then
+			AC_SUBST([AUTOGEN], [/bin/true])
+		fi
+		included_libopts=yes
+	fi
+else
+	# Need to ensure the relevant conditionals get set
+	gl_STDNORETURN_H
+	AM_CONDITIONAL([INSTALL_LIBOPTS],[false])
+	AM_CONDITIONAL([NEED_LIBOPTS], [false])
+	included_libopts=yes
+fi
+
+AM_CONDITIONAL(NEED_LIBOPTS, test "$included_libopts" = "yes")
 
 AC_CHECK_TYPE(ssize_t,
   [
@@ -636,9 +722,14 @@ if test "$opt_guile_bindings" = "yes"; then
 
    AC_PATH_PROG([guile_snarf], [guile-snarf])
    if test "x$guile_snarf" = "x"; then
-      AC_MSG_WARN([`guile-snarf' from Guile 1.8 not found.  Guile bindings not built.])
+      AC_MSG_WARN([`guile-snarf' from Guile not found.  Guile bindings not built.])
       opt_guile_bindings=no
    else
+      dnl Check for 'guild', which can be used to compile Scheme code
+      dnl on Guile 2.x.
+      AC_PATH_PROG([GUILD], [guild])
+      AC_SUBST([GUILD])
+
       GUILE_PROGS
       GUILE_FLAGS
 
@@ -695,6 +786,10 @@ if test "$opt_guile_bindings" = "yes"; then
 	AC_MSG_RESULT([$guile_effective_version])
 	guileextensiondir="$libdir/guile/$guile_effective_version"
 	AC_SUBST([guileextensiondir])
+
+	# The location of .go files.
+	guileobjectdir="$libdir/guile/$guile_effective_version/site-ccache"
+	AC_SUBST([guileobjectdir])
       else
         AC_MSG_RESULT([no])
         AC_MSG_WARN([A sufficiently recent GNU Guile not found.  Guile bindings not built.])
@@ -702,7 +797,9 @@ if test "$opt_guile_bindings" = "yes"; then
       fi
    fi
 fi
-AM_CONDITIONAL(HAVE_GUILE, test "$opt_guile_bindings" = "yes")
+
+AM_CONDITIONAL([HAVE_GUILE], [test "$opt_guile_bindings" = "yes"])
+AM_CONDITIONAL([HAVE_GUILD], [test "x$GUILD" != "x"])
 
 LIBGNUTLS_LIBS="-L${libdir} -lgnutls $LIBS"
 LIBGNUTLS_CFLAGS="-I${includedir}"
@@ -750,15 +847,12 @@ AC_CHECK_FUNCS([alarm atexit dup2 epoll_create kqueue memchr memset munmap \
 AC_ARG_ENABLE(crywrap,
 	AS_HELP_STRING([--disable-crywrap], [unconditionally disable the crywrap TLS proxy service]))
 
- libidn=no
 
  if test "x$enable_crywrap" != "xno" ; then
-	PKG_CHECK_MODULES(LIBIDN, libidn >= 0.0.0, [libidn=yes], [libidn=no])
-	AC_CHECK_FUNCS([argp_usage],[ac_argp=yes],[ac_argp=no])
- fi
-
- if test "x$libidn" != "xno" && test "$ac_cv_func_daemon" != "no" && test "$ac_argp" != "no";then
-  crywrap=yes
+   AC_CHECK_FUNCS([argp_usage],[ac_argp=yes],[ac_argp=no])
+   if test "$ac_cv_func_daemon" != "no" && test "$ac_argp" != "no" && test "$with_libidn" != "no";then
+     crywrap=yes
+   fi
  fi
 
 fi
@@ -795,9 +889,7 @@ AC_CONFIG_FILES([
   gl/Makefile
   gl/tests/Makefile
   guile/Makefile
-  guile/modules/Makefile
   guile/src/Makefile
-  guile/tests/Makefile
   lib/Makefile
   lib/accelerated/Makefile
   lib/accelerated/x86/Makefile
@@ -840,7 +932,6 @@ AC_CONFIG_FILES([
 AC_OUTPUT
 
 dnl  Warning flags:        errors: ${WERROR_CFLAGS} warnings: ${WARN_CFLAGS}
-dnl  Valgrind:             $opt_valgrind_tests ${VALGRIND}
 AC_MSG_NOTICE([summary of build options:
 
   version:              ${VERSION} shared $LT_CURRENT:$LT_REVISION:$LT_AGE
@@ -848,12 +939,12 @@ AC_MSG_NOTICE([summary of build options:
   Build system:         ${build}
   Install prefix:       ${prefix}
   Compiler:             ${CC}
+  Valgrind:             $opt_valgrind_tests ${VALGRIND}
   CFlags:               ${CFLAGS}
   Library types:        Shared=${enable_shared}, Static=${enable_static}
-  Local libopts:        ${enable_local_libopts}
+  Local libopts:        ${included_libopts}
   Local libtasn1:       ${included_libtasn1}
   Use nettle-mini:      ${mini_nettle}
-  nettle-version:       ${nettle_version}
 ])
 
 AC_MSG_NOTICE([External hardware support:
@@ -861,9 +952,15 @@ AC_MSG_NOTICE([External hardware support:
   /dev/crypto:          $enable_cryptodev
   Hardware accel:       $hw_accel
   Padlock accel:        $use_padlock
+  getrandom variant:    $enable_getrandom
   PKCS#11 support:      $with_p11_kit
   TPM support:          $with_tpm
 ])
+if test -n "$ac_trousers_lib";then
+AC_MSG_NOTICE([
+  TPM library:          $ac_trousers_lib
+])
+fi
 
 AC_MSG_NOTICE([Optional features:
 (note that included applications might not compile properly
@@ -878,9 +975,9 @@ if features are disabled)
   PSK support:          $ac_enable_psk
   DHE support:          $ac_enable_dhe
   ECDHE support:        $ac_enable_ecdhe
-  RSA-EXPORT support:   $ac_enable_rsa_export
   Anon auth support:    $ac_enable_anon
   Heartbeat support:    $ac_enable_heartbeat
+  IDNA support:         $with_libidn
   Unicode support:      $ac_have_unicode
   Self checks:          $enable_self_checks
   Non-SuiteB curves:    $enable_non_suiteb
@@ -889,7 +986,7 @@ if features are disabled)
 
 AC_MSG_NOTICE([Optional applications:
 
-  crywrap app:          $libidn
+  crywrap app:          $crywrap
 ])
 
 AC_MSG_NOTICE([Optional libraries:

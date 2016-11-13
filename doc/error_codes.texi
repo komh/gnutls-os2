@@ -106,6 +106,7 @@
 @item -214 @tab GNUTLS_@-E_@-BAD_@-COOKIE @tab The cookie was bad.
 @item -215 @tab GNUTLS_@-E_@-OPENPGP_@-PREFERRED_@-KEY_@-ERROR @tab The OpenPGP key has not a preferred key set.
 @item -216 @tab GNUTLS_@-E_@-INCOMPAT_@-DSA_@-KEY_@-WITH_@-TLS_@-PROTOCOL @tab The given DSA key is incompatible with the selected TLS protocol.
+@item -217 @tab GNUTLS_@-E_@-INSUFFICIENT_@-SECURITY @tab One of the involved algorithms has insufficient security level.
 @item -292 @tab GNUTLS_@-E_@-HEARTBEAT_@-PONG_@-RECEIVED @tab A heartbeat pong message was received.
 @item -293 @tab GNUTLS_@-E_@-HEARTBEAT_@-PING_@-RECEIVED @tab A heartbeat ping message was received.
 @item -300 @tab GNUTLS_@-E_@-PKCS11_@-ERROR @tab PKCS #11 error.
@@ -142,14 +143,19 @@
 @item -332 @tab GNUTLS_@-E_@-TPM_@-SESSION_@-ERROR @tab Cannot initialize a session with the TPM.
 @item -333 @tab GNUTLS_@-E_@-TPM_@-KEY_@-NOT_@-FOUND @tab TPM key was not found in persistent storage.
 @item -334 @tab GNUTLS_@-E_@-TPM_@-UNINITIALIZED @tab TPM is not initialized.
+@item -335 @tab GNUTLS_@-E_@-TPM_@-NO_@-LIB @tab The TPM library (trousers) cannot be found.
 @item -340 @tab GNUTLS_@-E_@-NO_@-CERTIFICATE_@-STATUS @tab There is no certificate status (OCSP).
 @item -341 @tab GNUTLS_@-E_@-OCSP_@-RESPONSE_@-ERROR @tab The OCSP response is invalid
 @item -342 @tab GNUTLS_@-E_@-RANDOM_@-DEVICE_@-ERROR @tab Error in the system's randomness device.
 @item -343 @tab GNUTLS_@-E_@-AUTH_@-ERROR @tab Could not authenticate peer.
 @item -344 @tab GNUTLS_@-E_@-NO_@-APPLICATION_@-PROTOCOL @tab No common application protocol could be negotiated.
 @item -345 @tab GNUTLS_@-E_@-SOCKETS_@-INIT_@-ERROR @tab Error in sockets initialization.
+@item -346 @tab GNUTLS_@-E_@-KEY_@-IMPORT_@-FAILED @tab Failed to import the key into store.
+@item -347 @tab GNUTLS_@-E_@-INAPPROPRIATE_@-FALLBACK @tab A connection with inappropriate fallback was attempted.
+@item -348 @tab GNUTLS_@-E_@-CERTIFICATE_@-VERIFICATION_@-ERROR @tab Error in the certificate verification.
 @item -400 @tab GNUTLS_@-E_@-SELF_@-TEST_@-ERROR @tab Error while performing self checks.
 @item -401 @tab GNUTLS_@-E_@-NO_@-SELF_@-TEST @tab There is no self test for this algorithm.
 @item -402 @tab GNUTLS_@-E_@-LIB_@-IN_@-ERROR_@-STATE @tab An error has been detected in the library and cannot continue operations.
 @item -403 @tab GNUTLS_@-E_@-PK_@-GENERATION_@-ERROR @tab Error in public key generation.
+@item -404 @tab GNUTLS_@-E_@-IDNA_@-ERROR @tab There was an issue converting to or from UTF8.
 @end multitable

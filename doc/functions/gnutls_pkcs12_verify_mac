@@ -3,7 +3,7 @@
 
 
 @deftypefun {int} {gnutls_pkcs12_verify_mac} (gnutls_pkcs12_t @var{pkcs12}, const char * @var{pass})
-@var{pkcs12}: should contain a gnutls_pkcs12_t structure
+@var{pkcs12}: should contain a gnutls_pkcs12_t type
 
 @var{pass}: The password for the MAC
 

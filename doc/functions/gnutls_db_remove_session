@@ -3,7 +3,7 @@
 
 
 @deftypefun {void} {gnutls_db_remove_session} (gnutls_session_t @var{session})
-@var{session}: is a @code{gnutls_session_t}  structure.
+@var{session}: is a @code{gnutls_session_t}  type.
 
 This function will remove the current session data from the
 session database.  This will prevent future handshakes reusing

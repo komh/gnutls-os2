@@ -2,6 +2,6 @@
 
 @c gnutls_supplemental_data_format_type_t
 @table @code
-@item GNUTLS_@-SUPPLEMENTAL_@-USER_@-MAPPING_@-DATA
-Supplemental user mapping data.
+@item GNUTLS_@-SUPPLEMENTAL_@-UNKNOWN
+Unknown data format
 @end table

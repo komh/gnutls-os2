@@ -3,7 +3,7 @@
 
 
 @deftypefun {int} {gnutls_x509_crt_get_ca_status} (gnutls_x509_crt_t @var{cert}, unsigned int * @var{critical})
-@var{cert}: should contain a @code{gnutls_x509_crt_t}  structure
+@var{cert}: should contain a @code{gnutls_x509_crt_t}  type
 
 @var{critical}: will be non-zero if the extension is marked as critical
 

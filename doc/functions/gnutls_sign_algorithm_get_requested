@@ -3,7 +3,7 @@
 
 
 @deftypefun {int} {gnutls_sign_algorithm_get_requested} (gnutls_session_t @var{session}, size_t @var{indx}, gnutls_sign_algorithm_t * @var{algo})
-@var{session}: is a @code{gnutls_session_t}  structure.
+@var{session}: is a @code{gnutls_session_t}  type.
 
 @var{indx}: is an index of the signature algorithm to return
 

@@ -3,7 +3,7 @@
 
 
 @deftypefun {void} {gnutls_x509_crl_iter_deinit} (gnutls_x509_crl_iter_t @var{iter})
-@var{iter}: The iterator structure to be deinitialized
+@var{iter}: The iterator to be deinitialized
 
-This function will deinitialize an iterator structure.
+This function will deinitialize an iterator type.
 @end deftypefun

@@ -2,16 +2,16 @@
 
 
 
-@deftypefun {int} {gnutls_hmac_fast} (gnutls_mac_algorithm_t @var{algorithm}, const void * @var{key}, size_t @var{keylen}, const void * @var{text}, size_t @var{textlen}, void * @var{digest})
+@deftypefun {int} {gnutls_hmac_fast} (gnutls_mac_algorithm_t @var{algorithm}, const void * @var{key}, size_t @var{keylen}, const void * @var{ptext}, size_t @var{ptext_len}, void * @var{digest})
 @var{algorithm}: the hash algorithm to use
 
 @var{key}: the key to use
 
-@var{keylen}: The length of the key
+@var{keylen}: the length of the key
 
-@var{text}: the data to hash
+@var{ptext}: the data to hash
 
-@var{textlen}: The length of data to hash
+@var{ptext_len}: the length of data to hash
 
 @var{digest}: is the output value of the hash
 

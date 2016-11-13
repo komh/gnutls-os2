@@ -5,7 +5,7 @@
 @deftypefun {int} {gnutls_x509_ext_import_authority_key_id} (const gnutls_datum_t * @var{ext}, gnutls_x509_aki_t @var{aki}, unsigned int @var{flags})
 @var{ext}: a DER encoded extension
 
-@var{aki}: An initialized authority key identifier structure
+@var{aki}: An initialized authority key identifier type
 
 @var{flags}: should be zero
 

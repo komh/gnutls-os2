@@ -3,7 +3,7 @@
 
 
 @deftypefun {int} {gnutls_x509_crq_sign2} (gnutls_x509_crq_t @var{crq}, gnutls_x509_privkey_t @var{key}, gnutls_digest_algorithm_t @var{dig}, unsigned int @var{flags})
-@var{crq}: should contain a @code{gnutls_x509_crq_t}  structure
+@var{crq}: should contain a @code{gnutls_x509_crq_t}  type
 
 @var{key}: holds a private key
 

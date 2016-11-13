@@ -3,11 +3,11 @@
 
 
 @deftypefun {int} {gnutls_x509_crl_get_extension_oid} (gnutls_x509_crl_t @var{crl}, int @var{indx}, void * @var{oid}, size_t * @var{sizeof_oid})
-@var{crl}: should contain a @code{gnutls_x509_crl_t}  structure
+@var{crl}: should contain a @code{gnutls_x509_crl_t}  type
 
 @var{indx}: Specifies which extension OID to send, use (0) to get the first one.
 
-@var{oid}: a pointer to a structure to hold the OID (may be null)
+@var{oid}: a pointer to store the OID (may be null)
 
 @var{sizeof_oid}: initially holds the size of  @code{oid} 
 

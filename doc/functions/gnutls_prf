@@ -3,7 +3,7 @@
 
 
 @deftypefun {int} {gnutls_prf} (gnutls_session_t @var{session}, size_t @var{label_size}, const char * @var{label}, int @var{server_random_first}, size_t @var{extra_size}, const char * @var{extra}, size_t @var{outsize}, char * @var{out})
-@var{session}: is a @code{gnutls_session_t}  structure.
+@var{session}: is a @code{gnutls_session_t}  type.
 
 @var{label_size}: length of the  @code{label} variable.
 
@@ -21,9 +21,7 @@
 
 Applies the TLS Pseudo-Random-Function (PRF) on the master secret
 and the provided data, seeded with the client and server random fields.
-
-The output of this function is identical to RFC5705 extractor if  @code{extra} and  @code{extra_size} are set to zero. Otherwise,  @code{extra} should contain the context
-value prefixed by a two-byte length.
+For the key expansion specified in RFC5705 see @code{gnutls_prf_rfc5705()} .
 
 The  @code{label} variable usually contains a string denoting the purpose
 for the generated data.  The  @code{server_random_first} indicates whether

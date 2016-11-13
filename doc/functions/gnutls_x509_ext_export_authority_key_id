@@ -3,7 +3,7 @@
 
 
 @deftypefun {int} {gnutls_x509_ext_export_authority_key_id} (gnutls_x509_aki_t @var{aki}, gnutls_datum_t * @var{ext})
-@var{aki}: An initialized authority key identifier structure
+@var{aki}: An initialized authority key identifier
 
 @var{ext}: The DER-encoded extension data; must be freed using @code{gnutls_free()} .
 

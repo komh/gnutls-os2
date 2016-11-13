@@ -57,9 +57,6 @@
 /* enable anonymous authentication */
 #undef ENABLE_ANON
 
-/* Enable ARCFOUR128 */
-#undef ENABLE_ARCFOUR128
-
 /* Enable cryptodev support */
 #undef ENABLE_CRYPTODEV
 
@@ -99,9 +96,6 @@
 /* enable PSK authentication */
 #undef ENABLE_PSK
 
-/* enable RSA-EXPORT */
-#undef ENABLE_RSA_EXPORT
-
 /* Self checks are included in the library */
 #undef ENABLE_SELF_CHECKS
 
@@ -110,9 +104,6 @@
 
 /* enable SRP authentication */
 #undef ENABLE_SRP
-
-/* Enable SSL3.0 */
-#undef ENABLE_SSL3
 
 /* fopen(3) accepts a 'b' in the mode flag */
 #undef FOPEN_BINARY_FLAG
@@ -136,6 +127,10 @@
 /* Define to a C preprocessor expression that evaluates to 1 or 0, depending
    whether the gnulib module fscanf shall be considered present. */
 #undef GNULIB_FSCANF
+
+/* Define to 1 if printf and friends should be labeled with attribute
+   "__gnu_printf__" instead of "__printf__" */
+#undef GNULIB_PRINTF_ATTRIBUTE_FLAVOR_GNU
 
 /* Define to a C preprocessor expression that evaluates to 1 or 0, depending
    whether the gnulib module scanf shall be considered present. */
@@ -230,6 +225,9 @@
 /* Define to 1 when the gnulib module recvfrom should be tested. */
 #undef GNULIB_TEST_RECVFROM
 
+/* Define to 1 when the gnulib module secure_getenv should be tested. */
+#undef GNULIB_TEST_SECURE_GETENV
+
 /* Define to 1 when the gnulib module select should be tested. */
 #undef GNULIB_TEST_SELECT
 
@@ -310,9 +308,6 @@
 
 /* Define to 1 if you have the <arpa/inet.h> header file. */
 #undef HAVE_ARPA_INET_H
-
-/* Have this function */
-#undef HAVE_ASN1_DECODE_SIMPLE_BER
 
 /* Define to 1 if you have the `atexit' function. */
 #undef HAVE_ATEXIT
@@ -555,8 +550,8 @@
 /* Define to 1 if you have the `getdelim' function. */
 #undef HAVE_GETDELIM
 
-/* Define to 1 if you have the `getdtablesize' function. */
-#undef HAVE_GETDTABLESIZE
+/* Enable the OpenBSD getentropy function */
+#undef HAVE_GETENTROPY
 
 /* Define to 1 if you have the `gethostbyname' function. */
 #undef HAVE_GETHOSTBYNAME
@@ -622,6 +617,9 @@
 /* Define to 1 if <sys/socket.h> defines AF_INET6. */
 #undef HAVE_IPV6
 
+/* Define to 1 if you have the `issetugid' function. */
+#undef HAVE_ISSETUGID
+
 /* Define to 1 if you have the `kqueue' function. */
 #undef HAVE_KQUEUE
 
@@ -636,6 +634,9 @@
 
 /* Define if you have the libiconv library. */
 #undef HAVE_LIBICONV
+
+/* Build IDNA support */
+#undef HAVE_LIBIDN
 
 /* Define to 1 if you have the `intl' library (-lintl). */
 #undef HAVE_LIBINTL
@@ -660,6 +661,9 @@
 
 /* Define to 1 if you have the <limits.h> header file. */
 #undef HAVE_LIMITS_H
+
+/* Enable the Linux getrandom function */
+#undef HAVE_LINUX_GETRANDOM
 
 /* Define to 1 if you have the `localtime' function. */
 #undef HAVE_LOCALTIME
@@ -936,6 +940,9 @@
 
 /* Define to 1 if isatty is declared even after undefining macros. */
 #undef HAVE_RAW_DECL_ISATTY
+
+/* Define to 1 if isblank is declared even after undefining macros. */
+#undef HAVE_RAW_DECL_ISBLANK
 
 /* Define to 1 if lchmod is declared even after undefining macros. */
 #undef HAVE_RAW_DECL_LCHMOD
@@ -1381,6 +1388,9 @@
 /* Define to 1 if you have the <search.h> header file. */
 #undef HAVE_SEARCH_H
 
+/* Define to 1 if you have the `secure_getenv' function. */
+#undef HAVE_SECURE_GETENV
+
 /* Define to 1 if you have the `select' function. */
 #undef HAVE_SELECT
 
@@ -1706,6 +1716,12 @@
 /* Define to 1 if you have the `__fsetlocking' function. */
 #undef HAVE___FSETLOCKING
 
+/* Define to 1 if you have the `__register_atfork' function. */
+#undef HAVE___REGISTER_ATFORK
+
+/* Define to 1 if you have the `__secure_getenv' function. */
+#undef HAVE___SECURE_GETENV
+
 /* Have __va_copy() */
 #undef HAVE___VA_COPY
 
@@ -1847,11 +1863,11 @@
 /* Define to 1 if your <sys/time.h> declares `struct tm'. */
 #undef TM_IN_SYS_TIME
 
+/* the location of the trousers library */
+#undef TROUSERS_LIB
+
 /* The DNSSEC root key file */
 #undef UNBOUND_ROOT_KEY_FILE
-
-/* nettle 3.0 or later */
-#undef USE_NETTLE3
 
 /* Enable extensions on AIX 3, Interix.  */
 #ifndef _ALL_SOURCE
@@ -1968,6 +1984,12 @@
 /* Define to 1 if you need to in order for 'stat' and other things to work. */
 #undef _POSIX_SOURCE
 
+/* Define to 1 if the system <stdint.h> predates C++11. */
+#undef __STDC_CONSTANT_MACROS
+
+/* Define to 1 if the system <stdint.h> predates C++11. */
+#undef __STDC_LIMIT_MACROS
+
 /* Define as a replacement for the ISO C99 __func__ variable. */
 #undef __func__
 
@@ -2017,6 +2039,7 @@
       ? defined __GNUC_STDC_INLINE__ && __GNUC_STDC_INLINE__ \
       : (199901L <= __STDC_VERSION__ \
          && !defined __HP_cc \
+         && !defined __PGI \
          && !(defined __SUNPRO_C && __STDC__))) \
      && !defined _GL_EXTERN_INLINE_STDHEADER_BUG)
 # define _GL_INLINE inline
@@ -2037,12 +2060,13 @@
 # define _GL_EXTERN_INLINE static _GL_UNUSED
 #endif
 
-/* In GCC, suppress bogus "no previous prototype for 'FOO'"
+/* In GCC 4.6 (inclusive) to 5.1 (exclusive),
+   suppress bogus "no previous prototype for 'FOO'"
    and "no previous declaration for 'FOO'" diagnostics,
    when FOO is an inline function in the header; see
    <https://gcc.gnu.org/bugzilla/show_bug.cgi?id=54113> and
    <https://gcc.gnu.org/bugzilla/show_bug.cgi?id=63877>.  */
-#if 4 < __GNUC__ + (6 <= __GNUC_MINOR__)
+#if __GNUC__ == 4 && 6 <= __GNUC_MINOR__
 # if defined __GNUC_STDC_INLINE__ && __GNUC_STDC_INLINE__
 #  define _GL_INLINE_HEADER_CONST_PRAGMA
 # else

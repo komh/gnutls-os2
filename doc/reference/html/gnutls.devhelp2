@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
-<book xmlns="http://www.devhelp.net/book" title="GnuTLS API Reference Manual" link="index.html" author="" name="gnutls" version="2" language="c">
+<book xmlns="http://www.devhelp.net/book" title="GnuTLS API Reference Manual" link="index.html" author="" name="gnutls" version="2" language="c" online="http://www.gnutls.org/reference/">
   <chapters>
     <sub name="GnuTLS API Reference Manual" link="intro.html">
       <sub name="gnutls" link="gnutls-gnutls.html"/>
@@ -16,14 +16,6 @@
     <sub name="API Index" link="api-index-full.html"/>
   </chapters>
   <functions>
-    <keyword type="macro" name="GNUTLS_CLIENT" link="gnutls-gnutls.html#GNUTLS-CLIENT:CAPS"/>
-    <keyword type="macro" name="GNUTLS_DATAGRAM" link="gnutls-gnutls.html#GNUTLS-DATAGRAM:CAPS"/>
-    <keyword type="macro" name="GNUTLS_DEFAULT_HANDSHAKE_TIMEOUT" link="gnutls-gnutls.html#GNUTLS-DEFAULT-HANDSHAKE-TIMEOUT:CAPS"/>
-    <keyword type="macro" name="GNUTLS_HB_LOCAL_ALLOWED_TO_SEND" link="gnutls-gnutls.html#GNUTLS-HB-LOCAL-ALLOWED-TO-SEND:CAPS"/>
-    <keyword type="macro" name="GNUTLS_HB_PEER_ALLOWED_TO_SEND" link="gnutls-gnutls.html#GNUTLS-HB-PEER-ALLOWED-TO-SEND:CAPS"/>
-    <keyword type="macro" name="GNUTLS_HB_PEER_NOT_ALLOWED_TO_SEND" link="gnutls-gnutls.html#GNUTLS-HB-PEER-NOT-ALLOWED-TO-SEND:CAPS"/>
-    <keyword type="macro" name="GNUTLS_NONBLOCK" link="gnutls-gnutls.html#GNUTLS-NONBLOCK:CAPS"/>
-    <keyword type="macro" name="GNUTLS_NO_EXTENSIONS" link="gnutls-gnutls.html#GNUTLS-NO-EXTENSIONS:CAPS"/>
     <keyword type="function" name="gnutls_alert_get ()" link="gnutls-gnutls.html#gnutls-alert-get"/>
     <keyword type="function" name="gnutls_alert_get_name ()" link="gnutls-gnutls.html#gnutls-alert-get-name"/>
     <keyword type="function" name="gnutls_alert_get_strname ()" link="gnutls-gnutls.html#gnutls-alert-get-strname" since="3.0"/>
@@ -68,7 +60,7 @@
     <keyword type="function" name="gnutls_certificate_set_x509_crl_file ()" link="gnutls-gnutls.html#gnutls-certificate-set-x509-crl-file"/>
     <keyword type="function" name="gnutls_certificate_set_x509_crl_mem ()" link="gnutls-gnutls.html#gnutls-certificate-set-x509-crl-mem"/>
     <keyword type="function" name="gnutls_certificate_set_x509_key ()" link="gnutls-gnutls.html#gnutls-certificate-set-x509-key" since="2.4.0"/>
-    <keyword type="function" name="gnutls_certificate_set_x509_key_file ()" link="gnutls-gnutls.html#gnutls-certificate-set-x509-key-file"/>
+    <keyword type="function" name="gnutls_certificate_set_x509_key_file ()" link="gnutls-gnutls.html#gnutls-certificate-set-x509-key-file" since="3.1.11"/>
     <keyword type="function" name="gnutls_certificate_set_x509_key_mem ()" link="gnutls-gnutls.html#gnutls-certificate-set-x509-key-mem"/>
     <keyword type="function" name="gnutls_certificate_set_x509_simple_pkcs12_file ()" link="gnutls-gnutls.html#gnutls-certificate-set-x509-simple-pkcs12-file"/>
     <keyword type="function" name="gnutls_certificate_set_x509_simple_pkcs12_mem ()" link="gnutls-gnutls.html#gnutls-certificate-set-x509-simple-pkcs12-mem" since="2.8.0"/>
@@ -177,9 +169,7 @@
     <keyword type="function" name="gnutls_ocsp_status_request_is_checked ()" link="gnutls-gnutls.html#gnutls-ocsp-status-request-is-checked"/>
     <keyword type="function" name="gnutls_openpgp_send_cert ()" link="gnutls-gnutls.html#gnutls-openpgp-send-cert"/>
     <keyword type="function" name="gnutls_pem_base64_decode ()" link="gnutls-gnutls.html#gnutls-pem-base64-decode"/>
-    <keyword type="function" name="gnutls_pem_base64_decode_alloc ()" link="gnutls-gnutls.html#gnutls-pem-base64-decode-alloc"/>
     <keyword type="function" name="gnutls_pem_base64_encode ()" link="gnutls-gnutls.html#gnutls-pem-base64-encode"/>
-    <keyword type="function" name="gnutls_pem_base64_encode_alloc ()" link="gnutls-gnutls.html#gnutls-pem-base64-encode-alloc"/>
     <keyword type="function" name="gnutls_perror ()" link="gnutls-gnutls.html#gnutls-perror"/>
     <keyword type="function" name="gnutls_pin_callback_t ()" link="gnutls-gnutls.html#gnutls-pin-callback-t" since="2.12.0"/>
     <keyword type="function" name="gnutls_pk_algorithm_get_name ()" link="gnutls-gnutls.html#gnutls-pk-algorithm-get-name"/>
@@ -265,9 +255,7 @@
     <keyword type="function" name="gnutls_srp_allocate_client_credentials ()" link="gnutls-gnutls.html#gnutls-srp-allocate-client-credentials"/>
     <keyword type="function" name="gnutls_srp_allocate_server_credentials ()" link="gnutls-gnutls.html#gnutls-srp-allocate-server-credentials"/>
     <keyword type="function" name="gnutls_srp_base64_decode ()" link="gnutls-gnutls.html#gnutls-srp-base64-decode"/>
-    <keyword type="function" name="gnutls_srp_base64_decode_alloc ()" link="gnutls-gnutls.html#gnutls-srp-base64-decode-alloc"/>
     <keyword type="function" name="gnutls_srp_base64_encode ()" link="gnutls-gnutls.html#gnutls-srp-base64-encode"/>
-    <keyword type="function" name="gnutls_srp_base64_encode_alloc ()" link="gnutls-gnutls.html#gnutls-srp-base64-encode-alloc"/>
     <keyword type="function" name="gnutls_srp_free_client_credentials ()" link="gnutls-gnutls.html#gnutls-srp-free-client-credentials"/>
     <keyword type="function" name="gnutls_srp_free_server_credentials ()" link="gnutls-gnutls.html#gnutls-srp-free-server-credentials"/>
     <keyword type="function" name="gnutls_srp_server_get_username ()" link="gnutls-gnutls.html#gnutls-srp-server-get-username"/>
@@ -287,7 +275,6 @@
     <keyword type="function" name="gnutls_srtp_set_profile_direct ()" link="gnutls-gnutls.html#gnutls-srtp-set-profile-direct"/>
     <keyword type="function" name="gnutls_store_commitment ()" link="gnutls-gnutls.html#gnutls-store-commitment" since="3.0"/>
     <keyword type="function" name="gnutls_store_pubkey ()" link="gnutls-gnutls.html#gnutls-store-pubkey" since="3.0.13"/>
-    <keyword type="function" name="gnutls_strdup ()" link="gnutls-gnutls.html#gnutls-strdup"/>
     <keyword type="function" name="gnutls_strerror ()" link="gnutls-gnutls.html#gnutls-strerror"/>
     <keyword type="function" name="gnutls_strerror_name ()" link="gnutls-gnutls.html#gnutls-strerror-name" since="2.6.0"/>
     <keyword type="function" name="gnutls_tdb_deinit ()" link="gnutls-gnutls.html#gnutls-tdb-deinit"/>
@@ -320,6 +307,9 @@
     <keyword type="macro" name="GNUTLS_CIPHER_RIJNDAEL_128_CBC" link="gnutls-gnutls.html#GNUTLS-CIPHER-RIJNDAEL-128-CBC:CAPS"/>
     <keyword type="macro" name="GNUTLS_CIPHER_RIJNDAEL_256_CBC" link="gnutls-gnutls.html#GNUTLS-CIPHER-RIJNDAEL-256-CBC:CAPS"/>
     <keyword type="macro" name="GNUTLS_CIPHER_RIJNDAEL_CBC" link="gnutls-gnutls.html#GNUTLS-CIPHER-RIJNDAEL-CBC:CAPS"/>
+    <keyword type="macro" name="GNUTLS_CLIENT" link="gnutls-gnutls.html#GNUTLS-CLIENT:CAPS"/>
+    <keyword type="macro" name="GNUTLS_DATAGRAM" link="gnutls-gnutls.html#GNUTLS-DATAGRAM:CAPS"/>
+    <keyword type="macro" name="GNUTLS_DEFAULT_HANDSHAKE_TIMEOUT" link="gnutls-gnutls.html#GNUTLS-DEFAULT-HANDSHAKE-TIMEOUT:CAPS"/>
     <keyword type="macro" name="GNUTLS_DIG_SHA" link="gnutls-gnutls.html#GNUTLS-DIG-SHA:CAPS"/>
     <keyword type="macro" name="GNUTLS_E_AGAIN" link="gnutls-gnutls.html#GNUTLS-E-AGAIN:CAPS"/>
     <keyword type="macro" name="GNUTLS_E_APPLICATION_ERROR_MAX" link="gnutls-gnutls.html#GNUTLS-E-APPLICATION-ERROR-MAX:CAPS"/>
@@ -476,6 +466,9 @@
     <keyword type="macro" name="GNUTLS_E_X509_UNSUPPORTED_CRITICAL_EXTENSION" link="gnutls-gnutls.html#GNUTLS-E-X509-UNSUPPORTED-CRITICAL-EXTENSION:CAPS"/>
     <keyword type="macro" name="GNUTLS_E_X509_UNSUPPORTED_EXTENSION" link="gnutls-gnutls.html#GNUTLS-E-X509-UNSUPPORTED-EXTENSION:CAPS"/>
     <keyword type="macro" name="GNUTLS_E_X509_UNSUPPORTED_OID" link="gnutls-gnutls.html#GNUTLS-E-X509-UNSUPPORTED-OID:CAPS"/>
+    <keyword type="macro" name="GNUTLS_HB_LOCAL_ALLOWED_TO_SEND" link="gnutls-gnutls.html#GNUTLS-HB-LOCAL-ALLOWED-TO-SEND:CAPS"/>
+    <keyword type="macro" name="GNUTLS_HB_PEER_ALLOWED_TO_SEND" link="gnutls-gnutls.html#GNUTLS-HB-PEER-ALLOWED-TO-SEND:CAPS"/>
+    <keyword type="macro" name="GNUTLS_HB_PEER_NOT_ALLOWED_TO_SEND" link="gnutls-gnutls.html#GNUTLS-HB-PEER-NOT-ALLOWED-TO-SEND:CAPS"/>
     <keyword type="macro" name="GNUTLS_HEARTBEAT_WAIT" link="gnutls-gnutls.html#GNUTLS-HEARTBEAT-WAIT:CAPS"/>
     <keyword type="macro" name="GNUTLS_KEY_CRL_SIGN" link="gnutls-gnutls.html#GNUTLS-KEY-CRL-SIGN:CAPS"/>
     <keyword type="macro" name="GNUTLS_KEY_DATA_ENCIPHERMENT" link="gnutls-gnutls.html#GNUTLS-KEY-DATA-ENCIPHERMENT:CAPS"/>
@@ -489,6 +482,8 @@
     <keyword type="macro" name="GNUTLS_MAC_SHA" link="gnutls-gnutls.html#GNUTLS-MAC-SHA:CAPS"/>
     <keyword type="macro" name="GNUTLS_MAX_ALGORITHM_NUM" link="gnutls-gnutls.html#GNUTLS-MAX-ALGORITHM-NUM:CAPS"/>
     <keyword type="macro" name="GNUTLS_MAX_SESSION_ID" link="gnutls-gnutls.html#GNUTLS-MAX-SESSION-ID:CAPS"/>
+    <keyword type="macro" name="GNUTLS_NONBLOCK" link="gnutls-gnutls.html#GNUTLS-NONBLOCK:CAPS"/>
+    <keyword type="macro" name="GNUTLS_NO_EXTENSIONS" link="gnutls-gnutls.html#GNUTLS-NO-EXTENSIONS:CAPS"/>
     <keyword type="macro" name="GNUTLS_PKCS11_PIN_CONTEXT_SPECIFIC" link="gnutls-gnutls.html#GNUTLS-PKCS11-PIN-CONTEXT-SPECIFIC:CAPS"/>
     <keyword type="macro" name="GNUTLS_PKCS11_PIN_COUNT_LOW" link="gnutls-gnutls.html#GNUTLS-PKCS11-PIN-COUNT-LOW:CAPS"/>
     <keyword type="macro" name="GNUTLS_PKCS11_PIN_FINAL_TRY" link="gnutls-gnutls.html#GNUTLS-PKCS11-PIN-FINAL-TRY:CAPS"/>
@@ -505,7 +500,6 @@
     <keyword type="macro" name="HAVE_SSIZE_T" link="gnutls-gnutls.html#HAVE-SSIZE-T:CAPS"/>
     <keyword type="enum" name="enum gnutls_alert_description_t" link="gnutls-gnutls.html#gnutls-alert-description-t"/>
     <keyword type="enum" name="enum gnutls_alert_level_t" link="gnutls-gnutls.html#gnutls-alert-level-t"/>
-    <keyword type="variable" name="gnutls_calloc" link="gnutls-gnutls.html#gnutls-calloc"/>
     <keyword type="struct" name="struct gnutls_certificate_credentials_st" link="gnutls-gnutls.html#gnutls-certificate-credentials-st"/>
     <keyword type="enum" name="enum gnutls_certificate_print_formats_t" link="gnutls-gnutls.html#gnutls-certificate-print-formats-t"/>
     <keyword type="enum" name="enum gnutls_certificate_request_t" link="gnutls-gnutls.html#gnutls-certificate-request-t"/>
@@ -521,13 +515,9 @@
     <keyword type="typedef" name="gnutls_dh_params_t" link="gnutls-gnutls.html#gnutls-dh-params-t"/>
     <keyword type="enum" name="enum gnutls_digest_algorithm_t" link="gnutls-gnutls.html#gnutls-digest-algorithm-t"/>
     <keyword type="enum" name="enum gnutls_ecc_curve_t" link="gnutls-gnutls.html#gnutls-ecc-curve-t"/>
-    <keyword type="struct" name="struct gnutls_ecdh_params_int" link="gnutls-gnutls.html#gnutls-ecdh-params-int"/>
-    <keyword type="typedef" name="gnutls_ecdh_params_t" link="gnutls-gnutls.html#gnutls-ecdh-params-t"/>
-    <keyword type="variable" name="gnutls_free" link="gnutls-gnutls.html#gnutls-free"/>
     <keyword type="enum" name="enum gnutls_handshake_description_t" link="gnutls-gnutls.html#gnutls-handshake-description-t"/>
     <keyword type="enum" name="enum gnutls_kx_algorithm_t" link="gnutls-gnutls.html#gnutls-kx-algorithm-t"/>
     <keyword type="enum" name="enum gnutls_mac_algorithm_t" link="gnutls-gnutls.html#gnutls-mac-algorithm-t"/>
-    <keyword type="variable" name="gnutls_malloc" link="gnutls-gnutls.html#gnutls-malloc"/>
     <keyword type="struct" name="gnutls_openpgp_crt_int" link="gnutls-gnutls.html#gnutls-openpgp-crt-int"/>
     <keyword type="enum" name="enum gnutls_openpgp_crt_status_t" link="gnutls-gnutls.html#gnutls-openpgp-crt-status-t"/>
     <keyword type="typedef" name="gnutls_openpgp_crt_t" link="gnutls-gnutls.html#gnutls-openpgp-crt-t"/>
@@ -536,6 +526,8 @@
     <keyword type="struct" name="gnutls_openpgp_privkey_int" link="gnutls-gnutls.html#gnutls-openpgp-privkey-int"/>
     <keyword type="typedef" name="gnutls_openpgp_privkey_t" link="gnutls-gnutls.html#gnutls-openpgp-privkey-t"/>
     <keyword type="enum" name="enum gnutls_params_type_t" link="gnutls-gnutls.html#gnutls-params-type-t"/>
+    <keyword type="macro" name="gnutls_pem_base64_decode_alloc" link="gnutls-gnutls.html#gnutls-pem-base64-decode-alloc"/>
+    <keyword type="macro" name="gnutls_pem_base64_encode_alloc" link="gnutls-gnutls.html#gnutls-pem-base64-encode-alloc"/>
     <keyword type="enum" name="enum gnutls_pin_flag_t" link="gnutls-gnutls.html#gnutls-pin-flag-t"/>
     <keyword type="enum" name="enum gnutls_pk_algorithm_t" link="gnutls-gnutls.html#gnutls-pk-algorithm-t"/>
     <keyword type="struct" name="struct gnutls_pkcs11_privkey_st" link="gnutls-gnutls.html#gnutls-pkcs11-privkey-st"/>
@@ -547,7 +539,6 @@
     <keyword type="enum" name="enum gnutls_psk_key_flags" link="gnutls-gnutls.html#gnutls-psk-key-flags"/>
     <keyword type="enum" name="enum gnutls_random_art_t" link="gnutls-gnutls.html#gnutls-random-art-t"/>
     <keyword type="macro" name="gnutls_read" link="gnutls-gnutls.html#gnutls-read"/>
-    <keyword type="variable" name="gnutls_realloc" link="gnutls-gnutls.html#gnutls-realloc"/>
     <keyword type="typedef" name="gnutls_rsa_params_t" link="gnutls-gnutls.html#gnutls-rsa-params-t"/>
     <keyword type="enum" name="enum gnutls_sec_param_t" link="gnutls-gnutls.html#gnutls-sec-param-t"/>
     <keyword type="enum" name="enum gnutls_server_name_type_t" link="gnutls-gnutls.html#gnutls-server-name-type-t"/>
@@ -555,16 +546,8 @@
     <keyword type="typedef" name="gnutls_session_t" link="gnutls-gnutls.html#gnutls-session-t"/>
     <keyword type="macro" name="gnutls_sign_algorithm_get_name" link="gnutls-gnutls.html#gnutls-sign-algorithm-get-name"/>
     <keyword type="enum" name="enum gnutls_sign_algorithm_t" link="gnutls-gnutls.html#gnutls-sign-algorithm-t"/>
-    <keyword type="variable" name="gnutls_srp_1024_group_generator" link="gnutls-gnutls.html#gnutls-srp-1024-group-generator"/>
-    <keyword type="variable" name="gnutls_srp_1024_group_prime" link="gnutls-gnutls.html#gnutls-srp-1024-group-prime"/>
-    <keyword type="variable" name="gnutls_srp_1536_group_generator" link="gnutls-gnutls.html#gnutls-srp-1536-group-generator"/>
-    <keyword type="variable" name="gnutls_srp_1536_group_prime" link="gnutls-gnutls.html#gnutls-srp-1536-group-prime"/>
-    <keyword type="variable" name="gnutls_srp_2048_group_generator" link="gnutls-gnutls.html#gnutls-srp-2048-group-generator"/>
-    <keyword type="variable" name="gnutls_srp_2048_group_prime" link="gnutls-gnutls.html#gnutls-srp-2048-group-prime"/>
-    <keyword type="variable" name="gnutls_srp_3072_group_generator" link="gnutls-gnutls.html#gnutls-srp-3072-group-generator"/>
-    <keyword type="variable" name="gnutls_srp_3072_group_prime" link="gnutls-gnutls.html#gnutls-srp-3072-group-prime"/>
-    <keyword type="variable" name="gnutls_srp_4096_group_generator" link="gnutls-gnutls.html#gnutls-srp-4096-group-generator"/>
-    <keyword type="variable" name="gnutls_srp_4096_group_prime" link="gnutls-gnutls.html#gnutls-srp-4096-group-prime"/>
+    <keyword type="macro" name="gnutls_srp_base64_decode_alloc" link="gnutls-gnutls.html#gnutls-srp-base64-decode-alloc"/>
+    <keyword type="macro" name="gnutls_srp_base64_encode_alloc" link="gnutls-gnutls.html#gnutls-srp-base64-encode-alloc"/>
     <keyword type="enum" name="enum gnutls_srtp_profile_t" link="gnutls-gnutls.html#gnutls-srtp-profile-t"/>
     <keyword type="enum" name="enum gnutls_supplemental_data_format_type_t" link="gnutls-gnutls.html#gnutls-supplemental-data-format-type-t"/>
     <keyword type="struct" name="struct gnutls_tdb_int" link="gnutls-gnutls.html#gnutls-tdb-int"/>
@@ -619,7 +602,6 @@
     <keyword type="function" name="gnutls_pubkey_get_openpgp_key_id ()" link="gnutls-abstract.html#gnutls-pubkey-get-openpgp-key-id" since="3.0"/>
     <keyword type="function" name="gnutls_pubkey_get_pk_algorithm ()" link="gnutls-abstract.html#gnutls-pubkey-get-pk-algorithm" since="2.12.0"/>
     <keyword type="function" name="gnutls_pubkey_get_preferred_hash_algorithm ()" link="gnutls-abstract.html#gnutls-pubkey-get-preferred-hash-algorithm" since="2.12.0"/>
-    <keyword type="function" name="gnutls_pubkey_get_verify_algorithm ()" link="gnutls-abstract.html#gnutls-pubkey-get-verify-algorithm" deprecated="" since="2.12.0"/>
     <keyword type="function" name="gnutls_pubkey_import ()" link="gnutls-abstract.html#gnutls-pubkey-import" since="2.12.0"/>
     <keyword type="function" name="gnutls_pubkey_import_dsa_raw ()" link="gnutls-abstract.html#gnutls-pubkey-import-dsa-raw" since="2.12.0"/>
     <keyword type="function" name="gnutls_pubkey_import_ecc_raw ()" link="gnutls-abstract.html#gnutls-pubkey-import-ecc-raw" since="3.0"/>
@@ -627,7 +609,7 @@
     <keyword type="function" name="gnutls_pubkey_import_openpgp ()" link="gnutls-abstract.html#gnutls-pubkey-import-openpgp" since="2.12.0"/>
     <keyword type="function" name="gnutls_pubkey_import_openpgp_raw ()" link="gnutls-abstract.html#gnutls-pubkey-import-openpgp-raw" since="3.1.3"/>
     <keyword type="function" name="gnutls_pubkey_import_pkcs11 ()" link="gnutls-abstract.html#gnutls-pubkey-import-pkcs11" since="2.12.0"/>
-    <keyword type="function" name="gnutls_pubkey_import_pkcs11_url ()" link="gnutls-abstract.html#gnutls-pubkey-import-pkcs11-url" since="2.12.0"/>
+    <keyword type="macro" name="gnutls_pubkey_import_pkcs11_url()" link="gnutls-abstract.html#gnutls-pubkey-import-pkcs11-url" since="2.12.0"/>
     <keyword type="function" name="gnutls_pubkey_import_privkey ()" link="gnutls-abstract.html#gnutls-pubkey-import-privkey" since="2.12.0"/>
     <keyword type="function" name="gnutls_pubkey_import_rsa_raw ()" link="gnutls-abstract.html#gnutls-pubkey-import-rsa-raw" since="2.12.0"/>
     <keyword type="function" name="gnutls_pubkey_import_tpm_raw ()" link="gnutls-abstract.html#gnutls-pubkey-import-tpm-raw" since="3.1.0"/>
@@ -639,7 +621,6 @@
     <keyword type="function" name="gnutls_pubkey_init ()" link="gnutls-abstract.html#gnutls-pubkey-init" since="2.12.0"/>
     <keyword type="function" name="gnutls_pubkey_set_key_usage ()" link="gnutls-abstract.html#gnutls-pubkey-set-key-usage" since="2.12.0"/>
     <keyword type="function" name="gnutls_pubkey_set_pin_function ()" link="gnutls-abstract.html#gnutls-pubkey-set-pin-function" since="3.1.0"/>
-    <keyword type="function" name="gnutls_pubkey_verify_data ()" link="gnutls-abstract.html#gnutls-pubkey-verify-data" deprecated="" since="2.12.0"/>
     <keyword type="function" name="gnutls_pubkey_verify_data2 ()" link="gnutls-abstract.html#gnutls-pubkey-verify-data2" since="3.0"/>
     <keyword type="function" name="gnutls_pubkey_verify_hash2 ()" link="gnutls-abstract.html#gnutls-pubkey-verify-hash2" since="3.0"/>
     <keyword type="function" name="gnutls_x509_crl_privkey_sign ()" link="gnutls-abstract.html#gnutls-x509-crl-privkey-sign"/>
@@ -1057,8 +1038,8 @@
     <keyword type="function" name="gnutls_pkcs11_obj_get_info ()" link="gnutls-pkcs11.html#gnutls-pkcs11-obj-get-info" since="2.12.0"/>
     <keyword type="function" name="gnutls_pkcs11_obj_import_url ()" link="gnutls-pkcs11.html#gnutls-pkcs11-obj-import-url" since="2.12.0"/>
     <keyword type="function" name="gnutls_pkcs11_obj_init ()" link="gnutls-pkcs11.html#gnutls-pkcs11-obj-init" since="2.12.0"/>
-    <keyword type="function" name="gnutls_pkcs11_obj_list_import_url ()" link="gnutls-pkcs11.html#gnutls-pkcs11-obj-list-import-url" since="2.12.0"/>
-    <keyword type="function" name="gnutls_pkcs11_obj_list_import_url2 ()" link="gnutls-pkcs11.html#gnutls-pkcs11-obj-list-import-url2" since="3.1.0"/>
+    <keyword type="macro" name="gnutls_pkcs11_obj_list_import_url()" link="gnutls-pkcs11.html#gnutls-pkcs11-obj-list-import-url"/>
+    <keyword type="macro" name="gnutls_pkcs11_obj_list_import_url2()" link="gnutls-pkcs11.html#gnutls-pkcs11-obj-list-import-url2"/>
     <keyword type="function" name="gnutls_pkcs11_obj_set_pin_function ()" link="gnutls-pkcs11.html#gnutls-pkcs11-obj-set-pin-function" since="3.1.0"/>
     <keyword type="function" name="gnutls_pkcs11_privkey_deinit ()" link="gnutls-pkcs11.html#gnutls-pkcs11-privkey-deinit"/>
     <keyword type="function" name="gnutls_pkcs11_privkey_export_url ()" link="gnutls-pkcs11.html#gnutls-pkcs11-privkey-export-url"/>
@@ -1081,19 +1062,19 @@
     <keyword type="function" name="gnutls_pkcs11_token_set_pin ()" link="gnutls-pkcs11.html#gnutls-pkcs11-token-set-pin"/>
     <keyword type="function" name="gnutls_pkcs11_type_get_name ()" link="gnutls-pkcs11.html#gnutls-pkcs11-type-get-name" since="2.12.0"/>
     <keyword type="function" name="gnutls_x509_crt_import_pkcs11 ()" link="gnutls-pkcs11.html#gnutls-x509-crt-import-pkcs11" since="2.12.0"/>
-    <keyword type="function" name="gnutls_x509_crt_import_pkcs11_url ()" link="gnutls-pkcs11.html#gnutls-x509-crt-import-pkcs11-url" since="2.12.0"/>
     <keyword type="function" name="gnutls_x509_crt_list_import_pkcs11 ()" link="gnutls-pkcs11.html#gnutls-x509-crt-list-import-pkcs11" since="2.12.0"/>
     <keyword type="macro" name="GNUTLS_PKCS11_FLAG_AUTO" link="gnutls-pkcs11.html#GNUTLS-PKCS11-FLAG-AUTO:CAPS"/>
     <keyword type="macro" name="GNUTLS_PKCS11_FLAG_MANUAL" link="gnutls-pkcs11.html#GNUTLS-PKCS11-FLAG-MANUAL:CAPS"/>
     <keyword type="macro" name="GNUTLS_PKCS11_MAX_PIN_LEN" link="gnutls-pkcs11.html#GNUTLS-PKCS11-MAX-PIN-LEN:CAPS"/>
     <keyword type="macro" name="GNUTLS_PKCS11_TOKEN_HW" link="gnutls-pkcs11.html#GNUTLS-PKCS11-TOKEN-HW:CAPS"/>
-    <keyword type="enum" name="enum gnutls_pkcs11_obj_attr_t" link="gnutls-pkcs11.html#gnutls-pkcs11-obj-attr-t"/>
+    <keyword type="macro" name="gnutls_pkcs11_obj_attr_t" link="gnutls-pkcs11.html#gnutls-pkcs11-obj-attr-t"/>
     <keyword type="enum" name="enum gnutls_pkcs11_obj_info_t" link="gnutls-pkcs11.html#gnutls-pkcs11-obj-info-t"/>
     <keyword type="struct" name="struct gnutls_pkcs11_obj_st" link="gnutls-pkcs11.html#gnutls-pkcs11-obj-st"/>
     <keyword type="typedef" name="gnutls_pkcs11_obj_t" link="gnutls-pkcs11.html#gnutls-pkcs11-obj-t"/>
     <keyword type="enum" name="enum gnutls_pkcs11_obj_type_t" link="gnutls-pkcs11.html#gnutls-pkcs11-obj-type-t"/>
     <keyword type="enum" name="enum gnutls_pkcs11_token_info_t" link="gnutls-pkcs11.html#gnutls-pkcs11-token-info-t"/>
     <keyword type="enum" name="enum gnutls_pkcs11_url_type_t" link="gnutls-pkcs11.html#gnutls-pkcs11-url-type-t"/>
+    <keyword type="macro" name="gnutls_x509_crt_import_pkcs11_url" link="gnutls-pkcs11.html#gnutls-x509-crt-import-pkcs11-url"/>
     <keyword type="function" name="gnutls_pkcs12_bag_decrypt ()" link="gnutls-pkcs12.html#gnutls-pkcs12-bag-decrypt"/>
     <keyword type="function" name="gnutls_pkcs12_bag_deinit ()" link="gnutls-pkcs12.html#gnutls-pkcs12-bag-deinit"/>
     <keyword type="function" name="gnutls_pkcs12_bag_encrypt ()" link="gnutls-pkcs12.html#gnutls-pkcs12-bag-encrypt"/>
@@ -1177,14 +1158,14 @@
     <keyword type="function" name="gnutls_dtls_set_timeouts ()" link="gnutls-dtls.html#gnutls-dtls-set-timeouts" since="3.0"/>
     <keyword type="function" name="gnutls_record_get_discarded ()" link="gnutls-dtls.html#gnutls-record-get-discarded" since="3.0"/>
     <keyword type="macro" name="GNUTLS_COOKIE_KEY_SIZE" link="gnutls-dtls.html#GNUTLS-COOKIE-KEY-SIZE:CAPS"/>
-    <keyword type="macro" name="GNUTLS_TPM_KEY_SIGNING" link="gnutls-tpm.html#GNUTLS-TPM-KEY-SIGNING:CAPS"/>
-    <keyword type="macro" name="GNUTLS_TPM_KEY_USER" link="gnutls-tpm.html#GNUTLS-TPM-KEY-USER:CAPS"/>
-    <keyword type="macro" name="GNUTLS_TPM_REGISTER_KEY" link="gnutls-tpm.html#GNUTLS-TPM-REGISTER-KEY:CAPS"/>
     <keyword type="function" name="gnutls_tpm_get_registered ()" link="gnutls-tpm.html#gnutls-tpm-get-registered" since="3.1.0"/>
     <keyword type="function" name="gnutls_tpm_key_list_deinit ()" link="gnutls-tpm.html#gnutls-tpm-key-list-deinit" since="3.1.0"/>
     <keyword type="function" name="gnutls_tpm_key_list_get_url ()" link="gnutls-tpm.html#gnutls-tpm-key-list-get-url" since="3.1.0"/>
     <keyword type="function" name="gnutls_tpm_privkey_delete ()" link="gnutls-tpm.html#gnutls-tpm-privkey-delete" since="3.1.0"/>
     <keyword type="function" name="gnutls_tpm_privkey_generate ()" link="gnutls-tpm.html#gnutls-tpm-privkey-generate" since="3.1.0"/>
+    <keyword type="macro" name="GNUTLS_TPM_KEY_SIGNING" link="gnutls-tpm.html#GNUTLS-TPM-KEY-SIGNING:CAPS"/>
+    <keyword type="macro" name="GNUTLS_TPM_KEY_USER" link="gnutls-tpm.html#GNUTLS-TPM-KEY-USER:CAPS"/>
+    <keyword type="macro" name="GNUTLS_TPM_REGISTER_KEY" link="gnutls-tpm.html#GNUTLS-TPM-REGISTER-KEY:CAPS"/>
     <keyword type="typedef" name="gnutls_tpm_key_list_t" link="gnutls-tpm.html#gnutls-tpm-key-list-t"/>
     <keyword type="enum" name="enum gnutls_tpmkey_fmt_t" link="gnutls-tpm.html#gnutls-tpmkey-fmt-t"/>
     <keyword type="struct" name="struct tpm_key_list_st" link="gnutls-tpm.html#tpm-key-list-st"/>
@@ -1210,6 +1191,7 @@
     <keyword type="constant" name="GNUTLS_A_PROTOCOL_VERSION" link="gnutls-gnutls.html#GNUTLS-A-PROTOCOL-VERSION:CAPS"/>
     <keyword type="constant" name="GNUTLS_A_INSUFFICIENT_SECURITY" link="gnutls-gnutls.html#GNUTLS-A-INSUFFICIENT-SECURITY:CAPS"/>
     <keyword type="constant" name="GNUTLS_A_INTERNAL_ERROR" link="gnutls-gnutls.html#GNUTLS-A-INTERNAL-ERROR:CAPS"/>
+    <keyword type="constant" name="GNUTLS_A_INAPPROPRIATE_FALLBACK" link="gnutls-gnutls.html#GNUTLS-A-INAPPROPRIATE-FALLBACK:CAPS"/>
     <keyword type="constant" name="GNUTLS_A_USER_CANCELED" link="gnutls-gnutls.html#GNUTLS-A-USER-CANCELED:CAPS"/>
     <keyword type="constant" name="GNUTLS_A_NO_RENEGOTIATION" link="gnutls-gnutls.html#GNUTLS-A-NO-RENEGOTIATION:CAPS"/>
     <keyword type="constant" name="GNUTLS_A_UNSUPPORTED_EXTENSION" link="gnutls-gnutls.html#GNUTLS-A-UNSUPPORTED-EXTENSION:CAPS"/>
@@ -1240,6 +1222,7 @@
     <keyword type="constant" name="GNUTLS_CERT_REVOCATION_DATA_ISSUED_IN_FUTURE" link="gnutls-gnutls.html#GNUTLS-CERT-REVOCATION-DATA-ISSUED-IN-FUTURE:CAPS"/>
     <keyword type="constant" name="GNUTLS_CERT_SIGNER_CONSTRAINTS_FAILURE" link="gnutls-gnutls.html#GNUTLS-CERT-SIGNER-CONSTRAINTS-FAILURE:CAPS"/>
     <keyword type="constant" name="GNUTLS_CERT_MISMATCH" link="gnutls-gnutls.html#GNUTLS-CERT-MISMATCH:CAPS"/>
+    <keyword type="constant" name="GNUTLS_CERT_PURPOSE_MISMATCH" link="gnutls-gnutls.html#GNUTLS-CERT-PURPOSE-MISMATCH:CAPS"/>
     <keyword type="constant" name="GNUTLS_CRT_UNKNOWN" link="gnutls-gnutls.html#GNUTLS-CRT-UNKNOWN:CAPS"/>
     <keyword type="constant" name="GNUTLS_CRT_X509" link="gnutls-gnutls.html#GNUTLS-CRT-X509:CAPS"/>
     <keyword type="constant" name="GNUTLS_CRT_OPENPGP" link="gnutls-gnutls.html#GNUTLS-CRT-OPENPGP:CAPS"/>
@@ -1254,8 +1237,6 @@
     <keyword type="constant" name="GNUTLS_CIPHER_ARCFOUR_40" link="gnutls-gnutls.html#GNUTLS-CIPHER-ARCFOUR-40:CAPS"/>
     <keyword type="constant" name="GNUTLS_CIPHER_CAMELLIA_128_CBC" link="gnutls-gnutls.html#GNUTLS-CIPHER-CAMELLIA-128-CBC:CAPS"/>
     <keyword type="constant" name="GNUTLS_CIPHER_CAMELLIA_256_CBC" link="gnutls-gnutls.html#GNUTLS-CIPHER-CAMELLIA-256-CBC:CAPS"/>
-    <keyword type="constant" name="GNUTLS_CIPHER_RC2_40_CBC" link="gnutls-gnutls.html#GNUTLS-CIPHER-RC2-40-CBC:CAPS"/>
-    <keyword type="constant" name="GNUTLS_CIPHER_DES_CBC" link="gnutls-gnutls.html#GNUTLS-CIPHER-DES-CBC:CAPS"/>
     <keyword type="constant" name="GNUTLS_CIPHER_AES_192_CBC" link="gnutls-gnutls.html#GNUTLS-CIPHER-AES-192-CBC:CAPS"/>
     <keyword type="constant" name="GNUTLS_CIPHER_AES_128_GCM" link="gnutls-gnutls.html#GNUTLS-CIPHER-AES-128-GCM:CAPS"/>
     <keyword type="constant" name="GNUTLS_CIPHER_AES_256_GCM" link="gnutls-gnutls.html#GNUTLS-CIPHER-AES-256-GCM:CAPS"/>
@@ -1264,6 +1245,13 @@
     <keyword type="constant" name="GNUTLS_CIPHER_ESTREAM_SALSA20_256" link="gnutls-gnutls.html#GNUTLS-CIPHER-ESTREAM-SALSA20-256:CAPS"/>
     <keyword type="constant" name="GNUTLS_CIPHER_CAMELLIA_128_GCM" link="gnutls-gnutls.html#GNUTLS-CIPHER-CAMELLIA-128-GCM:CAPS"/>
     <keyword type="constant" name="GNUTLS_CIPHER_CAMELLIA_256_GCM" link="gnutls-gnutls.html#GNUTLS-CIPHER-CAMELLIA-256-GCM:CAPS"/>
+    <keyword type="constant" name="GNUTLS_CIPHER_RC2_40_CBC" link="gnutls-gnutls.html#GNUTLS-CIPHER-RC2-40-CBC:CAPS"/>
+    <keyword type="constant" name="GNUTLS_CIPHER_DES_CBC" link="gnutls-gnutls.html#GNUTLS-CIPHER-DES-CBC:CAPS"/>
+    <keyword type="constant" name="GNUTLS_CIPHER_AES_128_CCM" link="gnutls-gnutls.html#GNUTLS-CIPHER-AES-128-CCM:CAPS"/>
+    <keyword type="constant" name="GNUTLS_CIPHER_AES_256_CCM" link="gnutls-gnutls.html#GNUTLS-CIPHER-AES-256-CCM:CAPS"/>
+    <keyword type="constant" name="GNUTLS_CIPHER_AES_128_CCM_8" link="gnutls-gnutls.html#GNUTLS-CIPHER-AES-128-CCM-8:CAPS"/>
+    <keyword type="constant" name="GNUTLS_CIPHER_AES_256_CCM_8" link="gnutls-gnutls.html#GNUTLS-CIPHER-AES-256-CCM-8:CAPS"/>
+    <keyword type="constant" name="GNUTLS_CIPHER_CHACHA20_POLY1305" link="gnutls-gnutls.html#GNUTLS-CIPHER-CHACHA20-POLY1305:CAPS"/>
     <keyword type="constant" name="GNUTLS_CIPHER_IDEA_PGP_CFB" link="gnutls-gnutls.html#GNUTLS-CIPHER-IDEA-PGP-CFB:CAPS"/>
     <keyword type="constant" name="GNUTLS_CIPHER_3DES_PGP_CFB" link="gnutls-gnutls.html#GNUTLS-CIPHER-3DES-PGP-CFB:CAPS"/>
     <keyword type="constant" name="GNUTLS_CIPHER_CAST5_PGP_CFB" link="gnutls-gnutls.html#GNUTLS-CIPHER-CAST5-PGP-CFB:CAPS"/>
@@ -1380,16 +1368,17 @@
     <keyword type="constant" name="GNUTLS_PSK_KEY_RAW" link="gnutls-gnutls.html#GNUTLS-PSK-KEY-RAW:CAPS"/>
     <keyword type="constant" name="GNUTLS_PSK_KEY_HEX" link="gnutls-gnutls.html#GNUTLS-PSK-KEY-HEX:CAPS"/>
     <keyword type="constant" name="GNUTLS_RANDOM_ART_OPENSSH" link="gnutls-gnutls.html#GNUTLS-RANDOM-ART-OPENSSH:CAPS"/>
+    <keyword type="constant" name="GNUTLS_SEC_PARAM_UNKNOWN" link="gnutls-gnutls.html#GNUTLS-SEC-PARAM-UNKNOWN:CAPS"/>
     <keyword type="constant" name="GNUTLS_SEC_PARAM_INSECURE" link="gnutls-gnutls.html#GNUTLS-SEC-PARAM-INSECURE:CAPS"/>
     <keyword type="constant" name="GNUTLS_SEC_PARAM_EXPORT" link="gnutls-gnutls.html#GNUTLS-SEC-PARAM-EXPORT:CAPS"/>
     <keyword type="constant" name="GNUTLS_SEC_PARAM_VERY_WEAK" link="gnutls-gnutls.html#GNUTLS-SEC-PARAM-VERY-WEAK:CAPS"/>
     <keyword type="constant" name="GNUTLS_SEC_PARAM_WEAK" link="gnutls-gnutls.html#GNUTLS-SEC-PARAM-WEAK:CAPS"/>
-    <keyword type="constant" name="GNUTLS_SEC_PARAM_UNKNOWN" link="gnutls-gnutls.html#GNUTLS-SEC-PARAM-UNKNOWN:CAPS"/>
     <keyword type="constant" name="GNUTLS_SEC_PARAM_LOW" link="gnutls-gnutls.html#GNUTLS-SEC-PARAM-LOW:CAPS"/>
     <keyword type="constant" name="GNUTLS_SEC_PARAM_LEGACY" link="gnutls-gnutls.html#GNUTLS-SEC-PARAM-LEGACY:CAPS"/>
     <keyword type="constant" name="GNUTLS_SEC_PARAM_MEDIUM" link="gnutls-gnutls.html#GNUTLS-SEC-PARAM-MEDIUM:CAPS"/>
     <keyword type="constant" name="GNUTLS_SEC_PARAM_HIGH" link="gnutls-gnutls.html#GNUTLS-SEC-PARAM-HIGH:CAPS"/>
     <keyword type="constant" name="GNUTLS_SEC_PARAM_ULTRA" link="gnutls-gnutls.html#GNUTLS-SEC-PARAM-ULTRA:CAPS"/>
+    <keyword type="constant" name="GNUTLS_SEC_PARAM_FUTURE" link="gnutls-gnutls.html#GNUTLS-SEC-PARAM-FUTURE:CAPS"/>
     <keyword type="constant" name="GNUTLS_NAME_DNS" link="gnutls-gnutls.html#GNUTLS-NAME-DNS:CAPS"/>
     <keyword type="constant" name="GNUTLS_SIGN_UNKNOWN" link="gnutls-gnutls.html#GNUTLS-SIGN-UNKNOWN:CAPS"/>
     <keyword type="constant" name="GNUTLS_SIGN_RSA_SHA1" link="gnutls-gnutls.html#GNUTLS-SIGN-RSA-SHA1:CAPS"/>
@@ -1416,7 +1405,7 @@
     <keyword type="constant" name="GNUTLS_SRTP_AES128_CM_HMAC_SHA1_32" link="gnutls-gnutls.html#GNUTLS-SRTP-AES128-CM-HMAC-SHA1-32:CAPS"/>
     <keyword type="constant" name="GNUTLS_SRTP_NULL_HMAC_SHA1_80" link="gnutls-gnutls.html#GNUTLS-SRTP-NULL-HMAC-SHA1-80:CAPS"/>
     <keyword type="constant" name="GNUTLS_SRTP_NULL_HMAC_SHA1_32" link="gnutls-gnutls.html#GNUTLS-SRTP-NULL-HMAC-SHA1-32:CAPS"/>
-    <keyword type="constant" name="GNUTLS_SUPPLEMENTAL_USER_MAPPING_DATA" link="gnutls-gnutls.html#GNUTLS-SUPPLEMENTAL-USER-MAPPING-DATA:CAPS"/>
+    <keyword type="constant" name="GNUTLS_SUPPLEMENTAL_UNKNOWN" link="gnutls-gnutls.html#GNUTLS-SUPPLEMENTAL-UNKNOWN:CAPS"/>
     <keyword type="constant" name="GNUTLS_X509_FMT_DER" link="gnutls-gnutls.html#GNUTLS-X509-FMT-DER:CAPS"/>
     <keyword type="constant" name="GNUTLS_X509_FMT_PEM" link="gnutls-gnutls.html#GNUTLS-X509-FMT-PEM:CAPS"/>
     <keyword type="constant" name="GNUTLS_SAN_DNSNAME" link="gnutls-gnutls.html#GNUTLS-SAN-DNSNAME:CAPS"/>
@@ -1428,6 +1417,7 @@
     <keyword type="constant" name="GNUTLS_SAN_OTHERNAME_XMPP" link="gnutls-gnutls.html#GNUTLS-SAN-OTHERNAME-XMPP:CAPS"/>
     <keyword type="constant" name="GNUTLS_X509_CRT_LIST_IMPORT_FAIL_IF_EXCEED" link="gnutls-x509.html#GNUTLS-X509-CRT-LIST-IMPORT-FAIL-IF-EXCEED:CAPS"/>
     <keyword type="constant" name="GNUTLS_X509_CRT_LIST_FAIL_IF_UNSORTED" link="gnutls-x509.html#GNUTLS-X509-CRT-LIST-FAIL-IF-UNSORTED:CAPS"/>
+    <keyword type="constant" name="GNUTLS_X509_CRT_LIST_SORT" link="gnutls-x509.html#GNUTLS-X509-CRT-LIST-SORT:CAPS"/>
     <keyword type="constant" name="GNUTLS_VERIFY_DISABLE_CA_SIGN" link="gnutls-x509.html#GNUTLS-VERIFY-DISABLE-CA-SIGN:CAPS"/>
     <keyword type="constant" name="GNUTLS_VERIFY_DO_NOT_ALLOW_SAME" link="gnutls-x509.html#GNUTLS-VERIFY-DO-NOT-ALLOW-SAME:CAPS"/>
     <keyword type="constant" name="GNUTLS_VERIFY_ALLOW_ANY_X509_V1_CA_CRT" link="gnutls-x509.html#GNUTLS-VERIFY-ALLOW-ANY-X509-V1-CA-CRT:CAPS"/>
@@ -1440,6 +1430,7 @@
     <keyword type="constant" name="GNUTLS_VERIFY_ALLOW_UNSORTED_CHAIN" link="gnutls-x509.html#GNUTLS-VERIFY-ALLOW-UNSORTED-CHAIN:CAPS"/>
     <keyword type="constant" name="GNUTLS_VERIFY_DO_NOT_ALLOW_UNSORTED_CHAIN" link="gnutls-x509.html#GNUTLS-VERIFY-DO-NOT-ALLOW-UNSORTED-CHAIN:CAPS"/>
     <keyword type="constant" name="GNUTLS_VERIFY_DO_NOT_ALLOW_WILDCARDS" link="gnutls-x509.html#GNUTLS-VERIFY-DO-NOT-ALLOW-WILDCARDS:CAPS"/>
+    <keyword type="constant" name="GNUTLS_VERIFY_USE_TLS1_RSA" link="gnutls-x509.html#GNUTLS-VERIFY-USE-TLS1-RSA:CAPS"/>
     <keyword type="constant" name="GNUTLS_IA_ACCESSMETHOD_OID" link="gnutls-x509.html#GNUTLS-IA-ACCESSMETHOD-OID:CAPS"/>
     <keyword type="constant" name="GNUTLS_IA_ACCESSLOCATION_GENERALNAME_TYPE" link="gnutls-x509.html#GNUTLS-IA-ACCESSLOCATION-GENERALNAME-TYPE:CAPS"/>
     <keyword type="constant" name="GNUTLS_IA_URI" link="gnutls-x509.html#GNUTLS-IA-URI:CAPS"/>
@@ -1447,14 +1438,15 @@
     <keyword type="constant" name="GNUTLS_IA_OCSP_URI" link="gnutls-x509.html#GNUTLS-IA-OCSP-URI:CAPS"/>
     <keyword type="constant" name="GNUTLS_IA_CAISSUERS_URI" link="gnutls-x509.html#GNUTLS-IA-CAISSUERS-URI:CAPS"/>
     <keyword type="constant" name="GNUTLS_PKCS_PLAIN" link="gnutls-x509.html#GNUTLS-PKCS-PLAIN:CAPS"/>
-    <keyword type="constant" name="GNUTLS_PKCS_USE_PKCS12_3DES" link="gnutls-x509.html#GNUTLS-PKCS-USE-PKCS12-3DES:CAPS"/>
-    <keyword type="constant" name="GNUTLS_PKCS_USE_PKCS12_ARCFOUR" link="gnutls-x509.html#GNUTLS-PKCS-USE-PKCS12-ARCFOUR:CAPS"/>
-    <keyword type="constant" name="GNUTLS_PKCS_USE_PKCS12_RC2_40" link="gnutls-x509.html#GNUTLS-PKCS-USE-PKCS12-RC2-40:CAPS"/>
-    <keyword type="constant" name="GNUTLS_PKCS_USE_PBES2_3DES" link="gnutls-x509.html#GNUTLS-PKCS-USE-PBES2-3DES:CAPS"/>
-    <keyword type="constant" name="GNUTLS_PKCS_USE_PBES2_AES_128" link="gnutls-x509.html#GNUTLS-PKCS-USE-PBES2-AES-128:CAPS"/>
-    <keyword type="constant" name="GNUTLS_PKCS_USE_PBES2_AES_192" link="gnutls-x509.html#GNUTLS-PKCS-USE-PBES2-AES-192:CAPS"/>
-    <keyword type="constant" name="GNUTLS_PKCS_USE_PBES2_AES_256" link="gnutls-x509.html#GNUTLS-PKCS-USE-PBES2-AES-256:CAPS"/>
+    <keyword type="constant" name="GNUTLS_PKCS_PKCS12_3DES" link="gnutls-x509.html#GNUTLS-PKCS-PKCS12-3DES:CAPS"/>
+    <keyword type="constant" name="GNUTLS_PKCS_PKCS12_ARCFOUR" link="gnutls-x509.html#GNUTLS-PKCS-PKCS12-ARCFOUR:CAPS"/>
+    <keyword type="constant" name="GNUTLS_PKCS_PKCS12_RC2_40" link="gnutls-x509.html#GNUTLS-PKCS-PKCS12-RC2-40:CAPS"/>
+    <keyword type="constant" name="GNUTLS_PKCS_PBES2_3DES" link="gnutls-x509.html#GNUTLS-PKCS-PBES2-3DES:CAPS"/>
+    <keyword type="constant" name="GNUTLS_PKCS_PBES2_AES_128" link="gnutls-x509.html#GNUTLS-PKCS-PBES2-AES-128:CAPS"/>
+    <keyword type="constant" name="GNUTLS_PKCS_PBES2_AES_192" link="gnutls-x509.html#GNUTLS-PKCS-PBES2-AES-192:CAPS"/>
+    <keyword type="constant" name="GNUTLS_PKCS_PBES2_AES_256" link="gnutls-x509.html#GNUTLS-PKCS-PBES2-AES-256:CAPS"/>
     <keyword type="constant" name="GNUTLS_PKCS_NULL_PASSWORD" link="gnutls-x509.html#GNUTLS-PKCS-NULL-PASSWORD:CAPS"/>
+    <keyword type="constant" name="GNUTLS_PKCS_PBES2_DES" link="gnutls-x509.html#GNUTLS-PKCS-PBES2-DES:CAPS"/>
     <keyword type="constant" name="GNUTLS_CRL_REASON_UNSPECIFIED" link="gnutls-x509.html#GNUTLS-CRL-REASON-UNSPECIFIED:CAPS"/>
     <keyword type="constant" name="GNUTLS_CRL_REASON_PRIVILEGE_WITHDRAWN" link="gnutls-x509.html#GNUTLS-CRL-REASON-PRIVILEGE-WITHDRAWN:CAPS"/>
     <keyword type="constant" name="GNUTLS_CRL_REASON_CERTIFICATE_HOLD" link="gnutls-x509.html#GNUTLS-CRL-REASON-CERTIFICATE-HOLD:CAPS"/>
@@ -1473,14 +1465,6 @@
     <keyword type="constant" name="GNUTLS_RND_NONCE" link="gnutls-crypto.html#GNUTLS-RND-NONCE:CAPS"/>
     <keyword type="constant" name="GNUTLS_RND_RANDOM" link="gnutls-crypto.html#GNUTLS-RND-RANDOM:CAPS"/>
     <keyword type="constant" name="GNUTLS_RND_KEY" link="gnutls-crypto.html#GNUTLS-RND-KEY:CAPS"/>
-    <keyword type="constant" name="GNUTLS_PKCS11_OBJ_ATTR_CRT_ALL" link="gnutls-pkcs11.html#GNUTLS-PKCS11-OBJ-ATTR-CRT-ALL:CAPS"/>
-    <keyword type="constant" name="GNUTLS_PKCS11_OBJ_ATTR_CRT_TRUSTED" link="gnutls-pkcs11.html#GNUTLS-PKCS11-OBJ-ATTR-CRT-TRUSTED:CAPS"/>
-    <keyword type="constant" name="GNUTLS_PKCS11_OBJ_ATTR_CRT_WITH_PRIVKEY" link="gnutls-pkcs11.html#GNUTLS-PKCS11-OBJ-ATTR-CRT-WITH-PRIVKEY:CAPS"/>
-    <keyword type="constant" name="GNUTLS_PKCS11_OBJ_ATTR_PUBKEY" link="gnutls-pkcs11.html#GNUTLS-PKCS11-OBJ-ATTR-PUBKEY:CAPS"/>
-    <keyword type="constant" name="GNUTLS_PKCS11_OBJ_ATTR_PRIVKEY" link="gnutls-pkcs11.html#GNUTLS-PKCS11-OBJ-ATTR-PRIVKEY:CAPS"/>
-    <keyword type="constant" name="GNUTLS_PKCS11_OBJ_ATTR_ALL" link="gnutls-pkcs11.html#GNUTLS-PKCS11-OBJ-ATTR-ALL:CAPS"/>
-    <keyword type="constant" name="GNUTLS_PKCS11_OBJ_ATTR_CRT_TRUSTED_CA" link="gnutls-pkcs11.html#GNUTLS-PKCS11-OBJ-ATTR-CRT-TRUSTED-CA:CAPS"/>
-    <keyword type="constant" name="GNUTLS_PKCS11_OBJ_ATTR_MATCH" link="gnutls-pkcs11.html#GNUTLS-PKCS11-OBJ-ATTR-MATCH:CAPS"/>
     <keyword type="constant" name="GNUTLS_PKCS11_OBJ_ID_HEX" link="gnutls-pkcs11.html#GNUTLS-PKCS11-OBJ-ID-HEX:CAPS"/>
     <keyword type="constant" name="GNUTLS_PKCS11_OBJ_LABEL" link="gnutls-pkcs11.html#GNUTLS-PKCS11-OBJ-LABEL:CAPS"/>
     <keyword type="constant" name="GNUTLS_PKCS11_OBJ_TOKEN_LABEL" link="gnutls-pkcs11.html#GNUTLS-PKCS11-OBJ-TOKEN-LABEL:CAPS"/>
@@ -1502,6 +1486,7 @@
     <keyword type="constant" name="GNUTLS_PKCS11_TOKEN_SERIAL" link="gnutls-pkcs11.html#GNUTLS-PKCS11-TOKEN-SERIAL:CAPS"/>
     <keyword type="constant" name="GNUTLS_PKCS11_TOKEN_MANUFACTURER" link="gnutls-pkcs11.html#GNUTLS-PKCS11-TOKEN-MANUFACTURER:CAPS"/>
     <keyword type="constant" name="GNUTLS_PKCS11_TOKEN_MODEL" link="gnutls-pkcs11.html#GNUTLS-PKCS11-TOKEN-MODEL:CAPS"/>
+    <keyword type="constant" name="GNUTLS_PKCS11_TOKEN_MODNAME" link="gnutls-pkcs11.html#GNUTLS-PKCS11-TOKEN-MODNAME:CAPS"/>
     <keyword type="constant" name="GNUTLS_PKCS11_URL_GENERIC" link="gnutls-pkcs11.html#GNUTLS-PKCS11-URL-GENERIC:CAPS"/>
     <keyword type="constant" name="GNUTLS_PKCS11_URL_LIB" link="gnutls-pkcs11.html#GNUTLS-PKCS11-URL-LIB:CAPS"/>
     <keyword type="constant" name="GNUTLS_PKCS11_URL_LIB_VERSION" link="gnutls-pkcs11.html#GNUTLS-PKCS11-URL-LIB-VERSION:CAPS"/>

@@ -3,7 +3,7 @@
 
 
 @deftypefun {int} {gnutls_x509_crt_get_pk_algorithm} (gnutls_x509_crt_t @var{cert}, unsigned int * @var{bits})
-@var{cert}: should contain a @code{gnutls_x509_crt_t}  structure
+@var{cert}: should contain a @code{gnutls_x509_crt_t}  type
 
 @var{bits}: if bits is non null it will hold the size of the parameters' in bits
 

@@ -117,15 +117,6 @@ compat
 </para>
 
 
-<!-- ##### FUNCTION gnutls_certificate_client_set_retrieve_function ##### -->
-<para>
-
-</para>
-
-@cred: 
-@func: 
-
-
 <!-- ##### MACRO gnutls_openpgp_crt_get_id ##### -->
 <para>
 
@@ -229,25 +220,5 @@ compat
 
 </para>
 
-
-
-<!-- ##### FUNCTION gnutls_rsa_params_generate2 ##### -->
-<para>
-
-</para>
-
-@params: 
-@bits: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gnutls_sign_callback_set ##### -->
-<para>
-
-</para>
-
-@session: 
-@sign_func: 
-@userdata: 
 
 

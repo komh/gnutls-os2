@@ -3,7 +3,7 @@
 
 
 @deftypefun {int} {gnutls_session_get_id2} (gnutls_session_t @var{session}, gnutls_datum_t * @var{session_id})
-@var{session}: is a @code{gnutls_session_t}  structure.
+@var{session}: is a @code{gnutls_session_t}  type.
 
 @var{session_id}: will point to the session ID.
 

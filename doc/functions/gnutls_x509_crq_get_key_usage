@@ -3,7 +3,7 @@
 
 
 @deftypefun {int} {gnutls_x509_crq_get_key_usage} (gnutls_x509_crq_t @var{crq}, unsigned int * @var{key_usage}, unsigned int * @var{critical})
-@var{crq}: should contain a @code{gnutls_x509_crq_t}  structure
+@var{crq}: should contain a @code{gnutls_x509_crq_t}  type
 
 @var{key_usage}: where the key usage bits will be stored
 

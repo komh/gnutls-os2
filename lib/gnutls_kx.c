@@ -70,6 +70,10 @@ send_handshake(gnutls_session_t session, uint8_t * data, size_t size,
 
 #define MASTER_SECRET "master secret"
 #define MASTER_SECRET_SIZE (sizeof(MASTER_SECRET)-1)
+
+#define EXT_MASTER_SECRET "extended master secret"
+#define EXT_MASTER_SECRET_SIZE (sizeof(EXT_MASTER_SECRET)-1)
+
 static int generate_normal_master(gnutls_session_t session,
 				  gnutls_datum_t *, int);
 
@@ -89,6 +93,36 @@ int _gnutls_generate_master(gnutls_session_t session, int keep_premaster)
 		return generate_normal_master(session, &premaster, 1);
 	}
 	return 0;
+}
+
+static void write_nss_key_log(gnutls_session_t session, const gnutls_datum_t *premaster)
+{
+	char buf[512];
+	char buf2[512];
+	FILE *fp;
+	static const char *keylogfile = NULL;
+	static unsigned checked_env = 0;
+
+	if (!checked_env) {
+		checked_env = 1;
+		keylogfile = secure_getenv("SSLKEYLOGFILE");
+	}
+
+	if (keylogfile == NULL)
+		return;
+
+	fp = fopen(keylogfile, "a");
+	if (fp == NULL)
+		return;
+
+	fprintf(fp, "CLIENT_RANDOM %s %s\n", 
+		 _gnutls_bin2hex(session->security_parameters.
+				 client_random, 32, buf,
+				 sizeof(buf), NULL),
+		 _gnutls_bin2hex(session->security_parameters.
+				 master_secret, GNUTLS_MASTER_SIZE,
+				 buf2, sizeof(buf2), NULL));
+	fclose(fp);
 }
 
 /* here we generate the TLS Master secret.
@@ -114,40 +148,53 @@ generate_normal_master(gnutls_session_t session,
 					 server_random, 32, buf,
 					 sizeof(buf), NULL));
 
-	if (get_num_version(session) == GNUTLS_SSL3) {
+	if (session->security_parameters.ext_master_secret == 0) {
 		uint8_t rnd[2 * GNUTLS_RANDOM_SIZE + 1];
-
 		memcpy(rnd, session->security_parameters.client_random,
 		       GNUTLS_RANDOM_SIZE);
 		memcpy(&rnd[GNUTLS_RANDOM_SIZE],
 		       session->security_parameters.server_random,
 		       GNUTLS_RANDOM_SIZE);
 
-		ret =
-		    _gnutls_ssl3_generate_random(premaster->data,
-						 premaster->size, rnd,
-						 2 * GNUTLS_RANDOM_SIZE,
-						 GNUTLS_MASTER_SIZE,
-						 session->security_parameters.
-						 master_secret);
-
+		if (get_num_version(session) == GNUTLS_SSL3) {
+			ret =
+			    _gnutls_ssl3_generate_random(premaster->data,
+							 premaster->size, rnd,
+							 2 * GNUTLS_RANDOM_SIZE,
+							 GNUTLS_MASTER_SIZE,
+							 session->security_parameters.
+							 master_secret);
+		} else {
+			ret =
+			    _gnutls_PRF(session, premaster->data, premaster->size,
+					MASTER_SECRET, MASTER_SECRET_SIZE,
+					rnd, 2 * GNUTLS_RANDOM_SIZE,
+					GNUTLS_MASTER_SIZE,
+					session->security_parameters.
+					master_secret);
+		}
 	} else {
-		uint8_t rnd[2 * GNUTLS_RANDOM_SIZE + 1];
+		gnutls_datum_t shash = {NULL, 0};
 
-		memcpy(rnd, session->security_parameters.client_random,
-		       GNUTLS_RANDOM_SIZE);
-		memcpy(&rnd[GNUTLS_RANDOM_SIZE],
-		       session->security_parameters.server_random,
-		       GNUTLS_RANDOM_SIZE);
+		/* draft-ietf-tls-session-hash-02 */
+		ret = _gnutls_handshake_get_session_hash(session, &shash);
+		if (ret < 0)
+			return gnutls_assert_val(ret);
+		if (get_num_version(session) == GNUTLS_SSL3)
+			return gnutls_assert_val(GNUTLS_E_INTERNAL_ERROR);
 
 		ret =
 		    _gnutls_PRF(session, premaster->data, premaster->size,
-				MASTER_SECRET, MASTER_SECRET_SIZE,
-				rnd, 2 * GNUTLS_RANDOM_SIZE,
+				EXT_MASTER_SECRET, EXT_MASTER_SECRET_SIZE,
+				shash.data, shash.size,
 				GNUTLS_MASTER_SIZE,
 				session->security_parameters.
 				master_secret);
+
+		gnutls_free(shash.data);
 	}
+
+	write_nss_key_log(session, premaster);
 
 	if (!keep_premaster)
 		_gnutls_free_temp_key_datum(premaster);

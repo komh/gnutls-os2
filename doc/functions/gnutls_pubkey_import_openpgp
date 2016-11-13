@@ -11,7 +11,7 @@
 
 Imports a public key from an openpgp key. This function will import
 the given public key to the abstract @code{gnutls_pubkey_t} 
-structure. The subkey set as preferred will be imported or the
+type. The subkey set as preferred will be imported or the
 master key otherwise.
 
 @strong{Returns:} On success, @code{GNUTLS_E_SUCCESS}  (0) is returned, otherwise a

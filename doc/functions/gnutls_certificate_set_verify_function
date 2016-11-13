@@ -3,7 +3,7 @@
 
 
 @deftypefun {void} {gnutls_certificate_set_verify_function} (gnutls_certificate_credentials_t @var{cred}, gnutls_certificate_verify_function * @var{func})
-@var{cred}: is a @code{gnutls_certificate_credentials_t}  structure.
+@var{cred}: is a @code{gnutls_certificate_credentials_t}  type.
 
 @var{func}: is the callback function
 

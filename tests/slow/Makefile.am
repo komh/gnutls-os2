@@ -22,6 +22,7 @@ AM_CPPFLAGS = -I$(top_srcdir)/lib/includes		\
 	-I$(top_builddir)/lib/includes \
 	-I$(top_srcdir)/tests/ \
 	-I$(top_srcdir)/lib \
+	-I$(top_builddir)/gl \
 	-I$(top_srcdir)/gl
 
 if ENABLE_MINITASN1
@@ -30,20 +31,25 @@ endif
 
 AM_LDFLAGS = -no-install
 LDADD = ../libutils.la \
-	$(top_builddir)/lib/libgnutls.la $(LTLIBGCRYPT) $(LIBSOCKET)
+	../../gl/libgnu.la \
+	$(top_builddir)/lib/libgnutls.la $(LIBSOCKET)
 
 if !ENABLE_SELF_CHECKS
-cipher_test_CPPFLAGS = $(AM_CPPFLAGS) -I$(top_builddir)/lib/ -I$(top_builddir)/gl/
+cipher_test_CPPFLAGS = $(AM_CPPFLAGS) -I$(top_builddir)/lib/
 else
 cipher_test_CPPFLAGS = $(AM_CPPFLAGS)
 endif
 
-dist_check_SCRIPTS = test-hash-large
+ctests = gendh
 
-ctests = gendh keygen cipher-test
+if ENABLE_NETTLE
+cipher_override_LDFLAGS = $(NETTLE_LIBS) $(HOGWEED_LIBS) $(GMP_LIBS) $(LDADD)
+mac_override_LDFLAGS = $(NETTLE_LIBS) $(HOGWEED_LIBS) $(GMP_LIBS) $(LDADD)
+endif
 
-check_PROGRAMS = $(ctests) hash-large
-TESTS = $(ctests) test-hash-large
+dist_check_SCRIPTS = test-ciphers override-ciphers test-hash-large
+check_PROGRAMS = $(ctests) cipher-test cipher-override mac-override cipher-override2 hash-large
+TESTS = $(ctests) test-ciphers override-ciphers test-hash-large
 
 EXTRA_DIST = README
 
@@ -51,3 +57,7 @@ TESTS_ENVIRONMENT = EXEEXT=$(EXEEXT) \
 	LC_ALL="C"						\
 	top_builddir="$(top_builddir)"				\
 	srcdir="$(srcdir)"
+
+if WINDOWS
+TESTS_ENVIRONMENT += WINDOWS=1
+endif

@@ -74,16 +74,6 @@ system
 @Returns: 
 
 
-<!-- ##### FUNCTION system_recv_timeout ##### -->
-<para>
-
-</para>
-
-@ptr: 
-@ms: 
-@Returns: 
-
-
 <!-- ##### FUNCTION system_write ##### -->
 <para>
 

@@ -3,7 +3,7 @@
 
 
 @deftypefun {int} {gnutls_x509_crt_check_hostname2} (gnutls_x509_crt_t @var{cert}, const char * @var{hostname}, unsigned int @var{flags})
-@var{cert}: should contain an gnutls_x509_crt_t structure
+@var{cert}: should contain an gnutls_x509_crt_t type
 
 @var{hostname}: A null terminated string that contains a DNS name
 
@@ -20,9 +20,6 @@ x:x:x:x:x:x:x:x format. For them the IPAddress subject alternative
 name extension is consulted, as well as the DNSNames in case of a non-match.
 The latter fallback exists due to misconfiguration of many servers
 which place an IPAddress inside the DNSName extension.
-
-The comparison of dns names may have false-negatives as it is done byte 
-by byte in non-ascii names.
 
 When the flag @code{GNUTLS_VERIFY_DO_NOT_ALLOW_WILDCARDS}  is specified no
 wildcards are considered. Otherwise they are only considered if the

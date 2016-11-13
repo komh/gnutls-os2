@@ -3,7 +3,7 @@
 
 
 @deftypefun {int} {gnutls_range_split} (gnutls_session_t @var{session}, const gnutls_range_st * @var{orig}, gnutls_range_st * @var{next}, gnutls_range_st * @var{remainder})
-@var{session}: is a @code{gnutls_session_t}  structure
+@var{session}: is a @code{gnutls_session_t}  type
 
 @var{orig}: is the original range provided by the user
 

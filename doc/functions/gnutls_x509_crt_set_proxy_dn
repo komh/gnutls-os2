@@ -3,7 +3,7 @@
 
 
 @deftypefun {int} {gnutls_x509_crt_set_proxy_dn} (gnutls_x509_crt_t @var{crt}, gnutls_x509_crt_t @var{eecrt}, unsigned int @var{raw_flag}, const void * @var{name}, unsigned int @var{sizeof_name})
-@var{crt}: a gnutls_x509_crt_t structure with the new proxy cert
+@var{crt}: a gnutls_x509_crt_t type with the new proxy cert
 
 @var{eecrt}: the end entity certificate that will be issuing the proxy
 

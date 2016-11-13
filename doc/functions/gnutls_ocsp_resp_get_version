@@ -3,7 +3,7 @@
 
 
 @deftypefun {int} {gnutls_ocsp_resp_get_version} (gnutls_ocsp_resp_t @var{resp})
-@var{resp}: should contain a @code{gnutls_ocsp_resp_t}  structure
+@var{resp}: should contain a @code{gnutls_ocsp_resp_t}  type
 
 This function will return the version of the Basic OCSP Response.
 Typically this is always 1 indicating version 1.

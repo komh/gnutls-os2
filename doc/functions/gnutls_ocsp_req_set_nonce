@@ -3,7 +3,7 @@
 
 
 @deftypefun {int} {gnutls_ocsp_req_set_nonce} (gnutls_ocsp_req_t @var{req}, unsigned int @var{critical}, const gnutls_datum_t * @var{nonce})
-@var{req}: should contain a @code{gnutls_ocsp_req_t}  structure
+@var{req}: should contain a @code{gnutls_ocsp_req_t}  type
 
 @var{critical}: critical flag, normally false.
 

@@ -3,7 +3,7 @@
 
 
 @deftypefun {int} {gnutls_x509_crt_get_subject} (gnutls_x509_crt_t @var{cert}, gnutls_x509_dn_t * @var{dn})
-@var{cert}: should contain a @code{gnutls_x509_crt_t}  structure
+@var{cert}: should contain a @code{gnutls_x509_crt_t}  type
 
 @var{dn}: output variable with pointer to uint8_t DN.
 

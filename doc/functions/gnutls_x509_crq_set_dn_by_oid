@@ -3,7 +3,7 @@
 
 
 @deftypefun {int} {gnutls_x509_crq_set_dn_by_oid} (gnutls_x509_crq_t @var{crq}, const char * @var{oid}, unsigned int @var{raw_flag}, const void * @var{data}, unsigned int @var{sizeof_data})
-@var{crq}: should contain a @code{gnutls_x509_crq_t}  structure
+@var{crq}: should contain a @code{gnutls_x509_crq_t}  type
 
 @var{oid}: holds an Object Identifier in a (0)-terminated string
 

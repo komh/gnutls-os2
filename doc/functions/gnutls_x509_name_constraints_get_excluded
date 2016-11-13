@@ -3,7 +3,7 @@
 
 
 @deftypefun {int} {gnutls_x509_name_constraints_get_excluded} (gnutls_x509_name_constraints_t @var{nc}, unsigned @var{idx}, unsigned * @var{type}, gnutls_datum_t * @var{name})
-@var{nc}: the extracted name constraints structure
+@var{nc}: the extracted name constraints
 
 @var{idx}: the index of the constraint
 
@@ -11,7 +11,7 @@
 
 @var{name}: the name in the constraint (of the specific type)
 
-This function will return an intermediate structure containing
+This function will return an intermediate type containing
 the name constraints of the provided CA certificate. That
 structure can be used in combination with @code{gnutls_x509_name_constraints_check()} 
 to verify whether a server's name is in accordance with the constraints.

@@ -3,7 +3,7 @@
 
 
 @deftypefun {void} {gnutls_db_set_store_function} (gnutls_session_t @var{session}, gnutls_db_store_func @var{store_func})
-@var{session}: is a @code{gnutls_session_t}  structure.
+@var{session}: is a @code{gnutls_session_t}  type.
 
 @var{store_func}: is the function
 

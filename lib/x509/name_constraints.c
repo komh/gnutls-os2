@@ -130,12 +130,12 @@ int _gnutls_extract_name_constraints(ASN1_TYPE c2, const char *vstr,
 
 /**
  * gnutls_x509_crt_get_name_constraints:
- * @crt: should contain a #gnutls_x509_crt_t structure
- * @nc: The nameconstraints intermediate structure
+ * @crt: should contain a #gnutls_x509_crt_t type
+ * @nc: The nameconstraints intermediate type
  * @flags: zero or %GNUTLS_NAME_CONSTRAINTS_FLAG_APPEND
  * @critical: the extension status
  *
- * This function will return an intermediate structure containing
+ * This function will return an intermediate type containing
  * the name constraints of the provided CA certificate. That
  * structure can be used in combination with gnutls_x509_name_constraints_check()
  * to verify whether a server's name is in accordance with the constraints.
@@ -192,9 +192,9 @@ int gnutls_x509_crt_get_name_constraints(gnutls_x509_crt_t crt,
 
 /**
  * gnutls_x509_name_constraints_deinit:
- * @nc: The nameconstraints structure
+ * @nc: The nameconstraints
  *
- * This function will deinitialize a name constraints structure.
+ * This function will deinitialize a name constraints type.
  *
  * Since: 3.3.0
  **/
@@ -222,9 +222,9 @@ void gnutls_x509_name_constraints_deinit(gnutls_x509_name_constraints_t nc)
 
 /**
  * gnutls_x509_name_constraints_init:
- * @nc: The nameconstraints structure
+ * @nc: The nameconstraints
  *
- * This function will initialize a name constraints structure.
+ * This function will initialize a name constraints type.
  *
  * Returns: On success, %GNUTLS_E_SUCCESS (0) is returned, otherwise a negative error value.
  *
@@ -253,6 +253,10 @@ int name_constraints_add(gnutls_x509_name_constraints_t nc,
 	if (type != GNUTLS_SAN_DNSNAME && type != GNUTLS_SAN_RFC822NAME &&
 		type != GNUTLS_SAN_DN && type != GNUTLS_SAN_URI && type != GNUTLS_SAN_IPADDRESS)
 		return gnutls_assert_val(GNUTLS_E_INVALID_REQUEST);
+
+	if (type == GNUTLS_SAN_IPADDRESS && (name->size != 8 && name->size != 32)) {
+		return gnutls_assert_val(GNUTLS_E_INVALID_REQUEST);
+	}
 
 	if (permitted != 0)
 		prev = tmp = nc->permitted;
@@ -291,12 +295,15 @@ int name_constraints_add(gnutls_x509_name_constraints_t nc,
 
 /**
  * gnutls_x509_name_constraints_add_permitted:
- * @nc: The nameconstraints structure
+ * @nc: The nameconstraints
  * @type: The type of the constraints
  * @name: The data of the constraints
  *
  * This function will add a name constraint to the list of permitted
- * constraints.
+ * constraints. The constraints @type can be any of the following types:
+ * %GNUTLS_SAN_DNSNAME, %GNUTLS_SAN_RFC822NAME, %GNUTLS_SAN_DN,
+ * %GNUTLS_SAN_URI, %GNUTLS_SAN_IPADDRESS. For the latter, an IP address
+ * in network byte order is expected, followed by its network mask.
  *
  * Returns: On success, %GNUTLS_E_SUCCESS (0) is returned, otherwise a negative error value.
  *
@@ -311,12 +318,16 @@ int gnutls_x509_name_constraints_add_permitted(gnutls_x509_name_constraints_t nc
 
 /**
  * gnutls_x509_name_constraints_add_excluded:
- * @nc: The nameconstraints structure
+ * @nc: The nameconstraints
  * @type: The type of the constraints
  * @name: The data of the constraints
  *
  * This function will add a name constraint to the list of excluded
- * constraints.
+ * constraints. The constraints @type can be any of the following types:
+ * %GNUTLS_SAN_DNSNAME, %GNUTLS_SAN_RFC822NAME, %GNUTLS_SAN_DN,
+ * %GNUTLS_SAN_URI, %GNUTLS_SAN_IPADDRESS. For the latter, an IP address
+ * in network byte order is expected, followed by its network mask (which is
+ * 4 bytes in IPv4 or 16-bytes in IPv6).
  *
  * Returns: On success, %GNUTLS_E_SUCCESS (0) is returned, otherwise a negative error value.
  *
@@ -331,7 +342,7 @@ int gnutls_x509_name_constraints_add_excluded(gnutls_x509_name_constraints_t nc,
 
 /**
  * gnutls_x509_crt_set_name_constraints:
- * @crt: The certificate structure
+ * @crt: The certificate
  * @nc: The nameconstraints structure
  * @critical: whether this extension will be critical
  *
@@ -566,7 +577,7 @@ gnutls_datum_t rname;
 
 /**
  * gnutls_x509_name_constraints_check:
- * @nc: the extracted name constraints structure
+ * @nc: the extracted name constraints
  * @type: the type of the constraint to check (of type gnutls_x509_subject_alt_name_t)
  * @name: the name to be checked
  *
@@ -591,9 +602,49 @@ unsigned gnutls_x509_name_constraints_check(gnutls_x509_name_constraints_t nc,
 	return check_unsupported_constraint(nc, type);
 }
 
+/* This function checks for unsupported constraints, that we also
+ * know their structure. That is it will fail only if the constraint
+ * is present in the CA, _and_ the name in the end certificate contains
+ * the constrained element. */
+static int check_unsupported_constraint2(gnutls_x509_crt_t cert, 
+					 gnutls_x509_name_constraints_t nc,
+					 gnutls_x509_subject_alt_name_t type)
+{
+	unsigned idx, found_one;
+	char name[MAX_CN];
+	size_t name_size;
+	unsigned san_type;
+	int ret;
+
+	idx = 0;
+	found_one = 0;
+
+	do {
+		name_size = sizeof(name);
+		ret = gnutls_x509_crt_get_subject_alt_name2(cert,
+			idx++, name, &name_size, &san_type, NULL);
+		if (ret == GNUTLS_E_REQUESTED_DATA_NOT_AVAILABLE)
+			break;
+		else if (ret < 0)
+			return gnutls_assert_val(0);
+
+		if (san_type != GNUTLS_SAN_URI)
+			continue;
+
+		found_one = 1;
+		break;
+	} while(ret >= 0);
+
+	if (found_one != 0)
+		return check_unsupported_constraint(nc, type);
+
+	/* no name was found in the certificate, so accept */
+	return 1;
+}
+
 /**
  * gnutls_x509_name_constraints_check_crt:
- * @nc: the extracted name constraints structure
+ * @nc: the extracted name constraints
  * @type: the type of the constraint to check (of type gnutls_x509_subject_alt_name_t)
  * @cert: the certificate to be checked
  *
@@ -712,9 +763,10 @@ unsigned found_one;
 			return 1;
 
 		/* verify the name constraints against the CN, if the certificate is
-		 * not a CA. */
+		 * not a CA. We do this check only on certificates marked as WWW server,
+		 * because that's where the CN check is only performed. */
+		if (_gnutls_check_key_purpose(cert, GNUTLS_KP_TLS_WWW_SERVER, 0) != 0)
 		do {
-
 			/* ensure there is only a single CN, according to rfc6125 */
 			name_size = sizeof(name);
 			ret = gnutls_x509_crt_get_dn_by_oid(cert, GNUTLS_OID_X520_COMMON_NAME,
@@ -748,66 +800,20 @@ unsigned found_one;
 			 */
 			return gnutls_assert_val(1);
 		}
-	} else if (type == GNUTLS_SAN_IPADDRESS) {
-		/* Only check whether the IPAddress is present */
-		idx = found_one = 0;
-		do {
-			name_size = sizeof(name);
-			ret = gnutls_x509_crt_get_subject_alt_name2(cert,
-				idx++, name, &name_size, &san_type, NULL);
-			if (ret == GNUTLS_E_REQUESTED_DATA_NOT_AVAILABLE)
-				break;
-			else if (ret < 0)
-				return gnutls_assert_val(0);
-
-			if (san_type != GNUTLS_SAN_IPADDRESS)
-				continue;
-
-			found_one = 1;
-			break;
-		} while(ret >= 0);
-
-		if (found_one != 0)
-			return check_unsupported_constraint(nc, type);
-
-		/* no IPaddress was found in the certificate, so accept */
-		return 1;
-	} else if (type == GNUTLS_SAN_URI) {
-		/* Only check whether the URI is present */
-		idx = found_one = 0;
-		do {
-			name_size = sizeof(name);
-			ret = gnutls_x509_crt_get_subject_alt_name2(cert,
-				idx++, name, &name_size, &san_type, NULL);
-			if (ret == GNUTLS_E_REQUESTED_DATA_NOT_AVAILABLE)
-				break;
-			else if (ret < 0)
-				return gnutls_assert_val(0);
-
-			if (san_type != GNUTLS_SAN_URI)
-				continue;
-
-			found_one = 1;
-			break;
-		} while(ret >= 0);
-
-		if (found_one != 0)
-			return check_unsupported_constraint(nc, type);
-
-		/* no IPaddress was found in the certificate, so accept */
-		return 1;
+	} else if (type == GNUTLS_SAN_IPADDRESS || type == GNUTLS_SAN_URI) {
+		return check_unsupported_constraint2(cert, nc, type);
 	} else
 		return check_unsupported_constraint(nc, type);
 }
 
 /**
  * gnutls_x509_name_constraints_get_permitted:
- * @nc: the extracted name constraints structure
+ * @nc: the extracted name constraints
  * @idx: the index of the constraint
  * @type: the type of the constraint (of type gnutls_x509_subject_alt_name_t)
  * @name: the name in the constraint (of the specific type)
  *
- * This function will return an intermediate structure containing
+ * This function will return an intermediate type containing
  * the name constraints of the provided CA certificate. That
  * structure can be used in combination with gnutls_x509_name_constraints_check()
  * to verify whether a server's name is in accordance with the constraints.
@@ -846,12 +852,12 @@ int gnutls_x509_name_constraints_get_permitted(gnutls_x509_name_constraints_t nc
 
 /**
  * gnutls_x509_name_constraints_get_excluded:
- * @nc: the extracted name constraints structure
+ * @nc: the extracted name constraints
  * @idx: the index of the constraint
  * @type: the type of the constraint (of type gnutls_x509_subject_alt_name_t)
  * @name: the name in the constraint (of the specific type)
  *
- * This function will return an intermediate structure containing
+ * This function will return an intermediate type containing
  * the name constraints of the provided CA certificate. That
  * structure can be used in combination with gnutls_x509_name_constraints_check()
  * to verify whether a server's name is in accordance with the constraints.

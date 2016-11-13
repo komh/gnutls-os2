@@ -393,6 +393,12 @@
 </para>
 
 
+<!-- ##### MACRO TLS_MAX_SESSION_ID_SIZE ##### -->
+<para>
+
+</para>
+
+
 <!-- ##### USER_FUNCTION _gnutls_is_secure_memory ##### -->
 <para>
 
@@ -2345,6 +2351,13 @@
 
 @ctx: 
 
+<!-- ##### USER_FUNCTION deinit_func ##### -->
+<para>
+
+</para>
+
+@handle: 
+
 <!-- ##### USER_FUNCTION derive ##### -->
 <para>
 
@@ -2434,6 +2447,65 @@
 @q_bits: 
 @Returns: 
 
+<!-- ##### VARIABLE gnutls_calloc ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### FUNCTION gnutls_certificate_client_set_retrieve_function ##### -->
+<para>
+
+</para>
+
+@cred: 
+@func: 
+
+<!-- ##### FUNCTION gnutls_crypto_cipher_register ##### -->
+<para>
+
+</para>
+
+@priority: 
+@s: 
+@Returns: 
+
+<!-- ##### FUNCTION gnutls_crypto_digest_register ##### -->
+<para>
+
+</para>
+
+@priority: 
+@s: 
+@Returns: 
+
+<!-- ##### FUNCTION gnutls_crypto_mac_register ##### -->
+<para>
+
+</para>
+
+@priority: 
+@s: 
+@Returns: 
+
+<!-- ##### STRUCT gnutls_ecdh_params_int ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### TYPEDEF gnutls_ecdh_params_t ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### VARIABLE gnutls_free ##### -->
+<para>
+
+</para>
+
+
 <!-- ##### USER_FUNCTION gnutls_generate_client_certificate ##### -->
 <para>
 
@@ -2496,6 +2568,12 @@
 @session: 
 @check_only: 
 @Returns: 
+
+<!-- ##### VARIABLE gnutls_malloc ##### -->
+<para>
+
+</para>
+
 
 <!-- ##### TYPEDEF gnutls_openpgp_keyid_t ##### -->
 <para>
@@ -2563,6 +2641,42 @@
 @Param3: 
 @Returns: 
 
+<!-- ##### FUNCTION gnutls_pubkey_get_verify_algorithm ##### -->
+<para>
+
+</para>
+
+@key: 
+@signature: 
+@hash: 
+@Returns: 
+
+<!-- ##### FUNCTION gnutls_pubkey_verify_data ##### -->
+<para>
+
+</para>
+
+@pubkey: 
+@flags: 
+@data: 
+@signature: 
+@Returns: 
+
+<!-- ##### VARIABLE gnutls_realloc ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### FUNCTION gnutls_rsa_params_generate2 ##### -->
+<para>
+
+</para>
+
+@params: 
+@bits: 
+@Returns: 
+
 <!-- ##### FUNCTION gnutls_secure_calloc ##### -->
 <para>
 
@@ -2585,6 +2699,83 @@
 
 @session: 
 @sign: 
+
+<!-- ##### FUNCTION gnutls_sign_callback_set ##### -->
+<para>
+
+</para>
+
+@session: 
+@sign_func: 
+@userdata: 
+
+<!-- ##### VARIABLE gnutls_srp_1024_group_generator ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### VARIABLE gnutls_srp_1024_group_prime ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### VARIABLE gnutls_srp_1536_group_generator ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### VARIABLE gnutls_srp_1536_group_prime ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### VARIABLE gnutls_srp_2048_group_generator ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### VARIABLE gnutls_srp_2048_group_prime ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### VARIABLE gnutls_srp_3072_group_generator ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### VARIABLE gnutls_srp_3072_group_prime ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### VARIABLE gnutls_srp_4096_group_generator ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### VARIABLE gnutls_srp_4096_group_prime ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### USER_FUNCTION gnutls_strdup ##### -->
+<para>
+
+</para>
+
+@Param1: 
+@Returns: 
 
 <!-- ##### FUNCTION gnutls_system_global_deinit ##### -->
 <para>
@@ -2688,6 +2879,12 @@
 
 
 <!-- ##### MACRO node_data_struct ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### VARIABLE now ##### -->
 <para>
 
 </para>
@@ -2867,6 +3064,15 @@
 
 </para>
 
+
+<!-- ##### FUNCTION system_recv_timeout ##### -->
+<para>
+
+</para>
+
+@ptr: 
+@ms: 
+@Returns: 
 
 <!-- ##### USER_FUNCTION tag ##### -->
 <para>

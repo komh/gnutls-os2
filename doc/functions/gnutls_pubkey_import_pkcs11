@@ -10,7 +10,7 @@
 @var{flags}: should be zero
 
 Imports a public key from a pkcs11 key. This function will import
-the given public key to the abstract @code{gnutls_pubkey_t}  structure.
+the given public key to the abstract @code{gnutls_pubkey_t}  type.
 
 @strong{Returns:} On success, @code{GNUTLS_E_SUCCESS}  (0) is returned, otherwise a
 negative error value.

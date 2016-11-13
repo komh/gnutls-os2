@@ -3,7 +3,7 @@
 
 
 @deftypefun {int} {gnutls_x509_privkey_export_rsa_raw2} (gnutls_x509_privkey_t @var{key}, gnutls_datum_t * @var{m}, gnutls_datum_t * @var{e}, gnutls_datum_t * @var{d}, gnutls_datum_t * @var{p}, gnutls_datum_t * @var{q}, gnutls_datum_t * @var{u}, gnutls_datum_t * @var{e1}, gnutls_datum_t * @var{e2})
-@var{key}: a structure that holds the rsa parameters
+@var{key}: a key
 
 @var{m}: will hold the modulus
 

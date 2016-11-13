@@ -236,7 +236,7 @@ int _dtls_transmit(gnutls_session_t session)
 	 * return.
 	 */
 	if (session->internals.dtls.flight_init != 0
-	    && session->internals.dtls.blocking == 0) {
+	    && session->internals.blocking == 0) {
 		/* just in case previous run was interrupted */
 		ret = _gnutls_io_write_flush(session);
 		if (ret < 0) {
@@ -288,9 +288,8 @@ int _dtls_transmit(gnutls_session_t session)
 
 		diff =
 		    timespec_sub_ms(&now,
-				    &session->internals.dtls.
-				    handshake_start_time);
-		if (diff >= session->internals.dtls.total_timeout_ms) {
+				    &session->internals.handshake_start_time);
+		if (diff >= session->internals.handshake_timeout_ms) {
 			_gnutls_dtls_log("Session timeout: %u ms\n", diff);
 			ret = gnutls_assert_val(GNUTLS_E_TIMEDOUT);
 			goto end_flight;
@@ -356,7 +355,7 @@ int _dtls_transmit(gnutls_session_t session)
 			goto cleanup;
 		} else {	/* all other messages -> implicit ack (receive of next flight) */
 
-			if (session->internals.dtls.blocking != 0)
+			if (session->internals.blocking != 0)
 				ret =
 				    _gnutls_io_check_recv(session,
 							  timeout);
@@ -423,7 +422,7 @@ int _dtls_wait_and_retransmit(gnutls_session_t session)
 {
 	int ret;
 
-	if (session->internals.dtls.blocking != 0)
+	if (session->internals.blocking != 0)
 		ret = _gnutls_io_check_recv(session, TIMER_WINDOW);
 	else
 		ret = _gnutls_io_check_recv(session, 0);
@@ -443,6 +442,37 @@ int _dtls_wait_and_retransmit(gnutls_session_t session)
 #define window_table rp->record_sw
 #define window_size rp->record_sw_size
 #define window_head_idx rp->record_sw_head_idx
+
+#define LOAD_UINT48(out, ubytes) \
+	for (i = 2; i < 8; i++) { \
+		out <<= 8; \
+		out |= ubytes[i] & 0xff; \
+	}
+
+void _dtls_reset_window(gnutls_session_t session, uint8_t _seq[8])
+{
+	record_parameters_st *rp;
+	int ret;
+	unsigned i;
+	uint64_t seq = 0;
+
+	ret =
+	    _gnutls_epoch_get(session, EPOCH_READ_CURRENT, &rp);
+	if (ret < 0)
+		return;
+
+	LOAD_UINT48(seq, _seq);
+
+	if (seq == 0) {
+		window_size = 0;
+		window_head_idx = 0;
+		return;
+	}
+
+	window_size = 1;
+	window_head_idx = 0;
+	window_table[window_head_idx] = seq - 1;
+}
 
 static void slide_window(struct record_parameters_st *rp,
 			 unsigned int places)
@@ -471,10 +501,7 @@ int _dtls_record_check(struct record_parameters_st *rp, uint64 * _seq)
 	unsigned int i, offset = 0;
 	unsigned int last_idx;
 
-	for (i = 2; i < 8; i++) {
-		seq <<= 8;
-		seq |= _seq->i[i] & 0xff;
-	}
+	LOAD_UINT48(seq, _seq->i);
 
 	/* only two values allowed in window_size */
 	if (window_size == 0) {
@@ -537,7 +564,7 @@ int _dtls_record_check(struct record_parameters_st *rp, uint64 * _seq)
 
 /**
  * gnutls_dtls_set_timeouts:
- * @session: is a #gnutls_session_t structure.
+ * @session: is a #gnutls_session_t type.
  * @retrans_timeout: The time at which a retransmission will occur in milliseconds
  * @total_timeout: The time at which the connection will be aborted, in milliseconds.
  *
@@ -548,7 +575,7 @@ int _dtls_record_check(struct record_parameters_st *rp, uint64 * _seq)
  * handshake will be aborted with %GNUTLS_E_TIMEDOUT.
  *
  * The DTLS protocol recommends the values of 1 sec and 60 seconds
- * respectively.
+ * respectively, and these are the default values.
  *
  * To disable retransmissions set a @retrans_timeout larger than the @total_timeout.
  *
@@ -559,18 +586,18 @@ void gnutls_dtls_set_timeouts(gnutls_session_t session,
 			      unsigned int total_timeout)
 {
 	session->internals.dtls.retrans_timeout_ms = retrans_timeout;
-	session->internals.dtls.total_timeout_ms = total_timeout;
+	session->internals.handshake_timeout_ms = total_timeout;
 }
 
 /**
  * gnutls_dtls_set_mtu:
- * @session: is a #gnutls_session_t structure.
+ * @session: is a #gnutls_session_t type.
  * @mtu: The maximum transfer unit of the transport
  *
  * This function will set the maximum transfer unit of the transport
  * that DTLS packets are sent over. Note that this should exclude
  * the IP (or IPv6) and UDP headers. So for DTLS over IPv6 on an
- * Ethenet device with MTU 1500, the DTLS MTU set with this function
+ * Ethernet device with MTU 1500, the DTLS MTU set with this function
  * would be 1500 - 40 (IPV6 header) - 8 (UDP header) = 1452.
  *
  * Since: 3.0
@@ -587,7 +614,7 @@ static int record_overhead(const cipher_entry_st * cipher,
 	int total = 0;
 	int t, ret;
 
-	if (_gnutls_cipher_is_block(cipher) == CIPHER_BLOCK) {
+	if (_gnutls_cipher_type(cipher) == CIPHER_BLOCK) {
 		t = _gnutls_cipher_get_explicit_iv_size(cipher);
 		total += t;
 
@@ -597,7 +624,7 @@ static int record_overhead(const cipher_entry_st * cipher,
 	}
 
 	if (mac->id == GNUTLS_MAC_AEAD) {
-		total += AEAD_EXPLICIT_DATA_SIZE;
+		total += cipher->explicit_iv;
 		total += _gnutls_cipher_get_tag_size(cipher);
 	} else {
 		ret = _gnutls_mac_get_algo_len(mac);
@@ -718,7 +745,7 @@ size_t gnutls_record_overhead_size(gnutls_session_t session)
 
 /**
  * gnutls_dtls_get_data_mtu:
- * @session: is a #gnutls_session_t structure.
+ * @session: is a #gnutls_session_t type.
  *
  * This function will return the actual maximum transfer unit for
  * application data. I.e. DTLS headers are subtracted from the
@@ -744,7 +771,7 @@ unsigned int gnutls_dtls_get_data_mtu(gnutls_session_t session)
 
 /**
  * gnutls_dtls_set_data_mtu:
- * @session: is a #gnutls_session_t structure.
+ * @session: is a #gnutls_session_t type.
  * @mtu: The maximum unencrypted transfer unit of the session
  *
  * This function will set the maximum size of the *unencrypted* records
@@ -782,7 +809,7 @@ int gnutls_dtls_set_data_mtu(gnutls_session_t session, unsigned int mtu)
 
 /**
  * gnutls_dtls_get_mtu:
- * @session: is a #gnutls_session_t structure.
+ * @session: is a #gnutls_session_t type.
  *
  * This function will return the MTU size as set with
  * gnutls_dtls_set_mtu(). This is not the actual MTU
@@ -800,7 +827,7 @@ unsigned int gnutls_dtls_get_mtu(gnutls_session_t session)
 
 /**
  * gnutls_dtls_get_timeout:
- * @session: is a #gnutls_session_t structure.
+ * @session: is a #gnutls_session_t type.
  *
  * This function will return the milliseconds remaining
  * for a retransmission of the previously sent handshake
@@ -1077,7 +1104,7 @@ void gnutls_dtls_prestate_set(gnutls_session_t session,
 
 /**
  * gnutls_record_get_discarded:
- * @session: is a #gnutls_session_t structure.
+ * @session: is a #gnutls_session_t type.
  *
  * Returns the number of discarded packets in a
  * DTLS connection.

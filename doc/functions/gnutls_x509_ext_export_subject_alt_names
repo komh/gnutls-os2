@@ -3,7 +3,7 @@
 
 
 @deftypefun {int} {gnutls_x509_ext_export_subject_alt_names} (gnutls_subject_alt_names_t @var{sans}, gnutls_datum_t * @var{ext})
-@var{sans}: The alternative names structure
+@var{sans}: The alternative names
 
 @var{ext}: The DER-encoded extension data; must be freed using @code{gnutls_free()} .
 

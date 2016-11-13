@@ -3,9 +3,9 @@
 
 
 @deftypefun {int} {gnutls_x509_crt_check_revocation} (gnutls_x509_crt_t @var{cert}, const gnutls_x509_crl_t * @var{crl_list}, int @var{crl_list_length})
-@var{cert}: should contain a @code{gnutls_x509_crt_t}  structure
+@var{cert}: should contain a @code{gnutls_x509_crt_t}  type
 
-@var{crl_list}: should contain a list of gnutls_x509_crl_t structures
+@var{crl_list}: should contain a list of gnutls_x509_crl_t types
 
 @var{crl_list_length}: the length of the crl_list
 

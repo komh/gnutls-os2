@@ -3,9 +3,9 @@
 
 
 @deftypefun {int} {gnutls_x509_aki_init} (gnutls_x509_aki_t * @var{aki})
-@var{aki}: The authority key ID structure
+@var{aki}: The authority key ID type
 
-This function will initialize an authority key ID structure.
+This function will initialize an authority key ID.
 
 @strong{Returns:} On success, @code{GNUTLS_E_SUCCESS}  (0) is returned, otherwise a negative error value.
 

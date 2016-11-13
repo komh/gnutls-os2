@@ -27,13 +27,10 @@
 #include <gnutls_errors.h>
 #include <libtasn1.h>
 #include <gnutls_pk.h>
+#include <gnutls_str.h>
 #include "algorithms.h"
 
 #include <gnutls/ocsp.h>
-
-/* I18n of error codes. */
-#include "gettext.h"
-#define _(String) dgettext (PACKAGE, String)
 
 #define addf _gnutls_buffer_append_printf
 #define adds _gnutls_buffer_append_str
@@ -115,17 +112,17 @@ static void print_req(gnutls_buffer_st * str, gnutls_ocsp_req_t req)
 		if (oid.size == sizeof(GNUTLS_OCSP_NONCE) &&
 		    memcmp(oid.data, GNUTLS_OCSP_NONCE, oid.size) == 0) {
 			gnutls_datum_t nonce;
-			unsigned int critical;
+			unsigned int ncrit;
 
 			ret =
-			    gnutls_ocsp_req_get_nonce(req, &critical,
+			    gnutls_ocsp_req_get_nonce(req, &ncrit,
 						      &nonce);
 			if (ret != GNUTLS_E_SUCCESS) {
 				addf(str, "error: get_nonce: %s\n",
 				     gnutls_strerror(ret));
 			} else {
 				addf(str, "\t\tNonce%s: ",
-				     critical ? " (critical)" : "");
+				     ncrit ? " (critical)" : "");
 				_gnutls_buffer_hexprint(str, nonce.data,
 							nonce.size);
 				adds(str, "\n");
@@ -156,7 +153,7 @@ static void print_req(gnutls_buffer_st * str, gnutls_ocsp_req_t req)
 
 /**
  * gnutls_ocsp_req_print:
- * @req: The structure to be printed
+ * @req: The data to be printed
  * @format: Indicate the format to use
  * @out: Newly allocated datum with (0) terminated string.
  *
@@ -190,9 +187,7 @@ gnutls_ocsp_req_print(gnutls_ocsp_req_t req,
 
 	print_req(&str, req);
 
-	_gnutls_buffer_append_data(&str, "\0", 1);
-
-	rc = _gnutls_buffer_to_datum(&str, out);
+	rc = _gnutls_buffer_to_datum(&str, out, 1);
 	if (rc != GNUTLS_E_SUCCESS) {
 		gnutls_assert();
 		return rc;
@@ -285,16 +280,27 @@ print_resp(gnutls_buffer_st * str, gnutls_ocsp_resp_t resp,
 	{
 		gnutls_datum_t dn;
 
-		/* XXX byKey */
-
 		ret = gnutls_ocsp_resp_get_responder(resp, &dn);
-		if (ret < 0)
-			addf(str, "error: get_dn: %s\n",
-			     gnutls_strerror(ret));
-		else {
-			addf(str, _("\tResponder ID: %.*s\n"), dn.size,
-			     dn.data);
-			gnutls_free(dn.data);
+		if (ret < 0 || dn.data == NULL) {
+			if (dn.data == 0) {
+				ret = gnutls_ocsp_resp_get_responder_raw_id(resp, GNUTLS_OCSP_RESP_ID_KEY, &dn);
+
+				if (ret >= 0) {
+					addf(str, _("\tResponder Key ID: "));
+					_gnutls_buffer_hexprint(str, dn.data, dn.size);
+					adds(str, "\n");
+				}
+				gnutls_free(dn.data);
+			} else {
+				addf(str, "error: get_dn: %s\n",
+				     gnutls_strerror(ret));
+			}
+		} else {
+			if (dn.data != NULL) {
+				addf(str, _("\tResponder ID: %.*s\n"), dn.size,
+				     dn.data);
+				gnutls_free(dn.data);
+			}
 		}
 	}
 
@@ -436,18 +442,18 @@ print_resp(gnutls_buffer_st * str, gnutls_ocsp_resp_t resp,
 			size_t max = sizeof(s);
 			struct tm t;
 
-			if (next_update == (time_t) - 1)
-				addf(str, "error: next_update\n");
-			else if (gmtime_r(&next_update, &t) == NULL)
-				addf(str, "error: gmtime_r (%ld)\n",
-				     (unsigned long) next_update);
-			else if (strftime
-				 (s, max, "%a %b %d %H:%M:%S UTC %Y",
-				  &t) == 0)
-				addf(str, "error: strftime (%ld)\n",
-				     (unsigned long) next_update);
-			else
-				addf(str, _("\t\tNext Update: %s\n"), s);
+			if (next_update != (time_t) - 1) {
+				if (gmtime_r(&next_update, &t) == NULL)
+					addf(str, "error: gmtime_r (%ld)\n",
+					     (unsigned long) next_update);
+				else if (strftime
+					 (s, max, "%a %b %d %H:%M:%S UTC %Y",
+					  &t) == 0)
+					addf(str, "error: strftime (%ld)\n",
+					     (unsigned long) next_update);
+				else
+					addf(str, _("\t\tNext Update: %s\n"), s);
+			}
 		}
 
 		/* XXX singleRequestExtensions */
@@ -473,17 +479,17 @@ print_resp(gnutls_buffer_st * str, gnutls_ocsp_resp_t resp,
 		if (oid.size == sizeof(GNUTLS_OCSP_NONCE) &&
 		    memcmp(oid.data, GNUTLS_OCSP_NONCE, oid.size) == 0) {
 			gnutls_datum_t nonce;
-			unsigned int critical;
+			unsigned int ncrit;
 
 			ret =
-			    gnutls_ocsp_resp_get_nonce(resp, &critical,
+			    gnutls_ocsp_resp_get_nonce(resp, &ncrit,
 						       &nonce);
 			if (ret != GNUTLS_E_SUCCESS) {
 				addf(str, "error: get_nonce: %s\n",
 				     gnutls_strerror(ret));
 			} else {
 				addf(str, "\t\tNonce%s: ",
-				     critical ? " (critical)" : "");
+				     ncrit ? " (critical)" : "");
 				_gnutls_buffer_hexprint(str, nonce.data,
 							nonce.size);
 				adds(str, "\n");
@@ -524,7 +530,7 @@ print_resp(gnutls_buffer_st * str, gnutls_ocsp_resp_t resp,
 				name = _("unknown");
 			addf(str, _("\tSignature Algorithm: %s\n"), name);
 		}
-		if (gnutls_sign_is_secure(ret) == 0) {
+		if (ret != GNUTLS_SIGN_UNKNOWN && gnutls_sign_is_secure(ret) == 0) {
 			adds(str,
 			     _("warning: signed using a broken signature "
 			       "algorithm that can be forged.\n"));
@@ -554,6 +560,9 @@ print_resp(gnutls_buffer_st * str, gnutls_ocsp_resp_t resp,
 			addf(str, "error: get_certs: %s\n",
 			     gnutls_strerror(ret));
 		else {
+			if (ncerts > 0)
+				addf(str, "\tAdditional certificates:\n");
+
 			for (i = 0; i < ncerts; i++) {
 				size_t s = 0;
 
@@ -615,7 +624,7 @@ print_resp(gnutls_buffer_st * str, gnutls_ocsp_resp_t resp,
 
 /**
  * gnutls_ocsp_resp_print:
- * @resp: The structure to be printed
+ * @resp: The data to be printed
  * @format: Indicate the format to use
  * @out: Newly allocated datum with (0) terminated string.
  *
@@ -644,9 +653,7 @@ gnutls_ocsp_resp_print(gnutls_ocsp_resp_t resp,
 
 	print_resp(&str, resp, format);
 
-	_gnutls_buffer_append_data(&str, "\0", 1);
-
-	rc = _gnutls_buffer_to_datum(&str, out);
+	rc = _gnutls_buffer_to_datum(&str, out, 1);
 	if (rc != GNUTLS_E_SUCCESS) {
 		gnutls_assert();
 		return rc;

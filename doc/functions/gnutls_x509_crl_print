@@ -3,7 +3,7 @@
 
 
 @deftypefun {int} {gnutls_x509_crl_print} (gnutls_x509_crl_t @var{crl}, gnutls_certificate_print_formats_t @var{format}, gnutls_datum_t * @var{out})
-@var{crl}: The structure to be printed
+@var{crl}: The data to be printed
 
 @var{format}: Indicate the format to use
 

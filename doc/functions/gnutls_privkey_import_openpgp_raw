@@ -14,7 +14,7 @@
 @var{password}: A password (optional)
 
 This function will import the given private key to the abstract
-@code{gnutls_privkey_t}  structure. 
+@code{gnutls_privkey_t}  type. 
 
 @strong{Returns:} On success, @code{GNUTLS_E_SUCCESS}  (0) is returned, otherwise a
 negative error value.

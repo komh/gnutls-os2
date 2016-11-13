@@ -17,9 +17,10 @@ GnuTLS is used by more than one library in an application.  This
 function can be called many times, but will only do something the
 first time.
 
-Since GnuTLS 3.3.0 this function is only required in systems that
-do not support library constructors and static linking. This
-function also became thread safe.
+Since GnuTLS 3.3.0 this function is automatically called on library
+constructor. Since the same version this function is also thread safe.
+The automatic initialization can be avoided if the environment variable
+@code{GNUTLS_NO_EXPLICIT_INIT}  is set to be 1.
 
 A subsequent call of this function if the initial has failed will
 return the same error code.

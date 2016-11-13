@@ -3,7 +3,7 @@
 
 
 @deftypefun {void *} {gnutls_db_get_ptr} (gnutls_session_t @var{session})
-@var{session}: is a @code{gnutls_session_t}  structure.
+@var{session}: is a @code{gnutls_session_t}  type.
 
 Get db function pointer.
 

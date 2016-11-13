@@ -3,7 +3,7 @@
 
 
 @deftypefun {void} {gnutls_handshake_set_post_client_hello_function} (gnutls_session_t @var{session}, gnutls_handshake_post_client_hello_func       @var{func})
-@var{session}: is a @code{gnutls_session_t}  structure.
+@var{session}: is a @code{gnutls_session_t}  type.
 
 @var{func}: is the function to be called
 

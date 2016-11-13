@@ -3,9 +3,9 @@
 
 
 @deftypefun {int} {gnutls_pkcs12_init} (gnutls_pkcs12_t * @var{pkcs12})
-@var{pkcs12}: The structure to be initialized
+@var{pkcs12}: A pointer to the type to be initialized
 
-This function will initialize a PKCS12 structure. PKCS12 structures
+This function will initialize a PKCS12 type. PKCS12 structures
 usually contain lists of X.509 Certificates and X.509 Certificate
 revocation lists.
 

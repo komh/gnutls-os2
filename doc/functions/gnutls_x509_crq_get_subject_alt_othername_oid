@@ -3,7 +3,7 @@
 
 
 @deftypefun {int} {gnutls_x509_crq_get_subject_alt_othername_oid} (gnutls_x509_crq_t @var{crq}, unsigned int @var{seq}, void * @var{ret}, size_t * @var{ret_size})
-@var{crq}: should contain a @code{gnutls_x509_crq_t}  structure
+@var{crq}: should contain a @code{gnutls_x509_crq_t}  type
 
 @var{seq}: specifies the sequence number of the alt name (0 for the first one, 1 for the second etc.)
 

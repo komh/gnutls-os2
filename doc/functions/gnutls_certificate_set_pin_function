@@ -3,7 +3,7 @@
 
 
 @deftypefun {void} {gnutls_certificate_set_pin_function} (gnutls_certificate_credentials_t       @var{cred}, gnutls_pin_callback_t @var{fn}, void * @var{userdata})
-@var{cred}: is a @code{gnutls_certificate_credentials_t}  structure.
+@var{cred}: is a @code{gnutls_certificate_credentials_t}  type.
 
 @var{fn}: A PIN callback
 

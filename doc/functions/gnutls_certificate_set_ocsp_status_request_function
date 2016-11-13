@@ -3,7 +3,7 @@
 
 
 @deftypefun {void} {gnutls_certificate_set_ocsp_status_request_function} (gnutls_certificate_credentials_t @var{sc}, gnutls_status_request_ocsp_func @var{ocsp_func}, void * @var{ptr})
-@var{sc}: is a @code{gnutls_certificate_credentials_t}  structure.
+@var{sc}: is a @code{gnutls_certificate_credentials_t}  type.
 
 @var{ocsp_func}: function pointer to OCSP status request callback.
 

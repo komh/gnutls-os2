@@ -3,15 +3,15 @@
 
 
 @deftypefun {int} {gnutls_x509_crt_get_name_constraints} (gnutls_x509_crt_t @var{crt}, gnutls_x509_name_constraints_t @var{nc}, unsigned int @var{flags}, unsigned int * @var{critical})
-@var{crt}: should contain a @code{gnutls_x509_crt_t}  structure
+@var{crt}: should contain a @code{gnutls_x509_crt_t}  type
 
-@var{nc}: The nameconstraints intermediate structure
+@var{nc}: The nameconstraints intermediate type
 
 @var{flags}: zero or @code{GNUTLS_NAME_CONSTRAINTS_FLAG_APPEND} 
 
 @var{critical}: the extension status
 
-This function will return an intermediate structure containing
+This function will return an intermediate type containing
 the name constraints of the provided CA certificate. That
 structure can be used in combination with @code{gnutls_x509_name_constraints_check()} 
 to verify whether a server's name is in accordance with the constraints.

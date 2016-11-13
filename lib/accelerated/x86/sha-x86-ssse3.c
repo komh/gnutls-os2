@@ -63,7 +63,7 @@ wrap_x86_hash_update(void *_ctx, const void *text, size_t textsize)
 {
 	struct x86_hash_ctx *ctx = _ctx;
 
-	_NETTLE_UPDATE(ctx->update, ctx->ctx_ptr, textsize, text);
+	ctx->update(ctx->ctx_ptr, textsize, text);
 
 	return GNUTLS_E_SUCCESS;
 }
@@ -73,7 +73,7 @@ static void wrap_x86_hash_deinit(void *hd)
 	gnutls_free(hd);
 }
 
-void x86_sha1_update(struct sha1_ctx *ctx, _NETTLE_SIZE_T length,
+void x86_sha1_update(struct sha1_ctx *ctx, size_t length,
 		     const uint8_t * data)
 {
 	struct {
@@ -113,11 +113,7 @@ void x86_sha1_update(struct sha1_ctx *ctx, _NETTLE_SIZE_T length,
 		sha1_block_data_order(&octx, data, t2);
 
 		for (i=0;i<t2;i++)
-#ifdef USE_NETTLE3
 			ctx->count++;
-#else
-			MD_INCR(ctx);
-#endif
 		data += length;
 	}
 
@@ -136,7 +132,7 @@ void x86_sha1_update(struct sha1_ctx *ctx, _NETTLE_SIZE_T length,
 
 }
 
-void x86_sha256_update(struct sha256_ctx *ctx, _NETTLE_SIZE_T length,
+void x86_sha256_update(struct sha256_ctx *ctx, size_t length,
 		     const uint8_t * data)
 {
 	struct {
@@ -170,11 +166,7 @@ void x86_sha256_update(struct sha256_ctx *ctx, _NETTLE_SIZE_T length,
 		sha256_block_data_order(&octx, data, t2);
 		
 		for (i=0;i<t2;i++)
-#ifdef USE_NETTLE3
 			ctx->count++;
-#else
-			MD_INCR(ctx);
-#endif
 		data += length;
 	}
 
@@ -189,7 +181,7 @@ void x86_sha256_update(struct sha256_ctx *ctx, _NETTLE_SIZE_T length,
 }
 
 #ifdef ENABLE_SHA512
-void x86_sha512_update(struct sha512_ctx *ctx, _NETTLE_SIZE_T length,
+void x86_sha512_update(struct sha512_ctx *ctx, size_t length,
 		     const uint8_t * data)
 {
 	struct {
@@ -344,7 +336,7 @@ static int wrap_x86_hash_fast(gnutls_digest_algorithm_t algo,
 	if (ret < 0)
 		return gnutls_assert_val(ret);
 
-	_NETTLE_UPDATE(ctx.update, &ctx, text_size, text);
+	ctx.update(&ctx, text_size, text);
 	ctx.digest(&ctx, ctx.length, digest);
 
 	return 0;

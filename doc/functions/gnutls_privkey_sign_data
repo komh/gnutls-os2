@@ -11,7 +11,7 @@
 
 @var{data}: holds the data to be signed
 
-@var{signature}: will contain the signature allocate with @code{gnutls_malloc()} 
+@var{signature}: will contain the signature allocated with @code{gnutls_malloc()} 
 
 This function will sign the given data using a signature algorithm
 supported by the private key. Signature algorithms are always used

@@ -3,7 +3,7 @@
 
 
 @deftypefun {int} {gnutls_ocsp_resp_get_signature} (gnutls_ocsp_resp_t @var{resp}, gnutls_datum_t * @var{sig})
-@var{resp}: should contain a @code{gnutls_ocsp_resp_t}  structure
+@var{resp}: should contain a @code{gnutls_ocsp_resp_t}  type
 
 @var{sig}: newly allocated output buffer with signature data
 

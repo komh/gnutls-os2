@@ -27,10 +27,13 @@ if ENABLE_DANE
 SUBDIRS += libdane
 endif
 
-SUBDIRS += po src
-if ENABLE_DOC
-SUBDIRS += doc
+SUBDIRS += po
+if ENABLE_TOOLS
+SUBDIRS += src/gl src
+else
+SUBDIRS += src/gl
 endif
+
 if ENABLE_TESTS
 SUBDIRS += tests
 endif
@@ -39,11 +42,37 @@ if HAVE_GUILE
 SUBDIRS += guile
 endif
 
+if ENABLE_DOC
+SUBDIRS += doc
+endif
+
 ACLOCAL_AMFLAGS = -I m4 -I gl/m4 -I src/libopts/m4 -I src/gl/m4
 
 EXTRA_DIST = cfg.mk maint.mk .clcopying
 
-dist-hook: 
+README-alpha: README.md
+	cp $^ $@
+	chmod 444 $@
+
+TMPFILE="abi-temp.xml"
+
+abi-check:
+	@rm -f $(TMPFILE)
+	@echo "Checking libgnutls ABI"
+	@echo "<version>$(VERSION)</version>" >$(TMPFILE)
+	@echo "<headers>$(srcdir)/lib/includes/gnutls" >>$(TMPFILE)
+	@echo "$(builddir)/lib/includes/gnutls</headers>" >>$(TMPFILE)
+	@echo "<libs>$(builddir)/lib/.libs</libs>" >>$(TMPFILE)
+	test ! -f "$(srcdir)/devel/ABI-$$(uname -m).dump" || \
+		abi-compliance-checker -abi -lib gnutls -old "$(srcdir)/devel/ABI-$$(uname -m).dump" -new $(TMPFILE) -skip-symbols $(srcdir)/devel/abi-unchecked-symbols 
+	@echo "Checking libgnutls-dane ABI"
+	@echo "<version>$(VERSION)</version>" >$(TMPFILE)
+	@echo "<headers>$(srcdir)/libdane/includes/gnutls</headers>" >>$(TMPFILE)
+	@echo "<libs>$(builddir)/libdane/.libs</libs>" >>$(TMPFILE)
+	test ! -f "$(srcdir)/devel/ABI-dane-$$(uname -m).dump" || abi-compliance-checker -abi -lib gnutls-dane -old "$(srcdir)/devel/ABI-dane-$$(uname -m).dump" -new $(TMPFILE)
+	@rm -f $(TMPFILE)
+
+dist-hook: abi-check
 	make -C doc/ compare-makefile
 	make -C doc/ compare-exported
 	make -C doc/manpages compare-makefile
@@ -52,7 +81,7 @@ dist-hook:
 	@echo "symbols added or removed are correct and copy symbols.last.tmp as"
 	@echo "symbols.last"
 	@echo "*****************************************************************"
-	objdump -T $(srcdir)/lib/.libs/libgnutls.so.28  | grep -v ' \*UND\*' | awk '{print $$7 "@" $$6;}' | grep -v GNUTLS_FIPS140 | grep -v GNUTLS_PRIVATE | sort -u >symbols.last.tmp
+	objdump -T $(srcdir)/lib/.libs/libgnutls.so.30  | grep -v ' \*UND\*' | awk '{print $$7 "@" $$6;}' | grep -v GNUTLS_FIPS140 | grep -v GNUTLS_PRIVATE |  sort -u >symbols.last.tmp
 	diff -u symbols.last symbols.last.tmp >/dev/null 2>&1
 	rm -f symbols.last.tmp
 	rm -f ChangeLog
@@ -79,3 +108,5 @@ dist-hook:
 	@echo "*****************************************************************"
 	test "`autoopts-config libsrc|cut -d '-' -f 2|sed 's/.tar.gz//'`" = "`cat src/libopts/autoopts/options.h |grep OPTIONS_VERSION_STRING|cut -d '"' -f 2|sed 's/:/./g'`"
 	touch $(distdir)/doc/*.html $(distdir)/doc/*.pdf $(distdir)/doc/*.info
+
+.PHONY: abi-check

@@ -1,1 +1,1 @@
-@item @var{int} @ref{gnutls_cipher_encrypt2} (gnutls_cipher_hd_t @var{handle}, const void * @var{text}, size_t @var{textlen}, void * @var{ciphertext}, size_t @var{ciphertextlen})
+@item @var{int} @ref{gnutls_cipher_encrypt2} (gnutls_cipher_hd_t @var{handle}, const void * @var{ptext}, size_t @var{ptext_len}, void * @var{ctext}, size_t @var{ctext_len})

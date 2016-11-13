@@ -3,7 +3,7 @@
 
 
 @deftypefun {int} {gnutls_x509_crt_get_subject_key_id} (gnutls_x509_crt_t @var{cert}, void * @var{ret}, size_t * @var{ret_size}, unsigned int * @var{critical})
-@var{cert}: should contain a @code{gnutls_x509_crt_t}  structure
+@var{cert}: should contain a @code{gnutls_x509_crt_t}  type
 
 @var{ret}: The place where the identifier will be copied
 

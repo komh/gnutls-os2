@@ -3,7 +3,7 @@
 
 
 @deftypefun {void} {gnutls_certificate_set_verify_flags} (gnutls_certificate_credentials_t         @var{res}, unsigned int @var{flags})
-@var{res}: is a gnutls_certificate_credentials_t structure
+@var{res}: is a gnutls_certificate_credentials_t type
 
 @var{flags}: are the flags
 

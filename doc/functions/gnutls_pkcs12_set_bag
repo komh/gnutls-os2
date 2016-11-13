@@ -3,7 +3,7 @@
 
 
 @deftypefun {int} {gnutls_pkcs12_set_bag} (gnutls_pkcs12_t @var{pkcs12}, gnutls_pkcs12_bag_t @var{bag})
-@var{pkcs12}: should contain a gnutls_pkcs12_t structure
+@var{pkcs12}: should contain a gnutls_pkcs12_t type
 
 @var{bag}: An initialized bag
 

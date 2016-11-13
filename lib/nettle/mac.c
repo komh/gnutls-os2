@@ -31,13 +31,12 @@
 #include <nettle/sha.h>
 #include <nettle/hmac.h>
 #include <nettle/umac.h>
-#include "gnettle.h"
 #include <fips.h>
 
-typedef void (*update_func) (void *, _NETTLE_SIZE_T, const uint8_t *);
-typedef void (*digest_func) (void *, _NETTLE_SIZE_T, uint8_t *);
-typedef void (*set_key_func) (void *, _NETTLE_SIZE_T, const uint8_t *);
-typedef void (*set_nonce_func) (void *, _NETTLE_SIZE_T, const uint8_t *);
+typedef void (*update_func) (void *, size_t, const uint8_t *);
+typedef void (*digest_func) (void *, size_t, uint8_t *);
+typedef void (*set_key_func) (void *, size_t, const uint8_t *);
+typedef void (*set_nonce_func) (void *, size_t, const uint8_t *);
 
 static int wrap_nettle_hash_init(gnutls_digest_algorithm_t algo,
 				 void **_ctx);
@@ -81,7 +80,7 @@ struct nettle_mac_ctx {
 };
 
 static void
-_wrap_umac96_set_key(void *ctx, _NETTLE_SIZE_T len, const uint8_t * key)
+_wrap_umac96_set_key(void *ctx, size_t len, const uint8_t * key)
 {
 	if (unlikely(len != 16))
 		abort();
@@ -89,7 +88,7 @@ _wrap_umac96_set_key(void *ctx, _NETTLE_SIZE_T len, const uint8_t * key)
 }
 
 static void
-_wrap_umac128_set_key(void *ctx, _NETTLE_SIZE_T len, const uint8_t * key)
+_wrap_umac128_set_key(void *ctx, size_t len, const uint8_t * key)
 {
 	if (unlikely(len != 16))
 		abort();
@@ -189,7 +188,7 @@ static int wrap_nettle_mac_fast(gnutls_mac_algorithm_t algo,
 	if (ctx.set_nonce)
 		ctx.set_nonce(&ctx, nonce_size, nonce);
 	ctx.set_key(&ctx, key_size, key);
-	_NETTLE_UPDATE(ctx.update, &ctx, text_size, text);
+	ctx.update(&ctx, text_size, text);
 	ctx.digest(&ctx, ctx.length, digest);
 	
 	zeroize_temp_key(&ctx, sizeof(ctx));
@@ -270,7 +269,7 @@ wrap_nettle_mac_update(void *_ctx, const void *text, size_t textsize)
 {
 	struct nettle_mac_ctx *ctx = _ctx;
 
-	_NETTLE_UPDATE(ctx->update, ctx->ctx_ptr, textsize, text);
+	ctx->update(ctx->ctx_ptr, textsize, text);
 
 	return GNUTLS_E_SUCCESS;
 }
@@ -306,7 +305,7 @@ wrap_nettle_hash_update(void *_ctx, const void *text, size_t textsize)
 {
 	struct nettle_hash_ctx *ctx = _ctx;
 
-	_NETTLE_UPDATE(ctx->update, ctx->ctx_ptr, textsize, text);
+	ctx->update(ctx->ctx_ptr, textsize, text);
 
 	return GNUTLS_E_SUCCESS;
 }
@@ -412,7 +411,7 @@ static int wrap_nettle_hash_fast(gnutls_digest_algorithm_t algo,
 	if (ret < 0)
 		return gnutls_assert_val(ret);
 
-	_NETTLE_UPDATE(ctx.update, &ctx, text_size, text);
+	ctx.update(&ctx, text_size, text);
 	ctx.digest(&ctx, ctx.length, digest);
 
 	return 0;

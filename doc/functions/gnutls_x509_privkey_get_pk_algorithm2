@@ -3,7 +3,7 @@
 
 
 @deftypefun {int} {gnutls_x509_privkey_get_pk_algorithm2} (gnutls_x509_privkey_t @var{key}, unsigned int * @var{bits})
-@var{key}: should contain a @code{gnutls_x509_privkey_t}  structure
+@var{key}: should contain a @code{gnutls_x509_privkey_t}  type
 
 @var{bits}: The number of bits in the public key algorithm
 

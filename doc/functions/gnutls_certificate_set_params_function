@@ -3,7 +3,7 @@
 
 
 @deftypefun {void} {gnutls_certificate_set_params_function} (gnutls_certificate_credentials_t            @var{res}, gnutls_params_function * @var{func})
-@var{res}: is a gnutls_certificate_credentials_t structure
+@var{res}: is a gnutls_certificate_credentials_t type
 
 @var{func}: is the function to be called
 

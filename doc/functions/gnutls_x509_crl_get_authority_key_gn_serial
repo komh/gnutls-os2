@@ -3,7 +3,7 @@
 
 
 @deftypefun {int} {gnutls_x509_crl_get_authority_key_gn_serial} (gnutls_x509_crl_t @var{crl}, unsigned int @var{seq}, void * @var{alt}, size_t * @var{alt_size}, unsigned int * @var{alt_type}, void * @var{serial}, size_t * @var{serial_size}, unsigned int * @var{critical})
-@var{crl}: should contain a @code{gnutls_x509_crl_t}  structure
+@var{crl}: should contain a @code{gnutls_x509_crl_t}  type
 
 @var{seq}: specifies the sequence number of the alt name (0 for the first one, 1 for the second etc.)
 

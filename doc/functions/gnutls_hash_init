@@ -3,7 +3,7 @@
 
 
 @deftypefun {int} {gnutls_hash_init} (gnutls_hash_hd_t * @var{dig}, gnutls_digest_algorithm_t @var{algorithm})
-@var{dig}: is a @code{gnutls_hash_hd_t}  structure.
+@var{dig}: is a @code{gnutls_hash_hd_t}  type
 
 @var{algorithm}: the hash algorithm to use
 

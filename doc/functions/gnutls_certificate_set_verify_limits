@@ -3,7 +3,7 @@
 
 
 @deftypefun {void} {gnutls_certificate_set_verify_limits} (gnutls_certificate_credentials_t @var{res}, unsigned int @var{max_bits}, unsigned int @var{max_depth})
-@var{res}: is a gnutls_certificate_credentials structure
+@var{res}: is a gnutls_certificate_credentials type
 
 @var{max_bits}: is the number of bits of an acceptable certificate (default 8200)
 

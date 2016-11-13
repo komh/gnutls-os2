@@ -3,9 +3,9 @@
 @c gnutls_cipher_algorithm_t
 @table @code
 @item GNUTLS_@-CIPHER_@-UNKNOWN
-Unknown algorithm.
+Value to identify an unknown/unsupported algorithm.
 @item GNUTLS_@-CIPHER_@-NULL
-NULL algorithm.
+The NULL (identity) encryption algorithm.
 @item GNUTLS_@-CIPHER_@-ARCFOUR_@-128
 ARCFOUR stream cipher with 128-bit keys.
 @item GNUTLS_@-CIPHER_@-3DES_@-CBC
@@ -20,10 +20,6 @@ ARCFOUR stream cipher with 40-bit keys.
 Camellia in CBC mode with 128-bit keys.
 @item GNUTLS_@-CIPHER_@-CAMELLIA_@-256_@-CBC
 Camellia in CBC mode with 256-bit keys.
-@item GNUTLS_@-CIPHER_@-RC2_@-40_@-CBC
-RC2 in CBC mode with 40-bit keys.
-@item GNUTLS_@-CIPHER_@-DES_@-CBC
-DES in CBC mode (56-bit keys).
 @item GNUTLS_@-CIPHER_@-AES_@-192_@-CBC
 AES in CBC mode with 192-bit keys.
 @item GNUTLS_@-CIPHER_@-AES_@-128_@-GCM
@@ -40,24 +36,38 @@ Estream's Salsa20 variant with 256-bit keys.
 CAMELLIA in GCM mode with 128-bit keys.
 @item GNUTLS_@-CIPHER_@-CAMELLIA_@-256_@-GCM
 CAMELLIA in GCM mode with 256-bit keys.
+@item GNUTLS_@-CIPHER_@-RC2_@-40_@-CBC
+RC2 in CBC mode with 40-bit keys.
+@item GNUTLS_@-CIPHER_@-DES_@-CBC
+DES in CBC mode (56-bit keys).
+@item GNUTLS_@-CIPHER_@-AES_@-128_@-CCM
+AES in CCM mode with 128-bit keys.
+@item GNUTLS_@-CIPHER_@-AES_@-256_@-CCM
+AES in CCM mode with 256-bit keys.
+@item GNUTLS_@-CIPHER_@-AES_@-128_@-CCM_@-8
+AES in CCM mode with 64-bit tag and 128-bit keys.
+@item GNUTLS_@-CIPHER_@-AES_@-256_@-CCM_@-8
+AES in CCM mode with 64-bit tag and 256-bit keys.
+@item GNUTLS_@-CIPHER_@-CHACHA20_@-POLY1305
+The Chacha20 cipher with the Poly1305 authenticator (AEAD).
 @item GNUTLS_@-CIPHER_@-IDEA_@-PGP_@-CFB
-IDEA in CFB mode.
+IDEA in CFB mode (placeholder - unsupported).
 @item GNUTLS_@-CIPHER_@-3DES_@-PGP_@-CFB
-3DES in CFB mode.
+3DES in CFB mode (placeholder - unsupported).
 @item GNUTLS_@-CIPHER_@-CAST5_@-PGP_@-CFB
-CAST5 in CFB mode.
+CAST5 in CFB mode (placeholder - unsupported).
 @item GNUTLS_@-CIPHER_@-BLOWFISH_@-PGP_@-CFB
-Blowfish in CFB mode.
+Blowfish in CFB mode (placeholder - unsupported).
 @item GNUTLS_@-CIPHER_@-SAFER_@-SK128_@-PGP_@-CFB
-Safer-SK in CFB mode with 128-bit keys.
+Safer-SK in CFB mode with 128-bit keys (placeholder - unsupported).
 @item GNUTLS_@-CIPHER_@-AES128_@-PGP_@-CFB
-AES in CFB mode with 128-bit keys.
+AES in CFB mode with 128-bit keys (placeholder - unsupported).
 @item GNUTLS_@-CIPHER_@-AES192_@-PGP_@-CFB
-AES in CFB mode with 192-bit keys.
+AES in CFB mode with 192-bit keys (placeholder - unsupported).
 @item GNUTLS_@-CIPHER_@-AES256_@-PGP_@-CFB
-AES in CFB mode with 256-bit keys.
+AES in CFB mode with 256-bit keys (placeholder - unsupported).
 @item GNUTLS_@-CIPHER_@-TWOFISH_@-PGP_@-CFB
-Twofish in CFB mode.
+Twofish in CFB mode (placeholder - unsupported).
 @end table
 
 @c gnutls_kx_algorithm_t
@@ -240,6 +250,8 @@ Error in protocol version.
 Insufficient security.
 @item GNUTLS_@-A_@-INTERNAL_@-ERROR
 Internal error.
+@item GNUTLS_@-A_@-INAPPROPRIATE_@-FALLBACK
+Inappropriate fallback,
 @item GNUTLS_@-A_@-USER_@-CANCELED
 User canceled.
 @item GNUTLS_@-A_@-NO_@-RENEGOTIATION
@@ -334,6 +346,8 @@ The certificate's signer constraints were
 violated.
 @item GNUTLS_@-CERT_@-MISMATCH
 The certificate presented isn't the expected one (TOFU)
+@item GNUTLS_@-CERT_@-PURPOSE_@-MISMATCH
+The certificate or an intermediate does not match the intended purpose (extended key usage).
 @end table
 
 @c gnutls_certificate_request_t
@@ -502,6 +516,8 @@ the SECP192R1 curve
 
 @c gnutls_sec_param_t
 @table @code
+@item GNUTLS_@-SEC_@-PARAM_@-UNKNOWN
+Cannot be known
 @item GNUTLS_@-SEC_@-PARAM_@-INSECURE
 Less than 42 bits of security
 @item GNUTLS_@-SEC_@-PARAM_@-EXPORT
@@ -510,8 +526,6 @@ Less than 42 bits of security
 64 bits of security
 @item GNUTLS_@-SEC_@-PARAM_@-WEAK
 72 bits of security
-@item GNUTLS_@-SEC_@-PARAM_@-UNKNOWN
-Cannot be known
 @item GNUTLS_@-SEC_@-PARAM_@-LOW
 80 bits of security
 @item GNUTLS_@-SEC_@-PARAM_@-LEGACY
@@ -522,6 +536,8 @@ Cannot be known
 128 bits of security
 @item GNUTLS_@-SEC_@-PARAM_@-ULTRA
 192 bits of security
+@item GNUTLS_@-SEC_@-PARAM_@-FUTURE
+256 bits of security
 @end table
 
 @c gnutls_channel_binding_t
@@ -538,8 +554,8 @@ Domain Name System name type.
 
 @c gnutls_supplemental_data_format_type_t
 @table @code
-@item GNUTLS_@-SUPPLEMENTAL_@-USER_@-MAPPING_@-DATA
-Supplemental user mapping data.
+@item GNUTLS_@-SUPPLEMENTAL_@-UNKNOWN
+Unknown data format
 @end table
 
 @c gnutls_srtp_profile_t
@@ -552,6 +568,29 @@ Supplemental user mapping data.
 NULL cipher with a 80 bit HMAC-SHA1
 @item GNUTLS_@-SRTP_@-NULL_@-HMAC_@-SHA1_@-32
 NULL cipher with a 32 bit HMAC-SHA1
+@end table
+
+@c gnutls_vdata_types_t
+@table @code
+@item GNUTLS_@-DT_@-UNKNOWN
+Unknown data type.
+@item GNUTLS_@-DT_@-DNS_@-HOSTNAME
+The data contain a null-terminated DNS hostname; the hostname will be 
+matched using the RFC6125 rules.
+@item GNUTLS_@-DT_@-KEY_@-PURPOSE_@-OID
+The data contain a null-terminated key purpose OID. It will be matched
+against the certificate's Extended Key Usage extension.
+@item GNUTLS_@-DT_@-RFC822NAME
+The data contain a null-terminated email address; the email will be
+matched against the RFC822Name field of the certificate, or the EMAIL DN component if the
+former isn't available. Prior to matching the email address will be converted to ACE
+(ASCII-compatible-encoding).
+@end table
+
+@c gnutls_certificate_flags
+@table @code
+@item GNUTLS_@-CERTIFICATE_@-SKIP_@-KEY_@-CERT_@-MATCH
+Skip the key and certificate matching check.
 @end table
 
 @c gnutls_psk_key_flags
@@ -591,16 +630,6 @@ OpenPGP private key, @code{gnutls_openpgp_privkey_t} .
 PKCS11 private key, @code{gnutls_pkcs11_privkey_t} .
 @item GNUTLS_@-PRIVKEY_@-EXT
 External private key, operating using callbacks.
-@end table
-
-@c gnutls_vdata_types_t
-@table @code
-@item GNUTLS_@-DT_@-UNKNOWN
-Unknown data type.
-@item GNUTLS_@-DT_@-DNS_@-HOSTNAME
-The data contain a null-terminated DNS hostname.
-@item GNUTLS_@-DT_@-KEY_@-PURPOSE_@-OID
-The data contain a null-terminated key purpose OID.
 @end table
 
 @c gnutls_pin_flag_t
@@ -648,6 +677,20 @@ it will increase by one for each subsequent attempt.
 @end deftypefun
 
 
+@c gnutls_ext_parse_type_t
+@table @code
+@item GNUTLS_@-EXT_@-ANY
+Any extension type.
+@item GNUTLS_@-EXT_@-APPLICATION
+Application extension.
+@item GNUTLS_@-EXT_@-TLS
+TLS-internal extension.
+@item GNUTLS_@-EXT_@-MANDATORY
+Extension parsed even if resuming (or extensions are disabled).
+@item GNUTLS_@-EXT_@-NONE
+Never parsed
+@end table
+
 @c gnutls_certificate_import_flags
 @table @code
 @item GNUTLS_@-X509_@-CRT_@-LIST_@-IMPORT_@-FAIL_@-IF_@-EXCEED
@@ -658,6 +701,18 @@ certificates. The error code will be @code{GNUTLS_E_SHORT_MEMORY_BUFFER} .
 Fail if the certificates
 in the buffer are not ordered starting from subject to issuer.
 The error code will be @code{GNUTLS_E_CERTIFICATE_LIST_UNSORTED} .
+@item GNUTLS_@-X509_@-CRT_@-LIST_@-SORT
+Sort the certificate chain if unsorted.
+@end table
+
+@c gnutls_keyid_flags_t
+@table @code
+@item GNUTLS_@-KEYID_@-USE_@-SHA1
+Use SHA1 as the key ID algorithm (default).
+@item GNUTLS_@-KEYID_@-USE_@-SHA256
+Use SHA256 as the key ID algorithm.
+@item GNUTLS_@-KEYID_@-USE_@-BEST_@-KNOWN
+Use the best known algorithm to calculate key ID. Using that option will make your program behavior depend on the version of gnutls linked with. That option has a cap of 64-bytes key IDs.
 @end table
 
 @c gnutls_certificate_verify_flags
@@ -705,6 +760,9 @@ certificate chain.
 @item GNUTLS_@-VERIFY_@-DO_@-NOT_@-ALLOW_@-WILDCARDS
 When including a hostname
 check in the verification, do not consider any wildcards.
+@item GNUTLS_@-VERIFY_@-USE_@-TLS1_@-RSA
+This indicates that a (raw) RSA signature is provided
+as in the TLS 1.0 protocol. Not all functions accept this flag.
 @end table
 
 @c gnutls_certificate_verification_profiles_t
@@ -739,22 +797,24 @@ applies the SUITEB192 rules
 @table @code
 @item GNUTLS_@-PKCS_@-PLAIN
 Unencrypted private key.
-@item GNUTLS_@-PKCS_@-USE_@-PKCS12_@-3DES
+@item GNUTLS_@-PKCS_@-PKCS12_@-3DES
 PKCS-12 3DES.
-@item GNUTLS_@-PKCS_@-USE_@-PKCS12_@-ARCFOUR
+@item GNUTLS_@-PKCS_@-PKCS12_@-ARCFOUR
 PKCS-12 ARCFOUR.
-@item GNUTLS_@-PKCS_@-USE_@-PKCS12_@-RC2_@-40
+@item GNUTLS_@-PKCS_@-PKCS12_@-RC2_@-40
 PKCS-12 RC2-40.
-@item GNUTLS_@-PKCS_@-USE_@-PBES2_@-3DES
+@item GNUTLS_@-PKCS_@-PBES2_@-3DES
 PBES2 3DES.
-@item GNUTLS_@-PKCS_@-USE_@-PBES2_@-AES_@-128
+@item GNUTLS_@-PKCS_@-PBES2_@-AES_@-128
 PBES2 AES-128.
-@item GNUTLS_@-PKCS_@-USE_@-PBES2_@-AES_@-192
+@item GNUTLS_@-PKCS_@-PBES2_@-AES_@-192
 PBES2 AES-192.
-@item GNUTLS_@-PKCS_@-USE_@-PBES2_@-AES_@-256
+@item GNUTLS_@-PKCS_@-PBES2_@-AES_@-256
 PBES2 AES-256.
 @item GNUTLS_@-PKCS_@-NULL_@-PASSWORD
 Some schemas distinguish between an empty and a NULL password.
+@item GNUTLS_@-PKCS_@-PBES2_@-DES
+PBES2 single DES.
 @end table
 
 @c gnutls_openpgp_crt_fmt_t
@@ -822,38 +882,52 @@ on error.
 @c gnutls_pkcs11_obj_flags
 @table @code
 @item GNUTLS_@-PKCS11_@-OBJ_@-FLAG_@-LOGIN
-Force login in the token for the operation.
+Force login in the token for the operation (seek+store). 
 @item GNUTLS_@-PKCS11_@-OBJ_@-FLAG_@-MARK_@-TRUSTED
-object marked as trusted.
+object marked as trusted (seek+store).
 @item GNUTLS_@-PKCS11_@-OBJ_@-FLAG_@-MARK_@-SENSITIVE
-object marked as sensitive (unexportable).
+object marked as sensitive -unexportable (store).
 @item GNUTLS_@-PKCS11_@-OBJ_@-FLAG_@-LOGIN_@-SO
-force login as a security officer in the token for the operation.
+force login as a security officer in the token for the operation (seek+store).
 @item GNUTLS_@-PKCS11_@-OBJ_@-FLAG_@-MARK_@-PRIVATE
-marked as private (requires PIN to access).
+marked as private -requires PIN to access (store).
 @item GNUTLS_@-PKCS11_@-OBJ_@-FLAG_@-MARK_@-NOT_@-PRIVATE
-marked as not private.
+marked as not private (store).
 @item GNUTLS_@-PKCS11_@-OBJ_@-FLAG_@-RETRIEVE_@-ANY
-When retrieving an object, do not set any requirements.
+When retrieving an object, do not set any requirements (store).
 @item GNUTLS_@-PKCS11_@-OBJ_@-FLAG_@-RETRIEVE_@-TRUSTED
-When retrieving an object, only retrieve the marked as trusted.
+When retrieving an object, only retrieve the marked as trusted (alias to @code{GNUTLS_PKCS11_OBJ_FLAG_MARK_TRUSTED} ).
 In @code{gnutls_pkcs11_crt_is_known()}  it implies @code{GNUTLS_PKCS11_OBJ_FLAG_RETRIEVE_COMPARE}  if @code{GNUTLS_PKCS11_OBJ_FLAG_COMPARE_KEY}  is not given.
 @item GNUTLS_@-PKCS11_@-OBJ_@-FLAG_@-RETRIEVE_@-DISTRUSTED
-When retrieving an object, only retrieve the marked as distrusted.
+When retrieving an object, only retrieve the marked as distrusted (seek).
 @item GNUTLS_@-PKCS11_@-OBJ_@-FLAG_@-COMPARE
-When checking an object's presence, fully compare it before returning any result.
+When checking an object's presence, fully compare it before returning any result (seek).
 @item GNUTLS_@-PKCS11_@-OBJ_@-FLAG_@-PRESENT_@-IN_@-TRUSTED_@-MODULE
-The object must be present in a marked as trusted module.
+The object must be present in a marked as trusted module (seek).
 @item GNUTLS_@-PKCS11_@-OBJ_@-FLAG_@-MARK_@-CA
-Mark the object as a CA.
+Mark the object as a CA (seek+store).
 @item GNUTLS_@-PKCS11_@-OBJ_@-FLAG_@-MARK_@-KEY_@-WRAP
-Mark the generated key pair as wrapping and unwrapping keys.
+Mark the generated key pair as wrapping and unwrapping keys (store).
 @item GNUTLS_@-PKCS11_@-OBJ_@-FLAG_@-COMPARE_@-KEY
-When checking an object's presence, compare the key before returning any result.
+When checking an object's presence, compare the key before returning any result (seek).
 @item GNUTLS_@-PKCS11_@-OBJ_@-FLAG_@-OVERWRITE_@-TRUSTMOD_@-EXT
-When an issuer is requested, override its extensions with the ones present in the trust module.
+When an issuer is requested, override its extensions with the ones present in the trust module (seek).
+@item GNUTLS_@-PKCS11_@-OBJ_@-FLAG_@-MARK_@-ALWAYS_@-AUTH
+Mark the key pair as requiring authentication (pin entry) before every operation (seek+store).
+@item GNUTLS_@-PKCS11_@-OBJ_@-FLAG_@-MARK_@-EXTRACTABLE
+Mark the key pair as being extractable (store).
+@item GNUTLS_@-PKCS11_@-OBJ_@-FLAG_@-NEVER_@-EXTRACTABLE
+If set, the object was never marked as extractable (store).
+@item GNUTLS_@-PKCS11_@-OBJ_@-FLAG_@-CRT
+When searching, restrict to certificates only (seek).
+@item GNUTLS_@-PKCS11_@-OBJ_@-FLAG_@-WITH_@-PRIVKEY
+-- undescribed --
+@item GNUTLS_@-PKCS11_@-OBJ_@-FLAG_@-PUBKEY
+When searching, restrict to public key objects only (seek).
 @item GNUTLS_@-PKCS11_@-OBJ_@-FLAG_@-NO_@-STORE_@-PUBKEY
 When generating a keypair don't store the public key (store).
+@item GNUTLS_@-PKCS11_@-OBJ_@-FLAG_@-PRIVKEY
+When searching, restrict to private key objects only (seek).
 @end table
 
 @c gnutls_pkcs11_url_type_t
@@ -883,31 +957,11 @@ The token's model.
 @item GNUTLS_@-PKCS11_@-OBJ_@-ID
 The object ID.
 @item GNUTLS_@-PKCS11_@-OBJ_@-LIBRARY_@-VERSION
-The library's used to access the object version.
+The library's version.
 @item GNUTLS_@-PKCS11_@-OBJ_@-LIBRARY_@-DESCRIPTION
-The library's used to access the object description (name).
+The library's description.
 @item GNUTLS_@-PKCS11_@-OBJ_@-LIBRARY_@-MANUFACTURER
-The library's used to access the object manufacturer name.
-@end table
-
-@c gnutls_pkcs11_obj_attr_t
-@table @code
-@item GNUTLS_@-PKCS11_@-OBJ_@-ATTR_@-CRT_@-ALL
-Specify all certificates in the specified token.
-@item GNUTLS_@-PKCS11_@-OBJ_@-ATTR_@-CRT_@-TRUSTED
-Specify all certificates marked as trusted in the specified token.
-@item GNUTLS_@-PKCS11_@-OBJ_@-ATTR_@-CRT_@-WITH_@-PRIVKEY
-Specify all certificates with a corresponding private key in the specified token.
-@item GNUTLS_@-PKCS11_@-OBJ_@-ATTR_@-PUBKEY
-Specify all public keys in the specified token.
-@item GNUTLS_@-PKCS11_@-OBJ_@-ATTR_@-PRIVKEY
-Specify all private keys in the specified token.
-@item GNUTLS_@-PKCS11_@-OBJ_@-ATTR_@-ALL
-Specify all objects in the specified token.
-@item GNUTLS_@-PKCS11_@-OBJ_@-ATTR_@-CRT_@-TRUSTED_@-CA
-Specify all certificates marked as trusted and are CAs in the specified token.
-@item GNUTLS_@-PKCS11_@-OBJ_@-ATTR_@-MATCH
-Only the objects that match the URL.
+The library's manufacturer name.
 @end table
 
 @c gnutls_pkcs11_token_info_t
@@ -920,6 +974,8 @@ The token's serial number (string)
 The token's manufacturer (string)
 @item GNUTLS_@-PKCS11_@-TOKEN_@-MODEL
 The token's model (string)
+@item GNUTLS_@-PKCS11_@-TOKEN_@-MODNAME
+The token's module name (string - since 3.4.3)
 @end table
 
 @c gnutls_pkcs11_obj_type_t
@@ -942,9 +998,6 @@ X.509 certificate extension (supported by p11-kit trust module only).
 
 @c gnutls_pubkey_flags_t
 @table @code
-@item GNUTLS_@-PUBKEY_@-VERIFY_@-FLAG_@-TLS1_@-RSA
-This indicates that a (raw) RSA signature is provided
-as in the TLS 1.0 protocol.
 @item GNUTLS_@-PUBKEY_@-DISABLE_@-CALLBACKS
 The following flag disables call to PIN callbacks. Only
 relevant to TPM keys.
@@ -1139,4 +1192,16 @@ The CA constraints were violated.
 The certificate obtained via DNS differs.
 @item DANE_@-VERIFY_@-UNKNOWN_@-DANE_@-INFO
 No known DANE data was found in the DNS record.
+@end table
+
+@c gnutls_pkcs7_sign_flags
+@table @code
+@item GNUTLS_@-PKCS7_@-EMBED_@-DATA
+The signed data will be embedded in the structure.
+@item GNUTLS_@-PKCS7_@-INCLUDE_@-TIME
+The signing time will be included in the structure.
+@item GNUTLS_@-PKCS7_@-INCLUDE_@-CERT
+The signer's certificate will be included in the cert list.
+@item GNUTLS_@-PKCS7_@-WRITE_@-SPKI
+Use the signer's key identifier instead of name.
 @end table

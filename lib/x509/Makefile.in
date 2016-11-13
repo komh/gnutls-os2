@@ -145,7 +145,8 @@ am__aclocal_m4_deps = $(top_srcdir)/src/gl/m4/arpa_inet_h.m4 \
 	$(top_srcdir)/gl/m4/00gnulib.m4 \
 	$(top_srcdir)/gl/m4/absolute-header.m4 \
 	$(top_srcdir)/gl/m4/alloca.m4 $(top_srcdir)/gl/m4/base64.m4 \
-	$(top_srcdir)/gl/m4/byteswap.m4 $(top_srcdir)/gl/m4/errno_h.m4 \
+	$(top_srcdir)/gl/m4/byteswap.m4 $(top_srcdir)/gl/m4/ctype.m4 \
+	$(top_srcdir)/gl/m4/errno_h.m4 \
 	$(top_srcdir)/gl/m4/exponentd.m4 \
 	$(top_srcdir)/gl/m4/extensions.m4 \
 	$(top_srcdir)/gl/m4/extern-inline.m4 \
@@ -177,13 +178,14 @@ am__aclocal_m4_deps = $(top_srcdir)/src/gl/m4/arpa_inet_h.m4 \
 	$(top_srcdir)/gl/m4/off_t.m4 \
 	$(top_srcdir)/gl/m4/onceonly_2_57.m4 \
 	$(top_srcdir)/gl/m4/printf.m4 $(top_srcdir)/gl/m4/read-file.m4 \
-	$(top_srcdir)/gl/m4/realloc.m4 $(top_srcdir)/gl/m4/snprintf.m4 \
-	$(top_srcdir)/gl/m4/socklen.m4 $(top_srcdir)/gl/m4/sockpfaf.m4 \
-	$(top_srcdir)/gl/m4/ssize_t.m4 $(top_srcdir)/gl/m4/stdalign.m4 \
-	$(top_srcdir)/gl/m4/stdbool.m4 $(top_srcdir)/gl/m4/stddef_h.m4 \
-	$(top_srcdir)/gl/m4/stdint.m4 $(top_srcdir)/gl/m4/stdio_h.m4 \
-	$(top_srcdir)/gl/m4/stdlib_h.m4 $(top_srcdir)/gl/m4/strcase.m4 \
-	$(top_srcdir)/gl/m4/string_h.m4 \
+	$(top_srcdir)/gl/m4/realloc.m4 \
+	$(top_srcdir)/gl/m4/secure_getenv.m4 \
+	$(top_srcdir)/gl/m4/snprintf.m4 $(top_srcdir)/gl/m4/socklen.m4 \
+	$(top_srcdir)/gl/m4/sockpfaf.m4 $(top_srcdir)/gl/m4/ssize_t.m4 \
+	$(top_srcdir)/gl/m4/stdalign.m4 $(top_srcdir)/gl/m4/stdbool.m4 \
+	$(top_srcdir)/gl/m4/stddef_h.m4 $(top_srcdir)/gl/m4/stdint.m4 \
+	$(top_srcdir)/gl/m4/stdio_h.m4 $(top_srcdir)/gl/m4/stdlib_h.m4 \
+	$(top_srcdir)/gl/m4/strcase.m4 $(top_srcdir)/gl/m4/string_h.m4 \
 	$(top_srcdir)/gl/m4/strings_h.m4 \
 	$(top_srcdir)/gl/m4/strndup.m4 $(top_srcdir)/gl/m4/strnlen.m4 \
 	$(top_srcdir)/gl/m4/strtok_r.m4 \
@@ -226,21 +228,22 @@ CONFIG_CLEAN_VPATH_FILES =
 LTLIBRARIES = $(noinst_LTLIBRARIES)
 libgnutls_x509_la_LIBADD =
 am__libgnutls_x509_la_SOURCES_DIST = common.c key_encode.c common.h \
-	key_decode.c crl.c crl_write.c crq.c dn.c extensions.c mpi.c \
-	output.c pbkdf2-sha1.c pbkdf2-sha1.h pkcs12.c pkcs12_bag.c \
-	pkcs12_encr.c pkcs7.c privkey.c privkey_pkcs8.c \
-	privkey_openssl.c rfc2818_hostname.c sign.c verify.c x509.c \
+	key_decode.c gnutls-idna.h crl.c crl_write.c crq.c dn.c \
+	extensions.c mpi.c output.c pkcs12.c pkcs12_bag.c \
+	pkcs12_encr.c pkcs7.c pkcs7-attrs.c privkey.c privkey_pkcs8.c \
+	privkey_openssl.c hostname-verify.c sign.c verify.c x509.c \
 	x509_dn.c x509_int.h x509_write.c name_constraints.c \
-	verify-high.c verify-high2.c verify-high.h x509_ext.c ocsp.c \
-	ocsp_output.c
+	verify-high.c verify-high2.c verify-high.h x509_ext.c \
+	email-verify.c pkcs7-output.c ocsp.c ocsp_output.c
 @ENABLE_OCSP_TRUE@am__objects_1 = ocsp.lo ocsp_output.lo
 am_libgnutls_x509_la_OBJECTS = common.lo key_encode.lo key_decode.lo \
 	crl.lo crl_write.lo crq.lo dn.lo extensions.lo mpi.lo \
-	output.lo pbkdf2-sha1.lo pkcs12.lo pkcs12_bag.lo \
-	pkcs12_encr.lo pkcs7.lo privkey.lo privkey_pkcs8.lo \
-	privkey_openssl.lo rfc2818_hostname.lo sign.lo verify.lo \
-	x509.lo x509_dn.lo x509_write.lo name_constraints.lo \
-	verify-high.lo verify-high2.lo x509_ext.lo $(am__objects_1)
+	output.lo pkcs12.lo pkcs12_bag.lo pkcs12_encr.lo pkcs7.lo \
+	pkcs7-attrs.lo privkey.lo privkey_pkcs8.lo privkey_openssl.lo \
+	hostname-verify.lo sign.lo verify.lo x509.lo x509_dn.lo \
+	x509_write.lo name_constraints.lo verify-high.lo \
+	verify-high2.lo x509_ext.lo email-verify.lo pkcs7-output.lo \
+	$(am__objects_1)
 libgnutls_x509_la_OBJECTS = $(am_libgnutls_x509_la_OBJECTS)
 AM_V_lt = $(am__v_lt_@AM_V@)
 am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
@@ -452,6 +455,7 @@ GNULIB_IMAXDIV = @GNULIB_IMAXDIV@
 GNULIB_INET_NTOP = @GNULIB_INET_NTOP@
 GNULIB_INET_PTON = @GNULIB_INET_PTON@
 GNULIB_ISATTY = @GNULIB_ISATTY@
+GNULIB_ISBLANK = @GNULIB_ISBLANK@
 GNULIB_LCHMOD = @GNULIB_LCHMOD@
 GNULIB_LCHOWN = @GNULIB_LCHOWN@
 GNULIB_LINK = @GNULIB_LINK@
@@ -582,6 +586,7 @@ GNULIB_SYMLINKAT = @GNULIB_SYMLINKAT@
 GNULIB_SYSTEM_POSIX = @GNULIB_SYSTEM_POSIX@
 GNULIB_TIMEGM = @GNULIB_TIMEGM@
 GNULIB_TIME_R = @GNULIB_TIME_R@
+GNULIB_TIME_RZ = @GNULIB_TIME_RZ@
 GNULIB_TMPFILE = @GNULIB_TMPFILE@
 GNULIB_TTYNAME_R = @GNULIB_TTYNAME_R@
 GNULIB_UNISTD_H_NONBLOCKING = @GNULIB_UNISTD_H_NONBLOCKING@
@@ -643,6 +648,7 @@ GREP = @GREP@
 GTKDOC_CHECK = @GTKDOC_CHECK@
 GTKDOC_MKPDF = @GTKDOC_MKPDF@
 GTKDOC_REBASE = @GTKDOC_REBASE@
+GUILD = @GUILD@
 GUILE = @GUILE@
 GUILE_CFLAGS = @GUILE_CFLAGS@
 GUILE_CONFIG = @GUILE_CONFIG@
@@ -727,6 +733,7 @@ HAVE_GETTIMEOFDAY = @HAVE_GETTIMEOFDAY@
 HAVE_GRANTPT = @HAVE_GRANTPT@
 HAVE_GROUP_MEMBER = @HAVE_GROUP_MEMBER@
 HAVE_INTTYPES_H = @HAVE_INTTYPES_H@
+HAVE_ISBLANK = @HAVE_ISBLANK@
 HAVE_LCHMOD = @HAVE_LCHMOD@
 HAVE_LCHOWN = @HAVE_LCHOWN@
 HAVE_LIBDL = @HAVE_LIBDL@
@@ -830,6 +837,7 @@ HAVE_SYS_TIME_H = @HAVE_SYS_TIME_H@
 HAVE_SYS_TYPES_H = @HAVE_SYS_TYPES_H@
 HAVE_SYS_UIO_H = @HAVE_SYS_UIO_H@
 HAVE_TIMEGM = @HAVE_TIMEGM@
+HAVE_TIMEZONE_T = @HAVE_TIMEZONE_T@
 HAVE_TYPE_VOLATILE_SIG_ATOMIC_T = @HAVE_TYPE_VOLATILE_SIG_ATOMIC_T@
 HAVE_UNISTD_H = @HAVE_UNISTD_H@
 HAVE_UNLINKAT = @HAVE_UNLINKAT@
@@ -945,6 +953,9 @@ LT_REVISION = @LT_REVISION@
 LT_SSL_AGE = @LT_SSL_AGE@
 LT_SSL_CURRENT = @LT_SSL_CURRENT@
 LT_SSL_REVISION = @LT_SSL_REVISION@
+LT_XSSL_AGE = @LT_XSSL_AGE@
+LT_XSSL_CURRENT = @LT_XSSL_CURRENT@
+LT_XSSL_REVISION = @LT_XSSL_REVISION@
 MAJOR_VERSION = @MAJOR_VERSION@
 MAKEINFO = @MAKEINFO@
 MANIFEST_TOOL = @MANIFEST_TOOL@
@@ -958,6 +969,7 @@ NETTLE_CFLAGS = @NETTLE_CFLAGS@
 NETTLE_LIBS = @NETTLE_LIBS@
 NEXT_ARPA_INET_H = @NEXT_ARPA_INET_H@
 NEXT_AS_FIRST_DIRECTIVE_ARPA_INET_H = @NEXT_AS_FIRST_DIRECTIVE_ARPA_INET_H@
+NEXT_AS_FIRST_DIRECTIVE_CTYPE_H = @NEXT_AS_FIRST_DIRECTIVE_CTYPE_H@
 NEXT_AS_FIRST_DIRECTIVE_ERRNO_H = @NEXT_AS_FIRST_DIRECTIVE_ERRNO_H@
 NEXT_AS_FIRST_DIRECTIVE_FCNTL_H = @NEXT_AS_FIRST_DIRECTIVE_FCNTL_H@
 NEXT_AS_FIRST_DIRECTIVE_FLOAT_H = @NEXT_AS_FIRST_DIRECTIVE_FLOAT_H@
@@ -980,6 +992,7 @@ NEXT_AS_FIRST_DIRECTIVE_SYS_UIO_H = @NEXT_AS_FIRST_DIRECTIVE_SYS_UIO_H@
 NEXT_AS_FIRST_DIRECTIVE_TIME_H = @NEXT_AS_FIRST_DIRECTIVE_TIME_H@
 NEXT_AS_FIRST_DIRECTIVE_UNISTD_H = @NEXT_AS_FIRST_DIRECTIVE_UNISTD_H@
 NEXT_AS_FIRST_DIRECTIVE_WCHAR_H = @NEXT_AS_FIRST_DIRECTIVE_WCHAR_H@
+NEXT_CTYPE_H = @NEXT_CTYPE_H@
 NEXT_ERRNO_H = @NEXT_ERRNO_H@
 NEXT_FCNTL_H = @NEXT_FCNTL_H@
 NEXT_FLOAT_H = @NEXT_FLOAT_H@
@@ -1182,6 +1195,7 @@ STDNORETURN_H = @STDNORETURN_H@
 STRIP = @STRIP@
 SYS_TIME_H_DEFINES_STRUCT_TIMESPEC = @SYS_TIME_H_DEFINES_STRUCT_TIMESPEC@
 TIME_H_DEFINES_STRUCT_TIMESPEC = @TIME_H_DEFINES_STRUCT_TIMESPEC@
+TROUSERS_LIB = @TROUSERS_LIB@
 TSS_CFLAGS = @TSS_CFLAGS@
 TSS_LIBS = @TSS_LIBS@
 UINT32_MAX_LT_UINTMAX_MAX = @UINT32_MAX_LT_UINTMAX_MAX@
@@ -1189,6 +1203,7 @@ UINT64_MAX_EQ_ULONG_MAX = @UINT64_MAX_EQ_ULONG_MAX@
 UNBOUND_CFLAGS = @UNBOUND_CFLAGS@
 UNBOUND_LIBS = @UNBOUND_LIBS@
 UNDEFINE_STRTOK_R = @UNDEFINE_STRTOK_R@
+UNISTD_H_DEFINES_STRUCT_TIMESPEC = @UNISTD_H_DEFINES_STRUCT_TIMESPEC@
 UNISTD_H_HAVE_WINSOCK2_H = @UNISTD_H_HAVE_WINSOCK2_H@
 UNISTD_H_HAVE_WINSOCK2_H_AND_USE_SOCKETS = @UNISTD_H_HAVE_WINSOCK2_H_AND_USE_SOCKETS@
 USE_NLS = @USE_NLS@
@@ -1245,6 +1260,7 @@ gltests_LTLIBOBJS = @gltests_LTLIBOBJS@
 gltests_WITNESS = @gltests_WITNESS@
 guile_snarf = @guile_snarf@
 guileextensiondir = @guileextensiondir@
+guileobjectdir = @guileobjectdir@
 host = @host@
 host_alias = @host_alias@
 host_cpu = @host_cpu@
@@ -1280,13 +1296,13 @@ AM_CPPFLAGS = -I$(srcdir)/../../gl -I$(builddir)/../../gl \
 	-I$(srcdir)/.. $(LIBOPENCDK_CFLAGS) $(am__append_1)
 noinst_LTLIBRARIES = libgnutls_x509.la
 libgnutls_x509_la_SOURCES = common.c key_encode.c common.h \
-	key_decode.c crl.c crl_write.c crq.c dn.c extensions.c mpi.c \
-	output.c pbkdf2-sha1.c pbkdf2-sha1.h pkcs12.c pkcs12_bag.c \
-	pkcs12_encr.c pkcs7.c privkey.c privkey_pkcs8.c \
-	privkey_openssl.c rfc2818_hostname.c sign.c verify.c x509.c \
+	key_decode.c gnutls-idna.h crl.c crl_write.c crq.c dn.c \
+	extensions.c mpi.c output.c pkcs12.c pkcs12_bag.c \
+	pkcs12_encr.c pkcs7.c pkcs7-attrs.c privkey.c privkey_pkcs8.c \
+	privkey_openssl.c hostname-verify.c sign.c verify.c x509.c \
 	x509_dn.c x509_int.h x509_write.c name_constraints.c \
 	verify-high.c verify-high2.c verify-high.h x509_ext.c \
-	$(am__append_2)
+	email-verify.c pkcs7-output.c $(am__append_2)
 all: all-am
 
 .SUFFIXES:
@@ -1346,7 +1362,9 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/crl_write.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/crq.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/dn.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/email-verify.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/extensions.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/hostname-verify.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/key_decode.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/key_encode.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mpi.Plo@am__quote@
@@ -1354,15 +1372,15 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ocsp.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ocsp_output.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/output.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pbkdf2-sha1.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pkcs12.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pkcs12_bag.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pkcs12_encr.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pkcs7-attrs.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pkcs7-output.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pkcs7.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/privkey.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/privkey_openssl.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/privkey_pkcs8.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/rfc2818_hostname.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sign.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/verify-high.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/verify-high2.Plo@am__quote@

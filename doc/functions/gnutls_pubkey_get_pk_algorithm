@@ -3,7 +3,7 @@
 
 
 @deftypefun {int} {gnutls_pubkey_get_pk_algorithm} (gnutls_pubkey_t @var{key}, unsigned int * @var{bits})
-@var{key}: should contain a @code{gnutls_pubkey_t}  structure
+@var{key}: should contain a @code{gnutls_pubkey_t}  type
 
 @var{bits}: If set will return the number of bits of the parameters (may be NULL)
 

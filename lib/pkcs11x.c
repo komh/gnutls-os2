@@ -159,9 +159,9 @@ int pkcs11_override_cert_exts(struct pkcs11_session_info *sinfo, gnutls_datum_t 
 }
 
 static int
-find_ext_cb(struct pkcs11_session_info *sinfo,
-	     struct token_info *info, struct ck_info *lib_info,
-	     void *input)
+find_ext_cb(struct ck_function_list *module, struct pkcs11_session_info *sinfo,
+	    struct ck_token_info *tinfo, struct ck_info *lib_info,
+	    void *input)
 {
 	struct find_ext_data_st *find_data = input;
 	struct ck_attribute a[4];
@@ -172,7 +172,7 @@ find_ext_cb(struct pkcs11_session_info *sinfo,
 	int ret;
 	gnutls_datum_t ext;
 
-	if (info == NULL) {	/* we don't support multiple calls */
+	if (tinfo == NULL) {	/* we don't support multiple calls */
 		gnutls_assert();
 		return GNUTLS_E_REQUESTED_DATA_NOT_AVAILABLE;
 	}
@@ -180,7 +180,7 @@ find_ext_cb(struct pkcs11_session_info *sinfo,
 	/* do not bother reading the token if basic fields do not match
 	 */
 	if (!p11_kit_uri_match_token_info
-	    (find_data->obj->info, &info->tinfo)
+	    (find_data->obj->info, tinfo)
 	    || !p11_kit_uri_match_module_info(find_data->obj->info,
 					      lib_info)) {
 		gnutls_assert();
@@ -219,6 +219,7 @@ find_ext_cb(struct pkcs11_session_info *sinfo,
 			if (_gnutls_x509_decode_ext(&ext, &find_data->exts[find_data->exts_size]) == 0) {
 				find_data->exts_size++;
 			}
+			gnutls_free(ext.data);
 		}
 	}
 
@@ -229,15 +230,18 @@ find_ext_cb(struct pkcs11_session_info *sinfo,
 }
 
 /**
- * gnutls_pkcs11_obj_get_ext:
- * @obj: should contain a #gnutls_pkcs11_obj_t structure
- * @exts: an allocated list of pointers to %gnutls_x509_ext_st
- * @exts_size: the number of @exts
+ * gnutls_pkcs11_obj_get_exts:
+ * @obj: should contain a #gnutls_pkcs11_obj_t type
+ * @exts: a pointer to a %gnutls_x509_ext_st pointer
+ * @exts_size: will be updated with the number of @exts
  * @flags: Or sequence of %GNUTLS_PKCS11_OBJ_* flags 
  *
  * This function will return information about attached extensions
  * that associate to the provided object (which should be a certificate).
  * The extensions are the attached p11-kit trust module extensions.
+ *
+ * Each element of @exts must be deinitialized using gnutls_x509_ext_deinit()
+ * while @exts should be deallocated using gnutls_free().
  *
  * Returns: %GNUTLS_E_SUCCESS (0) on success or a negative error code on error.
  *

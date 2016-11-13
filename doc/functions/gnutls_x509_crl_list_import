@@ -3,7 +3,7 @@
 
 
 @deftypefun {int} {gnutls_x509_crl_list_import} (gnutls_x509_crl_t * @var{crls}, unsigned int * @var{crl_max}, const gnutls_datum_t * @var{data}, gnutls_x509_crt_fmt_t @var{format}, unsigned int @var{flags})
-@var{crls}: The structures to store the parsed CRLs. Must not be initialized.
+@var{crls}: Indicates where the parsed CRLs will be copied to. Must not be initialized.
 
 @var{crl_max}: Initially must hold the maximum number of crls. It will be updated with the number of crls available.
 

@@ -3,7 +3,7 @@
 
 
 @deftypefun {unsigned} {gnutls_x509_name_constraints_check} (gnutls_x509_name_constraints_t @var{nc}, gnutls_x509_subject_alt_name_t @var{type}, const gnutls_datum_t * @var{name})
-@var{nc}: the extracted name constraints structure
+@var{nc}: the extracted name constraints
 
 @var{type}: the type of the constraint to check (of type gnutls_x509_subject_alt_name_t)
 

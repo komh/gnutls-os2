@@ -3,7 +3,7 @@
 
 
 @deftypefun {int} {gnutls_x509_crq_set_key_rsa_raw} (gnutls_x509_crq_t @var{crq}, const gnutls_datum_t * @var{m}, const gnutls_datum_t * @var{e})
-@var{crq}: should contain a @code{gnutls_x509_crq_t}  structure
+@var{crq}: should contain a @code{gnutls_x509_crq_t}  type
 
 @var{m}: holds the modulus
 

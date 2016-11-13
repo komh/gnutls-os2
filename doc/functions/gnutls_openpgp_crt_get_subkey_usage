@@ -3,7 +3,7 @@
 
 
 @deftypefun {int} {gnutls_openpgp_crt_get_subkey_usage} (gnutls_openpgp_crt_t @var{key}, unsigned int @var{idx}, unsigned int * @var{key_usage})
-@var{key}: should contain a gnutls_openpgp_crt_t structure
+@var{key}: should contain a gnutls_openpgp_crt_t type
 
 @var{idx}: the subkey index
 

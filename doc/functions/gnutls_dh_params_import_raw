@@ -3,7 +3,7 @@
 
 
 @deftypefun {int} {gnutls_dh_params_import_raw} (gnutls_dh_params_t @var{dh_params}, const gnutls_datum_t * @var{prime}, const gnutls_datum_t * @var{generator})
-@var{dh_params}: Is a structure that will hold the prime numbers
+@var{dh_params}: The parameters
 
 @var{prime}: holds the new prime
 

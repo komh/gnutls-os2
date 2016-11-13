@@ -3,7 +3,7 @@
 
 
 @deftypefun {int} {gnutls_x509_trust_list_remove_trust_file} (gnutls_x509_trust_list_t @var{list}, const char * @var{ca_file}, gnutls_x509_crt_fmt_t @var{type})
-@var{list}: The structure of the list
+@var{list}: The list
 
 @var{ca_file}: A file containing a list of CAs
 

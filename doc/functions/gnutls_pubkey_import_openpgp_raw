@@ -14,7 +14,7 @@
 @var{flags}: Should be zero
 
 This function will import the given public key to the abstract
-@code{gnutls_pubkey_t}  structure. 
+@code{gnutls_pubkey_t}  type. 
 
 @strong{Returns:} On success, @code{GNUTLS_E_SUCCESS}  (0) is returned, otherwise a
 negative error value.

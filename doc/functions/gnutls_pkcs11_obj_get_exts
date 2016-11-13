@@ -3,7 +3,7 @@
 
 
 @deftypefun {int} {gnutls_pkcs11_obj_get_exts} (gnutls_pkcs11_obj_t @var{obj}, gnutls_x509_ext_st ** @var{exts}, unsigned int * @var{exts_size}, unsigned int @var{flags})
-@var{obj}: should contain a @code{gnutls_pkcs11_obj_t}  structure
+@var{obj}: should contain a @code{gnutls_pkcs11_obj_t}  type
 
 @var{exts}: an allocated list of pointers to @code{gnutls_x509_ext_st} 
 

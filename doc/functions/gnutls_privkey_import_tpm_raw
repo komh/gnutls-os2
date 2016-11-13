@@ -16,7 +16,7 @@
 @var{flags}: should be zero
 
 This function will import the given private key to the abstract
-@code{gnutls_privkey_t}  structure. 
+@code{gnutls_privkey_t}  type. 
 
 With respect to passwords the same as in @code{gnutls_privkey_import_tpm_url()}  apply.
 

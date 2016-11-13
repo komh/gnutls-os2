@@ -3,7 +3,7 @@
 
 
 @deftypefun {int} {gnutls_certificate_set_x509_trust_mem} (gnutls_certificate_credentials_t @var{res}, const gnutls_datum_t * @var{ca}, gnutls_x509_crt_fmt_t @var{type})
-@var{res}: is a @code{gnutls_certificate_credentials_t}  structure.
+@var{res}: is a @code{gnutls_certificate_credentials_t}  type.
 
 @var{ca}: is a list of trusted CAs or a DER certificate
 

@@ -228,36 +228,6 @@ crypto-backend
 @Returns: 
 
 
-<!-- ##### FUNCTION gnutls_crypto_cipher_register ##### -->
-<para>
-
-</para>
-
-@priority: 
-@s: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gnutls_crypto_digest_register ##### -->
-<para>
-
-</para>
-
-@priority: 
-@s: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gnutls_crypto_mac_register ##### -->
-<para>
-
-</para>
-
-@priority: 
-@s: 
-@Returns: 
-
-
 <!-- ##### FUNCTION gnutls_crypto_pk_register ##### -->
 <para>
 
@@ -286,6 +256,7 @@ crypto-backend
 @algorithm: 
 @priority: 
 @s: 
+@free_s: 
 @Returns: 
 
 
@@ -304,6 +275,7 @@ crypto-backend
 @algorithm: 
 @priority: 
 @s: 
+@free_s: 
 @Returns: 
 
 
@@ -322,6 +294,7 @@ crypto-backend
 @algorithm: 
 @priority: 
 @s: 
+@free_s: 
 @Returns: 
 
 

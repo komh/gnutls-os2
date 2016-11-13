@@ -33,7 +33,6 @@
 #include <aes-x86.h>
 #include <sha-x86.h>
 #include <algorithms.h>
-#include <x86-common.h>
 
 #ifdef HAVE_LIBNETTLE
 
@@ -240,7 +239,7 @@ wrap_x86_hmac_update(void *_ctx, const void *text, size_t textsize)
 {
 	struct x86_hmac_ctx *ctx = _ctx;
 
-	_NETTLE_UPDATE(ctx->update, ctx->ctx_ptr, textsize, text);
+	ctx->update(ctx->ctx_ptr, textsize, text);
 
 	return GNUTLS_E_SUCCESS;
 }
@@ -280,7 +279,7 @@ static int wrap_x86_hmac_fast(gnutls_mac_algorithm_t algo,
 		return gnutls_assert_val(ret);
 
 	ctx.setkey(&ctx, key_size, key);
-	_NETTLE_UPDATE(ctx.update, &ctx, text_size, text);
+	ctx.update(&ctx, text_size, text);
 	ctx.digest(&ctx, ctx.length, digest);
 	
 	zeroize_temp_key(&ctx, sizeof(ctx));

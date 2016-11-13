@@ -2,7 +2,7 @@
 
 
 
-@deftypefun {void} {gnutls_rnd_refresh} ()
+@deftypefun {void} {gnutls_rnd_refresh} ( @var{void})
 
 This function refreshes the random generator state.
 That is the current precise time, CPU usage, and
