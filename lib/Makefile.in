@@ -120,24 +120,26 @@ host_triplet = @host@
 
 @ENABLE_NETTLE_TRUE@am__append_9 = nettle
 @ENABLE_PKCS11_TRUE@am__append_10 = pkcs11_int.h pkcs11x.h
-@HAVE_LIBIDN_TRUE@am__append_11 = $(LIBIDN_LIBS)
-@ENABLE_NETTLE_TRUE@am__append_12 = accelerated/libaccelerated.la
-@WINDOWS_FALSE@am__append_13 = $(LTLIBPTHREAD)
-@NEEDS_LIBRT_TRUE@am__append_14 = $(LTLIBRT)
-@ENABLE_FIPS140_TRUE@am__append_15 = $(FIPS140_LIBS)
-@ENABLE_TROUSERS_TRUE@am__append_16 = $(LIBDL)
-@ENABLE_OPENPGP_TRUE@am__append_17 = openpgp/libgnutls_openpgp.la \
+@OS2_TRUE@am__append_11 = -os2dllname gtls
+@HAVE_LIBIDN_TRUE@am__append_12 = $(LIBIDN_LIBS)
+@ENABLE_NETTLE_TRUE@am__append_13 = accelerated/libaccelerated.la
+@WINDOWS_FALSE@am__append_14 = $(LTLIBPTHREAD)
+@NEEDS_LIBRT_TRUE@am__append_15 = $(LTLIBRT)
+@ENABLE_FIPS140_TRUE@am__append_16 = $(FIPS140_LIBS)
+@ENABLE_TROUSERS_TRUE@am__append_17 = $(LIBDL)
+@ENABLE_OPENPGP_TRUE@am__append_18 = openpgp/libgnutls_openpgp.la \
 @ENABLE_OPENPGP_TRUE@	opencdk/libminiopencdk.la
-@HAVE_LD_VERSION_SCRIPT_TRUE@am__append_18 = -Wl,--version-script=$(srcdir)/libgnutls.map
-@HAVE_LD_VERSION_SCRIPT_FALSE@am__append_19 = -export-symbols-regex '^(gnutls|_gnutls).*'
-@ENABLE_MINITASN1_TRUE@am__append_20 = minitasn1/libminitasn1.la
-@ENABLE_MINITASN1_FALSE@am__append_21 = $(LIBTASN1_LIBS)
-@ENABLE_NETTLE_TRUE@am__append_22 = $(NETTLE_LIBS) $(HOGWEED_LIBS) $(GMP_LIBS)
-@ENABLE_NETTLE_TRUE@am__append_23 = nettle/libcrypto.la
-@HAVE_LD_OUTPUT_DEF_TRUE@am__append_24 = -Wl,--output-def,libgnutls-$(DLL_VERSION).def
-@HAVE_LD_OUTPUT_DEF_TRUE@am__append_25 = $(defexec_DATA)
-@WINDOWS_TRUE@am__append_26 = -lcrypt32
-@ENABLE_CXX_TRUE@am__append_27 = libgnutlsxx.la
+@HAVE_LD_VERSION_SCRIPT_TRUE@am__append_19 = -Wl,--version-script=$(srcdir)/libgnutls.map
+@HAVE_LD_VERSION_SCRIPT_FALSE@am__append_20 = -export-symbols-regex '^(gnutls|_gnutls).*'
+@ENABLE_MINITASN1_TRUE@am__append_21 = minitasn1/libminitasn1.la
+@ENABLE_MINITASN1_FALSE@am__append_22 = $(LIBTASN1_LIBS)
+@ENABLE_NETTLE_TRUE@am__append_23 = $(NETTLE_LIBS) $(HOGWEED_LIBS) $(GMP_LIBS)
+@ENABLE_NETTLE_TRUE@am__append_24 = nettle/libcrypto.la
+@HAVE_LD_OUTPUT_DEF_TRUE@am__append_25 = -Wl,--output-def,libgnutls-$(DLL_VERSION).def
+@HAVE_LD_OUTPUT_DEF_TRUE@am__append_26 = $(defexec_DATA)
+@WINDOWS_TRUE@am__append_27 = -lcrypt32
+@ENABLE_CXX_TRUE@am__append_28 = libgnutlsxx.la
+@ENABLE_CXX_TRUE@@OS2_TRUE@am__append_29 = -os2dllname gtlsxx
 subdir = lib
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/src/gl/m4/arpa_inet_h.m4 \
@@ -307,8 +309,8 @@ am__DEPENDENCIES_9 = $(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
 libgnutls_la_DEPENDENCIES = ../gl/libgnu.la x509/libgnutls_x509.la \
 	ext/libgnutls_ext.la auth/libgnutls_auth.la \
 	algorithms/libgnutls_alg.la extras/libgnutls_extras.la \
-	$(am__append_12) $(am__append_17) $(am__append_20) \
-	$(am__append_23) $(am__DEPENDENCIES_9)
+	$(am__append_13) $(am__append_18) $(am__append_21) \
+	$(am__append_24) $(am__DEPENDENCIES_9)
 am__libgnutls_la_SOURCES_DIST = abstract_int.h debug.h \
 	gnutls_compress.h gnutls_cipher.h gnutls_buffers.h \
 	gnutls_errors.h gnutls_int.h gnutls_dtls.h gnutls_handshake.h \
@@ -1489,7 +1491,6 @@ pdfdir = @pdfdir@
 prefix = @prefix@
 program_transform_name = @program_transform_name@
 psdir = @psdir@
-runstatedir = @runstatedir@
 sbindir = @sbindir@
 sharedstatedir = @sharedstatedir@
 srcdir = @srcdir@
@@ -1513,8 +1514,8 @@ AM_CPPFLAGS = -DLOCALEDIR=\"$(localedir)\" -I$(srcdir)/../gl \
 # Pkg-config script.
 pkgconfigdir = $(libdir)/pkgconfig
 pkgconfig_DATA = gnutls.pc
-DISTCLEANFILES = $(pkgconfig_DATA) $(am__append_25)
-lib_LTLIBRARIES = libgnutls.la $(am__append_27)
+DISTCLEANFILES = $(pkgconfig_DATA) $(am__append_26)
+lib_LTLIBRARIES = libgnutls.la $(am__append_28)
 SRP_COBJECTS = gnutls_srp.c
 PSK_COBJECTS = gnutls_psk.c
 COBJECTS = gnutls_range.c gnutls_record.c gnutls_compress.c debug.c \
@@ -1556,18 +1557,18 @@ libgnutls_la_SOURCES = $(HFILES) $(COBJECTS) $(SRP_COBJECTS)	\
 	gnutls.asn pkix.asn libgnutls.map
 
 libgnutls_la_LDFLAGS = -no-undefined -version-info \
-	$(LT_CURRENT):$(LT_REVISION):$(LT_AGE) $(am__append_18) \
-	$(am__append_19) $(am__append_24)
+	$(LT_CURRENT):$(LT_REVISION):$(LT_AGE) $(am__append_11) \
+	$(am__append_19) $(am__append_20) $(am__append_25)
 libgnutls_la_LIBADD = ../gl/libgnu.la x509/libgnutls_x509.la \
 	ext/libgnutls_ext.la auth/libgnutls_auth.la \
 	algorithms/libgnutls_alg.la extras/libgnutls_extras.la \
-	$(am__append_12) $(am__append_17) $(am__append_20) \
-	$(am__append_23) $(thirdparty_libadd)
+	$(am__append_13) $(am__append_18) $(am__append_21) \
+	$(am__append_24) $(thirdparty_libadd)
 thirdparty_libadd = $(LTLIBZ) $(LTLIBINTL) $(LIBSOCKET) $(LTLIBNSL) \
-	$(LTLIBICONV) $(P11_KIT_LIBS) $(LIB_SELECT) $(am__append_11) \
-	$(am__append_13) $(am__append_14) $(am__append_15) \
-	$(am__append_16) $(am__append_21) $(am__append_22) \
-	$(am__append_26)
+	$(LTLIBICONV) $(P11_KIT_LIBS) $(LIB_SELECT) $(am__append_12) \
+	$(am__append_14) $(am__append_15) $(am__append_16) \
+	$(am__append_17) $(am__append_22) $(am__append_23) \
+	$(am__append_27)
 @HAVE_LD_OUTPUT_DEF_TRUE@defexecdir = $(bindir)
 @HAVE_LD_OUTPUT_DEF_TRUE@defexec_DATA = libgnutls-$(DLL_VERSION).def
 
@@ -1578,9 +1579,9 @@ thirdparty_libadd = $(LTLIBZ) $(LTLIBINTL) $(LIBSOCKET) $(LTLIBNSL) \
 @ENABLE_CXX_TRUE@	-I$(builddir)/includes	
 
 @ENABLE_CXX_TRUE@libgnutlsxx_la_SOURCES = gnutlsxx.cpp
-@ENABLE_CXX_TRUE@libgnutlsxx_la_LDFLAGS = -no-undefined \
-@ENABLE_CXX_TRUE@	-version-info $(CXX_LT_CURRENT):$(CXX_LT_REVISION):$(CXX_LT_AGE)
-
+@ENABLE_CXX_TRUE@libgnutlsxx_la_LDFLAGS = -no-undefined -version-info \
+@ENABLE_CXX_TRUE@	$(CXX_LT_CURRENT):$(CXX_LT_REVISION):$(CXX_LT_AGE) \
+@ENABLE_CXX_TRUE@	$(am__append_29)
 @ENABLE_CXX_TRUE@libgnutlsxx_la_LIBADD = libgnutls.la
 all: $(BUILT_SOURCES)
 	$(MAKE) $(AM_MAKEFLAGS) all-recursive
