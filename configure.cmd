@@ -1,7 +1,6 @@
 extproc sh
 
-./configure --prefix=/usr \
-            --disable-shared \
+./configure --disable-shared \
             --enable-static \
             --disable-doc \
             --enable-openssl-compatibility \
