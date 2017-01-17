@@ -45,10 +45,14 @@ libcrypto_la_SOURCES = pk.c mpi.c mac.c cipher.c init.c \
 if WINDOWS
 libcrypto_la_SOURCES += sysrng-windows.c
 else
+if OS2
+libcrypto_la_SOURCES += sysrng-os2.c
+else
 if HAVE_GETENTROPY
 libcrypto_la_SOURCES += sysrng-getentropy.c
 else
 libcrypto_la_SOURCES += sysrng-linux.c
+endif
 endif
 endif
 
