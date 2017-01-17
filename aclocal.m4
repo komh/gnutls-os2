@@ -725,6 +725,42 @@ fi
 rmdir .tst 2>/dev/null
 AC_SUBST([am__leading_dot])])
 
+# Add --enable-maintainer-mode option to configure.         -*- Autoconf -*-
+# From Jim Meyering
+
+# Copyright (C) 1996-2014 Free Software Foundation, Inc.
+#
+# This file is free software; the Free Software Foundation
+# gives unlimited permission to copy and/or distribute it,
+# with or without modifications, as long as this notice is preserved.
+
+# AM_MAINTAINER_MODE([DEFAULT-MODE])
+# ----------------------------------
+# Control maintainer-specific portions of Makefiles.
+# Default is to disable them, unless 'enable' is passed literally.
+# For symmetry, 'disable' may be passed as well.  Anyway, the user
+# can override the default with the --enable/--disable switch.
+AC_DEFUN([AM_MAINTAINER_MODE],
+[m4_case(m4_default([$1], [disable]),
+       [enable], [m4_define([am_maintainer_other], [disable])],
+       [disable], [m4_define([am_maintainer_other], [enable])],
+       [m4_define([am_maintainer_other], [enable])
+        m4_warn([syntax], [unexpected argument to AM@&t@_MAINTAINER_MODE: $1])])
+AC_MSG_CHECKING([whether to enable maintainer-specific portions of Makefiles])
+  dnl maintainer-mode's default is 'disable' unless 'enable' is passed
+  AC_ARG_ENABLE([maintainer-mode],
+    [AS_HELP_STRING([--]am_maintainer_other[-maintainer-mode],
+      am_maintainer_other[ make rules and dependencies not useful
+      (and sometimes confusing) to the casual installer])],
+    [USE_MAINTAINER_MODE=$enableval],
+    [USE_MAINTAINER_MODE=]m4_if(am_maintainer_other, [enable], [no], [yes]))
+  AC_MSG_RESULT([$USE_MAINTAINER_MODE])
+  AM_CONDITIONAL([MAINTAINER_MODE], [test $USE_MAINTAINER_MODE = yes])
+  MAINT=$MAINTAINER_MODE_TRUE
+  AC_SUBST([MAINT])dnl
+]
+)
+
 # Check to see how 'make' treats includes.	            -*- Autoconf -*-
 
 # Copyright (C) 2001-2014 Free Software Foundation, Inc.
@@ -812,38 +848,6 @@ else
   am_missing_run=
   AC_MSG_WARN(['missing' script is too old or missing])
 fi
-])
-
-# Copyright (C) 2003-2014 Free Software Foundation, Inc.
-#
-# This file is free software; the Free Software Foundation
-# gives unlimited permission to copy and/or distribute it,
-# with or without modifications, as long as this notice is preserved.
-
-# AM_PROG_MKDIR_P
-# ---------------
-# Check for 'mkdir -p'.
-AC_DEFUN([AM_PROG_MKDIR_P],
-[AC_PREREQ([2.60])dnl
-AC_REQUIRE([AC_PROG_MKDIR_P])dnl
-dnl FIXME we are no longer going to remove this! adjust warning
-dnl FIXME message accordingly.
-AC_DIAGNOSE([obsolete],
-[$0: this macro is deprecated, and will soon be removed.
-You should use the Autoconf-provided 'AC][_PROG_MKDIR_P' macro instead,
-and use '$(MKDIR_P)' instead of '$(mkdir_p)'in your Makefile.am files.])
-dnl Automake 1.8 to 1.9.6 used to define mkdir_p.  We now use MKDIR_P,
-dnl while keeping a definition of mkdir_p for backward compatibility.
-dnl @MKDIR_P@ is magic: AC_OUTPUT adjusts its value for each Makefile.
-dnl However we cannot define mkdir_p as $(MKDIR_P) for the sake of
-dnl Makefile.ins that do not define MKDIR_P, so we do our own
-dnl adjustment using top_builddir (which is defined more often than
-dnl MKDIR_P).
-AC_SUBST([mkdir_p], ["$MKDIR_P"])dnl
-case $mkdir_p in
-  [[\\/$]]* | ?:[[\\/]]*) ;;
-  */*) mkdir_p="\$(top_builddir)/$mkdir_p" ;;
-esac
 ])
 
 # Helper functions for option handling.                     -*- Autoconf -*-
@@ -1262,17 +1266,24 @@ AC_SUBST([am__tar])
 AC_SUBST([am__untar])
 ]) # _AM_PROG_TAR
 
+m4_include([lib/unistring/m4/gnulib-comp.m4])
+m4_include([lib/unistring/m4/inline.m4])
+m4_include([lib/unistring/m4/libunistring-base.m4])
 m4_include([src/gl/m4/arpa_inet_h.m4])
 m4_include([src/gl/m4/bison.m4])
 m4_include([src/gl/m4/clock_time.m4])
 m4_include([src/gl/m4/close.m4])
+m4_include([src/gl/m4/dirname.m4])
+m4_include([src/gl/m4/double-slash-root.m4])
 m4_include([src/gl/m4/dup2.m4])
 m4_include([src/gl/m4/eealloc.m4])
 m4_include([src/gl/m4/environ.m4])
 m4_include([src/gl/m4/error.m4])
+m4_include([src/gl/m4/flexmember.m4])
 m4_include([src/gl/m4/fseek.m4])
 m4_include([src/gl/m4/getaddrinfo.m4])
 m4_include([src/gl/m4/getpass.m4])
+m4_include([src/gl/m4/getprogname.m4])
 m4_include([src/gl/m4/gettime.m4])
 m4_include([src/gl/m4/gnulib-comp.m4])
 m4_include([src/gl/m4/hostent.m4])
@@ -1289,7 +1300,10 @@ m4_include([src/gl/m4/socketlib.m4])
 m4_include([src/gl/m4/sockets.m4])
 m4_include([src/gl/m4/strdup.m4])
 m4_include([src/gl/m4/strerror.m4])
+m4_include([src/gl/m4/strftime.m4])
 m4_include([src/gl/m4/sys_select_h.m4])
+m4_include([src/gl/m4/time_rz.m4])
+m4_include([src/gl/m4/timegm.m4])
 m4_include([src/gl/m4/timespec.m4])
 m4_include([src/gl/m4/tm_gmtoff.m4])
 m4_include([src/gl/m4/xalloc.m4])
@@ -1298,13 +1312,11 @@ m4_include([src/libopts/m4/stdnoreturn.m4])
 m4_include([gl/m4/00gnulib.m4])
 m4_include([gl/m4/absolute-header.m4])
 m4_include([gl/m4/alloca.m4])
-m4_include([gl/m4/base64.m4])
 m4_include([gl/m4/byteswap.m4])
 m4_include([gl/m4/ctype.m4])
 m4_include([gl/m4/errno_h.m4])
 m4_include([gl/m4/exponentd.m4])
 m4_include([gl/m4/extensions.m4])
-m4_include([gl/m4/extern-inline.m4])
 m4_include([gl/m4/fcntl_h.m4])
 m4_include([gl/m4/fdopen.m4])
 m4_include([gl/m4/float_h.m4])
@@ -1326,6 +1338,7 @@ m4_include([gl/m4/inttypes.m4])
 m4_include([gl/m4/largefile.m4])
 m4_include([gl/m4/ld-output-def.m4])
 m4_include([gl/m4/ld-version-script.m4])
+m4_include([gl/m4/limits-h.m4])
 m4_include([gl/m4/lseek.m4])
 m4_include([gl/m4/malloc.m4])
 m4_include([gl/m4/manywarnings.m4])
@@ -1377,6 +1390,8 @@ m4_include([gl/m4/vsnprintf.m4])
 m4_include([gl/m4/warn-on-use.m4])
 m4_include([gl/m4/warnings.m4])
 m4_include([gl/m4/wchar_h.m4])
+m4_include([m4/ax_code_coverage.m4])
+m4_include([m4/extern-inline.m4])
 m4_include([m4/fcntl-o.m4])
 m4_include([m4/gettext.m4])
 m4_include([m4/gtk-doc.m4])

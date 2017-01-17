@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgnutls 3.2.1\n"
 "Report-Msgid-Bugs-To: bug-gnutls@gnu.org\n"
-"POT-Creation-Date: 2016-10-09 20:19+0200\n"
+"POT-Creation-Date: 2017-01-09 08:22+0100\n"
 "PO-Revision-Date: 2013-06-19 17:09+0300\n"
 "Last-Translator: Jorma Karvonen <karvonen.jorma@gmail.com>\n"
 "Language-Team: Finnish <translation-team-fi@lists.sourceforge.net>\n"
@@ -17,160 +17,160 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: lib/gnutls_alert.c:39
+#: lib/alert.c:39
 msgid "Close notify"
 msgstr "Sulkemisilmoitus"
 
-#: lib/gnutls_alert.c:40
+#: lib/alert.c:40
 msgid "Unexpected message"
 msgstr "Odottamaton viesti"
 
-#: lib/gnutls_alert.c:41
+#: lib/alert.c:41
 msgid "Bad record MAC"
 msgstr "Väärä tietue MAC"
 
-#: lib/gnutls_alert.c:42
+#: lib/alert.c:42
 msgid "Decryption failed"
 msgstr "Salauksen purku epäonnistui"
 
-#: lib/gnutls_alert.c:43
+#: lib/alert.c:43
 msgid "Record overflow"
 msgstr "Tietueylivuoto"
 
-#: lib/gnutls_alert.c:45
+#: lib/alert.c:45
 msgid "Decompression failed"
 msgstr "Pakkauksen purkaminen epäonnistui"
 
-#: lib/gnutls_alert.c:46
+#: lib/alert.c:46
 msgid "Handshake failed"
 msgstr "Kättely epäonnistui"
 
-#: lib/gnutls_alert.c:47
+#: lib/alert.c:47
 msgid "Certificate is bad"
 msgstr "Varmenne on väärä"
 
-#: lib/gnutls_alert.c:49
+#: lib/alert.c:49
 msgid "Certificate is not supported"
 msgstr "Varmennetta ei tueta"
 
-#: lib/gnutls_alert.c:51
+#: lib/alert.c:51
 msgid "Certificate was revoked"
 msgstr "Varmenne kumottiin"
 
-#: lib/gnutls_alert.c:53
+#: lib/alert.c:53
 msgid "Certificate is expired"
 msgstr "Varmenne on vanhentunut"
 
-#: lib/gnutls_alert.c:55
+#: lib/alert.c:55
 msgid "Unknown certificate"
 msgstr "Tuntematon varmenne"
 
-#: lib/gnutls_alert.c:56
+#: lib/alert.c:56
 msgid "Illegal parameter"
 msgstr "Virheellinen parametri"
 
-#: lib/gnutls_alert.c:57
+#: lib/alert.c:57
 msgid "CA is unknown"
 msgstr "Varmenneviranomainen on tuntematon"
 
-#: lib/gnutls_alert.c:58
+#: lib/alert.c:58
 msgid "Access was denied"
 msgstr "Pääsy kielletty"
 
-#: lib/gnutls_alert.c:59
+#: lib/alert.c:59
 msgid "Decode error"
 msgstr "Dekoodausvirhe"
 
-#: lib/gnutls_alert.c:60
+#: lib/alert.c:60
 msgid "Decrypt error"
 msgstr "Salauksen purkuvirhe"
 
-#: lib/gnutls_alert.c:61
+#: lib/alert.c:61
 msgid "Export restriction"
 msgstr "Vientirajoite"
 
-#: lib/gnutls_alert.c:63
+#: lib/alert.c:63
 msgid "Error in protocol version"
 msgstr "Virhe yhteyskäytäntöversiossa"
 
-#: lib/gnutls_alert.c:65
+#: lib/alert.c:65
 msgid "Insufficient security"
 msgstr "Riittämättömästi turvallisuutta"
 
-#: lib/gnutls_alert.c:66
+#: lib/alert.c:66
 msgid "User canceled"
 msgstr "Käyttäjä perui"
 
-#: lib/gnutls_alert.c:68
+#: lib/alert.c:68
 msgid "No certificate (SSL 3.0)"
 msgstr "Ei varmmennetta (SSL 3.0)"
 
-#: lib/gnutls_alert.c:69
+#: lib/alert.c:69
 msgid "Internal error"
 msgstr "Sisäinen virhe"
 
-#: lib/gnutls_alert.c:71
+#: lib/alert.c:71
 msgid "Inappropriate fallback"
 msgstr ""
 
-#: lib/gnutls_alert.c:73
+#: lib/alert.c:73
 msgid "No renegotiation is allowed"
 msgstr "Uudelleenneuvottelua ei sallita"
 
-#: lib/gnutls_alert.c:75
+#: lib/alert.c:75
 msgid "Could not retrieve the specified certificate"
 msgstr "Määritellyn varmenteen noutaminen epäonnistui"
 
-#: lib/gnutls_alert.c:77
+#: lib/alert.c:77
 msgid "An unsupported extension was sent"
 msgstr "Lähetettiin tukematon laajennus"
 
-#: lib/gnutls_alert.c:79
+#: lib/alert.c:79
 msgid "The server name sent was not recognized"
 msgstr "Ei tunnistettu lähetettyä palvelinnimeä"
 
-#: lib/gnutls_alert.c:81
+#: lib/alert.c:81
 msgid "The SRP/PSK username is missing or not known"
 msgstr "SRP-/PSK-käyttäjänimi puuttuu tai on tuntematon"
 
-#: lib/gnutls_alert.c:84
+#: lib/alert.c:84
 msgid "No supported application protocol could be negotiated"
 msgstr "Tuettujen sovellusyhteyskäytäntöjen neuvottelu epäonnistui"
 
-#: lib/gnutls_errors.c:44
+#: lib/errors.c:44
 msgid "Could not negotiate a supported cipher suite."
 msgstr "Tuetusta salakirjoitusmenetelmästä neuvottelu epäonnistui."
 
-#: lib/gnutls_errors.c:46
+#: lib/errors.c:46
 msgid "No or insufficient priorities were set."
 msgstr "Ei ollut asetettu prioriteetteja tai niitä oli riittämättömästi."
 
-#: lib/gnutls_errors.c:48
+#: lib/errors.c:48
 msgid "The cipher type is unsupported."
 msgstr "Salakirjoitusmenetelmätyyppiä ei tueta."
 
-#: lib/gnutls_errors.c:50
+#: lib/errors.c:50
 msgid "The certificate and the given key do not match."
 msgstr "Varmenne ja annettu avain eivät täsmää."
 
-#: lib/gnutls_errors.c:53
+#: lib/errors.c:53
 msgid "Could not negotiate a supported compression method."
 msgstr "Tuetusta pakkaamismenetelmästä neuvottelu epäonnistui."
 
-#: lib/gnutls_errors.c:55
+#: lib/errors.c:55
 msgid "An unknown public key algorithm was encountered."
 msgstr "Kohdattiin tuntematon julkinen avainalgoritmi."
 
-#: lib/gnutls_errors.c:58
+#: lib/errors.c:58
 msgid "An algorithm that is not enabled was negotiated."
 msgstr "Neuvoteltiin algoritmista, jota ei ole otettu käyttöön."
 
-#: lib/gnutls_errors.c:61
+#: lib/errors.c:61
 #, fuzzy
 msgid "A packet with illegal or unsupported version was received."
 msgstr "Vastaanotettiin tietuepaketti, jonka versio oli virheellinen."
 
-#: lib/gnutls_errors.c:64
+#: lib/errors.c:64
 msgid ""
 "The Diffie-Hellman prime sent by the server is not acceptable (not long "
 "enough)."
@@ -178,539 +178,567 @@ msgstr ""
 "Palvelimen lähettämä Diffie-Hellman -perusavain ei ollut hyväksyttävä (ei "
 "riittävän pitkä)."
 
-#: lib/gnutls_errors.c:67
+#: lib/errors.c:67
 msgid "A TLS packet with unexpected length was received."
 msgstr "Vastaanotettiin odottamattoman pituinen TLS-paketti."
 
-#: lib/gnutls_errors.c:69
+#: lib/errors.c:69
 msgid "The TLS connection was non-properly terminated."
 msgstr "TLS-yhteys ei ollut päätetty oikein."
 
-#: lib/gnutls_errors.c:72
+#: lib/errors.c:72
 msgid "The specified session has been invalidated for some reason."
 msgstr "Määritelty istunto on jostain syystä virheellinen."
 
-#: lib/gnutls_errors.c:75
+#: lib/errors.c:75
 msgid "GnuTLS internal error."
 msgstr "Sisäinen GnuTLS-virhe."
 
-#: lib/gnutls_errors.c:77
+#: lib/errors.c:77
 msgid "A connection with inappropriate fallback was attempted."
 msgstr ""
 
-#: lib/gnutls_errors.c:79
+#: lib/errors.c:79
 msgid "An illegal TLS extension was received."
 msgstr "Vastaanotettiin virheellinen TLS-laajennus."
 
-#: lib/gnutls_errors.c:81
+#: lib/errors.c:81
 msgid "A TLS fatal alert has been received."
 msgstr "Vastaanotettiin kohtalokas TLS-hälytys."
 
-#: lib/gnutls_errors.c:83
+#: lib/errors.c:83
 msgid "An unexpected TLS packet was received."
 msgstr "Vastaanotettiin odottamaton TLS-paketti."
 
-#: lib/gnutls_errors.c:85
+#: lib/errors.c:85
 msgid "Failed to import the key into store."
 msgstr ""
 
-#: lib/gnutls_errors.c:88
+#: lib/errors.c:88
 msgid "An error was encountered at the TLS Finished packet calculation."
 msgstr "Kohdattiin virhe ”TLS Finished”-paketin laskennassa."
 
-#: lib/gnutls_errors.c:90
+#: lib/errors.c:90 libdane/errors.c:67
 msgid "No certificate was found."
 msgstr "Varmennetta ei löytynyt."
 
-#: lib/gnutls_errors.c:93
+#: lib/errors.c:93
 msgid "The given DSA key is incompatible with the selected TLS protocol."
 msgstr ""
 "Annettu DSA-avain on yhteensopimaton valitun TLS-yhteyskäytännön kanssa."
 
-#: lib/gnutls_errors.c:96
+#: lib/errors.c:96
 msgid "There is already a crypto algorithm with lower priority."
 msgstr "Salausalgoritmi alemmalla prioriteetilla on jo olemassa."
 
-#: lib/gnutls_errors.c:99
+#: lib/errors.c:99
 msgid "No temporary RSA parameters were found."
 msgstr "Ei löytynyt tilapäisiä RSA-parametreja."
 
-#: lib/gnutls_errors.c:101
+#: lib/errors.c:101
 msgid "No temporary DH parameters were found."
 msgstr "Ei löytynyt tilapäisiä DH-parametreja."
 
-#: lib/gnutls_errors.c:103
+#: lib/errors.c:103
 msgid "An unexpected TLS handshake packet was received."
 msgstr "Vastaanotettiin odottamaton TLS-kättelypaketti."
 
-#: lib/gnutls_errors.c:105
+#: lib/errors.c:105
 msgid "The scanning of a large integer has failed."
 msgstr "Suurikokoisen kokonaisluvun etsintä epäonnistui."
 
-#: lib/gnutls_errors.c:107
+#: lib/errors.c:107
 msgid "Could not export a large integer."
 msgstr "Suuren kokonaisluvun vienti epäonnistui."
 
-#: lib/gnutls_errors.c:109
+#: lib/errors.c:109
 msgid "Decryption has failed."
 msgstr "Salauksen purku epäonnistui."
 
-#: lib/gnutls_errors.c:111
+#: lib/errors.c:111
 msgid "Encryption has failed."
 msgstr "Salaus epäonnistui."
 
-#: lib/gnutls_errors.c:113
+#: lib/errors.c:113
 msgid "Public key decryption has failed."
 msgstr "Salauksen purku julkisella avaimella epäonnistui."
 
-#: lib/gnutls_errors.c:115
+#: lib/errors.c:115
 msgid "Public key encryption has failed."
 msgstr "Salaus julkisella avaimella epäonnistui."
 
-#: lib/gnutls_errors.c:117
+#: lib/errors.c:117
 msgid "Public key signing has failed."
 msgstr "Allekirjoitus julkisella avaimella epäonnistui."
 
-#: lib/gnutls_errors.c:119
+#: lib/errors.c:119
 msgid "Public key signature verification has failed."
 msgstr "Allekirjoituksen todennus julkisella avaimella epäonnistui."
 
-#: lib/gnutls_errors.c:122
+#: lib/errors.c:122
 msgid "Decompression of the TLS record packet has failed."
 msgstr "TLS-tietuepaketin pakkaamisen purkaminen epäonnistui."
 
-#: lib/gnutls_errors.c:124
+#: lib/errors.c:124
 msgid "Compression of the TLS record packet has failed."
 msgstr "TLS-tietuepaketin pakkaaminen epäonnistui."
 
-#: lib/gnutls_errors.c:127
+#: lib/errors.c:127
 msgid "Internal error in memory allocation."
 msgstr "Sisäinen virhe muistivarauksessa."
 
-#: lib/gnutls_errors.c:130
+#: lib/errors.c:130
 msgid "An unimplemented or disabled feature has been requested."
 msgstr "Pyydettiin toteuttamatonta tai käytöstä pois otettua ominaisuutta."
 
-#: lib/gnutls_errors.c:132
+#: lib/errors.c:132
 msgid "Insufficient credentials for that request."
 msgstr "Riittämättömästi valtuustietoja tuolle pyynnölle."
 
-#: lib/gnutls_errors.c:134
+#: lib/errors.c:134
 msgid "Error in password file."
 msgstr "Virhe salasanatiedostossa."
 
-#: lib/gnutls_errors.c:135
+#: lib/errors.c:135
 msgid "Wrong padding in PKCS1 packet."
 msgstr "Väärä täyte PKCS1-paketissa."
 
-#: lib/gnutls_errors.c:137
-msgid "The requested session has expired."
+#: lib/errors.c:137
+#, fuzzy
+msgid "The session or certificate has expired."
 msgstr "Vaadittu istunto on vanhentunut."
 
-#: lib/gnutls_errors.c:139
+#: lib/errors.c:139
+#, fuzzy
+msgid "The certificate is not yet activated."
+msgstr "Varmenteessa on tukemattomia attribuutteja."
+
+#: lib/errors.c:141
 msgid "Hashing has failed."
 msgstr "Tiivisteen laskeminen epäonnistui."
 
-#: lib/gnutls_errors.c:140
+#: lib/errors.c:142
 msgid "Base64 decoding error."
 msgstr "Base64-dekoodausvirhe."
 
-#: lib/gnutls_errors.c:142
+#: lib/errors.c:144
 msgid "Base64 unexpected header error."
 msgstr "Base64 odottamaton otsakevirhe."
 
-#: lib/gnutls_errors.c:144
+#: lib/errors.c:146
 msgid "Base64 encoding error."
 msgstr "Base64-koodausvirhe."
 
-#: lib/gnutls_errors.c:146
+#: lib/errors.c:148
 msgid "Parsing error in password file."
 msgstr "Jäsennysvirhe salasanatiedostossa."
 
-#: lib/gnutls_errors.c:148
+#: lib/errors.c:150
 msgid "The requested data were not available."
 msgstr "Pyydetyt tiedot eivät olleet saatavilla."
 
-#: lib/gnutls_errors.c:150
+#: lib/errors.c:152
+msgid "There are no embedded data in the structure."
+msgstr ""
+
+#: lib/errors.c:154
 msgid "Error in the pull function."
 msgstr "Virhe pull-toiminnossa."
 
-#: lib/gnutls_errors.c:151
+#: lib/errors.c:155
 msgid "Error in the push function."
 msgstr "Virhe push-toiminnossa."
 
-#: lib/gnutls_errors.c:153
+#: lib/errors.c:157
 msgid ""
 "The upper limit of record packet sequence numbers has been reached. Wow!"
 msgstr "Tietuepakettijärjestysnumeroiden yläraja on saavutettu. Wow!"
 
-#: lib/gnutls_errors.c:155
+#: lib/errors.c:159
 msgid "Error in the certificate."
 msgstr "Virhe varmenteessa."
 
-#: lib/gnutls_errors.c:157
+#: lib/errors.c:161
 #, fuzzy
 msgid "Error in the certificate verification."
 msgstr "Virhe varmenteessa."
 
-#: lib/gnutls_errors.c:159
+#: lib/errors.c:163
+msgid "Error in the private key verification; seed doesn't match."
+msgstr ""
+
+#: lib/errors.c:165
 msgid "Could not authenticate peer."
 msgstr "Vastapuolen todentaminen epäonnistui."
 
-#: lib/gnutls_errors.c:162
+#: lib/errors.c:168
 msgid "Unknown Subject Alternative name in X.509 certificate."
 msgstr "Tuntematon aihevaihtoehtonimi X.509-varmenteessa."
 
-#: lib/gnutls_errors.c:166
+#: lib/errors.c:171
+msgid "CIDR name constraint is malformed in size or structure."
+msgstr ""
+
+#: lib/errors.c:175
 msgid "Unsupported critical extension in X.509 certificate."
 msgstr "Tukematon kriittinen laajennus X.509-varmenteessa."
 
-#: lib/gnutls_errors.c:168
+#: lib/errors.c:177
 msgid "Unsupported extension in X.509 certificate."
 msgstr "Tukematon laajennus X.509-varmenteessa."
 
-#: lib/gnutls_errors.c:171
+#: lib/errors.c:180
 msgid "Key usage violation in certificate has been detected."
 msgstr "Havaittiin avainkäytön rikkomus varmenteessa."
 
-#: lib/gnutls_errors.c:173 lib/gnutls_errors.c:392
+#: lib/errors.c:182 lib/errors.c:423
 msgid "Function was interrupted."
 msgstr "Funktio keskeytettiin."
 
-#: lib/gnutls_errors.c:175
+#: lib/errors.c:184
 msgid "TLS Application data were received, while expecting handshake data."
 msgstr ""
 "Vastaanotettiin TLS-sovelluksen tietoja, vaikka odotettiin kättelytietoja."
 
-#: lib/gnutls_errors.c:177
+#: lib/errors.c:186
 msgid "Error in Database backend."
 msgstr "Virhe tietokantatallennusmoduulissa."
 
-#: lib/gnutls_errors.c:178
+#: lib/errors.c:187
 msgid "The certificate type is not supported."
 msgstr "Varmenteen tyyppiä ei tueta."
 
-#: lib/gnutls_errors.c:181
+#: lib/errors.c:190
 msgid "The given memory buffer is too short to hold parameters."
 msgstr "Annettu muistipuskuri on liian lyhyt parametrien säilyttämiseen."
 
-#: lib/gnutls_errors.c:183
+#: lib/errors.c:192 libdane/errors.c:61
 msgid "The request is invalid."
 msgstr "Pyyntö on virheellinen."
 
-#: lib/gnutls_errors.c:185
+#: lib/errors.c:194
 msgid "The cookie was bad."
 msgstr "Eväste oli väärä."
 
-#: lib/gnutls_errors.c:186
+#: lib/errors.c:195
 msgid "An illegal parameter has been received."
 msgstr "Vastaanotettiin virheellinen parametri."
 
-#: lib/gnutls_errors.c:188
+#: lib/errors.c:197
 msgid "An illegal parameter was found."
 msgstr "Löytyi virheellinen parametri."
 
-#: lib/gnutls_errors.c:190
+#: lib/errors.c:199
 msgid "Error while reading file."
 msgstr "Virhe luettaessa tiedostoa."
 
-#: lib/gnutls_errors.c:192
+#: lib/errors.c:201
 msgid "ASN1 parser: Element was not found."
 msgstr "ASN1-jäsennin: Elementtiä ei löytynyt."
 
-#: lib/gnutls_errors.c:194
+#: lib/errors.c:203
 msgid "ASN1 parser: Identifier was not found"
 msgstr "ASN1-jäsennin: Tunnistetta ei löytynyt"
 
-#: lib/gnutls_errors.c:196
+#: lib/errors.c:205
 msgid "ASN1 parser: Error in DER parsing."
 msgstr "ASN1-jäsennin: Virhe DER-jäsennyksessä."
 
-#: lib/gnutls_errors.c:198
+#: lib/errors.c:207
 msgid "ASN1 parser: Value was not found."
 msgstr "ASN1-jäsennin: Arvoa ei löytynyt."
 
-#: lib/gnutls_errors.c:200
+#: lib/errors.c:209
 msgid "ASN1 parser: Generic parsing error."
 msgstr "ASN1-jäsennin: Yleinen jäsennysvirhe."
 
-#: lib/gnutls_errors.c:202
+#: lib/errors.c:211
 msgid "ASN1 parser: Value is not valid."
 msgstr "ASN1-jäsennin: Arvo on virheellinen."
 
-#: lib/gnutls_errors.c:204
+#: lib/errors.c:213
 msgid "ASN1 parser: Error in TAG."
 msgstr "ASN1-jäsennin: Virhe TUNNUKSESSA."
 
-#: lib/gnutls_errors.c:206
+#: lib/errors.c:215
 msgid "ASN1 parser: error in implicit tag"
 msgstr "ASN1-jäsennin: virhe implisiittisessä tunnuksessa"
 
-#: lib/gnutls_errors.c:208
+#: lib/errors.c:217
 msgid "ASN1 parser: Error in type 'ANY'."
 msgstr "ASN1-jäsennin: Virhe tyypissä ’ANY’."
 
-#: lib/gnutls_errors.c:210
+#: lib/errors.c:219
 msgid "ASN1 parser: Syntax error."
 msgstr "ASN1-jäsennin: Syntaksivirhe."
 
-#: lib/gnutls_errors.c:212
+#: lib/errors.c:221
 msgid "ASN1 parser: Overflow in DER parsing."
 msgstr "ASN1-jäsennin: Ylivuoto DER-jäsennyksessä."
 
-#: lib/gnutls_errors.c:216
+#: lib/errors.c:225
 msgid "Too many empty record packets have been received."
 msgstr "Vastaanotettiin liian monta tyhjää tietuepakettia."
 
-#: lib/gnutls_errors.c:218
+#: lib/errors.c:227
 msgid "Too many handshake packets have been received."
 msgstr "Vastaanotettiin liian monta kättelypakettia."
 
-#: lib/gnutls_errors.c:220
+#: lib/errors.c:229
 msgid "The crypto library version is too old."
 msgstr "Kirjaston crypto versio on liian vanha."
 
-#: lib/gnutls_errors.c:223
+#: lib/errors.c:232
 msgid "The tasn1 library version is too old."
 msgstr "Kirjaston tasn1 versio on liian vanha."
 
-#: lib/gnutls_errors.c:225
+#: lib/errors.c:234
 msgid "The OpenPGP User ID is revoked."
 msgstr "Kumottiin OpenPGP-käyttäjätunniste."
 
-#: lib/gnutls_errors.c:227
+#: lib/errors.c:236
 msgid "The OpenPGP key has not a preferred key set."
 msgstr "OpenPGP-avaimella ei ole ensisijaista avainjoukkoa."
 
-#: lib/gnutls_errors.c:229
+#: lib/errors.c:238
 msgid "Error loading the keyring."
 msgstr "Virhe ladattaessa avainrengasta."
 
-#: lib/gnutls_errors.c:231
+#: lib/errors.c:240
 msgid "The initialization of crypto backend has failed."
 msgstr "Salaustaustaohjelman alustus epäonnistui."
 
-#: lib/gnutls_errors.c:234
+#: lib/errors.c:243
 msgid "No supported compression algorithms have been found."
 msgstr "Ei ole löytynyt yhtään tuettua pakkausalgoritmia."
 
-#: lib/gnutls_errors.c:236
+#: lib/errors.c:245
 msgid "No supported cipher suites have been found."
 msgstr "Ei ole löytynyt yhtään tuettua salakirjoitusmenetelmää."
 
-#: lib/gnutls_errors.c:238
+#: lib/errors.c:247
 msgid "Could not get OpenPGP key."
 msgstr "OpenPGP-avaimen haku epäonnistui."
 
-#: lib/gnutls_errors.c:240
+#: lib/errors.c:249
 msgid "Could not find OpenPGP subkey."
 msgstr "OpenPGP-aliavaimen löytäminen epäonnistui."
 
-#: lib/gnutls_errors.c:242
+#: lib/errors.c:251
 msgid "Safe renegotiation failed."
 msgstr "Turvallinen uudelleenneuvottelu epäonnistui."
 
-#: lib/gnutls_errors.c:244
+#: lib/errors.c:253
 msgid "Unsafe renegotiation denied."
 msgstr "Turvaton uudelleenneuvottelu kielletty."
 
-#: lib/gnutls_errors.c:247
+#: lib/errors.c:256
 msgid "The SRP username supplied is illegal."
 msgstr "Tarjottu SRP-käyttäjänimi on virheellinen."
 
-#: lib/gnutls_errors.c:249
+#: lib/errors.c:258
 msgid "The SRP username supplied is unknown."
 msgstr "Tarjottu SRP-käyttäjänimi on tuntematon."
 
-#: lib/gnutls_errors.c:252
+#: lib/errors.c:261
 msgid "The OpenPGP fingerprint is not supported."
 msgstr "OpenPGP-sormenjälkeä ei tueta."
 
-#: lib/gnutls_errors.c:254
+#: lib/errors.c:263
 msgid "The signature algorithm is not supported."
 msgstr "Allekirjoitusalgoritmia ei tueta."
 
-#: lib/gnutls_errors.c:256
+#: lib/errors.c:265
 msgid "The certificate has unsupported attributes."
 msgstr "Varmenteessa on tukemattomia attribuutteja."
 
-#: lib/gnutls_errors.c:258
+#: lib/errors.c:267
 msgid "The OID is not supported."
 msgstr "OID on tukematon."
 
-#: lib/gnutls_errors.c:260
+#: lib/errors.c:269
 msgid "The hash algorithm is unknown."
 msgstr "Tiivistealgoritmi on tuntematon."
 
-#: lib/gnutls_errors.c:262
+#: lib/errors.c:271
 msgid "The PKCS structure's content type is unknown."
 msgstr "PKCS-rakenteen sisältötyyppi on tuntematon."
 
-#: lib/gnutls_errors.c:264
+#: lib/errors.c:273
 msgid "The PKCS structure's bag type is unknown."
 msgstr "PKCS-rakenteen bag-tyyppi on tuntematon."
 
-#: lib/gnutls_errors.c:266
+#: lib/errors.c:275 lib/errors.c:281
 msgid "The given password contains invalid characters."
 msgstr "Annettu salasana sisältää virheellisiä merkkejä."
 
-#: lib/gnutls_errors.c:269
+#: lib/errors.c:277
+#, fuzzy
+msgid "The given string contains invalid UTF-8 characters."
+msgstr "Annettu salasana sisältää virheellisiä merkkejä."
+
+#: lib/errors.c:279
+#, fuzzy
+msgid "The given email string contains non-ASCII characters before '@'."
+msgstr "Annettu salasana sisältää virheellisiä merkkejä."
+
+#: lib/errors.c:284
 msgid "The Message Authentication Code verification failed."
 msgstr "MAC-todennus epäonnistui."
 
-#: lib/gnutls_errors.c:271
+#: lib/errors.c:286
 msgid "Some constraint limits were reached."
 msgstr "Tavoitettiin joitakin rajoiterajoja."
 
-#: lib/gnutls_errors.c:273
+#: lib/errors.c:288
 msgid "Failed to acquire random data."
 msgstr "Satunnaisten tietojen hankkiminen epäonnistui."
 
-#: lib/gnutls_errors.c:275
+#: lib/errors.c:290
 msgid "Verifying TLS/IA phase checksum failed"
 msgstr "TLS/IA-vaiheen tarkistussumman todentaminen epäonnistui"
 
-#: lib/gnutls_errors.c:278
+#: lib/errors.c:293
 msgid "The specified algorithm or protocol is unknown."
 msgstr "Määritelty algoritmi tai yhteyskäytäntö on tuntematon."
 
-#: lib/gnutls_errors.c:281
+#: lib/errors.c:296
 msgid "The handshake data size is too large."
 msgstr "Kättelytietojen koko on liian suuri."
 
-#: lib/gnutls_errors.c:284
+#: lib/errors.c:299
 msgid "Error opening /dev/crypto"
 msgstr "Virhe avattaessa /dev/crypto"
 
-#: lib/gnutls_errors.c:287
+#: lib/errors.c:302
 msgid "Error interfacing with /dev/crypto"
 msgstr "Virhe rajapintaliitännässä /dev/crypto"
 
-#: lib/gnutls_errors.c:289
+#: lib/errors.c:304
 msgid "Peer has terminated the connection"
 msgstr "Vastapuoli katkaisi yhteyden"
 
-#: lib/gnutls_errors.c:291
+#: lib/errors.c:306
 msgid "Channel binding data not available"
 msgstr "Kanavan sitomistiedot eivät ole saatavilla."
 
-#: lib/gnutls_errors.c:294
+#: lib/errors.c:309
 msgid "TPM error."
 msgstr "TPM-virhe."
 
-#: lib/gnutls_errors.c:296
+#: lib/errors.c:311
 msgid "The TPM library (trousers) cannot be found."
 msgstr ""
 
-#: lib/gnutls_errors.c:298
+#: lib/errors.c:313
 msgid "TPM is not initialized."
 msgstr "TPM ei ole alustettu."
 
-#: lib/gnutls_errors.c:300
+#: lib/errors.c:315
 msgid "TPM key was not found in persistent storage."
 msgstr "Pysyvästä muistista ei löytynyt TPM-avainta."
 
-#: lib/gnutls_errors.c:302
+#: lib/errors.c:317
 msgid "Cannot initialize a session with the TPM."
 msgstr "Istunnon alustaminen TPM:llä epäonnistui."
 
-#: lib/gnutls_errors.c:304
+#: lib/errors.c:319
 msgid "PKCS #11 error."
 msgstr "PKCS #11 -virhe."
 
-#: lib/gnutls_errors.c:306
+#: lib/errors.c:321
 msgid "PKCS #11 initialization error."
 msgstr "PKCS #11 -alustusvirhe."
 
-#: lib/gnutls_errors.c:308
+#: lib/errors.c:323
 msgid "Error in parsing."
 msgstr "Virhe jäsennettäessä."
 
-#: lib/gnutls_errors.c:310
+#: lib/errors.c:325
 msgid "Error in provided PIN."
 msgstr "Tarjotussa PIN-luvussa on virhe."
 
-#: lib/gnutls_errors.c:312
+#: lib/errors.c:327
 msgid "Error in provided SRK password for TPM."
 msgstr "TPM:lle tarjotussa SRK-salasanassa on virhe."
 
-#: lib/gnutls_errors.c:315
+#: lib/errors.c:330
 msgid "Error in provided password for key to be loaded in TPM."
 msgstr "Virhe TPM:lle ladattavan avaimen tarjotussa salassanassa."
 
-#: lib/gnutls_errors.c:317
+#: lib/errors.c:332
 msgid "PKCS #11 error in slot"
 msgstr "PKCS #11 -virhe välissä"
 
-#: lib/gnutls_errors.c:319
+#: lib/errors.c:334
 msgid "Thread locking error"
 msgstr "Säikeen lukitusvirhe"
 
-#: lib/gnutls_errors.c:321
+#: lib/errors.c:336
 msgid "PKCS #11 error in attribute"
 msgstr "PKCS #11 -virhe attribuutissa"
 
-#: lib/gnutls_errors.c:323
+#: lib/errors.c:338
 msgid "PKCS #11 error in device"
 msgstr "PKCS #11 -virhe laitteessa"
 
-#: lib/gnutls_errors.c:325
+#: lib/errors.c:340
 msgid "PKCS #11 error in data"
 msgstr "PKCS #11 -virhe tiedoissa"
 
-#: lib/gnutls_errors.c:327
+#: lib/errors.c:342
 msgid "PKCS #11 unsupported feature"
 msgstr "PKCS #11 tukematon ominaisuus"
 
-#: lib/gnutls_errors.c:329
+#: lib/errors.c:344
 msgid "PKCS #11 error in key"
 msgstr "PKCS #11 -vireh avaimessa"
 
-#: lib/gnutls_errors.c:331
+#: lib/errors.c:346
 msgid "PKCS #11 PIN expired"
 msgstr "PKCS #11 PIN vanhentunut"
 
-#: lib/gnutls_errors.c:333
+#: lib/errors.c:348
 msgid "PKCS #11 PIN locked"
 msgstr "PKCS #11 PIN lukittu"
 
-#: lib/gnutls_errors.c:335
+#: lib/errors.c:350
 msgid "PKCS #11 error in session"
 msgstr "PKCS #11 -virhe istunnossa"
 
-#: lib/gnutls_errors.c:337
+#: lib/errors.c:352
 msgid "PKCS #11 error in signature"
 msgstr "PKCS #11 -virhe allekirjoituksessa"
 
-#: lib/gnutls_errors.c:339
+#: lib/errors.c:354
 msgid "PKCS #11 error in token"
 msgstr "PKCS #11 -virhe merkkijonossa"
 
-#: lib/gnutls_errors.c:341
+#: lib/errors.c:356
 msgid "PKCS #11 user error"
 msgstr "PKCS #11 -käyttäjävirhe"
 
-#: lib/gnutls_errors.c:343
+#: lib/errors.c:358
 msgid "The operation timed out"
 msgstr "Toiminnan aikakatkaisu"
 
-#: lib/gnutls_errors.c:345
+#: lib/errors.c:360
 msgid "The operation was cancelled due to user error"
 msgstr "Toiminto peruutettiin käyttäjävirheen vuoksi"
 
-#: lib/gnutls_errors.c:347
+#: lib/errors.c:362
 msgid "No supported ECC curves were found"
 msgstr "Ei ole löytynyt yhtään ECC-koordinaattia."
 
-#: lib/gnutls_errors.c:349
+#: lib/errors.c:364
 msgid "The curve is unsupported"
 msgstr "Koordinaattia ei tueta."
 
-#: lib/gnutls_errors.c:351
+#: lib/errors.c:366
 msgid "The requested PKCS #11 object is not available"
 msgstr "Pyydetty PKCS #11 -objekti ei ole saatavilla."
 
-#: lib/gnutls_errors.c:354
+#: lib/errors.c:369
 msgid ""
 "The provided X.509 certificate list is not sorted (in subject to issuer "
 "order)"
@@ -718,83 +746,119 @@ msgstr ""
 "Tarjottua X.599-varmenneluetteloa ei ole lajiteltu (aiheessa "
 "julkaisijajärjestys)"
 
-#: lib/gnutls_errors.c:356
+#: lib/errors.c:371
 msgid "The OCSP response is invalid"
 msgstr "OCSP-vastaus on virheellinen"
 
-#: lib/gnutls_errors.c:358
+#: lib/errors.c:373
 msgid "There is no certificate status (OCSP)."
 msgstr "Ei ole mitään varmennetilaa (OCSP)."
 
-#: lib/gnutls_errors.c:360
+#: lib/errors.c:375
 msgid "Error in the system's randomness device."
 msgstr "Virhe järjestelmän satunnaisuuslaitteessa."
 
-#: lib/gnutls_errors.c:363
+#: lib/errors.c:378
 msgid "No common application protocol could be negotiated."
 msgstr "Yleisen sovellusyhteyskäytännön neuvottelu epäonnistui."
 
-#: lib/gnutls_errors.c:365
+#: lib/errors.c:380
 #, fuzzy
 msgid "Error while performing self checks."
 msgstr "Virhe luettaessa tiedostoa."
 
-#: lib/gnutls_errors.c:367
+#: lib/errors.c:382
 msgid "There is no self test for this algorithm."
 msgstr ""
 
-#: lib/gnutls_errors.c:369
+#: lib/errors.c:384
 msgid ""
 "An error has been detected in the library and cannot continue operations."
 msgstr ""
 
-#: lib/gnutls_errors.c:371
+#: lib/errors.c:386
 #, fuzzy
 msgid "Error in sockets initialization."
 msgstr "Virhe push-toiminnossa."
 
-#: lib/gnutls_errors.c:373
+#: lib/errors.c:388
 #, fuzzy
 msgid "Error in public key generation."
 msgstr "Virhe pull-toiminnossa."
 
-#: lib/gnutls_errors.c:375
+#: lib/errors.c:390
+#, fuzzy
+msgid "Invalid TLS extensions length field."
+msgstr "Vastaanotettiin virheellinen TLS-laajennus."
+
+#: lib/errors.c:392
+msgid "Peer's certificate or username has changed during a rehandshake."
+msgstr ""
+
+#: lib/errors.c:394
+msgid "The provided string has an embedded null."
+msgstr ""
+
+#: lib/errors.c:396
+msgid "Attempted handshake during false start."
+msgstr ""
+
+#: lib/errors.c:398
+#, fuzzy
+msgid "The SNI host name not recognised."
+msgstr "Ei tunnistettu lähetettyä palvelinnimeä"
+
+#: lib/errors.c:400
 msgid "There was an issue converting to or from UTF8."
 msgstr ""
 
-#: lib/gnutls_errors.c:381
+#: lib/errors.c:402
+msgid "Cannot obtain resumption parameters while handshake is incomplete."
+msgstr ""
+
+#: lib/errors.c:404
+#, fuzzy
+msgid "The obtained public key is invalid."
+msgstr "Pyyntö on virheellinen."
+
+#: lib/errors.c:406
+#, fuzzy
+msgid "The private key is invalid."
+msgstr "Pyyntö on virheellinen."
+
+#: lib/errors.c:412 libdane/errors.c:42
 msgid "Success."
 msgstr "Onnistui."
 
-#: lib/gnutls_errors.c:382
+#: lib/errors.c:413
 msgid "A TLS warning alert has been received."
 msgstr "Vastaanotettiin TLS-varoitushälytys."
 
-#: lib/gnutls_errors.c:384
+#: lib/errors.c:415
 msgid "A heartbeat pong message was received."
 msgstr "Vastaanotettiin pong-sydämenlyöntiviesti."
 
-#: lib/gnutls_errors.c:386
+#: lib/errors.c:417
 msgid "A heartbeat ping message was received."
 msgstr "Vastaanotettiin ping-sydämenlyöntiviesti."
 
-#: lib/gnutls_errors.c:388
+#: lib/errors.c:419
 msgid "Resource temporarily unavailable, try again."
 msgstr "Resurssi on tilapäisesti tavoittamattomissa, yritä uudelleen."
 
-#: lib/gnutls_errors.c:390
+#: lib/errors.c:421
 msgid "The transmitted packet is too large (EMSGSIZE)."
 msgstr "Siirretty paketti on liian suuri (EMGSSIZE)."
 
-#: lib/gnutls_errors.c:393
+#: lib/errors.c:424
 msgid "Rehandshake was requested by the peer."
 msgstr "Vastapuoli vaati uudelleenkättelyn."
 
-#: lib/gnutls_errors.c:395
+#: lib/errors.c:426
 msgid "One of the involved algorithms has insufficient security level."
 msgstr ""
 
-#: lib/gnutls_errors.c:486
+#: lib/errors.c:517 libdane/errors.c:100
 msgid "(unknown error code)"
 msgstr "(tuntematon virhekoodi)"
 
@@ -865,9 +929,10 @@ msgstr "\t\tVanheneminen: Ei koskaan\n"
 msgid "\t\tExpiration: %s\n"
 msgstr "\t\tVanheneminen: %s\n"
 
-#: lib/openpgp/output.c:230 lib/x509/ocsp_output.c:530 lib/x509/output.c:1080
-#: lib/x509/output.c:1446 lib/x509/output.c:1654 lib/x509/output.c:2088
-#: lib/x509/output.c:2247
+#: lib/openpgp/output.c:230 lib/x509/ocsp_output.c:527 lib/x509/output.c:1178
+#: lib/x509/output.c:1375 lib/x509/output.c:1519 lib/x509/output.c:1744
+#: lib/x509/output.c:1757 lib/x509/output.c:2174 lib/x509/output.c:2272
+#: lib/x509/output.c:2323
 msgid "unknown"
 msgstr "tuntematon"
 
@@ -881,7 +946,7 @@ msgstr "\tJulkisen avaimen algoritmi: %s\n"
 msgid "\tKey Security Level: %s\n"
 msgstr "\tAvaimen turvataso: %s\n"
 
-#: lib/openpgp/output.c:257 lib/x509/output.c:1116
+#: lib/openpgp/output.c:257 lib/x509/output.c:1214
 #, c-format
 msgid "\t\tModulus (bits %d):\n"
 msgstr "\t\tModulo (bitit %d):\n"
@@ -890,30 +955,30 @@ msgstr "\t\tModulo (bitit %d):\n"
 msgid "\t\tExponent:\n"
 msgstr "\t\tEksponentti:\n"
 
-#: lib/openpgp/output.c:293 lib/x509/output.c:1219
+#: lib/openpgp/output.c:293 lib/x509/output.c:1317
 #, c-format
 msgid "\t\tPublic key (bits %d):\n"
 msgstr "\t\tJulkinen avain (bitit %d):\n"
 
-#: lib/openpgp/output.c:295 lib/x509/output.c:1168
+#: lib/openpgp/output.c:295 lib/x509/output.c:1266
 msgid "\t\tY:\n"
 msgstr "\t\tY:\n"
 
-#: lib/openpgp/output.c:299 lib/x509/output.c:1224
+#: lib/openpgp/output.c:299 lib/x509/output.c:1322
 msgid "\t\tP:\n"
 msgstr "\t\tP:\n"
 
-#: lib/openpgp/output.c:303 lib/x509/output.c:1228
+#: lib/openpgp/output.c:303 lib/x509/output.c:1326
 msgid "\t\tQ:\n"
 msgstr "\t\tQ:\n"
 
-#: lib/openpgp/output.c:307 lib/x509/output.c:1232
+#: lib/openpgp/output.c:307 lib/x509/output.c:1330
 msgid "\t\tG:\n"
 msgstr "\t\tG:\n"
 
 #: lib/openpgp/output.c:341 lib/x509/ocsp_output.c:50
-#: lib/x509/ocsp_output.c:276 lib/x509/output.c:1285 lib/x509/output.c:1819
-#: lib/x509/output.c:2190
+#: lib/x509/ocsp_output.c:276 lib/x509/output.c:1398 lib/x509/output.c:1927
+#: lib/x509/output.c:2295
 #, c-format
 msgid "\tVersion: %d\n"
 msgstr "\tVersio: %d\n"
@@ -975,17 +1040,17 @@ msgstr "avainalgoritmi %s (%d bittiä)"
 msgid "unknown key algorithm (%d)"
 msgstr "tuntematon avainalgoritmi (%d)"
 
-#: lib/openpgp/output.c:580
+#: lib/openpgp/output.c:584
 msgid "OpenPGP Certificate Information:\n"
 msgstr "OpenPGP-varmennetiedot:\n"
 
-#: lib/x509/ocsp_output.c:136 lib/x509/ocsp_output.c:503 lib/x509/output.c:2005
-#: lib/x509/output.c:2377
+#: lib/x509/ocsp_output.c:136 lib/x509/ocsp_output.c:500 lib/x509/output.c:2095
+#: lib/x509/output.c:2457
 msgid "\t\t\tASCII: "
 msgstr "\t\t\tASCII: "
 
-#: lib/x509/ocsp_output.c:141 lib/x509/ocsp_output.c:508 lib/x509/output.c:2009
-#: lib/x509/output.c:2382
+#: lib/x509/ocsp_output.c:141 lib/x509/ocsp_output.c:505 lib/x509/output.c:2099
+#: lib/x509/output.c:2462
 msgid "\t\t\tHexdump: "
 msgstr "\t\t\tHeksadesimaalivedos: "
 
@@ -998,108 +1063,109 @@ msgstr "OCSP-pyyntötietoa:\n"
 msgid "\tResponder Key ID: "
 msgstr "\tVastaanottajatunniste: %.*s\n"
 
-#: lib/x509/ocsp_output.c:300
-#, c-format
-msgid "\tResponder ID: %.*s\n"
+#: lib/x509/ocsp_output.c:299
+#, fuzzy, c-format
+msgid "\tResponder ID: %s\n"
 msgstr "\tVastaanottajatunniste: %.*s\n"
 
-#: lib/x509/ocsp_output.c:323
+#: lib/x509/ocsp_output.c:320
 #, c-format
 msgid "\tProduced At: %s\n"
 msgstr "\tTuotettu paikassa: %s\n"
 
-#: lib/x509/ocsp_output.c:417
+#: lib/x509/ocsp_output.c:414
 #, c-format
 msgid "\t\tRevocation time: %s\n"
 msgstr "\t\tKumoamisaika: %s\n"
 
-#: lib/x509/ocsp_output.c:437
+#: lib/x509/ocsp_output.c:434
 #, c-format
 msgid "\t\tThis Update: %s\n"
 msgstr "\t\tTämä päivitys: %s\n"
 
-#: lib/x509/ocsp_output.c:455
+#: lib/x509/ocsp_output.c:452
 #, c-format
 msgid "\t\tNext Update: %s\n"
 msgstr "\t\tSeuraava osoitteessa: %s\n"
 
-#: lib/x509/ocsp_output.c:531 lib/x509/output.c:1447 lib/x509/output.c:2089
-#: lib/x509/output.c:2248
+#: lib/x509/ocsp_output.c:528 lib/x509/output.c:1523 lib/x509/output.c:2178
+#: lib/x509/output.c:2327
 #, c-format
 msgid "\tSignature Algorithm: %s\n"
 msgstr "\tAllekirjoitusalgoritmi: %s\n"
 
-#: lib/x509/ocsp_output.c:535 lib/x509/output.c:1451 lib/x509/output.c:2093
+#: lib/x509/ocsp_output.c:532 lib/x509/output.c:1528 lib/x509/output.c:2183
 msgid ""
 "warning: signed using a broken signature algorithm that can be forged.\n"
 msgstr ""
 "varoitus: allekirjoitettu käyttäen murrettua allekirjoitusalgoritmia, joka "
 "voi olla väärennetty.\n"
 
-#: lib/x509/ocsp_output.c:544 lib/x509/output.c:1477 lib/x509/output.c:2119
+#: lib/x509/ocsp_output.c:541 lib/x509/output.c:1554 lib/x509/output.c:2209
 msgid "\tSignature:\n"
 msgstr "\tAllekirjoitus:\n"
 
-#: lib/x509/ocsp_output.c:652
+#: lib/x509/ocsp_output.c:649
 msgid "OCSP Response Information:\n"
 msgstr "OCSP-vastaustietoa:\n"
 
-#: lib/x509/output.c:144
+#: lib/x509/output.c:59
 #, fuzzy
-msgid "warning: generalName contains an embedded NUL, replacing with '!'\n"
+msgid "warning: SAN contains an embedded NUL, replacing with '!'\n"
 msgstr ""
 "varoitus: altname sisältää upotettuja NUL-merkkejä, korvataan merkillä ’!’\n"
 
-#: lib/x509/output.c:167
+#: lib/x509/output.c:76 lib/x509/output.c:84
 #, c-format
 msgid "%sDNSname: %.*s (%s)\n"
 msgstr ""
 
-#: lib/x509/output.c:170
-msgid "note: DNSname is not in UTF-8.\n"
-msgstr ""
-
-#: lib/x509/output.c:171 lib/x509/output.c:174
+#: lib/x509/output.c:92
 #, fuzzy, c-format
 msgid "%sDNSname: %.*s\n"
 msgstr "%s\t\t\t”otherName OID”-tunniste: %.*s\n"
 
-#: lib/x509/output.c:179
+#: lib/x509/output.c:97
 #, c-format
 msgid "%sRFC822Name: %.*s\n"
 msgstr ""
 
-#: lib/x509/output.c:183
+#: lib/x509/output.c:101
 #, c-format
 msgid "%sURI: %.*s\n"
 msgstr ""
 
-#: lib/x509/output.c:197
+#: lib/x509/output.c:115
 #, fuzzy, c-format
 msgid "%sdirectoryName: %.*s\n"
 msgstr "%s\t\t\t”otherName OID”-tunniste: %.*s\n"
 
-#: lib/x509/output.c:201
+#: lib/x509/output.c:119
 #, fuzzy, c-format
 msgid "%sXMPP Address: %.*s\n"
 msgstr "%s\t\t\tXMPP-osoite: %.*s\n"
 
-#: lib/x509/output.c:204
+#: lib/x509/output.c:123
+#, c-format
+msgid "%sKRB5Principal: %.*s\n"
+msgstr ""
+
+#: lib/x509/output.c:127
 #, c-format
 msgid "%sUnknown name: "
 msgstr ""
 
-#: lib/x509/output.c:227
+#: lib/x509/output.c:269
 #, c-format
 msgid "\t\t\tPath Length Constraint: %d\n"
 msgstr "\t\t\tPolkupituusrajoite: %d\n"
 
-#: lib/x509/output.c:229
+#: lib/x509/output.c:271
 #, c-format
 msgid "\t\t\tPolicy Language: %s"
 msgstr "\t\t\tMenettelytapakieli: %s"
 
-#: lib/x509/output.c:237
+#: lib/x509/output.c:279
 msgid ""
 "\t\t\tPolicy:\n"
 "\t\t\t\tASCII: "
@@ -1107,7 +1173,7 @@ msgstr ""
 "\t\t\tMenettelytapa:\n"
 "\t\t\t\tASCII: "
 
-#: lib/x509/output.c:239
+#: lib/x509/output.c:281
 msgid ""
 "\n"
 "\t\t\t\tHexdump: "
@@ -1115,142 +1181,142 @@ msgstr ""
 "\n"
 "\t\t\t\tHeksadesimaalivedos: "
 
-#: lib/x509/output.c:272
+#: lib/x509/output.c:314
 #, c-format
 msgid "%s\t\t\tPermitted:\n"
 msgstr ""
 
-#: lib/x509/output.c:284
+#: lib/x509/output.c:326
 #, c-format
 msgid "%s\t\t\tExcluded:\n"
 msgstr ""
 
-#: lib/x509/output.c:324 lib/x509/output.c:326 lib/x509/output.c:328
+#: lib/x509/output.c:366 lib/x509/output.c:368 lib/x509/output.c:370
 #, fuzzy, c-format
 msgid "\t\t\tAccess Method: %s (%s)\n"
 msgstr "\t\t\tPääsymetodi: %.*s"
 
-#: lib/x509/output.c:433
+#: lib/x509/output.c:474
 #, c-format
 msgid "%sDigital signature.\n"
 msgstr "%sDigitaalinen allekirjoitus.\n"
 
-#: lib/x509/output.c:435
+#: lib/x509/output.c:476
 #, c-format
 msgid "%sNon repudiation.\n"
 msgstr "%sKiistämättömyys.\n"
 
-#: lib/x509/output.c:437
+#: lib/x509/output.c:478
 #, c-format
 msgid "%sKey encipherment.\n"
 msgstr "%sAvainsalaus.\n"
 
-#: lib/x509/output.c:439
+#: lib/x509/output.c:480
 #, c-format
 msgid "%sData encipherment.\n"
 msgstr "%stTietosalaus.\n"
 
-#: lib/x509/output.c:441
+#: lib/x509/output.c:482
 #, c-format
 msgid "%sKey agreement.\n"
 msgstr "%sAvainsopimus.\n"
 
-#: lib/x509/output.c:443
+#: lib/x509/output.c:484
 #, c-format
 msgid "%sCertificate signing.\n"
 msgstr "%sVarmenneallekirjoitus.\n"
 
-#: lib/x509/output.c:445
+#: lib/x509/output.c:486
 #, c-format
 msgid "%sCRL signing.\n"
 msgstr "%sCRL-allekirjoittaminen.\n"
 
-#: lib/x509/output.c:447
+#: lib/x509/output.c:488
 #, c-format
 msgid "%sKey encipher only.\n"
 msgstr "%sVain avainsalaaja.\n"
 
-#: lib/x509/output.c:449
+#: lib/x509/output.c:490
 #, c-format
 msgid "%sKey decipher only.\n"
 msgstr "%sVain avaimen salauspurkaja.\n"
 
-#: lib/x509/output.c:493
+#: lib/x509/output.c:534
 #, c-format
 msgid "\t\t\tNot Before: %s\n"
 msgstr "\t\t\tEi ennen: %s\n"
 
-#: lib/x509/output.c:502
+#: lib/x509/output.c:543
 #, c-format
 msgid "\t\t\tNot After: %s\n"
 msgstr "\t\t\tEi jälkeen: %s\n"
 
-#: lib/x509/output.c:580
+#: lib/x509/output.c:621
 #, c-format
 msgid "%s\t\t\tTLS WWW Server.\n"
 msgstr "%s\t\t\tTLS-webpalvelin.\n"
 
-#: lib/x509/output.c:582
+#: lib/x509/output.c:623
 #, c-format
 msgid "%s\t\t\tTLS WWW Client.\n"
 msgstr "%s\t\t\tTLS-webasiakas.\n"
 
-#: lib/x509/output.c:584
+#: lib/x509/output.c:625
 #, c-format
 msgid "%s\t\t\tCode signing.\n"
 msgstr "%s\t\t\tKoodin allekirjoittaminen.\n"
 
-#: lib/x509/output.c:586
+#: lib/x509/output.c:627
 #, c-format
 msgid "%s\t\t\tEmail protection.\n"
 msgstr "%s\t\t\tSähköpostisuojaus.\n"
 
-#: lib/x509/output.c:589
+#: lib/x509/output.c:630
 #, c-format
 msgid "%s\t\t\tTime stamping.\n"
 msgstr "%s\t\t\tAikaleimaus.\n"
 
-#: lib/x509/output.c:591
+#: lib/x509/output.c:632
 #, c-format
 msgid "%s\t\t\tOCSP signing.\n"
 msgstr "%s\t\t\tOCSP-allekirjoittaminen.\n"
 
-#: lib/x509/output.c:593
+#: lib/x509/output.c:634
 #, c-format
 msgid "%s\t\t\tIpsec IKE.\n"
 msgstr "%s\t\t\tIpsec IKE.\n"
 
-#: lib/x509/output.c:595
+#: lib/x509/output.c:636
 #, c-format
 msgid "%s\t\t\tAny purpose.\n"
 msgstr "%s\t\t\tMikä tahansa tarkoitus.\n"
 
-#: lib/x509/output.c:618
+#: lib/x509/output.c:659
 #, c-format
 msgid "%s\t\t\tCertificate Authority (CA): FALSE\n"
 msgstr "%s\t\t\tVarmennusviranomainen (CA): EPÄTOSI\n"
 
-#: lib/x509/output.c:621
+#: lib/x509/output.c:662
 #, c-format
 msgid "%s\t\t\tCertificate Authority (CA): TRUE\n"
 msgstr "%s\t\t\tVarmenneviranomainen (CA): TOSI\n"
 
-#: lib/x509/output.c:625
+#: lib/x509/output.c:666
 #, c-format
 msgid "%s\t\t\tPath Length Constraint: %d\n"
 msgstr "%s\t\t\tPolkupituusrajoite: %d\n"
 
-#: lib/x509/output.c:681
+#: lib/x509/output.c:722
 #, c-format
 msgid "%s\t\t\totherName OID: %.*s\n"
 msgstr "%s\t\t\t”otherName OID”-tunniste: %.*s\n"
 
-#: lib/x509/output.c:683
+#: lib/x509/output.c:724
 #, c-format
 msgid "%s\t\t\totherName DER: "
 msgstr "%s\t\t\totherName DER: "
 
-#: lib/x509/output.c:686
+#: lib/x509/output.c:727
 #, c-format
 msgid ""
 "\n"
@@ -1259,342 +1325,436 @@ msgstr ""
 "\n"
 "%s\t\t\totherName ASCII: "
 
-#: lib/x509/output.c:783
+#: lib/x509/output.c:867
 #, c-format
 msgid "%s\t\tBasic Constraints (%s):\n"
 msgstr "%s\t\tPerusrajoitteet (%s):\n"
 
-#: lib/x509/output.c:785 lib/x509/output.c:799 lib/x509/output.c:843
-#: lib/x509/output.c:873 lib/x509/output.c:885 lib/x509/output.c:900
-#: lib/x509/output.c:912 lib/x509/output.c:925 lib/x509/output.c:937
-#: lib/x509/output.c:951 lib/x509/output.c:965 lib/x509/output.c:973
-#: lib/x509/output.c:984 lib/x509/output.c:990 lib/x509/output.c:1946
-#: lib/x509/output.c:1971 lib/x509/output.c:1991
+#: lib/x509/output.c:869 lib/x509/output.c:883 lib/x509/output.c:928
+#: lib/x509/output.c:958 lib/x509/output.c:970 lib/x509/output.c:985
+#: lib/x509/output.c:997 lib/x509/output.c:1010 lib/x509/output.c:1022
+#: lib/x509/output.c:1036 lib/x509/output.c:1050 lib/x509/output.c:1058
+#: lib/x509/output.c:1069 lib/x509/output.c:1080 lib/x509/output.c:1088
+#: lib/x509/output.c:2036 lib/x509/output.c:2061 lib/x509/output.c:2081
 msgid "critical"
 msgstr "kriittinen"
 
-#: lib/x509/output.c:785 lib/x509/output.c:799 lib/x509/output.c:844
-#: lib/x509/output.c:873 lib/x509/output.c:885 lib/x509/output.c:900
-#: lib/x509/output.c:912 lib/x509/output.c:925 lib/x509/output.c:937
-#: lib/x509/output.c:951 lib/x509/output.c:965 lib/x509/output.c:973
-#: lib/x509/output.c:984 lib/x509/output.c:990 lib/x509/output.c:1947
-#: lib/x509/output.c:1972 lib/x509/output.c:1992
+#: lib/x509/output.c:869 lib/x509/output.c:883 lib/x509/output.c:929
+#: lib/x509/output.c:958 lib/x509/output.c:970 lib/x509/output.c:985
+#: lib/x509/output.c:997 lib/x509/output.c:1010 lib/x509/output.c:1022
+#: lib/x509/output.c:1036 lib/x509/output.c:1050 lib/x509/output.c:1058
+#: lib/x509/output.c:1069 lib/x509/output.c:1080 lib/x509/output.c:1088
+#: lib/x509/output.c:2037 lib/x509/output.c:2062 lib/x509/output.c:2082
 msgid "not critical"
 msgstr "ei-kriittinen"
 
-#: lib/x509/output.c:797
+#: lib/x509/output.c:881
 #, c-format
 msgid "%s\t\tSubject Key Identifier (%s):\n"
 msgstr "%s\t\tAihepääavain (%s):\n"
 
-#: lib/x509/output.c:871
+#: lib/x509/output.c:956
 #, c-format
 msgid "%s\t\tAuthority Key Identifier (%s):\n"
 msgstr "%s\t\tViranomaispääavain (%s):\n"
 
-#: lib/x509/output.c:884
+#: lib/x509/output.c:969
 #, c-format
 msgid "%s\t\tKey Usage (%s):\n"
 msgstr "%s\t\tAvainkäyttö (%s):\n"
 
-#: lib/x509/output.c:898
+#: lib/x509/output.c:983
 #, c-format
 msgid "%s\t\tPrivate Key Usage Period (%s):\n"
 msgstr "%s\t\tYksityisen avaimen käyttöjakso (%s):\n"
 
-#: lib/x509/output.c:911
+#: lib/x509/output.c:996
 #, c-format
 msgid "%s\t\tKey Purpose (%s):\n"
 msgstr "%s\t\tAvaintarkoitus (%s):\n"
 
-#: lib/x509/output.c:923
+#: lib/x509/output.c:1008
 #, c-format
 msgid "%s\t\tSubject Alternative Name (%s):\n"
 msgstr "%s\t\tAiheen vaihtoehtoinen nimi (%s):\n"
 
-#: lib/x509/output.c:935
+#: lib/x509/output.c:1020
 #, c-format
 msgid "%s\t\tIssuer Alternative Name (%s):\n"
 msgstr "%s\t\tJulkaisijan vaihtoehtoinen nimi (%s):\n"
 
-#: lib/x509/output.c:949
+#: lib/x509/output.c:1034
 #, c-format
 msgid "%s\t\tCRL Distribution points (%s):\n"
 msgstr "%s\t\tCRL-jakelupisteitä (%s):\n"
 
-#: lib/x509/output.c:963
+#: lib/x509/output.c:1048
 #, c-format
 msgid "%s\t\tProxy Certificate Information (%s):\n"
 msgstr "%s\t\tVälityspalvelimen varmennetietoja (%s):\n"
 
-#: lib/x509/output.c:971
+#: lib/x509/output.c:1056
 #, c-format
 msgid "%s\t\tAuthority Information Access (%s):\n"
 msgstr "%s\t\tViranomaistietopääsy (%s):\n"
 
-#: lib/x509/output.c:983
+#: lib/x509/output.c:1068
 #, fuzzy, c-format
 msgid "%s\t\tName Constraints (%s):\n"
 msgstr "%s\t\tPerusrajoitteet (%s):\n"
 
-#: lib/x509/output.c:988
+#: lib/x509/output.c:1078
+#, fuzzy, c-format
+msgid "%s\t\tTLS Features (%s):\n"
+msgstr "%s\t\tAvaintarkoitus (%s):\n"
+
+#: lib/x509/output.c:1086
 #, c-format
 msgid "%s\t\tUnknown extension %s (%s):\n"
 msgstr "%s\t\tTuntematon laajennus %s (%s):\n"
 
-#: lib/x509/output.c:992
+#: lib/x509/output.c:1090
 #, c-format
 msgid "%s\t\t\tASCII: "
 msgstr "%s\t\t\tASCII: "
 
-#: lib/x509/output.c:996
+#: lib/x509/output.c:1094
 #, c-format
 msgid "%s\t\t\tHexdump: "
 msgstr "%s\t\t\tHeksadesimaalivedos: "
 
-#: lib/x509/output.c:1045
+#: lib/x509/output.c:1143
 #, c-format
 msgid "%s\tExtensions:\n"
 msgstr "%s\tLaajennukset:\n"
 
-#: lib/x509/output.c:1084
+#: lib/x509/output.c:1182
 #, c-format
 msgid "\t%sPublic Key Algorithm: %s\n"
 msgstr "\t%sJulkisen avaimen algoritmi: %s\n"
 
-#: lib/x509/output.c:1085
+#: lib/x509/output.c:1183
 #, c-format
 msgid "\tAlgorithm Security Level: %s (%d bits)\n"
 msgstr "\tAlgoritmin turvataso: %s (%d bittiä)\n"
 
-#: lib/x509/output.c:1101
+#: lib/x509/output.c:1199
 #, c-format
 msgid "\t\tModulus (bits %d): "
 msgstr "\t\tModulo (bitit %d): "
 
-#: lib/x509/output.c:1108
+#: lib/x509/output.c:1206
 #, c-format
 msgid "\t\tExponent (bits %d): "
 msgstr "\t\tEksponentti (bitit %d): "
 
-#: lib/x509/output.c:1123
+#: lib/x509/output.c:1221
 #, c-format
 msgid "\t\tExponent (bits %d):\n"
 msgstr "\t\tEksponentti (bitit %d):\n"
 
-#: lib/x509/output.c:1149
+#: lib/x509/output.c:1247
 #, c-format
 msgid "\t\tCurve:\t%s\n"
 msgstr "\t\tKoordinaatti:\t%s\n"
 
-#: lib/x509/output.c:1153
+#: lib/x509/output.c:1251
 msgid "\t\tX: "
 msgstr "\t\tX: "
 
-#: lib/x509/output.c:1158
+#: lib/x509/output.c:1256
 msgid "\t\tY: "
 msgstr "\t\tY: "
 
-#: lib/x509/output.c:1164
+#: lib/x509/output.c:1262
 msgid "\t\tX:\n"
 msgstr "\t\tX:\n"
 
-#: lib/x509/output.c:1195
+#: lib/x509/output.c:1293
 #, c-format
 msgid "\t\tPublic key (bits %d): "
 msgstr "\t\tJulkinen avain (bitit %d): "
 
-#: lib/x509/output.c:1201
+#: lib/x509/output.c:1299
 msgid "\t\tP: "
 msgstr "\t\tP: "
 
-#: lib/x509/output.c:1206
+#: lib/x509/output.c:1304
 msgid "\t\tQ: "
 msgstr "\t\tQ: "
 
-#: lib/x509/output.c:1211
+#: lib/x509/output.c:1309
 msgid "\t\tG: "
 msgstr "\t\tG: "
 
-#: lib/x509/output.c:1267 lib/x509/output.c:2172
+#: lib/x509/output.c:1365 lib/x509/output.c:2262
 msgid "Subject "
 msgstr "Aihe: "
 
-#: lib/x509/output.c:1300
+#: lib/x509/output.c:1413
 msgid "\tSerial Number (hex): "
 msgstr "\tSarjanumero (heksadesimaali): "
 
-#: lib/x509/output.c:1315 lib/x509/output.c:1831
+#: lib/x509/output.c:1426 lib/x509/output.c:1937
 #, fuzzy
 msgid "\tIssuer:\n"
 msgstr "\tJulkaisija: %s\n"
 
-#: lib/x509/output.c:1335 lib/x509/output.c:1851
+#: lib/x509/output.c:1431 lib/x509/output.c:1942
 #, c-format
 msgid "\tIssuer: %s\n"
 msgstr "\tJulkaisija: %s\n"
 
-#: lib/x509/output.c:1345
+#: lib/x509/output.c:1440
 msgid "\tValidity:\n"
 msgstr "\tKelpoisuus:\n"
 
-#: lib/x509/output.c:1362
+#: lib/x509/output.c:1457
 #, c-format
 msgid "\t\tNot Before: %s\n"
 msgstr "\t\tEi ennen: %s\n"
 
-#: lib/x509/output.c:1380
+#: lib/x509/output.c:1475
 #, c-format
 msgid "\t\tNot After: %s\n"
 msgstr "\t\tEi jälkeen: %s\n"
 
-#: lib/x509/output.c:1393 lib/x509/output.c:2202
+#: lib/x509/output.c:1486 lib/x509/output.c:2305
 #, fuzzy
 msgid "\tSubject:\n"
 msgstr "\tAihe: %s\n"
 
-#: lib/x509/output.c:1412 lib/x509/output.c:2221
+#: lib/x509/output.c:1491 lib/x509/output.c:2310
 #, c-format
 msgid "\tSubject: %s\n"
 msgstr "\tAihe: %s\n"
 
-#: lib/x509/output.c:1499
+#: lib/x509/output.c:1568
+#, fuzzy
+msgid "\tFingerprint:\n"
+msgstr "sormenjälki: "
+
+#: lib/x509/output.c:1577
+msgid "\t\tsha1:"
+msgstr ""
+
+#: lib/x509/output.c:1588
+msgid "\t\tsha256:"
+msgstr ""
+
+#: lib/x509/output.c:1622
 #, fuzzy, c-format
 msgid ""
-"\t%s fingerprint:\n"
-"\t\t"
-msgstr ""
-"\tMD5-sormenjälki:\n"
-"\t\t"
-
-#: lib/x509/output.c:1520 lib/x509/output.c:2420
-#, fuzzy
-msgid ""
-"\tPublic Key ID:\n"
-"\t\t"
+"%sPublic Key ID:\n"
+"%s\tsha1:"
 msgstr ""
 "\tJulkisen avaimen tunniste:\n"
 "\t\t"
 
-#: lib/x509/output.c:1548
+#: lib/x509/output.c:1672
 msgid "\tPublic key's random art:\n"
 msgstr "\tJulkisen avaimen satunnaiskuvio:\n"
 
-#: lib/x509/output.c:1578
+#: lib/x509/output.c:1699
 #, fuzzy
 msgid "no subject,"
 msgstr "Aihe: "
 
-#: lib/x509/output.c:1610
+#: lib/x509/output.c:1715
 msgid "no issuer,"
 msgstr ""
 
-#: lib/x509/output.c:1656
+#: lib/x509/output.c:1762
 #, c-format
 msgid "signed using %s (broken!), "
 msgstr "allekirjoitettu käyttäen %s (rikki!), "
 
-#: lib/x509/output.c:1659
+#: lib/x509/output.c:1764
 #, c-format
 msgid "signed using %s, "
 msgstr "allekirjoitettu käyttäen %s, "
 
-#: lib/x509/output.c:1795
+#: lib/x509/output.c:1903
 msgid "X.509 Certificate Information:\n"
 msgstr "X.509 -varmennetiedot:\n"
 
-#: lib/x509/output.c:1799 lib/x509/output.c:2457
+#: lib/x509/output.c:1907 lib/x509/output.c:2508
 msgid "Other Information:\n"
 msgstr "Muuta tietoa:\n"
 
-#: lib/x509/output.c:1814
+#: lib/x509/output.c:1922
 msgid "\tVersion: 1 (default)\n"
 msgstr "\tVersio: 1 (oletus)\n"
 
-#: lib/x509/output.c:1861
+#: lib/x509/output.c:1951
 msgid "\tUpdate dates:\n"
 msgstr "\tPäivityspäivämäärät:\n"
 
-#: lib/x509/output.c:1878
+#: lib/x509/output.c:1968
 #, c-format
 msgid "\t\tIssued: %s\n"
 msgstr "\t\tJulkaistu: %s\n"
 
-#: lib/x509/output.c:1898
+#: lib/x509/output.c:1988
 #, c-format
 msgid "\t\tNext at: %s\n"
 msgstr "\t\tSeuraava osoitteessa: %s\n"
 
-#: lib/x509/output.c:1929
+#: lib/x509/output.c:2019
 msgid "\tExtensions:\n"
 msgstr "\tLaajennukset:\n"
 
-#: lib/x509/output.c:1945
+#: lib/x509/output.c:2035
 #, c-format
 msgid "\t\tCRL Number (%s): "
 msgstr "\t\tCRL-numero (%s): "
 
-#: lib/x509/output.c:1970
+#: lib/x509/output.c:2060
 #, c-format
 msgid "\t\tAuthority Key Identifier (%s):\n"
 msgstr "\t\tViranomaispääavain (%s):\n"
 
-#: lib/x509/output.c:1989
+#: lib/x509/output.c:2079
 #, c-format
 msgid "\t\tUnknown extension %s (%s):\n"
 msgstr "\t\tTuntematon laajennus %s (%s):\n"
 
-#: lib/x509/output.c:2026
+#: lib/x509/output.c:2116
 #, c-format
 msgid "\tRevoked certificates (%d):\n"
 msgstr "\tKumotut varmenteet (%d):\n"
 
-#: lib/x509/output.c:2029
+#: lib/x509/output.c:2119
 msgid "\tNo revoked certificates.\n"
 msgstr "\tEi kumottuja varmenteita.\n"
 
-#: lib/x509/output.c:2050
+#: lib/x509/output.c:2140
 msgid "\t\tSerial Number (hex): "
 msgstr "\t\tSarjanumero (heksaluku): "
 
-#: lib/x509/output.c:2068
+#: lib/x509/output.c:2158
 #, c-format
 msgid "\t\tRevoked at: %s\n"
 msgstr "\t\tKumottu osoitteessa: %s\n"
 
-#: lib/x509/output.c:2150
+#: lib/x509/output.c:2240
 msgid "X.509 Certificate Revocation List Information:\n"
 msgstr "X.509-varmennekumoamisluettelotiedot:\n"
 
-#: lib/x509/output.c:2278
+#: lib/x509/output.c:2358
 msgid "\tAttributes:\n"
 msgstr "\tAttribuutit:\n"
 
-#: lib/x509/output.c:2335
+#: lib/x509/output.c:2415
 #, c-format
 msgid "\t\tChallenge password: %s\n"
 msgstr "\t\tHaastesalasana: %s\n"
 
-#: lib/x509/output.c:2345
+#: lib/x509/output.c:2425
 #, c-format
 msgid "\t\tUnknown attribute %s:\n"
 msgstr "\t\tTuntematon attribuutti %s:\n"
 
-#: lib/x509/output.c:2453
+#: lib/x509/output.c:2504
 msgid "PKCS #10 Certificate Request Information:\n"
 msgstr "PKCS #10 -varmennepyyntötiedot:\n"
 
-#: lib/x509/output.c:2481
+#: lib/x509/output.c:2530
 msgid "Public Key Usage:\n"
 msgstr "Julkisen avaimen käyttö:\n"
 
-#: lib/x509/output.c:2491
-msgid "Public Key ID: "
-msgstr "Julkisen avaimen tunniste: "
-
-#: lib/x509/output.c:2524
+#: lib/x509/output.c:2564
 msgid "Public Key Information:\n"
 msgstr "Julkisen avaimen tiedot:\n"
+
+#: libdane/dane.c:1040
+#, fuzzy
+msgid "Certificate matches. "
+msgstr "Varmenne on väärä"
+
+#: libdane/dane.c:1043
+#, fuzzy
+msgid "Verification failed. "
+msgstr "Salauksen purku epäonnistui"
+
+#: libdane/dane.c:1048
+#, fuzzy
+msgid "CA constrains were violated. "
+msgstr "Tavoitettiin joitakin rajoiterajoja."
+
+#: libdane/dane.c:1052
+#, fuzzy
+msgid "The certificate differs. "
+msgstr "Varmenne on väärä"
+
+#: libdane/dane.c:1057
+msgid "There were no DANE information. "
+msgstr ""
+
+#: libdane/errors.c:43
+msgid "There was error initializing the DNS query."
+msgstr ""
+
+#: libdane/errors.c:45
+msgid "There was an error while resolving."
+msgstr ""
+
+#: libdane/errors.c:47
+#, fuzzy
+msgid "No DANE data were found."
+msgstr "Ei löytynyt tilapäisiä DH-parametreja."
+
+#: libdane/errors.c:49
+msgid "Unknown DANE data were found."
+msgstr ""
+
+#: libdane/errors.c:51
+#, fuzzy
+msgid "No DNSSEC signature was found."
+msgstr "Varmennetta ei löytynyt."
+
+#: libdane/errors.c:53
+msgid "Received corrupt data."
+msgstr ""
+
+#: libdane/errors.c:55
+#, fuzzy
+msgid "The DNSSEC signature is invalid."
+msgstr "OCSP-vastaus on virheellinen"
+
+#: libdane/errors.c:57
+msgid "There was a memory error."
+msgstr ""
+
+#: libdane/errors.c:59
+#, fuzzy
+msgid "The requested data are not available."
+msgstr "Pyydetyt tiedot eivät olleet saatavilla."
+
+#: libdane/errors.c:63
+#, fuzzy
+msgid "There was an error in the certificate."
+msgstr "Virhe varmenteessa."
+
+#: libdane/errors.c:65
+msgid "There was an error in the public key."
+msgstr ""
+
+#: libdane/errors.c:69
+#, fuzzy
+msgid "Error in file."
+msgstr "Virhe salasanatiedostossa."
+
+#, fuzzy
+#~ msgid ""
+#~ "\t%s fingerprint:\n"
+#~ "\t\t"
+#~ msgstr ""
+#~ "\tMD5-sormenjälki:\n"
+#~ "\t\t"
+
+#~ msgid "Public Key ID: "
+#~ msgstr "Julkisen avaimen tunniste: "
 
 #~ msgid "Received a TLS/IA Intermediate Phase Finished message"
 #~ msgstr "Vastaanotettiin ”TLS/IA Intermediate Phase Finished”-viesti"

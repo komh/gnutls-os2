@@ -28,4 +28,7 @@ cert
 @cert_list: 
 @cert_list_length: 
 @names: 
+@ocsp_func: 
+@ocsp_func_ptr: 
+@ocsp_response_file: 
 

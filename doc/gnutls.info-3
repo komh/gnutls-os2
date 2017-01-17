@@ -1,9 +1,9 @@
-This is gnutls.info, produced by makeinfo version 6.1 from gnutls.texi.
+This is gnutls.info, produced by makeinfo version 6.3 from gnutls.texi.
 
-This manual is last updated 4 March 2015 for version 3.4.16 of GnuTLS.
+This manual is last updated 8 January 2017 for version 3.5.8 of GnuTLS.
 
-Copyright (C) 2001-2015 Free Software Foundation, Inc.\\ Copyright (C)
-2001-2015 Nikos Mavrogiannopoulos
+Copyright (C) 2001-2017 Free Software Foundation, Inc.\\ Copyright (C)
+2001-2017 Nikos Mavrogiannopoulos
 
      Permission is granted to copy, distribute and/or modify this
      document under the terms of the GNU Free Documentation License,
@@ -318,8 +318,8 @@ the process to do so is not difficult.  Here are the steps you need to
 follow if you wish to do this yourself.  For sake of discussion, let's
 consider adding support for the hypothetical TLS extension 'foobar'.
 The following section is about adding an extension to GnuTLS, for custom
-application extensions you should check the exported function *note
-gnutls_ext_register::.
+application extensions you should check the exported functions *note
+gnutls_session_ext_register:: or *note gnutls_ext_register::.
 
 Add 'configure' option like '--enable-foobar' or '--disable-foobar'.
 ....................................................................
@@ -598,7 +598,8 @@ the supplemental data handshake message.
      }
 
 Afterwards, register the new supplemental data using *note
-gnutls_supplemental_register::, at some point in your program.
+gnutls_session_supplemental_register::, or *note
+gnutls_supplemental_register:: at some point in your program.
 
 
 File: gnutls.info,  Node: Cryptographic Backend,  Prev: TLS Extension Handling,  Up: Internal architecture of GnuTLS
@@ -679,6 +680,14 @@ from 'crypto.h', can be used to register those algorithms.
 
 Those registration functions will only replace the specified algorithm
 and leave the rest of subsystem intact.
+
+Protecting keys through isolation
+---------------------------------
+
+For asymmetric or public keys, GnuTLS supports PKCS #11 which allows
+operation without access to long term keys, in addition to CPU
+offloading.  For more information see *note Hardware security modules
+and abstract key types::.
 
    ---------- Footnotes ----------
 
@@ -1097,8 +1106,8 @@ expressions.
                                           record packet has failed.
 -28         GNUTLS_E_AGAIN                Resource temporarily
                                           unavailable, try again.
--29         GNUTLS_E_EXPIRED              The requested session has
-                                          expired.
+-29         GNUTLS_E_EXPIRED              The session or
+                                          certificate has expired.
 -30         GNUTLS_E_DB_ERROR             Error in Database
                                           backend.
 -31         GNUTLS_E_SRP_PWD_ERROR        Error in password file.
@@ -1243,6 +1252,9 @@ expressions.
                                           is unknown.
 -110        GNUTLS_E_PREMATURE_TERMINATIONThe TLS connection was
                                           non-properly terminated.
+-111        GNUTLS_E_MALFORMED_CIDR       CIDR name constraint is
+                                          malformed in size or
+                                          structure.
 -201        GNUTLS_E_BASE64_ENCODING_ERRORBase64 encoding error.
 -202        GNUTLS_E_INCOMPATIBLE_GCRYPT_LIBRARYThe crypto library
                                           version is too old.
@@ -1281,6 +1293,8 @@ expressions.
                                           was received.
 -293        GNUTLS_E_HEARTBEAT_PING_RECEIVEDA heartbeat ping message
                                           was received.
+-294        GNUTLS_E_UNRECOGNIZED_NAME    The SNI host name not
+                                          recognised.
 -300        GNUTLS_E_PKCS11_ERROR         PKCS #11 error.
 -301        GNUTLS_E_PKCS11_LOAD_ERROR    PKCS #11 initialization
                                           error.
@@ -1360,6 +1374,13 @@ expressions.
                                           was attempted.
 -348        GNUTLS_E_CERTIFICATE_VERIFICATION_ERRORError in the certificate
                                           verification.
+-349        GNUTLS_E_PRIVKEY_VERIFICATION_ERRORError in the private key
+                                          verification; seed
+                                          doesn't match.
+-350        GNUTLS_E_UNEXPECTED_EXTENSIONS_LENGTHInvalid TLS extensions
+                                          length field.
+-351        GNUTLS_E_ASN1_EMBEDDED_NULL_IN_STRINGThe provided string has
+                                          an embedded null.
 -400        GNUTLS_E_SELF_TEST_ERROR      Error while performing
                                           self checks.
 -401        GNUTLS_E_NO_SELF_TEST         There is no self test for
@@ -1373,6 +1394,30 @@ expressions.
 -404        GNUTLS_E_IDNA_ERROR           There was an issue
                                           converting to or from
                                           UTF8.
+-406        GNUTLS_E_SESSION_USER_ID_CHANGEDPeer's certificate or
+                                          username has changed
+                                          during a rehandshake.
+-407        GNUTLS_E_HANDSHAKE_DURING_FALSE_STARTAttempted handshake
+                                          during false start.
+-408        GNUTLS_E_UNAVAILABLE_DURING_HANDSHAKECannot obtain resumption
+                                          parameters while
+                                          handshake is incomplete.
+-409        GNUTLS_E_PK_INVALID_PUBKEY    The obtained public key
+                                          is invalid.
+-410        GNUTLS_E_PK_INVALID_PRIVKEY   The private key is
+                                          invalid.
+-411        GNUTLS_E_NOT_YET_ACTIVATED    The certificate is not
+                                          yet activated.
+-412        GNUTLS_E_INVALID_UTF8_STRING  The given string contains
+                                          invalid UTF-8 characters.
+-413        GNUTLS_E_NO_EMBEDDED_DATA     There are no embedded
+                                          data in the structure.
+-414        GNUTLS_E_INVALID_UTF8_EMAIL   The given email string
+                                          contains non-ASCII
+                                          characters before '.'
+-415        GNUTLS_E_INVALID_PASSWORD_STRINGThe given password
+                                          contains invalid
+                                          characters.
 
 
 File: gnutls.info,  Node: Supported ciphersuites,  Next: API reference,  Prev: Error codes,  Up: Top
@@ -1648,7 +1693,9 @@ Public key algorithms
 
 'RSA'
 'DSA'
-'EC'
+'EC/ECDSA'
+'DH'
+'ECDHX'
 
 Public key signature algorithms
 ===============================
@@ -1681,6 +1728,7 @@ Elliptic curves
 'SECP256R1'
 'SECP384R1'
 'SECP521R1'
+'X25519'
 
 Compression methods
 ===================
@@ -1706,6 +1754,7 @@ Appendix E API reference
 * PKCS 11 API::
 * TPM API::
 * Abstract key API::
+* Socket specific API::
 * DANE API::
 * Cryptographic API::
 * Compatibility API::
@@ -1841,14 +1890,14 @@ gnutls_alpn_set_protocols
 
      PROTOCOLS_SIZE: the number of protocols to add.
 
-     FLAGS: zero or 'GNUTLS_ALPN_' *
+     FLAGS: zero or a sequence of 'gnutls_alpn_flags_t'
 
      This function is to be used by both clients and servers, to declare
      the supported ALPN protocols, which are used during negotiation
      with peer.
 
-     If 'GNUTLS_ALPN_MAND' is specified the connection will be aborted
-     if no matching ALPN protocol is found.
+     See 'gnutls_alpn_flags_t' description for the documentation of
+     available flags.
 
      *Returns:* On success, 'GNUTLS_E_SUCCESS' (0) is returned,
      otherwise a negative error code is returned.
@@ -1862,8 +1911,7 @@ gnutls_anon_allocate_client_credentials
           (gnutls_anon_client_credentials_t * SC)
      SC: is a pointer to a 'gnutls_anon_client_credentials_t' type.
 
-     This structure is complex enough to manipulate directly thus this
-     helper function is provided in order to allocate it.
+     Allocate a gnutls_anon_client_credentials_t structure.
 
      *Returns:* 'GNUTLS_E_SUCCESS' on success, or an error code.
 
@@ -1874,8 +1922,7 @@ gnutls_anon_allocate_server_credentials
           (gnutls_anon_server_credentials_t * SC)
      SC: is a pointer to a 'gnutls_anon_server_credentials_t' type.
 
-     This structure is complex enough to manipulate directly thus this
-     helper function is provided in order to allocate it.
+     Allocate a gnutls_anon_server_credentials_t structure.
 
      *Returns:* 'GNUTLS_E_SUCCESS' on success, or an error code.
 
@@ -1886,8 +1933,7 @@ gnutls_anon_free_client_credentials
           (gnutls_anon_client_credentials_t SC)
      SC: is a 'gnutls_anon_client_credentials_t' type.
 
-     This structure is complex enough to manipulate directly thus this
-     helper function is provided in order to free (deallocate) it.
+     Free a gnutls_anon_client_credentials_t structure.
 
 gnutls_anon_free_server_credentials
 -----------------------------------
@@ -1896,8 +1942,7 @@ gnutls_anon_free_server_credentials
           (gnutls_anon_server_credentials_t SC)
      SC: is a 'gnutls_anon_server_credentials_t' type.
 
-     This structure is complex enough to manipulate directly thus this
-     helper function is provided in order to free (deallocate) it.
+     Free a gnutls_anon_server_credentials_t structure.
 
 gnutls_anon_set_params_function
 -------------------------------
@@ -1926,6 +1971,26 @@ gnutls_anon_set_server_dh_params
      This function will set the Diffie-Hellman parameters for an
      anonymous server to use.  These parameters will be used in
      Anonymous Diffie-Hellman cipher suites.
+
+gnutls_anon_set_server_known_dh_params
+--------------------------------------
+
+ -- Function: int gnutls_anon_set_server_known_dh_params
+          (gnutls_anon_server_credentials_t RES, gnutls_sec_param_t
+          SEC_PARAM)
+     RES: is a gnutls_anon_server_credentials_t type
+
+     SEC_PARAM: - undescribed -
+
+     This function will set the Diffie-Hellman parameters for an
+     anonymous server to use.  These parameters will be used in
+     Anonymous Diffie-Hellman cipher suites and will be selected from
+     the FFDHE set of RFC7919 according to the security level provided.
+
+     *Returns:* On success, 'GNUTLS_E_SUCCESS' (0) is returned,
+     otherwise a negative error value.
+
+     *Since:* 3.5.6
 
 gnutls_anon_set_server_params_function
 --------------------------------------
@@ -2063,8 +2128,7 @@ gnutls_certificate_allocate_credentials
           (gnutls_certificate_credentials_t * RES)
      RES: is a pointer to a 'gnutls_certificate_credentials_t' type.
 
-     This structure is complex enough to manipulate directly thus this
-     helper function is provided in order to allocate it.
+     Allocate a gnutls_certificate_credentials_t structure.
 
      *Returns:* 'GNUTLS_E_SUCCESS' on success, or an error code.
 
@@ -2130,8 +2194,7 @@ gnutls_certificate_free_credentials
           (gnutls_certificate_credentials_t SC)
      SC: is a 'gnutls_certificate_credentials_t' type.
 
-     This structure is complex enough to manipulate directly thus this
-     helper function is provided in order to free (deallocate) it.
+     Free a gnutls_certificate_credentials_t structure.
 
      This function does not free any temporary parameters associated
      with this structure (ie RSA and DH parameters are not freed by this
@@ -2167,17 +2230,18 @@ gnutls_certificate_get_crt_raw
           IDX2, gnutls_datum_t * CERT)
      SC: is a 'gnutls_certificate_credentials_t' type.
 
-     IDX1: the index of the certificate if multiple are present
+     IDX1: the index of the certificate chain if multiple are present
 
-     IDX2: the index in the certificate list.  Zero gives the server's
-     certificate.
+     IDX2: the index of the certificate in the chain.  Zero gives the
+     server's certificate.
 
      CERT: Will hold the DER encoded certificate.
 
      This function will return the DER encoded certificate of the server
      or any other certificate on its certificate chain (based on 'idx2'
      ).  The returned data should be treated as constant and only
-     accessible during the lifetime of 'sc' .
+     accessible during the lifetime of 'sc' .  The 'idx1' matches the
+     value 'gnutls_certificate_set_x509_key()' and friends functions.
 
      *Returns:* On success, 'GNUTLS_E_SUCCESS' (0) is returned,
      otherwise a negative error value.  In case the indexes are out of
@@ -2200,11 +2264,15 @@ gnutls_certificate_get_issuer
 
      FLAGS: Use zero or 'GNUTLS_TL_GET_COPY'
 
-     This function will return the issuer of a given certificate.  As
-     with 'gnutls_x509_trust_list_get_issuer()' this function requires
-     the 'GNUTLS_TL_GET_COPY' flag in order to operate with PKCS '11'
-     trust lists.  In that case the issuer must be freed using
-     'gnutls_x509_crt_deinit()' .
+     This function will return the issuer of a given certificate.  If
+     the flag 'GNUTLS_TL_GET_COPY' is specified a copy of the issuer
+     will be returned which must be freed using
+     'gnutls_x509_crt_deinit()' .  In that case the provided 'issuer'
+     must not be initialized.
+
+     As with 'gnutls_x509_trust_list_get_issuer()' this function
+     requires the 'GNUTLS_TL_GET_COPY' flag in order to operate with
+     PKCS'11' trust lists in a thread-safe way.
 
      *Returns:* On success, 'GNUTLS_E_SUCCESS' (0) is returned,
      otherwise a negative error value.
@@ -2237,9 +2305,12 @@ gnutls_certificate_get_peers
 
      Get the peer's raw certificate (chain) as sent by the peer.  These
      certificates are in raw format (DER encoded for X.509).  In case of
-     a X.509 then a certificate list may be present.  The first
-     certificate in the list is the peer's certificate, following the
-     issuer's certificate, then the issuer's issuer etc.
+     a X.509 then a certificate list may be present.  The list is
+     provided as sent by the server; the server must send as first
+     certificate in the list its own certificate, following the issuer's
+     certificate, then the issuer's issuer etc.  However, there are
+     servers which violate this principle and thus on certain occasions
+     this may be an unsorted list.
 
      In case of OpenPGP keys a single key will be returned in raw
      format.
@@ -2304,6 +2375,10 @@ gnutls_certificate_get_x509_crt
      'gnutls_x509_crt_deinit()' , and the list itself must be freed with
      'gnutls_free()' .
 
+     The 'index' matches the return value of
+     'gnutls_certificate_set_x509_key()' and friends functions, when the
+     'GNUTLS_CERTIFICATE_API_V2' flag is set.
+
      If there is no certificate with the given index,
      'GNUTLS_E_REQUESTED_DATA_NOT_AVAILABLE' is returned.  If the
      certificate with the given index is not a X.509 certificate,
@@ -2337,6 +2412,10 @@ gnutls_certificate_get_x509_key
      'gnutls_certificate_set_x509_key_mem2()' .  The returned key must
      be deallocated with 'gnutls_x509_privkey_deinit()' when no longer
      needed.
+
+     The 'index' matches the return value of
+     'gnutls_certificate_set_x509_key()' and friends functions, when the
+     'GNUTLS_CERTIFICATE_API_V2' flag is set.
 
      If there is no key with the given index,
      'GNUTLS_E_REQUESTED_DATA_NOT_AVAILABLE' is returned.  If the key
@@ -2413,24 +2492,51 @@ gnutls_certificate_set_flags
 
      *Since:* 3.4.7
 
+gnutls_certificate_set_known_dh_params
+--------------------------------------
+
+ -- Function: int gnutls_certificate_set_known_dh_params
+          (gnutls_certificate_credentials_t RES, gnutls_sec_param_t
+          SEC_PARAM)
+     RES: is a gnutls_certificate_credentials_t type
+
+     SEC_PARAM: is an option of the 'gnutls_sec_param_t' enumeration
+
+     This function will set the Diffie-Hellman parameters for a
+     certificate server to use.  These parameters will be used in
+     Ephemeral Diffie-Hellman cipher suites and will be selected from
+     the FFDHE set of RFC7919 according to the security level provided.
+
+     *Returns:* On success, 'GNUTLS_E_SUCCESS' (0) is returned,
+     otherwise a negative error value.
+
+     *Since:* 3.5.6
+
 gnutls_certificate_set_ocsp_status_request_file
 -----------------------------------------------
 
  -- Function: int gnutls_certificate_set_ocsp_status_request_file
           (gnutls_certificate_credentials_t SC, const char *
-          RESPONSE_FILE, unsigned int FLAGS)
+          RESPONSE_FILE, unsigned IDX)
      SC: is a credentials structure.
 
      RESPONSE_FILE: a filename of the OCSP response
 
-     FLAGS: should be zero
+     IDX: is a certificate index as returned by
+     'gnutls_certificate_set_key()' and friends
 
      This function sets the filename of an OCSP response, that will be
-     sent to the client if requests an OCSP certificate status.  This is
-     a convenience function which is inefficient on busy servers since
-     the file is opened on every access.  Use
-     'gnutls_certificate_set_ocsp_status_request_function()' to
+     sent to the client if requests an OCSP certificate status for the
+     certificate chain specified by 'idx' .
+
+     This is a convenience function which may be inefficient on busy
+     servers since the file is opened on every access.  Use
+     'gnutls_certificate_set_ocsp_status_request_function2()' to
      fine-tune file accesses.
+
+     *Note:* the ability to set multiple OCSP responses per credential
+     structure via 'idx' was added in version 3.5.6 with the
+     'GNUTLS_CERTIFICATE_API_V2' flag.
 
      *Returns:* On success, 'GNUTLS_E_SUCCESS' (0) is returned,
      otherwise a negative error code is returned.
@@ -2460,16 +2566,56 @@ gnutls_certificate_set_ocsp_status_request_function
      The callback will be invoked if the client requests an OCSP
      certificate status.  The callback may return
      'GNUTLS_E_NO_CERTIFICATE_STATUS' , if there is no recent OCSP
-     response.  If the callback returns 'GNUTLS_E_SUCCESS' , the server
-     will provide the client with the ocsp_response.
+     response.  If the callback returns 'GNUTLS_E_SUCCESS' , it is
+     expected to have the 'ocsp_response' field set with a valid
+     (DER-encoded) OCSP response.  The response must be a value
+     allocated using 'gnutls_malloc()' , and will be deinitialized by
+     the caller.
 
-     The response must be a value allocated using 'gnutls_malloc()' ,
-     and will be deinitialized when needed.
+     It is possible to set a specific callback for each provided
+     certificate using
+     'gnutls_certificate_set_ocsp_status_request_function2()' .
+
+     *Since:* 3.1.3
+
+gnutls_certificate_set_ocsp_status_request_function2
+----------------------------------------------------
+
+ -- Function: int gnutls_certificate_set_ocsp_status_request_function2
+          (gnutls_certificate_credentials_t SC, unsigned IDX,
+          gnutls_status_request_ocsp_func OCSP_FUNC, void * PTR)
+     SC: is a 'gnutls_certificate_credentials_t' type.
+
+     IDX: is a certificate index as returned by
+     'gnutls_certificate_set_key()' and friends
+
+     OCSP_FUNC: function pointer to OCSP status request callback.
+
+     PTR: opaque pointer passed to callback function
+
+     This function is to be used by server to register a callback to
+     handle OCSP status requests that correspond to the indexed
+     certificate from the client.  The callback will be invoked if the
+     client supplied a status-request OCSP extension.
+
+     The callback function prototype is:
+
+     typedef int (*gnutls_status_request_ocsp_func) (gnutls_session_t
+     session, void *ptr, gnutls_datum_t *ocsp_response);
+
+     The callback will be invoked if the client requests an OCSP
+     certificate status.  The callback may return
+     'GNUTLS_E_NO_CERTIFICATE_STATUS' , if there is no recent OCSP
+     response.  If the callback returns 'GNUTLS_E_SUCCESS' , it is
+     expected to have the 'ocsp_response' field set with a valid
+     (DER-encoded) OCSP response.  The response must be a value
+     allocated using 'gnutls_malloc()' , and will be deinitialized by
+     the caller.
 
      *Returns:* On success, 'GNUTLS_E_SUCCESS' (0) is returned,
      otherwise a negative error code is returned.
 
-     *Since:* 3.1.3
+     *Since:* 3.5.5
 
 gnutls_certificate_set_params_function
 --------------------------------------
@@ -2714,8 +2860,15 @@ gnutls_certificate_set_x509_key
      If that function fails to load the 'res' type is at an undefined
      state, it must not be reused to load other keys or certificates.
 
-     *Returns:* 'GNUTLS_E_SUCCESS' (0) on success, or a negative error
-     code.
+     Note that, this function by default returns zero on success and a
+     negative value on error.  Since 3.5.6, when the flag
+     'GNUTLS_CERTIFICATE_API_V2' is set using
+     'gnutls_certificate_set_flags()' it returns an index (greater or
+     equal to zero).  That index can be used to other functions to refer
+     to the added key-pair.
+
+     *Returns:* On success this functions returns zero, and otherwise a
+     negative value on error (see above for modifying that behavior).
 
      *Since:* 2.4.0
 
@@ -2759,8 +2912,15 @@ gnutls_certificate_set_x509_key_file
      undefined state, it must not be reused to load other keys or
      certificates.
 
-     *Returns:* 'GNUTLS_E_SUCCESS' (0) on success, or a negative error
-     code.
+     Note that, this function by default returns zero on success and a
+     negative value on error.  Since 3.5.6, when the flag
+     'GNUTLS_CERTIFICATE_API_V2' is set using
+     'gnutls_certificate_set_flags()' it returns an index (greater or
+     equal to zero).  That index can be used to other functions to refer
+     to the added key-pair.
+
+     *Returns:* On success this functions returns zero, and otherwise a
+     negative value on error (see above for modifying that behavior).
 
      *Since:* 3.1.11
 
@@ -2811,8 +2971,15 @@ gnutls_certificate_set_x509_key_file2
      undefined state, it must not be reused to load other keys or
      certificates.
 
-     *Returns:* 'GNUTLS_E_SUCCESS' (0) on success, or a negative error
-     code.
+     Note that, this function by default returns zero on success and a
+     negative value on error.  Since 3.5.6, when the flag
+     'GNUTLS_CERTIFICATE_API_V2' is set using
+     'gnutls_certificate_set_flags()' it returns an index (greater or
+     equal to zero).  That index can be used to other functions to refer
+     to the added key-pair.
+
+     *Returns:* On success this functions returns zero, and otherwise a
+     negative value on error (see above for modifying that behavior).
 
 gnutls_certificate_set_x509_key_mem
 -----------------------------------
@@ -2845,8 +3012,15 @@ gnutls_certificate_set_x509_key_mem
      The 'key' may be 'NULL' if you are using a sign callback, see
      'gnutls_sign_callback_set()' .
 
-     *Returns:* 'GNUTLS_E_SUCCESS' (0) on success, or a negative error
-     code.
+     Note that, this function by default returns zero on success and a
+     negative value on error.  Since 3.5.6, when the flag
+     'GNUTLS_CERTIFICATE_API_V2' is set using
+     'gnutls_certificate_set_flags()' it returns an index (greater or
+     equal to zero).  That index can be used to other functions to refer
+     to the added key-pair.
+
+     *Returns:* On success this functions returns zero, and otherwise a
+     negative value on error (see above for modifying that behavior).
 
 gnutls_certificate_set_x509_key_mem2
 ------------------------------------
@@ -2884,8 +3058,15 @@ gnutls_certificate_set_x509_key_mem2
      The 'key' may be 'NULL' if you are using a sign callback, see
      'gnutls_sign_callback_set()' .
 
-     *Returns:* 'GNUTLS_E_SUCCESS' (0) on success, or a negative error
-     code.
+     Note that, this function by default returns zero on success and a
+     negative value on error.  Since 3.5.6, when the flag
+     'GNUTLS_CERTIFICATE_API_V2' is set using
+     'gnutls_certificate_set_flags()' it returns an index (greater or
+     equal to zero).  That index can be used to other functions to refer
+     to the added key-pair.
+
+     *Returns:* On success this functions returns zero, and otherwise a
+     negative value on error (see above for modifying that behavior).
 
 gnutls_certificate_set_x509_simple_pkcs12_file
 ----------------------------------------------
@@ -2925,8 +3106,15 @@ gnutls_certificate_set_x509_simple_pkcs12_file
      complexity that would make it harder to use this functionality at
      all.
 
-     *Returns:* 'GNUTLS_E_SUCCESS' (0) on success, or a negative error
-     code.
+     Note that, this function by default returns zero on success and a
+     negative value on error.  Since 3.5.6, when the flag
+     'GNUTLS_CERTIFICATE_API_V2' is set using
+     'gnutls_certificate_set_flags()' it returns an index (greater or
+     equal to zero).  That index can be used to other functions to refer
+     to the added key-pair.
+
+     *Returns:* On success this functions returns zero, and otherwise a
+     negative value on error (see above for modifying that behavior).
 
 gnutls_certificate_set_x509_simple_pkcs12_mem
 ---------------------------------------------
@@ -2966,8 +3154,15 @@ gnutls_certificate_set_x509_simple_pkcs12_mem
      complexity that would make it harder to use this functionality at
      all.
 
-     *Returns:* 'GNUTLS_E_SUCCESS' (0) on success, or a negative error
-     code.
+     Note that, this function by default returns zero on success and a
+     negative value on error.  Since 3.5.6, when the flag
+     'GNUTLS_CERTIFICATE_API_V2' is set using
+     'gnutls_certificate_set_flags()' it returns an index (greater or
+     equal to zero).  That index can be used to other functions to refer
+     to the added key-pair.
+
+     *Returns:* On success this functions returns zero, and otherwise a
+     negative value on error (see above for modifying that behavior).
 
      *Since:* 2.8.0
 
@@ -3195,19 +3390,21 @@ gnutls_certificate_verify_peers
      'GNUTLS_DT_RFC822NAME' and 'GNUTLS_DT_KEY_PURPOSE_OID' .  The
      former two accept as data a null-terminated hostname or email
      address, and the latter a null-terminated object identifier (e.g.,
-     'GNUTLS_KP_TLS_WWW_SERVER' ).  If a DNS hostname is provided then
-     this function will compare the hostname in the certificate against
-     the given.  If names do not match the
-     'GNUTLS_CERT_UNEXPECTED_OWNER' status flag will be set.  If a key
-     purpose OID is provided and the end-certificate contains the
-     extended key usage PKIX extension, it will be required to be have
-     the provided key purpose or be marked for any purpose, otherwise
-     verification will fail with
-     'GNUTLS_CERT_SIGNER_CONSTRAINTS_FAILURE' status.
+     'GNUTLS_KP_TLS_WWW_SERVER' ).
 
-     *Returns:* a negative error code on error and 'GNUTLS_E_SUCCESS'
-     (0) when the peer's certificate was successfully parsed, whether or
-     not it was verified.
+     If a DNS hostname is provided then this function will compare the
+     hostname in the certificate against the given.  If names do not
+     match the 'GNUTLS_CERT_UNEXPECTED_OWNER' status flag will be set.
+     If a key purpose OID is provided and the end-certificate contains
+     the extended key usage PKIX extension, it will be required to be
+     have the provided key purpose or be marked for any purpose,
+     otherwise verification status will have the
+     'GNUTLS_CERT_SIGNER_CONSTRAINTS_FAILURE' flag set.
+
+     *Returns:* 'GNUTLS_E_SUCCESS' (0) when the validation is performed,
+     or a negative error code otherwise.  A sucessful error code means
+     that the 'status' parameter must be checked to obtain the
+     validation status.
 
      *Since:* 3.3.0
 
@@ -3243,9 +3440,10 @@ gnutls_certificate_verify_peers2
      'gnutls_x509_crt_check_hostname()' , or use
      'gnutls_certificate_verify_peers3()' .
 
-     *Returns:* a negative error code on error and 'GNUTLS_E_SUCCESS'
-     (0) when the peer's certificate was successfully parsed, whether or
-     not it was verified.
+     *Returns:* 'GNUTLS_E_SUCCESS' (0) when the validation is performed,
+     or a negative error code otherwise.  A sucessful error code means
+     that the 'status' parameter must be checked to obtain the
+     validation status.
 
 gnutls_certificate_verify_peers3
 --------------------------------
@@ -3270,17 +3468,17 @@ gnutls_certificate_verify_peers3
      verification process.
 
      If the 'hostname' provided is non-NULL then this function will
-     compare the hostname in the certificate against the given.  The
-     comparison will be accurate for ascii names; non-ascii names are
-     compared byte-by-byte.  If names do not match the
+     compare the hostname in the certificate against it.  The comparison
+     will follow the RFC6125 recommendations.  If names do not match the
      'GNUTLS_CERT_UNEXPECTED_OWNER' status flag will be set.
 
      In order to verify the purpose of the end-certificate (by checking
      the extended key usage), use 'gnutls_certificate_verify_peers()' .
 
-     *Returns:* a negative error code on error and 'GNUTLS_E_SUCCESS'
-     (0) when the peer's certificate was successfully parsed, whether or
-     not it was verified.
+     *Returns:* 'GNUTLS_E_SUCCESS' (0) when the validation is performed,
+     or a negative error code otherwise.  A sucessful error code means
+     that the 'status' parameter must be checked to obtain the
+     validation status.
 
      *Since:* 3.1.4
 
@@ -3291,9 +3489,11 @@ gnutls_check_version
           REQ_VERSION)
      REQ_VERSION: version string to compare with, or 'NULL' .
 
-     Check GnuTLS Library version.
+     Check the GnuTLS Library version against the provided string.  See
+     'GNUTLS_VERSION' for a suitable 'req_version' string.
 
-     See 'GNUTLS_VERSION' for a suitable 'req_version' string.
+     See also 'gnutls_check_version_numeric()' , which provides this
+     functionality as a macro.
 
      *Returns:* Check that the version of the library is at minimum the
      one given as a string in 'req_version' and return the actual
@@ -3880,6 +4080,21 @@ gnutls_dh_params_generate2
      *Returns:* On success, 'GNUTLS_E_SUCCESS' (0) is returned,
      otherwise a negative error code is returned.
 
+gnutls_dh_params_import_dsa
+---------------------------
+
+ -- Function: int gnutls_dh_params_import_dsa (gnutls_dh_params_t
+          DH_PARAMS, gnutls_x509_privkey_t KEY)
+     DH_PARAMS: The parameters
+
+     KEY: holds a DSA private key
+
+     This function will import the prime and generator of the DSA key
+     for use in the Diffie-Hellman key exchange.
+
+     *Returns:* On success, 'GNUTLS_E_SUCCESS' (0) is returned,
+     otherwise a negative error code is returned.
+
 gnutls_dh_params_import_pkcs3
 -----------------------------
 
@@ -4091,15 +4306,25 @@ gnutls_ecc_curve_get_oid
 
      *Since:* 3.4.3
 
+gnutls_ecc_curve_get_pk
+-----------------------
+
+ -- Function: gnutls_pk_algorithm_t gnutls_ecc_curve_get_pk
+          (gnutls_ecc_curve_t CURVE)
+     CURVE: is an ECC curve
+
+     *Returns:* the public key algorithm associated with the named curve
+     or 'GNUTLS_PK_UNKNOWN' .
+
+     *Since:* 3.5.0
+
 gnutls_ecc_curve_get_size
 -------------------------
 
  -- Function: int gnutls_ecc_curve_get_size (gnutls_ecc_curve_t CURVE)
      CURVE: is an ECC curve
 
-     Returns the size in bytes of the curve.
-
-     *Returns:* a the size or (0).
+     *Returns:* the size in bytes of the curve or 0 on failure.
 
      *Since:* 3.0
 
@@ -4200,6 +4425,17 @@ gnutls_ext_get_data
 
      *Since:* 3.4.0
 
+gnutls_ext_get_name
+-------------------
+
+ -- Function: const char * gnutls_ext_get_name (unsigned int EXT)
+     EXT: is a TLS extension numeric ID
+
+     Convert a TLS extension numeric ID to a printable string.
+
+     *Returns:* a pointer to a string that contains the name of the
+     specified cipher, or 'NULL' .
+
 gnutls_ext_register
 -------------------
 
@@ -4290,7 +4526,7 @@ gnutls_fingerprint
 gnutls_fips140_mode_enabled
 ---------------------------
 
- -- Function: int gnutls_fips140_mode_enabled ( VOID)
+ -- Function: unsigned gnutls_fips140_mode_enabled ( VOID)
 
      Checks whether this library is in FIPS140 mode.
 
@@ -4306,10 +4542,20 @@ gnutls_global_deinit
      This function deinitializes the global data, that were initialized
      using 'gnutls_global_init()' .
 
+     Since GnuTLS 3.3.0 this function is no longer necessary to be
+     explicitly called.  GnuTLS will automatically deinitialize on
+     library destructor.  See 'gnutls_global_init()' for disabling the
+     implicit initialization/deinitialization.
+
 gnutls_global_init
 ------------------
 
  -- Function: int gnutls_global_init ( VOID)
+
+     Since GnuTLS 3.3.0 this function is no longer necessary to be
+     explicitly called.  To disable the implicit call (in a library
+     constructor) of this function set the environment variable
+     'GNUTLS_NO_EXPLICIT_INIT' to 1.
 
      This function performs any required precalculations, detects the
      supported CPU capabilities and initializes the underlying
@@ -4323,11 +4569,6 @@ gnutls_global_init
      when GnuTLS is used by more than one library in an application.
      This function can be called many times, but will only do something
      the first time.
-
-     Since GnuTLS 3.3.0 this function is automatically called on library
-     constructor.  Since the same version this function is also thread
-     safe.  The automatic initialization can be avoided if the
-     environment variable 'GNUTLS_NO_EXPLICIT_INIT' is set to be 1.
 
      A subsequent call of this function if the initial has failed will
      return the same error code.
@@ -4556,18 +4797,21 @@ gnutls_handshake_set_max_packet_length
      This function will set the maximum size of all handshake messages.
      Handshakes over this size are rejected with
      'GNUTLS_E_HANDSHAKE_TOO_LARGE' error code.  The default value is
-     48kb which is typically large enough.  Set this to 0 if you do not
+     128kb which is typically large enough.  Set this to 0 if you do not
      want to set an upper limit.
 
      The reason for restricting the handshake message sizes are to limit
      Denial of Service attacks.
 
+     Note that the maximum handshake size was increased to 128kb from
+     48kb in GnuTLS 3.5.5.
+
 gnutls_handshake_set_post_client_hello_function
 -----------------------------------------------
 
  -- Function: void gnutls_handshake_set_post_client_hello_function
-          (gnutls_session_t SESSION,
-          gnutls_handshake_post_client_hello_func FUNC)
+          (gnutls_session_t SESSION, gnutls_handshake_simple_hook_func
+          FUNC)
      SESSION: is a 'gnutls_session_t' type.
 
      FUNC: is the function to be called
@@ -4882,19 +5126,12 @@ gnutls_init
 
      FLAGS: indicate if this session is to be used for server or client.
 
-     This function initializes the current session to null.  Every
-     session must be initialized before use, so internal structures can
-     be allocated.  This function allocates structures which can only be
-     free'd by calling 'gnutls_deinit()' .  Returns 'GNUTLS_E_SUCCESS'
-     (0) on success.
+     This function initializes the provided session.  Every session must
+     be initialized before use, and must be deinitialized after used by
+     calling 'gnutls_deinit()' .
 
-     'flags' can be one of 'GNUTLS_CLIENT' , 'GNUTLS_SERVER' ,
-     'GNUTLS_DATAGRAM' , 'GNUTLS_NONBLOCK' or 'GNUTLS_NOSIGNAL' (since
-     3.4.2).
-
-     The flag 'GNUTLS_NO_REPLAY_PROTECTION' will disable any replay
-     protection in DTLS mode.  That must only used when replay
-     protection is achieved using other means.
+     'flags' can be any combination of flags from 'gnutls_init_flags_t'
+     .
 
      Note that since version 3.1.2 this function enables some common TLS
      extensions such as session tickets and OCSP certificate status
@@ -5138,19 +5375,26 @@ gnutls_ocsp_status_request_is_checked
 
      FLAGS: should be zero or 'GNUTLS_OCSP_SR_IS_AVAIL'
 
-     Check whether an OCSP status response was included in the handshake
-     and whether it was checked and valid (not too old or superseded).
-     This is a helper function when needing to decide whether to perform
-     an OCSP validity check on the peer's certificate.  Should be called
-     after any of gnutls_certificate_verify_peers*() are called.
+     When flags are zero this function returns non-zero if a valid OCSP
+     status response was included in the TLS handshake.  That is, an
+     OCSP status response which is not too old or superseded.  It
+     returns zero otherwise.
 
-     If the flag 'GNUTLS_OCSP_SR_IS_AVAIL' is specified, the return
-     value of the function indicates whether an OCSP status response
-     have been received (even if invalid).  The flag was introduced in
-     GnuTLS 3.4.0.
+     When the flag 'GNUTLS_OCSP_SR_IS_AVAIL' is specified, the function
+     returns non-zero if an OCSP status response was included in the
+     handshake even if it was invalid.  Otherwise, if no OCSP status
+     response was included, it returns zero.  The
+     'GNUTLS_OCSP_SR_IS_AVAIL' flag was introduced in GnuTLS 3.4.0.
+
+     This is a helper function when needing to decide whether to perform
+     an explicit OCSP validity check on the peer's certificate.  Should
+     be called after any of gnutls_certificate_verify_peers*() are
+     called.
 
      *Returns:* non zero if the response was valid, or a zero if it
      wasn't sent, or sent and was invalid.
+
+     *Since:* 3.1.4
 
 gnutls_oid_to_digest
 --------------------
@@ -5178,6 +5422,21 @@ gnutls_oid_to_ecc_curve
      specified OID, or 'GNUTLS_ECC_CURVE_INVALID' on error.
 
      *Since:* 3.4.3
+
+gnutls_oid_to_mac
+-----------------
+
+ -- Function: gnutls_mac_algorithm_t gnutls_oid_to_mac (const char *
+          OID)
+     OID: is an object identifier
+
+     Converts a textual object identifier typically from PKCS'5' values
+     to a 'gnutls_mac_algorithm_t' value.
+
+     *Returns:* a 'gnutls_mac_algorithm_t' id of the specified digest
+     algorithm, or 'GNUTLS_MAC_UNKNOWN' on failure.
+
+     *Since:* 3.5.4
 
 gnutls_oid_to_pk
 ----------------
@@ -5295,8 +5554,14 @@ gnutls_pem_base64_decode2
 
      You should use 'gnutls_free()' to free the returned data.
 
+     Note, that prior to GnuTLS 3.4.0 this function was available under
+     the name 'gnutls_pem_base64_decode_alloc()' .  There is
+     compatibility macro pointing to this function.
+
      *Returns:* On success, 'GNUTLS_E_SUCCESS' (0) is returned,
      otherwise an error code is returned.
+
+     *Since:* 3.4.0
 
 gnutls_pem_base64_encode
 ------------------------
@@ -5339,8 +5604,14 @@ gnutls_pem_base64_encode2
 
      You should use 'gnutls_free()' to free the returned data.
 
+     Note, that prior to GnuTLS 3.4.0 this function was available under
+     the name 'gnutls_pem_base64_encode_alloc()' .  There is
+     compatibility macro pointing to this function.
+
      *Returns:* On success, 'GNUTLS_E_SUCCESS' (0) is returned,
      otherwise an error code is returned.
+
+     *Since:* 3.4.0
 
 gnutls_perror
 -------------
@@ -5495,6 +5766,10 @@ gnutls_prf
 
      The output is placed in 'out' , which must be pre-allocated.
 
+     *Note:* This function produces identical output with
+     'gnutls_prf_rfc5705()' when 'server_random_first' is set to 0 and
+     'extra' is 'NULL' .
+
      *Returns:* 'GNUTLS_E_SUCCESS' on success, or an error code.
 
 gnutls_prf_raw
@@ -5573,7 +5848,7 @@ gnutls_prf_rfc5705
 
      The output is placed in 'out' , which must be pre-allocated.
 
-     Note that, to provide the RFC5705 context, the 'contect' variable
+     Note that, to provide the RFC5705 context, the 'context' variable
      must be non-null.
 
      *Returns:* 'GNUTLS_E_SUCCESS' on success, or an error code.
@@ -5698,7 +5973,7 @@ gnutls_priority_init
      to provide quick access to common preferences.
 
      Unless there is a special need, use the "NORMAL" keyword to apply a
-     reasonable security level, or "NORMAL:'COMPAT' " for compatibility.
+     reasonable security level, or "NORMAL:%COMPAT" for compatibility.
 
      "PERFORMANCE" means all the "secure" ciphersuites are enabled,
      limited to 128 bit ciphers and sorted by terms of speed
@@ -5731,13 +6006,22 @@ gnutls_priority_init
      "NONE" means nothing is enabled.  This disables even protocols and
      compression methods.
 
-     " 'KEYWORD' " The system administrator imposed settings.  The
-     provided keywords will be expanded from a configuration-time
-     provided file - default is: /etc/gnutls/default-priorities.  Any
-     keywords that follow it, will be appended to the expanded string.
-     If there is no system string, then the function will fail.  The
-     system file should be formatted as "KEYWORD=VALUE", e.g.,
-     "SYSTEM=NORMAL:+ARCFOUR-128".
+     "@KEYWORD1,KEYWORD2,..."  The system administrator imposed
+     settings.  The provided keyword(s) will be expanded from a
+     configuration-time provided file - default is:
+     /etc/gnutls/default-priorities.  Any attributes that follow it,
+     will be appended to the expanded string.  If multiple keywords are
+     provided, separated by commas, then the first keyword that exists
+     in the configuration file will be used.  At least one of the
+     keywords must exist, or this function will return an error.
+     Typical usage would be to specify an application specified keyword
+     first, followed by "SYSTEM" as a default fallback.  e.g., "
+     'LIBVIRT' ,SYSTEM:!-VERS-SSL3.0" will first try to find a config
+     file entry matching "LIBVIRT", but if that does not exist will use
+     the entry for "SYSTEM". If "SYSTEM" does not exist either, an error
+     will be returned.  In all cases, the SSL3.0 protocol will be
+     disabled.  The system priority file entries should be formatted as
+     "KEYWORD=VALUE", e.g., "SYSTEM=NORMAL:+ARCFOUR-128".
 
      Special keywords are "!", "-" and "+".  "!"  or "-" appended with
      an algorithm will remove this algorithm.  "+" appended with an
@@ -5761,7 +6045,7 @@ gnutls_priority_init
 
      "SECURE256:+SECURE128",
 
-     Note that "NORMAL:'COMPAT' " is the most compatible mode.
+     Note that "NORMAL:%COMPAT" is the most compatible mode.
 
      A 'NULL' 'priorities' string indicates the default priorities to be
      used (this is available since GnuTLS 3.3.0).
@@ -5944,8 +6228,7 @@ gnutls_psk_allocate_client_credentials
           (gnutls_psk_client_credentials_t * SC)
      SC: is a pointer to a 'gnutls_psk_server_credentials_t' type.
 
-     This structure is complex enough to manipulate directly thus this
-     helper function is provided in order to allocate it.
+     Allocate a gnutls_psk_client_credentials_t structure.
 
      *Returns:* On success, 'GNUTLS_E_SUCCESS' (0) is returned,
      otherwise an error code is returned.
@@ -5957,8 +6240,7 @@ gnutls_psk_allocate_server_credentials
           (gnutls_psk_server_credentials_t * SC)
      SC: is a pointer to a 'gnutls_psk_server_credentials_t' type.
 
-     This structure is complex enough to manipulate directly thus this
-     helper function is provided in order to allocate it.
+     Allocate a gnutls_psk_server_credentials_t structure.
 
      *Returns:* On success, 'GNUTLS_E_SUCCESS' (0) is returned,
      otherwise an error code is returned.
@@ -5986,8 +6268,7 @@ gnutls_psk_free_client_credentials
           (gnutls_psk_client_credentials_t SC)
      SC: is a 'gnutls_psk_client_credentials_t' type.
 
-     This structure is complex enough to manipulate directly thus this
-     helper function is provided in order to free (deallocate) it.
+     Free a gnutls_psk_client_credentials_t structure.
 
 gnutls_psk_free_server_credentials
 ----------------------------------
@@ -5996,8 +6277,7 @@ gnutls_psk_free_server_credentials
           (gnutls_psk_server_credentials_t SC)
      SC: is a 'gnutls_psk_server_credentials_t' type.
 
-     This structure is complex enough to manipulate directly thus this
-     helper function is provided in order to free (deallocate) it.
+     Free a gnutls_psk_server_credentials_t structure.
 
 gnutls_psk_server_get_username
 ------------------------------
@@ -6148,6 +6428,26 @@ gnutls_psk_set_server_dh_params
      This function will set the Diffie-Hellman parameters for an
      anonymous server to use.  These parameters will be used in
      Diffie-Hellman exchange with PSK cipher suites.
+
+gnutls_psk_set_server_known_dh_params
+-------------------------------------
+
+ -- Function: int gnutls_psk_set_server_known_dh_params
+          (gnutls_psk_server_credentials_t RES, gnutls_sec_param_t
+          SEC_PARAM)
+     RES: is a gnutls_psk_server_credentials_t type
+
+     SEC_PARAM: is an option of the 'gnutls_sec_param_t' enumeration
+
+     This function will set the Diffie-Hellman parameters for a PSK
+     server to use.  These parameters will be used in Ephemeral
+     Diffie-Hellman cipher suites and will be selected from the FFDHE
+     set of RFC7919 according to the security level provided.
+
+     *Returns:* On success, 'GNUTLS_E_SUCCESS' (0) is returned,
+     otherwise a negative error value.
+
+     *Since:* 3.5.6
 
 gnutls_psk_set_server_params_function
 -------------------------------------
@@ -6372,8 +6672,9 @@ gnutls_record_overhead_size
           SESSION)
      SESSION: is 'gnutls_session_t'
 
-     This function will return the set size in bytes of the overhead due
-     to TLS (or DTLS) per record.
+     This function will return the size in bytes of the overhead due to
+     TLS (or DTLS) per record.  On certain occasions (e.g., CBC ciphers)
+     the returned value is the maximum possible overhead.
 
      *Since:* 3.2.2
 
@@ -6398,7 +6699,7 @@ gnutls_record_recv
      server receiving this error code can only initiate a new handshake
      or terminate the session.
 
-     If 'EINTR' is returned by the internal push function (the default
+     If 'EINTR' is returned by the internal pull function (the default
      is 'recv()' ) then 'GNUTLS_E_INTERRUPTED' will be returned.  If
      'GNUTLS_E_INTERRUPTED' or 'GNUTLS_E_AGAIN' is returned, you must
      call this function again to get the data.  See also
@@ -6586,7 +6887,8 @@ gnutls_record_set_timeout
 
      This function sets the receive timeout for the record layer to the
      provided value.  Use an 'ms' value of zero to disable timeout (the
-     default).
+     default), or 'GNUTLS_INDEFINITE_TIMEOUT' , to set an indefinite
+     timeout.
 
      This function requires to set a pull timeout callback.  See
      'gnutls_transport_set_pull_timeout_function()' .
@@ -6652,8 +6954,8 @@ gnutls_rehandshake
 gnutls_safe_renegotiation_status
 --------------------------------
 
- -- Function: int gnutls_safe_renegotiation_status (gnutls_session_t
-          SESSION)
+ -- Function: unsigned gnutls_safe_renegotiation_status
+          (gnutls_session_t SESSION)
      SESSION: is a 'gnutls_session_t' type.
 
      Can be used to check whether safe renegotiation is being used in
@@ -6746,8 +7048,9 @@ gnutls_server_name_get
      and so on.  If no name with the given index exists
      GNUTLS_E_REQUESTED_DATA_NOT_AVAILABLE is returned.
 
-     *Returns:* On success, 'GNUTLS_E_SUCCESS' (0) is returned,
-     otherwise a negative error code is returned.
+     *Returns:* On success, 'GNUTLS_E_SUCCESS' (0) is returned, on UTF-8
+     decoding error 'GNUTLS_E_IDNA_ERROR' is returned, otherwise a
+     negative error code is returned.
 
 gnutls_server_name_set
 ----------------------
@@ -6772,7 +7075,9 @@ gnutls_server_name_set
      'GNUTLS_NAME_DNS' , a UTF-8 null-terminated domain name string,
      without the trailing dot, is expected.
 
-     IPv4 or IPv6 addresses are not permitted.
+     IPv4 or IPv6 addresses are not permitted to be set by this
+     function.  If the function is called with a name of 'name_length'
+     zero it will clear all server names set.
 
      *Returns:* On success, 'GNUTLS_E_SUCCESS' (0) is returned,
      otherwise a negative error code is returned.
@@ -6842,6 +7147,52 @@ gnutls_session_ext_master_secret_status
      *Returns:* Non-zero if the negotiation was successful or zero
      otherwise.
 
+gnutls_session_ext_register
+---------------------------
+
+ -- Function: int gnutls_session_ext_register (gnutls_session_t SESSION,
+          const char * NAME, int TYPE, gnutls_ext_parse_type_t
+          PARSE_TYPE, gnutls_ext_recv_func RECV_FUNC,
+          gnutls_ext_send_func SEND_FUNC, gnutls_ext_deinit_data_func
+          DEINIT_FUNC, gnutls_ext_pack_func PACK_FUNC,
+          gnutls_ext_unpack_func UNPACK_FUNC, unsigned FLAGS)
+     SESSION: the session for which this extension will be set
+
+     NAME: the name of the extension to register
+
+     TYPE: the numeric id of the extension
+
+     PARSE_TYPE: the parse type of the extension (see
+     gnutls_ext_parse_type_t)
+
+     RECV_FUNC: a function to receive the data
+
+     SEND_FUNC: a function to send the data
+
+     DEINIT_FUNC: a function deinitialize any private data
+
+     PACK_FUNC: a function which serializes the extension's private data
+     (used on session packing for resumption)
+
+     UNPACK_FUNC: a function which will deserialize the extension's
+     private data
+
+     FLAGS: must be zero
+
+     This function will register a new extension type.  The extension
+     will be only usable within the registered session.  If the
+     extension type is already registered then
+     'GNUTLS_E_ALREADY_REGISTERED' will be returned.
+
+     Each registered extension can store temporary data into the
+     gnutls_session_t structure using 'gnutls_ext_set_data()' , and they
+     can be retrieved using 'gnutls_ext_get_data()' .
+
+     *Returns:* 'GNUTLS_E_SUCCESS' on success, otherwise a negative
+     error code.
+
+     *Since:* 3.5.5
+
 gnutls_session_force_valid
 --------------------------
 
@@ -6868,9 +7219,11 @@ gnutls_session_get_data
      Returns all session parameters needed to be stored to support
      resumption.  The client should call this, and store the returned
      session data.  A session may be resumed later by calling
-     'gnutls_session_set_data()' .  This function must be called after a
-     successful (full) handshake.  It should not be used in already
-     resumed sessions -see 'gnutls_session_is_resumed()' .
+     'gnutls_session_set_data()' .
+
+     This function will fail if called prior to handshake completion.
+     In case of false start TLS, the handshake completes only after data
+     have been successfully received from the peer.
 
      *Returns:* On success, 'GNUTLS_E_SUCCESS' (0) is returned,
      otherwise an error code is returned.
@@ -6887,12 +7240,14 @@ gnutls_session_get_data2
      Returns all session parameters needed to be stored to support
      resumption.  The client should call this, and store the returned
      session data.  A session may be resumed later by calling
-     'gnutls_session_set_data()' .  This function must be called after a
-     successful (full) handshake.  It should not be used in already
-     resumed sessions -see 'gnutls_session_is_resumed()' .
+     'gnutls_session_set_data()' .
 
      The returned 'data' are allocated and must be released using
      'gnutls_free()' .
+
+     This function will fail if called prior to handshake completion.
+     In case of false start TLS, the handshake completes only after data
+     have been successfully received from the peer.
 
      *Returns:* On success, 'GNUTLS_E_SUCCESS' (0) is returned,
      otherwise an error code is returned.
@@ -6913,6 +7268,25 @@ gnutls_session_get_desc
      current session.
 
      *Since:* 3.1.10
+
+gnutls_session_get_flags
+------------------------
+
+ -- Function: unsigned gnutls_session_get_flags (gnutls_session_t
+          SESSION)
+     SESSION: is a 'gnutls_session_t' type.
+
+     This function will return a series (ORed) of flags, applicable for
+     the current session.
+
+     This replaces individual informational functions such as
+     'gnutls_safe_renegotiation_status()' ,
+     'gnutls_session_ext_master_secret_status()' , etc.
+
+     *Returns:* An ORed sequence of flags (see 'gnutls_session_flags_t'
+     )
+
+     *Since:* 3.5.0
 
 gnutls_session_get_id
 ---------------------
@@ -6954,6 +7328,20 @@ gnutls_session_get_id2
      otherwise an error code is returned.
 
      *Since:* 3.1.4
+
+gnutls_session_get_master_secret
+--------------------------------
+
+ -- Function: void gnutls_session_get_master_secret (gnutls_session_t
+          SESSION, gnutls_datum_t * SECRET)
+     SESSION: is a 'gnutls_session_t' type.
+
+     SECRET: the session's master secret
+
+     This function returns pointers to the master secret used in the TLS
+     session.  The pointers are not to be modified or deallocated.
+
+     *Since:* 3.5.0
 
 gnutls_session_get_ptr
 ----------------------
@@ -7073,6 +7461,8 @@ gnutls_session_set_id
      *Returns:* On success, 'GNUTLS_E_SUCCESS' (0) is returned,
      otherwise an error code is returned.
 
+     *Since:* 3.2.1
+
 gnutls_session_set_premaster
 ----------------------------
 
@@ -7146,6 +7536,9 @@ gnutls_session_set_verify_cert
      verification will be performed.  For a more advanced verification
      function check 'gnutls_session_set_verify_cert2()' .
 
+     If 'flags' is provided which contain a profile, this function
+     should be called after any session priority setting functions.
+
      The 'gnutls_session_set_verify_cert()' function is intended to be
      used by TLS clients to verify the server's certificate.
 
@@ -7178,6 +7571,9 @@ gnutls_session_set_verify_cert2
      valid for the lifetime of the session.  More precisely they should
      be available during any subsequent handshakes.
 
+     If 'flags' is provided which contain a profile, this function
+     should be called after any session priority setting functions.
+
      *Since:* 3.4.6
 
 gnutls_session_set_verify_function
@@ -7208,6 +7604,39 @@ gnutls_session_set_verify_function
      or non-zero to terminate.
 
      *Since:* 3.4.6
+
+gnutls_session_supplemental_register
+------------------------------------
+
+ -- Function: int gnutls_session_supplemental_register (gnutls_session_t
+          SESSION, const char * NAME,
+          gnutls_supplemental_data_format_type_t TYPE,
+          gnutls_supp_recv_func RECV_FUNC, gnutls_supp_send_func
+          SEND_FUNC, unsigned FLAGS)
+     SESSION: the session for which this will be registered
+
+     NAME: the name of the supplemental data to register
+
+     TYPE: the type of the supplemental data format
+
+     RECV_FUNC: the function to receive the data
+
+     SEND_FUNC: the function to send the data
+
+     FLAGS: must be zero
+
+     This function will register a new supplemental data type (rfc4680).
+     The registered supplemental functions will be used for that
+     specific session.  The provided 'type' must be an unassigned type
+     in 'gnutls_supplemental_data_format_type_t' .
+
+     If the type is already registered or handled by GnuTLS internally
+     'GNUTLS_E_ALREADY_REGISTERED' will be returned.
+
+     *Returns:* 'GNUTLS_E_SUCCESS' on success, otherwise a negative
+     error code.
+
+     *Since:* 3.5.5
 
 gnutls_session_ticket_enable_client
 -----------------------------------
@@ -7278,7 +7707,8 @@ gnutls_sign_algorithm_get
      SESSION: is a 'gnutls_session_t' type.
 
      Returns the signature algorithm that is (or will be) used in this
-     session by the server to sign data.
+     session by the server to sign data.  This function should be used
+     only with TLS 1.2 or later.
 
      *Returns:* The sign algorithm or 'GNUTLS_SIGN_UNKNOWN' .
 
@@ -7292,7 +7722,8 @@ gnutls_sign_algorithm_get_client
      SESSION: is a 'gnutls_session_t' type.
 
      Returns the signature algorithm that is (or will be) used in this
-     session by the client to sign data.
+     session by the client to sign data.  This function should be used
+     only with TLS 1.2 or later.
 
      *Returns:* The sign algorithm or 'GNUTLS_SIGN_UNKNOWN' .
 
@@ -7420,8 +7851,7 @@ gnutls_srp_allocate_client_credentials
           (gnutls_srp_client_credentials_t * SC)
      SC: is a pointer to a 'gnutls_srp_server_credentials_t' type.
 
-     This structure is complex enough to manipulate directly thus this
-     helper function is provided in order to allocate it.
+     Allocate a gnutls_srp_client_credentials_t structure.
 
      *Returns:* On success, 'GNUTLS_E_SUCCESS' (0) is returned, or an
      error code.
@@ -7433,8 +7863,7 @@ gnutls_srp_allocate_server_credentials
           (gnutls_srp_server_credentials_t * SC)
      SC: is a pointer to a 'gnutls_srp_server_credentials_t' type.
 
-     This structure is complex enough to manipulate directly thus this
-     helper function is provided in order to allocate it.
+     Allocate a gnutls_srp_server_credentials_t structure.
 
      *Returns:* On success, 'GNUTLS_E_SUCCESS' (0) is returned, or an
      error code.
@@ -7531,8 +7960,7 @@ gnutls_srp_free_client_credentials
           (gnutls_srp_client_credentials_t SC)
      SC: is a 'gnutls_srp_client_credentials_t' type.
 
-     This structure is complex enough to manipulate directly thus this
-     helper function is provided in order to free (deallocate) it.
+     Free a gnutls_srp_client_credentials_t structure.
 
 gnutls_srp_free_server_credentials
 ----------------------------------
@@ -7541,8 +7969,7 @@ gnutls_srp_free_server_credentials
           (gnutls_srp_server_credentials_t SC)
      SC: is a 'gnutls_srp_server_credentials_t' type.
 
-     This structure is complex enough to manipulate directly thus this
-     helper function is provided in order to free (deallocate) it.
+     Free a gnutls_srp_server_credentials_t structure.
 
 gnutls_srp_server_get_username
 ------------------------------
@@ -7982,6 +8409,15 @@ gnutls_store_pubkey
      storage of entries.  If it is NULL then the default file backend
      will be used.
 
+     Unless an alternative 'tdb' is provided, the storage format is a
+     textual format consisting of a line for each host with fields
+     separated by '|'.  The contents of the fields are a
+     format-identifier which is set to 'g0', the hostname that the rest
+     of the data applies to, the numeric port or host name, the
+     expiration time in seconds since the epoch (0 for no expiration),
+     and a base64 encoding of the raw (DER) public key information
+     (SPKI) of the peer.
+
      *Returns:* On success, 'GNUTLS_E_SUCCESS' (0) is returned,
      otherwise a negative error value.
 
@@ -8292,13 +8728,17 @@ gnutls_transport_set_int
 ------------------------
 
  -- Function: void gnutls_transport_set_int (gnutls_session_t SESSION,
-          int I)
+          int FD)
      SESSION: is a 'gnutls_session_t' type.
 
-     I: is the value.
+     FD: is the socket descriptor for the connection.
 
-     Used to set the first argument of the transport function (for push
-     and pull callbacks) for berkeley style sockets.
+     This function sets the first argument of the transport function,
+     such as 'send()' and 'recv()' for the default callbacks using the
+     system's socket API.
+
+     This function is equivalent to calling 'gnutls_transport_set_ptr()'
+     with the descriptor, but requires no casts.
 
      *Since:* 3.1.9
 
@@ -8306,17 +8746,21 @@ gnutls_transport_set_int2
 -------------------------
 
  -- Function: void gnutls_transport_set_int2 (gnutls_session_t SESSION,
-          int RECV_INT, int SEND_INT)
+          int RECV_FD, int SEND_FD)
      SESSION: is a 'gnutls_session_t' type.
 
-     RECV_INT: is the value for the pull function
+     RECV_FD: is socket descriptor for the pull function
 
-     SEND_INT: is the value for the push function
+     SEND_FD: is socket descriptor for the push function
 
-     Used to set the first argument of the transport function (for push
-     and pull callbacks), when using the berkeley style sockets.  With
-     this function you can set two different pointers for receiving and
-     sending.
+     This function sets the first argument of the transport functions,
+     such as 'send()' and 'recv()' for the default callbacks using the
+     system's socket API. With this function you can set two different
+     descriptors for receiving and sending.
+
+     This function is equivalent to calling
+     'gnutls_transport_set_ptr2()' with the descriptors, but requires no
+     casts.
 
      *Since:* 3.1.9
 
@@ -8385,7 +8829,9 @@ gnutls_transport_set_pull_timeout_function
      suitable for the provided transport calls.
 
      As with 'select()' , if the timeout value is zero the callback
-     should return zero if no data are immediately available.
+     should return zero if no data are immediately available.  The
+     special value 'GNUTLS_INDEFINITE_TIMEOUT' indicates that the
+     callback should wait indefinitely for data.
 
      'gnutls_pull_timeout_func' is of the form, int
      (*gnutls_pull_timeout_func)(gnutls_transport_ptr_t, unsigned int
@@ -8445,16 +8891,41 @@ gnutls_transport_set_vec_push_function
 gnutls_url_is_supported
 -----------------------
 
- -- Function: int gnutls_url_is_supported (const char * URL)
-     URL: A PKCS 11 url
+ -- Function: unsigned gnutls_url_is_supported (const char * URL)
+     URL: A URI to be tested
 
-     Check whether url is supported.  Depending on the system libraries
-     GnuTLS may support pkcs11 or tpmkey URLs.
+     Check whether the provided 'url' is supported.  Depending on the
+     system libraries GnuTLS may support pkcs11, tpmkey or other URLs.
 
      *Returns:* return non-zero if the given URL is supported, and zero
      if it is not known.
 
      *Since:* 3.1.0
+
+gnutls_utf8_password_normalize
+------------------------------
+
+ -- Function: int gnutls_utf8_password_normalize (const unsigned char *
+          PASSWORD, unsigned PLEN, gnutls_datum_t * OUT, unsigned FLAGS)
+     PASSWORD: contain the UTF-8 formatted password
+
+     PLEN: the length of the provided password
+
+     OUT: the result in an null-terminated allocated string
+
+     FLAGS: should be zero
+
+     This function will convert the provided UTF-8 password according to
+     the normalization rules in RFC7613.
+
+     If the flag 'GNUTLS_UTF8_IGNORE_ERRS' is specified, any UTF-8
+     encoding errors will be ignored, and in that case the output will
+     be a copy of the input.
+
+     *Returns:* 'GNUTLS_E_INVALID_UTF8_STRING' on invalid UTF-8 data, or
+     0 on success.
+
+     *Since:* 3.5.7
 
 gnutls_verify_stored_pubkey
 ---------------------------

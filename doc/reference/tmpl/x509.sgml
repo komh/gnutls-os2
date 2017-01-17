@@ -321,13 +321,6 @@ x509
 
 
 
-<!-- ##### MACRO GNUTLS_TL_VERIFY_CRL ##### -->
-<para>
-
-</para>
-
-
-
 <!-- ##### MACRO GNUTLS_X509_DN_OID_RETURN_OID ##### -->
 <para>
 
@@ -494,6 +487,8 @@ x509
 </para>
 
 @pkcs7: 
+@encap_data_oid: 
+@der_signed_data: 
 @signed_data: 
 
 <!-- ##### FUNCTION gnutls_pkcs7_set_crl ##### -->
@@ -557,6 +552,7 @@ x509
 @GNUTLS_PKCS_PBES2_AES_256: 
 @GNUTLS_PKCS_NULL_PASSWORD: 
 @GNUTLS_PKCS_PBES2_DES: 
+@GNUTLS_PKCS_PBES1_DES_MD5: 
 
 <!-- ##### FUNCTION gnutls_x509_crl_check_issuer ##### -->
 <para>
