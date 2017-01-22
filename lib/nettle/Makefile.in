@@ -109,9 +109,10 @@ build_triplet = @build@
 host_triplet = @host@
 @ENABLE_MINITASN1_TRUE@am__append_1 = -I$(srcdir)/../minitasn1
 @WINDOWS_TRUE@am__append_2 = sysrng-windows.c
-@HAVE_GETENTROPY_TRUE@@WINDOWS_FALSE@am__append_3 = sysrng-getentropy.c
-@HAVE_GETENTROPY_FALSE@@WINDOWS_FALSE@am__append_4 = sysrng-linux.c
-@ENABLE_FIPS140_TRUE@am__append_5 = rnd-fips.c int/drbg-aes-self-test.c \
+@OS2_TRUE@@WINDOWS_FALSE@am__append_3 = sysrng-os2.c
+@HAVE_GETENTROPY_TRUE@@OS2_FALSE@@WINDOWS_FALSE@am__append_4 = sysrng-getentropy.c
+@HAVE_GETENTROPY_FALSE@@OS2_FALSE@@WINDOWS_FALSE@am__append_5 = sysrng-linux.c
+@ENABLE_FIPS140_TRUE@am__append_6 = rnd-fips.c int/drbg-aes-self-test.c \
 @ENABLE_FIPS140_TRUE@	int/drbg-aes.c int/drbg-aes.h
 
 subdir = lib/nettle
@@ -248,20 +249,20 @@ am__libcrypto_la_SOURCES_DIST = pk.c mpi.c mac.c cipher.c init.c \
 	gnettle.h rnd-common.h rnd-common.c rnd.c int/rsa-fips.h \
 	int/rsa-keygen-fips186.c int/provable-prime.c int/dsa-fips.h \
 	int/dsa-keygen-fips186.c int/dsa-validate.c sysrng-windows.c \
-	sysrng-getentropy.c sysrng-linux.c rnd-fips.c \
+	sysrng-os2.c sysrng-getentropy.c sysrng-linux.c rnd-fips.c \
 	int/drbg-aes-self-test.c int/drbg-aes.c int/drbg-aes.h
 am__dirstamp = $(am__leading_dot)dirstamp
 @WINDOWS_TRUE@am__objects_1 = sysrng-windows.lo
-@HAVE_GETENTROPY_TRUE@@WINDOWS_FALSE@am__objects_2 =  \
-@HAVE_GETENTROPY_TRUE@@WINDOWS_FALSE@	sysrng-getentropy.lo
-@HAVE_GETENTROPY_FALSE@@WINDOWS_FALSE@am__objects_3 = sysrng-linux.lo
-@ENABLE_FIPS140_TRUE@am__objects_4 = rnd-fips.lo \
+@OS2_TRUE@@WINDOWS_FALSE@am__objects_2 = sysrng-os2.lo
+@HAVE_GETENTROPY_TRUE@@OS2_FALSE@@WINDOWS_FALSE@am__objects_3 = sysrng-getentropy.lo
+@HAVE_GETENTROPY_FALSE@@OS2_FALSE@@WINDOWS_FALSE@am__objects_4 = sysrng-linux.lo
+@ENABLE_FIPS140_TRUE@am__objects_5 = rnd-fips.lo \
 @ENABLE_FIPS140_TRUE@	int/drbg-aes-self-test.lo int/drbg-aes.lo
 am_libcrypto_la_OBJECTS = pk.lo mpi.lo mac.lo cipher.lo init.lo \
 	rnd-common.lo rnd.lo int/rsa-keygen-fips186.lo \
 	int/provable-prime.lo int/dsa-keygen-fips186.lo \
 	int/dsa-validate.lo $(am__objects_1) $(am__objects_2) \
-	$(am__objects_3) $(am__objects_4)
+	$(am__objects_3) $(am__objects_4) $(am__objects_5)
 libcrypto_la_OBJECTS = $(am_libcrypto_la_OBJECTS)
 AM_V_lt = $(am__v_lt_@AM_V@)
 am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
@@ -1331,7 +1332,6 @@ pdfdir = @pdfdir@
 prefix = @prefix@
 program_transform_name = @program_transform_name@
 psdir = @psdir@
-runstatedir = @runstatedir@
 sbindir = @sbindir@
 sharedstatedir = @sharedstatedir@
 srcdir = @srcdir@
@@ -1359,7 +1359,8 @@ libcrypto_la_SOURCES = pk.c mpi.c mac.c cipher.c init.c gnettle.h \
 	rnd-common.h rnd-common.c rnd.c int/rsa-fips.h \
 	int/rsa-keygen-fips186.c int/provable-prime.c int/dsa-fips.h \
 	int/dsa-keygen-fips186.c int/dsa-validate.c $(am__append_2) \
-	$(am__append_3) $(am__append_4) $(am__append_5)
+	$(am__append_3) $(am__append_4) $(am__append_5) \
+	$(am__append_6)
 all: all-am
 
 .SUFFIXES:
@@ -1443,6 +1444,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/rnd.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sysrng-getentropy.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sysrng-linux.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sysrng-os2.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sysrng-windows.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@int/$(DEPDIR)/drbg-aes-self-test.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@int/$(DEPDIR)/drbg-aes.Plo@am__quote@

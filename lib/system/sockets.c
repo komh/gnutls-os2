@@ -33,6 +33,7 @@
 
 #ifdef _WIN32
 # include <windows.h>
+#elif defined(__OS2__)
 #else /* !_WIN32 */
 # include <poll.h>
 #endif
@@ -149,7 +150,7 @@ int gnutls_system_recv_timeout(gnutls_transport_ptr_t ptr, unsigned int ms)
 {
 	int ret;
 	int fd = GNUTLS_POINTER_TO_INT(ptr);
-#ifndef _WIN32
+#if !defined(_WIN32) && !defined(__OS2__)
 	int timeo;
 	struct pollfd pfd;
 

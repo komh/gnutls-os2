@@ -36,8 +36,9 @@
 # include <wincrypt.h>
 
 #else /* !_WIN32 */
-
-# include <poll.h>
+# ifndef __OS2__
+#  include <poll.h>
+# endif
 
 # if defined(HAVE_GETPWUID_R)
 #  include <pwd.h>
@@ -244,7 +245,7 @@ static int load_revoked_certs(gnutls_x509_trust_list_t list, unsigned type)
 # endif
 
 
-/* This works on android 4.x 
+/* This works on android 4.x
  */
 static
 int add_system_trust(gnutls_x509_trust_list_t list, unsigned int tl_flags,

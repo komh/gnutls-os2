@@ -1,6 +1,6 @@
-# English translations for gnutls package.
+# English translations for GNU gnutls package.
 # Copyright (C) 2017 Free Software Foundation, Inc.
-# This file is distributed under the same license as the gnutls package.
+# This file is distributed under the same license as the GNU gnutls package.
 # Automatically generated, 2017.
 #
 # All this catalog "translates" are quotation characters.
@@ -27,10 +27,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gnutls 3.5.8\n"
+"Project-Id-Version: GNU gnutls 3.5.8\n"
 "Report-Msgid-Bugs-To: bug-gnutls@gnu.org\n"
-"POT-Creation-Date: 2017-01-09 08:22+0100\n"
-"PO-Revision-Date: 2017-01-09 08:22+0100\n"
+"POT-Creation-Date: 2017-01-17 15:28+0900\n"
+"PO-Revision-Date: 2017-01-17 15:28+0900\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "Language: en@quot\n"
